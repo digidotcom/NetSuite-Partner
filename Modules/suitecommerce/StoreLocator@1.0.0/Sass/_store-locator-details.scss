@@ -1,0 +1,143 @@
+/*
+	© 2016 NetSuite Inc.
+	User may not copy, modify, distribute, or re-bundle or otherwise make available this code;
+	provided, however, if you are an authorized user with a NetSuite account or log-in, you
+	may use this code subject to the terms that govern your access and use.
+*/
+
+.store-locator-details-main {
+	@extend .store-locator-main;
+}
+
+.store-locator-details-main-container {
+	@extend .store-locator-main-container;
+}
+
+.store-locator-details-main-container-box {
+	@extend .store-locator-main-container-box;
+}
+
+.store-locator-details-main-container-box-wrap {
+	@extend .store-locator-main-container-box-wrap;
+}
+
+.store-locator-details-main-container-box {
+	@extend .store-locator-main-container-box;
+}
+
+.store-locator-details-main-left {
+	@extend .store-locator-main-left;
+}
+
+.store-locator-details-main-pusher {
+	@extend .store-locator-main-pusher;
+}
+
+.store-locator-details-main-right {
+	position: absolute;
+    top: 45px;
+    left: 0px;
+    padding-top:$sc-base-padding*4;
+    @extend .col-xs-12;
+    @extend .col-sm-8;
+	background:$sc-color-tertiary;
+
+	@media (min-width: $screen-sm-min){
+		position:static;
+		padding-top:0px;
+	}
+
+	.store-locator-map {
+		height:190px;
+
+		@media (min-width: $screen-sm-min){
+			height:700px;
+		}
+	}
+
+}
+
+.store-locator-details-store {
+	padding:$sc-base-padding*3;
+	background:$sc-color-tertiary;
+	position:absolute;
+	top:250px;
+	width:100%;
+	height: 100%;
+
+	h4 {
+		margin:$sc-medium-margin 0;
+	}
+
+	@media (min-width: $screen-sm-min){
+		position:static;
+	}
+}
+
+.store-locator-details-main-nav-back {
+	@extend .store-locator-main-nav-back;
+}
+
+.store-locator-details-phone-label {
+	@extend .sc-label;
+}
+
+.store-locator-details-hours-label {
+	@extend .sc-label;
+}
+
+.store-locator-details-address {
+	display:block;
+}
+
+.store-locator-details-store-info {
+	margin-bottom:$sc-medium-margin;
+}
+
+.store-locator-details-main-details-info {}
+.store-locator-details-map {
+
+	margin-bottom:0px;
+	@media (min-width: $screen-sm-min){
+		margin-bottom:$sc-medium-margin;
+	}
+	.gm-style .gm-style-iw {
+		padding:$sc-base-padding*2;
+		@extend .row;
+		margin:auto;
+	}
+
+	.gm-style-iw + div {display: none;}
+}
+
+.store-locator-details-get-directions-link {
+	display:none;
+	@media (min-width: $screen-sm-min){
+		display:block;
+		margin-bottom:$sc-medium-margin;
+		margin-top:-$sc-base-margin*3;
+	}
+}
+
+.store-locator-details-get-directions-button{
+	@extend .button-primary;
+	@extend .button-medium;
+	@extend .button-generic;
+}
+
+.store-locator-details-get-directions-button-container{
+	display:block;
+	position:relative;
+	bottom: 75px;
+	padding: $sc-base-padding*3;
+	z-index:99999;
+	@media (min-width: $screen-sm-min){
+		display:none;
+	}
+}
+
+.store-locator-details-state {}
+.store-locator-details-hours-value {}
+.store-locator-details-city {}
+.store-locator-details-zipcode {}
+.store-locator-details-phone-value {}

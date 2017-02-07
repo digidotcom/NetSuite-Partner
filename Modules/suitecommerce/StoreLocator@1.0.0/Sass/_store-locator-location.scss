@@ -1,0 +1,253 @@
+/*
+	© 2016 NetSuite Inc.
+	User may not copy, modify, distribute, or re-bundle or otherwise make available this code;
+	provided, however, if you are an authorized user with a NetSuite account or log-in, you
+	may use this code subject to the terms that govern your access and use.
+*/
+
+.store-locator-location {
+	margin-bottom:$sc-medium-margin;
+	@media (min-width: $screen-sm-min){
+		margin:0px;
+	}
+	.store-locator-location-list-view {}
+}
+
+.store-locator-location-search-view {
+	padding:0px;
+	@media (min-width: $screen-sm-min){
+		padding:$sc-base-padding*3;
+	}
+}
+
+
+.store-locator-location-button-container {
+	display:block;
+	margin-bottom:$sc-medium-margin;
+	margin-top:$sc-medium-margin;
+}
+
+.store-locator-location-button-current {
+	@extend .button-medium;
+	@extend .button-tertiary;
+	@extend .button-generic;
+	background-color:$sc-color-tertiary;
+}
+
+.store-locator-location-button-enter {
+	@extend .button-small;
+	@extend .button-pill;
+	background-color:$sc-color-tertiary;
+}
+
+.store-locator-location-button-enter.active,
+.store-locator-location-button-current.active {
+	@extend .button-pill-active;
+}
+
+.store-locator-location-button-find {
+	@extend .button-medium;
+	@extend .button-primary;
+	@extend .button-generic;
+}
+
+.store-locator-location-map {
+	width:100%;
+	height:150px;
+	visibility:visible;
+	background-color:$sc-color-theme-background;
+	margin-bottom:$sc-medium-margin;
+
+	@media (min-width: $screen-sm-min){
+		visibility:hidden;
+		height:0px;
+		margin:0px;
+	}
+}
+
+.store-locator-location-current-input {
+	@extend .input-generic;
+}
+
+.store-locator-location-geolocation {
+	margin-bottom:$sc-small-margin;
+
+	label {
+		@extend .input-label;
+	}
+}
+
+.store-locator-location-enter-location {
+	margin-top:$sc-small-margin;
+	margin-bottom:$sc-small-margin;
+
+	@media (min-width: $screen-sm-min){
+		margin-top:0px;
+	}
+
+	@media (min-width: $screen-sm-min){
+		margin-top:0px;
+	}
+
+	label {
+		@extend .input-label;
+	}
+
+	input {
+		@extend .input-generic;
+	}
+}
+
+.store-locator-location-geolocation-message-warning {
+	@extend .message-warning;
+	margin-bottom:$sc-small-margin;
+	display: none;
+}
+.store-locator-location-geolocation-message-error {
+	@extend .message-error;
+	margin-top: $sc-small-margin;
+	margin-bottom: $sc-small-margin;
+	display: none;
+}
+
+.store-locator-location-input-autocomplete {
+	margin-bottom:$sc-medium-margin;
+}
+
+.store-locator-location-list {
+	@extend .store-locator-main-list;
+	background:$sc-color-tertiary;
+	overflow: auto;
+	overflow-x: hidden;
+}
+
+.store-locator-location-list-container
+{
+	@extend .store-locator-main-list-container;
+}
+
+.store-locator-location-pusher {
+	position:absolute;
+	top:0px;
+	left:0px;
+	width:100%;
+	z-index:1002;
+
+	@media (min-width: $screen-sm-min){
+		position:relative;
+	}
+}
+
+.store-locator-location-nav-back {
+	background: $sc-color-theme-background-light;
+	padding: $sc-base-padding*3;
+	text-align:left;
+}
+
+.store-locator-location-nav-button-container {
+	display:block;
+	padding:$sc-base-padding*3;
+	clear:both;
+	overflow:hidden;
+	background:$sc-color-tertiary;
+
+	@media (min-width: $screen-sm-min){
+		display:none;
+	}
+}
+
+.store-locator-location-nav-button-container-grid {
+	@extend .col-xs-6;
+	padding-left:0px;
+	padding-right:0px;
+}
+
+
+.store-locator-location-nav-button-map.active,
+.store-locator-location-nav-button-list.active {
+	@extend .button-pill-active;
+	display:block;
+	width:100%;
+}
+
+.store-locator-location-nav-button-map {
+	@extend .button-medium;
+	@extend .button-pill;
+	@extend .button-generic;
+	background-color:$sc-color-tertiary;
+	display:block;
+	width:100%;
+}
+
+.store-locator-location-nav-button-list {
+	@extend .button-medium;
+	@extend .button-pill;
+	@extend .button-generic;
+	background-color:$sc-color-tertiary;
+	display:block;
+	width:100%;
+}
+
+.store-locator-location-nav-description {
+	padding:$sc-base-padding*3;
+	background-color:$sc-color-tertiary;
+}
+
+.store-locator-location-nav-description-highlight {
+	color:$sc-color-primary;
+}
+
+.store-locator-location-nav-description-geolocation {}
+
+.store-locator-location-map-localization {
+	background:none;
+	height:150px;
+
+	@media (min-width: $screen-sm-min) {
+		display: none;
+	}
+}
+
+.store-locator-location-button-current-icon {
+	@extend .icon-map-marker;
+}
+
+
+.store-locator-location-buttons-container {
+	@extend .row;
+}
+
+.store-locator-location-buttons-container-find {
+	@extend .col-xs-12;
+	margin-bottom:$sc-base-margin;
+}
+
+.store-locator-location-buttons-container-geolocalization {
+	@extend .col-xs-12;
+}
+
+.store-locator-location-buttons-container-or {
+	@extend .col-xs-12;
+	text-align:center;
+	margin-bottom:$sc-base-margin*4;
+	color:$sc-color-light-copy;
+	border-bottom:1px solid $sc-color-light-copy;
+	span {
+		background:$sc-color-tertiary;
+		padding:0 $sc-base-padding;
+		position:relative;
+		top:7px;
+	}
+}
+
+.store-locator-location-buttons-container-or-wrap {
+	padding-left:$sc-base-padding*3;
+	padding-right:$sc-base-padding*3;
+}
+
+.store-locator-location-see-all-stores{
+	padding-left:0px;
+	@media (min-width: $screen-sm-min) {
+		padding-left:$sc-base-padding*3;
+	}
+}

@@ -1,0 +1,202 @@
+/*
+	© 2016 NetSuite Inc.
+	User may not copy, modify, distribute, or re-bundle or otherwise make available this code;
+	provided, however, if you are an authorized user with a NetSuite account or log-in, you
+	may use this code subject to the terms that govern your access and use.
+*/
+
+.store-locator-main {
+	@extend .container;
+}
+
+.store-locator-main-container {
+	width:100%;
+	min-height:100%;
+	height:auto;
+	display: table;
+}
+
+.store-locator-main-container-box {
+	margin-bottom:$sc-medium-margin;
+	margin-top:$sc-medium-margin;
+	display:block;
+	clear:both;
+	@media (min-width: $screen-sm-min){
+		margin:0;
+		margin-bottom:$sc-medium-margin;
+	}
+
+}
+
+.store-locator-main-pusher {
+	position:absolute;
+	top:0px;
+	left:0px;
+	width:100%;
+	height:100%;
+	z-index:9;
+	@media (min-width: $screen-sm-min){
+		position:relative;
+	}
+}
+
+.store-locator-main-map {
+	width:100%;
+  	height:100%;
+  	position:absolute;
+  	visibility:hidden;
+  	left:0px;
+  	top: 0px;
+  	z-index:1;
+   	background:$sc-color-tertiary;
+
+	.gm-style .gm-style-iw div {
+		overflow:hidden!important;
+	}
+
+	@media (min-width: $screen-sm-min){
+		visibility:visible;
+		position:static;
+	}
+
+	.gm-style .gm-style-iw {
+		padding:$sc-base-padding*2;
+		@extend .row;
+		margin:auto;
+	}
+
+	.gm-style-iw + div {display: none;}
+}
+
+.store-locator-main-map.map-view {
+	height: 100%;
+	visibility: visible;
+	.store-locator-map {
+		height: 100%;
+	}
+}
+
+.store-locator-main-nav {
+  	width:100%;
+  	background:$sc-color-tertiary;
+  	padding:0px;
+}
+
+.store-locator-main-left {
+	@extend .col-xs-12;
+	@extend .col-sm-4;
+  	background:$sc-color-tertiary;
+  	padding:0px;
+  	position:static;
+  	@media (min-width: $screen-sm-min){
+		position:relative;
+	}
+}
+
+.store-locator-main-right {
+	@extend .col-sm-8;
+	position:static;
+	background:$sc-color-tertiary;
+	padding-right:0px;
+}
+
+.store-locator-main-container-box-wrap {
+	display:block;
+	overflow-x:hidden;
+}
+
+.store-locator-main-list-description {
+	background:$sc-color-tertiary;
+}
+
+.store-locator-main-list {
+	padding:0px;
+	height: 100%;
+	margin-bottom:$sc-medium-margin;
+	overflow:hidden;
+
+	@media (min-width: $screen-sm-min){
+		height:565px;
+		overflow:auto;
+		overflow-x:hidden;
+		margin-bottom:0px;
+		display:block;
+	}
+}
+
+.store-locator-main-list-container {
+	position:relative;
+  	margin:0px;
+  	padding:0px;
+  	list-style-type: none;
+  	background:$sc-color-tertiary;
+
+  	li:hover {
+		cursor:pointer;
+   		cursor:hand;
+   		background:$sc-color-theme-background-light;
+	}
+}
+
+.store-locator-main-nav-button-container {
+	display:block;
+	padding:$sc-base-padding*3;
+	clear:both;
+	overflow:hidden;
+
+	@media (min-width: $screen-sm-min){
+		display:none;
+	}
+}
+
+.store-locator-main-nav-button-container-grid {
+	@extend .col-xs-6;
+	padding-left:0px;
+	padding-right:0px;
+}
+
+.store-locator-main-nav-description {
+	padding:$sc-base-padding*3;
+}
+
+.store-locator-main-nav-description-highlight {
+	color:$sc-color-primary;
+}
+
+
+.store-locator-main-nav-button-map {
+	@extend .button-medium;
+	@extend .button-pill;
+	@extend .button-generic;
+	background-color:$sc-color-tertiary;
+	display:block;
+	width:100%;
+}
+
+.store-locator-main-nav-button-map.active,
+.store-locator-main-nav-button-list.active {
+	@extend .button-pill-active;
+	display:block;
+	width:100%;
+}
+
+.store-locator-main-nav-button-list {
+	@extend .button-medium;
+	@extend .button-pill;
+	@extend .button-generic;
+	background-color:$sc-color-tertiary;
+	display:block;
+	width:100%;
+}
+
+.store-locator-main-nav-back {
+	background: $sc-color-theme-background-light;
+	padding: $sc-base-padding*3;
+	text-align:left;
+}
+
+.store-locator-main-location {}
+
+.store-locator-main-nav-description-geolocation {}
+
+
