@@ -154,12 +154,22 @@
         "third_parties/respond": "1.4.2-custom",
         "third_parties/twitter-bootstrap-sass": "3.3.1",
         "third_parties/twitter-typeahead": "0.10.5",
-        "third_parties/underscore.js": "1.7.0"
+        "third_parties/underscore.js": "1.7.0",
+
+        "efficiencies/EnvironmentFiles": "3.0.0",
+        "efficiencies/SSPFiles": "3.0.0-fixcms",
+
+        "site/Heartbeat": "dev"
     },
     "tasksConfig": {
         "local": {
             "http": {
                 "port": 7777
+            },
+            "https": {
+                "port": 7778,
+                "key": "SupportScripts/local-https/key.pem",
+                "cert": "SupportScripts/local-https/cert.pem"
             },
             "lessSourcemap": false,
             "jsRequire": true
@@ -318,7 +328,9 @@
                     "StoreLocatorAccessPoints",
                     "StoreLocator",
                     "Location.Model",
-                    "StoreLocator.Model"
+                    "StoreLocator.Model",
+
+                    "Heartbeat"
                 ],
                 "amdclean": true,
                 "amdConfig": {
@@ -423,7 +435,9 @@
                     "StoreLocatorAccessPoints",
                     "StoreLocator",
                     "Location.Model",
-                    "StoreLocator.Model"
+                    "StoreLocator.Model",
+
+                    "Heartbeat"
                 ],
                 "amdclean": true,
                 "amdConfig": {
@@ -527,7 +541,9 @@
                 "Transaction.ServiceController",
                 "Location.ServiceController",
                 "StoreLocator.ServiceController",
-                "ExternalPayment.Model"
+                "ExternalPayment.Model",
+
+                "Heartbeat.ServiceController"
             ],
             "exportFile": "ssp_libraries.js",
             "amdConfig": {
