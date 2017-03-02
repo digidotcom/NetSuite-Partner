@@ -345,7 +345,7 @@ var net_module = {
 ,	_postFilesOld: function (deploy, cb)
 	{
 		var t0 = new Date().getTime();
-		var payload_path = path.join(process.gulp_init_cwd, 'payload.json');
+		var payload_path = path.join(process.gulp_init_cwd, 'bin','payload.json');
 		fs.stat(payload_path, function(err, stat)
 		{
 			if (err)

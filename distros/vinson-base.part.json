@@ -1,4 +1,5 @@
 {
+    "id": "vinson-base",
     "name": "SuiteCommerce Advanced Vinson Release",
     "version": "2.0",
     "buildToolsVersion": "1.2.1",

@@ -1,0 +1,13 @@
+{
+    "gulp": {
+        "javascript": [
+            "JavaScript/*.js"
+        ],
+        "configuration": [
+            "Configuration/*.json"
+        ]
+    },
+    "overrides": {
+        "suitecommerce/jQueryExtras@2.2.1/JavaScript/jQuery.ajaxSetup.js": "JavaScript/jQuery.ajaxSetup.js"
+    }
+}

@@ -1,0 +1,107 @@
+{
+    "id": "boilerplate",
+    "name": "Boilerplate",
+    "dependencies": ["efficiencies"],
+    "endpoint": false,
+    "modules": {
+        "third_parties_boilerplate/NProgress": "0.2.0-custom",
+        "boilerplate/Backbone.CompositeView.CollectionViewFix": "dev",
+        "boilerplate/BackboneExtras.RemoveConsoleWarn": "dev",
+        "boilerplate/CMSadapterFixes": "1.2.1-fixconfig",
+        "boilerplate/Configuration.CommerceSuiteSolution.General": "dev",
+        "boilerplate/Configuration.LookAndFeel": "dev",
+        "boilerplate/ContactUs.NonMandatory": "dev",
+        "boilerplate/Footer.Copyright": "dev",
+        "boilerplate/SSPFiles": "3.0.0-fixcms",
+        "boilerplate/Footer.Links": "dev",
+        "boilerplate/NProgress.Loader": "dev",
+        "boilerplate/OrderWizard.Module.PaymenMethodFixes": "dev",
+        "boilerplate/OrderHistory.AdvancedShipping": "dev",
+        "boilerplate/FacetsTranslatorCategoryFacetFix": "dev"
+    },
+    "tasksConfig": {
+        "watcherInterval": 500,
+        "local": {
+            "optimize": false,
+            "nginx": false,
+            "livereload": {
+                "enable": false,
+                "secure": {
+                    "js_port": 35730,
+                    "port": 35731
+                },
+                "config": {
+                    "start": false,
+                    "silent": true,
+                    "port": 35729,
+                    "https": true
+                },
+                "tasks": {
+                    "sass": true,
+                    "templates": true
+                }
+            }
+        },
+        "javascript": [
+            {
+                "entryPoint": "SC.Shopping.Starter",
+                "dependencies": [
+                    "FacetsTranslatorCategoryFacetFix",
+                    "Backbone.CompositeView.CollectionViewFix",
+                    "CMSadapterFixes",
+                    "ContactUs.NonMandatory",
+                    "Footer.View.Copyright",
+                    "Footer.View.Links"
+                ]
+            },
+            {
+                "entryPoint": "SC.MyAccount.Starter",
+                "dependencies": [
+                    "Backbone.CompositeView.CollectionViewFix",
+                    "CMSadapterFixes",
+                    "Footer.View.Copyright",
+                    "Footer.Simplified.View.Copyright",
+                    "Footer.View.Links"
+                ]
+            },
+            {
+                "entryPoint": "SC.Checkout.Starter",
+                "dependencies": [
+                    "Backbone.CompositeView.CollectionViewFix",
+                    "CMSadapterFixes",
+                    "Footer.Simplified.View.Copyright",
+                    "Footer.View.Links",
+                    "OrderWizard.Module.PaymentMethod.GiftCertificates.Fixes"
+                ]
+            }
+        ],
+        "ssp-libraries": {
+            "dependencies": [
+                "CMSadapterFixes",
+                "OrderHistory.Model.AdvancedShipping"
+            ]
+        },
+        "sass": {
+            "applications": [
+                {
+                    "name": "Shopping",
+                    "dependencies": [
+                        "NProgress"
+                    ]
+                },
+                {
+                    "name": "MyAccount",
+                    "dependencies": [
+                        "NProgress"
+                    ]
+                },
+                {
+                    "name": "Checkout",
+                    "dependencies": [
+                        "NProgress"
+                    ]
+                }
+            ]
+        }
+    }
+}

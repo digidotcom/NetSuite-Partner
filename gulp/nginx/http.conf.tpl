@@ -1,6 +1,6 @@
 server {
-    listen 7777 default_server;
-    listen [::]:7777 default_server ipv6only=on;
+    listen <%= http_port || 7777 %> default_server; # PS: changed port to dynamic
+    listen [::]:<%= http_port || 7777 %> default_server ipv6only=on; # PS: changed port to dynamic
 
     root <%= localDistributionPath %>;
     server_name localhost;

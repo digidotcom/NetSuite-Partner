@@ -1,0 +1,12 @@
+{
+    "type": "object",
+    "properties": {
+        "commerceSuiteSolution.qs.pdpAddToQuote.enabled": {
+            "group": "commerceSuiteSolution",
+            "subtab": "general",
+            "type": "boolean",
+            "title": "Enable PDP Add to Quote",
+            "default": true
+        }
+    }
+}

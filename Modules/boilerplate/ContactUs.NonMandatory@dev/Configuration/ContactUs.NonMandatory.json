@@ -1,0 +1,38 @@
+{
+    "type": "object",
+    "properties": {
+        "commerceSuiteSolution.contactUs.enabled": {
+            "group": "commerceSuiteSolution",
+            "subtab": "contactUs",
+            "type": "boolean",
+            "title": "Enabled",
+            "default": false
+        }
+    },
+    "modifications": [
+        {
+            "target": "$.properties[commerceSuiteSolution.contactUs.formId].mandatory",
+            "action": "replace",
+            "value": false
+        },
+        {
+            "target": "$.properties[commerceSuiteSolution.contactUs.formId]",
+            "action": "add",
+            "value": {
+                "default": ""
+            }
+        },
+        {
+            "target": "$.properties[commerceSuiteSolution.contactUs.hash].mandatory",
+            "action": "replace",
+            "value": false
+        },
+        {
+            "target": "$.properties[commerceSuiteSolution.contactUs.hash]",
+            "action": "add",
+            "value": {
+                "default": ""
+            }
+        }
+    ]
+}

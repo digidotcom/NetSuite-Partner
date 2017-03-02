@@ -269,5 +269,5 @@ gulp.task('javascript-no-deps', processJavascript);
 
 gulp.task('watch-javascript', ['watch-templates', 'watch-macros'], function()
 {
-	gulp.watch(package_manager.getGlobsFor('javascript'), ['javascript-no-deps']);
+	gulp.watch(package_manager.getGlobsFor('javascript'), {interval: package_manager.configuration.watcherInterval}, ['javascript-no-deps']);
 });

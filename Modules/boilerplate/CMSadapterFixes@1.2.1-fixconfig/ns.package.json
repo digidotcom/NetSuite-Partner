@@ -1,0 +1,10 @@
+{
+    "gulp": {
+        "javascript": [
+            "JavaScript/*"
+        ],
+        "ssp-libraries": [
+            "SuiteScript/*.js"
+        ]
+    }
+}
