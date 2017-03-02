@@ -7,7 +7,7 @@ define('Registration', [
 
     return {
         mountToApp: function mountToApp(application) {
-            return new RegistrationRouter(application)
+            return new RegistrationRouter(application);
         }
     };
 });

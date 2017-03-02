@@ -10,7 +10,7 @@ define('Heartbeat.ServiceController', [
     return ServiceController.extend({
         name: 'Heartbeat.ServiceController',
 
-        get: function () {
+        get: function get() {
             var beatsParam = this.request.getParameter('beat');
             var beats = null;
 

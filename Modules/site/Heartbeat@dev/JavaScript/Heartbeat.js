@@ -55,7 +55,7 @@ define('Heartbeat', [
             var self = this;
             // run heartbeat only in local
             if (window.location.pathname.match('local.ssp')) {
-                console.log('LOCAL - Heartbeat ON');
+                console.log('LOCAL - Heartbeat ON'); // eslint-disable-line no-console
                 self.collectionInstance = new Collection({
                     application: application
                 });

@@ -38,7 +38,7 @@ define('CMSadapterFixes', [
             var cmsRequestT0 = new Date().getTime();
             var cmsPagesHeader = { 'Accept': 'application/json' };
             var isSecure = request.getURL().indexOf('https:') === 0;
-            var currentDomainMatch = request.getURL().match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i);
+            var currentDomainMatch = request.getURL().match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i); // eslint-disable-line no-useless-escape
             var currentDomain = currentDomainMatch && currentDomainMatch[0];
 
             var environmentSubDomain;

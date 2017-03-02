@@ -1,5 +1,5 @@
+node_modules
 .idea
-
 *.com
 *.class
 *.dll
@@ -26,11 +26,14 @@ ehthumbs.db
 Thumbs.db
 *.bak
 *.tar.gz
+*.zip
+*.tar
+*.gz
 *.swp
-
-node_modules
-
+bin
+.nsdeploy
+.git
+.gitignore
 LocalDistribution
 DeployDistribution
-.nsdeploy
 payload.json

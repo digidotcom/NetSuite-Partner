@@ -13,7 +13,7 @@ define('FacetsTranslatorCategoryFacetFix', [
 
     // @method getUrl
     // Gets the url for current state of the object
-    FacetsTranslator.prototype.getUrl = function getUrl() {
+    FacetsTranslator.prototype.getUrl = function getUrl() { // eslint-disable-line complexity
         var url = this.categoryUrl || '';
         var self = this;
         // Prepares seo limits
