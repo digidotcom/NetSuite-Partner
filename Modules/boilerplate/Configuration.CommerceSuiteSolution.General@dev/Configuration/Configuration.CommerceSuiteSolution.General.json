@@ -1,0 +1,8 @@
+{
+    "type": "object",
+    "subtab": {
+        "group": "commerceSuiteSolution",
+        "id": "general",
+        "title": "General"
+    }
+}

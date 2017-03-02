@@ -96,5 +96,5 @@ gulp.task('macros', ['macros-jst'], function()
 
 gulp.task('watch-macros', function()
 {
-	gulp.watch(package_manager.getGlobsFor('macros'), ['macros']);
+	gulp.watch(package_manager.getGlobsFor('macros'), {interval: package_manager.configuration.watcherInterval}, ['macros']);
 });

@@ -1,0 +1,6 @@
+// this prevents the images in the listings to grow beyond their natural width, and not be forced to be 100% width.
+.facets-item-cell-grid-image,
+.facets-item-cell-list-image,
+.facets-item-cell-table-image{
+  width:auto;
+}

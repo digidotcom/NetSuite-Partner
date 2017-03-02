@@ -1,0 +1,29 @@
+{
+    "type": "object",
+    "properties": {
+        "footer.copyright.hide": {
+            "group": "layout",
+            "subtab": "footer",
+            "type": "boolean",
+            "title": "Hide Copyright Notice",
+            "description": "Hide copyright notice from the footer",
+            "default": false
+        },
+        "footer.copyright.name": {
+            "group": "layout",
+            "subtab": "footer",
+            "type": "string",
+            "title": "Company Name",
+            "description": "Company Name to show in the footer copyright notice",
+            "default": "Company Name"
+        },
+        "footer.copyright.initialYear": {
+            "group": "layout",
+            "subtab": "footer",
+            "type": "integer",
+            "title": "Initial Year",
+            "description": "Initial Year to show in the footer copyright notice (empty will show current year)",
+            "default": null
+        }
+    }
+}
