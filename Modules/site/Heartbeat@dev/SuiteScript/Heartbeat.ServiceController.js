@@ -1,8 +1,6 @@
 define('Heartbeat.ServiceController', [
-    'Application',
     'ServiceController'
 ], function HeartbeatServiceController(
-    Application,
     ServiceController
 ) {
     'use strict';
@@ -11,7 +9,7 @@ define('Heartbeat.ServiceController', [
         name: 'Heartbeat.ServiceController',
 
         get: function get() {
-            var beatsParam = this.request.getParameter('beat');
+            var beatsParam = this.request.getParameter('beats');
             var beats = null;
 
             if (beatsParam) {
