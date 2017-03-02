@@ -4,7 +4,9 @@
     "dependencies": ["boilerplate"],
     "endpoint": true,
     "modules": {
-        "site/Configuration.Site": "dev"
+        "site/Configuration.Site": "dev",
+        "site/Heartbeat": "dev",
+        "site/Registration": "dev"
     },
     "tasksConfig": {
         "javascript": [
@@ -17,19 +19,23 @@
             {
                 "entryPoint": "SC.MyAccount.Starter",
                 "dependencies": [
-                    {"prepend": "SC.MyAccount.Configuration.Site"}
+                    {"prepend": "SC.MyAccount.Configuration.Site"},
+                    "Heartbeat",
+                    "Registration"
                 ]
             },
             {
                 "entryPoint": "SC.Checkout.Starter",
                 "dependencies": [
-                    {"prepend": "SC.Checkout.Configuration.Site"}
+                    {"prepend": "SC.Checkout.Configuration.Site"},
+                    "Heartbeat"
                 ]
             }
         ],
         "ssp-libraries": {
             "dependencies": [
-                "Configuration.Site"
+                "Configuration.Site",
+                "Heartbeat.ServiceController"
             ]
         },
         "sass": {
