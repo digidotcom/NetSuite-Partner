@@ -35,7 +35,8 @@
         "ssp-libraries": {
             "dependencies": [
                 "Configuration.Site",
-                "Heartbeat.ServiceController"
+                "Heartbeat.ServiceController",
+                "Registration.ServiceController"
             ]
         },
         "sass": {
