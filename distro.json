@@ -159,7 +159,8 @@
         "efficiencies/EnvironmentFiles": "3.0.0",
         "efficiencies/SSPFiles": "3.0.0-fixcms",
 
-        "site/Heartbeat": "dev"
+        "site/Heartbeat": "dev",
+        "site/Registration": "dev"
     },
     "tasksConfig": {
         "local": {
@@ -330,7 +331,8 @@
                     "Location.Model",
                     "StoreLocator.Model",
 
-                    "Heartbeat"
+                    "Heartbeat",
+                    "Registration"
                 ],
                 "amdclean": true,
                 "amdConfig": {
