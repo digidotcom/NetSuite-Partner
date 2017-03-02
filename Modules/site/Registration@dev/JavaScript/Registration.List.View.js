@@ -1,15 +1,24 @@
 define('Registration.List.View', [
-    'Backbone',
+    'Utils',
+    'Registration.AbstractView',
     'registration_list.tpl'
 ], function RegistrationListView(
-    Backbone,
+    Utils,
+    RegistrationAbstractView,
     registrationListTpl
 ) {
     'use strict';
 
-    return Backbone.View.extend({
+    return RegistrationAbstractView.extend({
 
         template: registrationListTpl,
+
+        titleSuffix: '',
+        breadcrumbPart: [],
+
+        events: {
+
+        },
 
         initialize: function initialize(options) {
             this.application = options.application;
