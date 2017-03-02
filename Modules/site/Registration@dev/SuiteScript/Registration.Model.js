@@ -109,7 +109,9 @@ define('Registration.Model', [
 
         list: function list() {
             var Search = new SearchHelper(this.record, this.filters, this.columns, this.fieldsets.list);
-            return Search.search().getResults();
+            return {
+                records: Search.search().getResults()
+            };
         }
     });
 });
