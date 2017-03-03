@@ -54,7 +54,7 @@ define('Registration.List.View', [
 
         sortOptions: [
             {
-                value: 'trandate,internalid',
+                value: 'date',
                 name: Utils.translate('Sort By Date'),
                 selected: true
             }
@@ -65,16 +65,6 @@ define('Registration.List.View', [
             this.collection = options.collection;
 
             this.listenCollection();
-
-            this.listHeader = new ListHeaderView({
-                view: this,
-                application: this.application,
-                collection: this.collection,
-                sorts: this.sortOptions,
-                rangeFilter: 'date',
-                rangeFilterLabel: Utils.translate('From'),
-                hidePagination: true
-            });
 
             BackboneCompositeView.add(this);
         },
@@ -108,6 +98,15 @@ define('Registration.List.View', [
 
         childViews: {
             'ListHeader': function ListHeader() {
+                this.listHeader = new ListHeaderView({
+                    view: this,
+                    application: this.application,
+                    collection: this.collection,
+                    sorts: this.sortOptions,
+                    rangeFilter: 'date',
+                    rangeFilterLabel: Utils.translate('From'),
+                    hidePagination: true
+                });
                 return this.listHeader;
             },
 

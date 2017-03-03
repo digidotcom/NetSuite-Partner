@@ -17,6 +17,7 @@ define('Registration.Model', [
         record: 'customrecord_registrationprocess',
         columns: {
             internalid: { fieldName: 'internalid' },
+            date: { fieldName: 'created' },
             name: { fieldName: 'name' },
             partnerName: { fieldName: 'custrecord_partner_name', type: 'object' }, // List/Record: Account
             additionalInformation: { fieldName: 'custrecord_additional_information' }, // Long Text
@@ -44,23 +45,26 @@ define('Registration.Model', [
             lead: { fieldName: 'custrecord_lead' }, // Free-form Text
             opportunity: { fieldName: 'custrecord_opportunity', type: 'object' }, // List/Record: Opportunity
             preferredDistributor: { fieldName: 'custrecord_preferred_distributor' }, // Free-form Text
-            productionDate: { fieldName: 'custrecord_production_date', type: 'text' }, // Date
+            productionDate: { fieldName: 'custrecord_production_date' }, // Date
             projectName: { fieldName: 'custrecord_project_name' }, // Free-form Text
             reseller: { fieldName: 'custrecord_reseller' }, // Free-form Text
             summaryOfApplication: { fieldName: 'custrecord_summary_of_application' }, // Long Text
             salesRep: { fieldName: 'custrecord_sales_rep', type: 'object' }, // List/Record: Employee
-            prototypeEvalDate: { fieldName: 'custrecord_prototype_eval_date', type: 'text' } // Date
+            prototypeEvalDate: { fieldName: 'custrecord_prototype_eval_date' } // Date
         },
         filters: [
             { fieldName: 'isinactive', operator: 'is', value1: 'F' }
         ],
+        sort: null,
         fieldsets: {
             list: [
                 'internalid',
+                'date',
                 'name'
             ],
             details: [
                 'internalid',
+                'date',
                 'name',
                 'partnerName',
                 'additionalInformation',
@@ -103,15 +107,54 @@ define('Registration.Model', [
             supplyChain: 'Supply Chain',
             projectDetails: 'Project Details'
         },
-        fields: {
+        fields: {},
 
+        parseListParameters: function parseListParameters() {
+            var offset;
+
+            // to-from filter
+            if (this.data.from && this.data.to) {
+                offset = new Date().getTimezoneOffset() * 60 * 1000;
+                this.filters.push({
+                    fieldName: 'created',
+                    operator: 'within',
+                    value1: new Date(parseInt(this.data.from, 10) + offset),
+                    value2: new Date(parseInt(this.data.to, 10) + offset)
+                });
+            }
+
+            // sort
+            if (this.data.sort) {
+                this.sort = {
+                    fieldName: this.data.sort,
+                    order: this.data.order >= 0 ? 'asc' : 'desc'
+                };
+            }
         },
 
-        list: function list() {
-            var Search = new SearchHelper(this.record, this.filters, this.columns, this.fieldsets.list);
-            return {
-                records: Search.search().getResults()
-            };
-        }
+        list: function list(data) {
+            var search;
+
+            this.data = data;
+            console.log(JSON.stringify(this.data));
+            this.parseListParameters();
+
+            search = new SearchHelper()
+                .setRecord(this.record)
+                .setFilters(this.filters)
+                .setColumns(this.columns)
+                .setFieldset(this.fieldsets.list)
+                .setResultsPerPage(this.data.resultsPerPage)
+                .setPage(this.data.page);
+
+            if (this.sort) {
+                search
+                    .setSort(this.sort.fieldName)
+                    .setSortOrder(this.sort.order);
+            }
+            return search.search().getResultsForListHeader();
+        },
+
+        get: function get(/* id */) {}
     });
 });

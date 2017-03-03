@@ -11,7 +11,7 @@
     </header>
 
 
-    <div class="order-history-list-header-nav">
+    <!-- div class="order-history-list-header-nav">
         <div class="order-history-list-header-button-group">
             {{#if openIsActive}}
                 <span class="order-history-list-header-button-open-active">{{translate 'Open'}}</span>
@@ -25,7 +25,7 @@
                 <a href="/purchases" class="order-history-list-header-button-all">{{translate 'All'}}</a>
             {{/if}}
         </div>
-    </div>
+    </div -->
 
     <div data-view="ListHeader" {{#if openIsActive}}style="display:none;"{{/if}}></div>
 

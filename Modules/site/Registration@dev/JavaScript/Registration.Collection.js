@@ -29,7 +29,6 @@ define('Registration.Collection', [
         update: function update(options) {
             var range = options.range || {};
             var data = {
-                filter: this.customFilters || (options.filter && options.filter.value),
                 sort: options.sort.value,
                 order: options.order,
                 from: range.from ? new Date(range.from.replace(/-/g, '/')).getTime() : null,

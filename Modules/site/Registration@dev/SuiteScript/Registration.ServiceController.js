@@ -17,7 +17,18 @@ define('Registration.ServiceController', [
         },
 
         get: function get() {
-            return RegistrationModel.list();
+            var id = this.request.getParameter('internalid');
+            if (id) {
+                return RegistrationModel.get(id);
+            }
+            return RegistrationModel.list({
+                order: this.request.getParameter('order'),
+                sort: this.request.getParameter('sort'),
+                from: this.request.getParameter('from'),
+                to: this.request.getParameter('to'),
+                page: this.request.getParameter('page') || 1,
+                resultsPerPage: this.request.getParameter('results_per_page')
+            });
         }
     });
 });
