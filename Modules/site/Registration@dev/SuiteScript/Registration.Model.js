@@ -136,7 +136,6 @@ define('Registration.Model', [
             var search;
 
             this.data = data;
-            console.log(JSON.stringify(this.data));
             this.parseListParameters();
 
             search = new SearchHelper()
