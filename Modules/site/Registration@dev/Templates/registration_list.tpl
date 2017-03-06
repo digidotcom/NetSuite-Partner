@@ -10,22 +10,7 @@
         <h2>{{pageHeader}}</h2>
     </header>
 
-
-    <!-- div class="registration-list-header-nav">
-        <div class="registration-list-header-button-group">
-            {{#if openIsActive}}
-                <span class="registration-list-header-button-open-active">{{translate 'Open'}}</span>
-            {{else}}
-                <a href="/open-purchases" class="registration-list-header-button-open">{{translate 'Open'}}</a>
-            {{/if}}
-
-            {{#if allIsActive}}
-                <span class="registration-list-header-button-all-active">{{translate 'All'}}</span>
-            {{else}}
-                <a href="/purchases" class="registration-list-header-button-all">{{translate 'All'}}</a>
-            {{/if}}
-        </div>
-    </div -->
+    <div class="registration-list-header-nav" data-view="Registration.Statuses"></div>
 
     <div data-view="ListHeader" {{#if openIsActive}}style="display:none;"{{/if}}></div>
 
@@ -54,11 +39,7 @@
             <p class="registration-list-empty">{{translate 'Loading...'}}</p>
         {{else}}
             <div class="registration-list-empty-section">
-                <h5>{{translate 'You don\'t have any registrations in your account right now.'}}</h5>
-
-                {{#unless allIsActive}}
-                    <p>{{translate 'To see a list of all your registrations, you can go to the tab <a href="/registrations" class="">All</a>.'}}</p>
-                {{/unless}}
+                <h5>{{translate 'You don\'t have any registrations that match the selected criteria.'}}</h5>
             </div>
         {{/if}}
 

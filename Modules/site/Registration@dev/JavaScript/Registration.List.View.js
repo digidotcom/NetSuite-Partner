@@ -12,6 +12,7 @@ define('Registration.List.View', [
     'ListHeader.View',
     'RecordViews.View',
     'Registration.AbstractView',
+    'Registration.Status.View',
     'registration_list.tpl'
 ], function RegistrationListView(
     _,
@@ -27,6 +28,7 @@ define('Registration.List.View', [
     ListHeaderView,
     RecordViewsView,
     RegistrationAbstractView,
+    RegistrationStatusView,
     registrationListTpl
 ) {
     'use strict';
@@ -63,11 +65,11 @@ define('Registration.List.View', [
         initialize: function initialize(options) {
             this.application = options.application;
             this.collection = options.collection;
-
-            this.collection.recordsPerPage = options.recordsPerPage;
+            this.statusCollection = options.statusCollection;
 
             this.listenCollection();
 
+            // in initialize to avoid render loop
             this.listHeader = new ListHeaderView({
                 view: this,
                 application: this.application,
@@ -76,6 +78,10 @@ define('Registration.List.View', [
                 rangeFilter: 'date',
                 rangeFilterLabel: Utils.translate('From'),
                 hidePagination: true
+            });
+            this.statusesView = new RegistrationStatusView({
+                collection: this.statusCollection,
+                active: options.status
             });
 
             BackboneCompositeView.add(this);
@@ -108,9 +114,17 @@ define('Registration.List.View', [
             this.isLoading = value;
         },
 
+        refreshStatuses: function refreshStatuses() {
+            this.statusesView.render();
+        },
+
         childViews: {
             'ListHeader': function ListHeader() {
                 return this.listHeader;
+            },
+
+            'Registration.Statuses': function RegistrationStatuses() {
+                return this.statusesView;
             },
 
             'GlobalViews.Pagination': function GlobalViewsPagination() {
@@ -164,8 +178,41 @@ define('Registration.List.View', [
         },
 
         getContext: function getContext() {
+            var statuses = [
+                {
+                    name: 'Approved',
+                    value: 'approved',
+                    isActive: false
+                },
+                {
+                    name: 'Expired',
+                    value: 'expired',
+                    isActive: false
+                },
+                {
+                    name: 'Open',
+                    value: '',
+                    isActive: true
+                },
+                {
+                    name: 'Not Submitted',
+                    value: 'notsubmitted',
+                    isActive: false
+                },
+                {
+                    name: 'Pending',
+                    value: 'pending',
+                    isActive: false
+                },
+                {
+                    name: 'Rejected',
+                    value: 'rejected',
+                    isActive: false
+                }
+            ];
             return {
                 pageHeader: this.pageHeader,
+                statuses: statuses,
                 collectionLengthGreaterThan0: this.collection.length > 0,
                 isLoading: this.isLoading,
                 showPagination: !!(this.collection.totalRecordsFound && this.collection.recordsPerPage),

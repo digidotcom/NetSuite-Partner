@@ -63,48 +63,6 @@
   position:relative;
 }
 
-.registration-list-header-button-group {
-  a, span {
-    display:table-cell;
-  }
-}
-
-.registration-list-header-button-active {
-  @extend .button-medium;
-  @extend .button-pill-active;
-}
-
-.registration-list-header-button {
-  @extend .button-medium;
-  @extend .button-pill;
-}
-
-.registration-list-header-button-open-active {
-  @extend .registration-list-header-button-active;
-}
-
-.registration-list-header-button-instore-active {
-  @extend .registration-list-header-button-active;
-}
-
-.registration-list-header-button-all-active {
-  @extend .registration-list-header-button-active;
-}
-
-.registration-list-header-button-open {
-  @extend .registration-list-header-button;
-}
-
-.registration-list-header-button-instore {
-  @extend .registration-list-header-button;
-  border-left:0px;
-  border-right:0px;
-}
-
-.registration-list-header-button-all {
-  @extend .registration-list-header-button;
-}
-
 .registration-list{}
 
 .registration-list-empty-section {

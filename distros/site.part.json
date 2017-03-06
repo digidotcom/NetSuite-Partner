@@ -36,7 +36,8 @@
             "dependencies": [
                 "Configuration.Site",
                 "Heartbeat.ServiceController",
-                "Registration.ServiceController"
+                "Registration.ServiceController",
+                "Registration.Status.ServiceController"
             ]
         },
         "sass": {
