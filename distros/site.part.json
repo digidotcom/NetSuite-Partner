@@ -49,6 +49,7 @@
                 {
                     "name": "MyAccount",
                     "dependencies": [
+                        "Registration"
                     ]
                 },
                 {

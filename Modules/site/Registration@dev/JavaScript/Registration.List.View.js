@@ -68,6 +68,16 @@ define('Registration.List.View', [
 
             this.listenCollection();
 
+            this.listHeader = new ListHeaderView({
+                view: this,
+                application: this.application,
+                collection: this.collection,
+                sorts: this.sortOptions,
+                rangeFilter: 'date',
+                rangeFilterLabel: Utils.translate('From'),
+                hidePagination: true
+            });
+
             BackboneCompositeView.add(this);
         },
 
@@ -100,15 +110,6 @@ define('Registration.List.View', [
 
         childViews: {
             'ListHeader': function ListHeader() {
-                this.listHeader = new ListHeaderView({
-                    view: this,
-                    application: this.application,
-                    collection: this.collection,
-                    sorts: this.sortOptions,
-                    rangeFilter: 'date',
-                    rangeFilterLabel: Utils.translate('From'),
-                    hidePagination: true
-                });
                 return this.listHeader;
             },
 
@@ -117,6 +118,7 @@ define('Registration.List.View', [
                     totalPages: Math.ceil(this.collection.totalRecordsFound / this.collection.recordsPerPage)
                 }, Configuration.defaultPaginationSettings));
             },
+
             'GlobalViews.ShowCurrentPage': function GlobalViewsShowCurrentPage() {
                 return new GlobalViewsShowingCurrentView({
                     items_per_page: this.collection.recordsPerPage,
