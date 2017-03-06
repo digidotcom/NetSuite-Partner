@@ -17,6 +17,7 @@ define('Registration.Collection', [
 
         initialize: function initialize(models, options) {
             this.customFilters = options && options.filters;
+            this.recordsPerPage = options && options.recordsPerPage;
         },
 
         parse: function parse(response) {
@@ -29,6 +30,7 @@ define('Registration.Collection', [
         update: function update(options) {
             var range = options.range || {};
             var data = {
+                results_per_page: options.recordsPerPage || this.recordsPerPage,
                 sort: options.sort.value,
                 order: options.order,
                 from: range.from ? new Date(range.from.replace(/-/g, '/')).getTime() : null,

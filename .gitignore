@@ -33,7 +33,6 @@ Thumbs.db
 bin
 .nsdeploy
 .git
-.gitignore
 LocalDistribution
 DeployDistribution
 payload.json

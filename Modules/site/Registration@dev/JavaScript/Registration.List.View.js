@@ -64,6 +64,8 @@ define('Registration.List.View', [
             this.application = options.application;
             this.collection = options.collection;
 
+            this.collection.recordsPerPage = options.recordsPerPage;
+
             this.listenCollection();
 
             BackboneCompositeView.add(this);

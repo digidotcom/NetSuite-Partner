@@ -24,12 +24,14 @@ define('Registration.Router', [
             var collection;
             var view;
             var options = (optionsArg) ? SC.Utils.parseUrlOptions(optionsArg) : { page: 1 };
-            options.page = options.page || 1;
+            options.page = (options.page && parseInt(options.page, 10)) || 1;
+            options.show = (options.show && parseInt(options.show, 10)) || 10;
 
             collection = new RegistrationCollection();
             view = new RegistrationListView({
                 application: this.application,
                 page: options.page,
+                recordsPerPage: options.show,
                 collection: collection,
                 activeTab: 'all'
             });
