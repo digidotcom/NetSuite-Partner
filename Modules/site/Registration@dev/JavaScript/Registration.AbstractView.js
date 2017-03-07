@@ -20,7 +20,7 @@ define('Registration.AbstractView', [
         getBreadcrumbPages: function getBreadcrumbPages() {
             return _.union([
                 {
-                    text: this.title,
+                    text: this.getTitle(),
                     href: '/registrations'
                 }
             ], this.getBreadcrumbPart());
