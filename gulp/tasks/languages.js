@@ -57,6 +57,6 @@ gulp.task('languages', function()
 
 gulp.task('watch-languages', [], function()
 {
-	gulp.watch(package_manager.getGlobsFor('languages'), ['languages']);
+	gulp.watch(package_manager.getGlobsFor('languages'), {interval: package_manager.configuration.watcherInterval}, ['languages']);
 });
 

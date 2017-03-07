@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js"></script>
+    <meta charset="UTF-8">
+    <h3>Items options</h3>
+</head>
+    <body>
+        <p>
+            <h4>URL: <var id="url">url</var></h4>
+        </p>
+        <h5>List of Internal id's and item options</h5>
+        <div class="log"></div>
+        <div id="images">
+        </div>
+        <script type="text/javascript">
+            var origin = location.origin;
+            $('#url').text(origin);
+            var initUrl = origin+"/api/items?fields=itemoptions_detail,itemid,storedescription&limit=100&offset=0";
+            //call every next page of items and add the internal id's to the list
+            var callback = function(call){
+                var internalid;
+                var $images = $('#images');
+                var $log = $( ".log" );
+
+                $log.text( "LOADING..." );
+                var internalid;
+                for (var i = 0; i < call.items.length; i++) {
+                    internalid = call.items[i].internalid;
+                    var itemid = call.items[i].itemid;
+                    var storedescription =call.items[i].storedescription;
+                    var matrix_options = _(_(call.items[i].itemoptions_detail.fields).filter(function(opt) {
+                        return opt.ismatrixdimension;
+                    })).map(function (opt) { return opt.label});
+                    //if (matrix_options && matrix_options.length) {
+                    $images.append(internalid + ',"' + itemid + '","' + storedescription + '",' + JSON.stringify(matrix_options));
+                    $images.append('<br>');
+                    //}
+                }
+
+                if (call.links.length>0){
+                    var result = _.find(call.links, function(num){ return num.rel=="next";});
+                    if (result && (result.rel=="next")){
+                        var url =result.href;
+                        $.ajax({
+                            url: url,
+                        }).done(callback) ;
+                    }else{
+                        $log.text( "" );
+                    }
+
+                }
+                else{
+                    $log.text( "" );
+                }
+
+            };
+
+
+            //first call
+            $.ajax({
+                url: initUrl
+            }).done(callback);
+        </script>
+    </body>
+</html>

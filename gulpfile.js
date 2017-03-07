@@ -49,6 +49,7 @@ gulp.task(
 	,	'ssp-libraries'
 	,	'ssp-files'
 	,	'configuration'
+	,	'hosting-root-files-zip'
 	]
 );
 

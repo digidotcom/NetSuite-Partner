@@ -1,0 +1,37 @@
+{
+    "type": "object",
+    "subtab": {
+        "id": "webFonts",
+        "title": "Web Fonts",
+        "group": "themes",
+        "description": "Web Fonts"
+    },
+    "properties": {
+        "themes.webFonts.isWebFontEnabled": {
+            "group": "themes",
+            "subtab": "webFonts",
+            "type": "boolean",
+            "title": "Enable Web Fonts",
+            "default": true
+        },
+        "themes.webFonts.isWebFontAsync": {
+            "group": "themes",
+            "subtab": "webFonts",
+            "type": "boolean",
+            "title": "Load Web Fonts Script Asynchronously",
+            "default": true
+        },
+        "themes.webFonts.webFontConfig.google.families": {
+            "group": "themes",
+            "subtab": "webFonts",
+            "type": "array",
+            "title": "WebFont Google Families",
+            "description": "",
+            "items": {
+                "type": "string"
+            },
+            "default": [
+            ]
+        }
+    }
+}

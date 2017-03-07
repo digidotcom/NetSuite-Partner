@@ -19,5 +19,5 @@ gulp.task('images', function()
 
 gulp.task('watch-images', [], function()
 {
-	gulp.watch(package_manager.getGlobsFor('images'), ['images']);
+	gulp.watch(package_manager.getGlobsFor('images'), {interval: package_manager.configuration.watcherInterval},['images']);
 });

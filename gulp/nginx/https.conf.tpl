@@ -1,7 +1,7 @@
 # HTTPS server
 #
 server {
-    listen 7778;
+    listen <%= https_port || 7778 %>; # PS: changed port to dynamic
     server_name localhost;
 
     root <%= localDistributionPath %>;

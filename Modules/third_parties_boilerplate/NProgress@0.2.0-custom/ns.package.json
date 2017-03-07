@@ -1,0 +1,10 @@
+{
+    "gulp": {
+        "sass": [
+            "_nprogress.scss"
+        ],
+        "javascript": [
+            "NProgress.js"
+        ]
+    }
+}

@@ -1,0 +1,10 @@
+{
+    "gulp": {
+        "javascript": [
+            "JavaScript/*.js"
+        ]
+    },
+    "overrides": {
+        "suitecommerce/BackboneExtras@2.3.0/JavaScript/Backbone.View.Plugins.js": "JavaScript/Backbone.View.Plugins.js"
+    }
+}

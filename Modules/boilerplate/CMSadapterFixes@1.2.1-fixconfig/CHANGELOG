@@ -1,0 +1,15 @@
+1.0.0
+- Initial Release
+
+1.1.0
+- Release for Mont Blanc, removes MetaTag fixes (Fixed by CommApps)
+
+1.2.0
+- Error cmsPagesResponseBody = [] better caught
+- Frontend resizes that change device type now trigger CMS re-drawing
+
+1.2.1
+- Requires the Models.Init module in files that uses Commerce API (Vinson migration)
+
+1.2.1-fixconfig
+- Fix usage of config to ".cms.useCMS"

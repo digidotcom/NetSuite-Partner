@@ -46,8 +46,9 @@ var gulp = require('gulp')
 ,	path = require('path')
 
 ,	package_manager = require('../package-manager')
-,	dest = path.join(process.gulp_dest, 'processed-templates');
+,	dest = path.join(process.gulp_dest, 'processed-templates')
 
+,	livereload = require('../livereload');
 
 var Handlebars = require('handlebars');
 // overrides Handlebars compiler public API to resolve the expression foo.bar into foo.get('bar') dynamically in case foo is a Backbone.Model
@@ -141,6 +142,10 @@ gulp.task('templates', function()
 		}))
 		.pipe(changed(dest, {extension: '.tpl.js'}))
 		.pipe(gulpif(/[.]tpl$/, handlebarsStream(), jstStream())).on('error', package_manager.pipeErrorHandler)
+
+		// fire livereload on template changes
+		.pipe(gulpif(livereload.isEnabledForTask('templates'), livereload.getForGulp()))
+
 		.pipe(map(function (file,cb)
 		{
 			cb(null,file);
@@ -196,7 +201,7 @@ gulp.task('templates.require', ['templates'], function() {});
 
 gulp.task('watch-templates', function()
 {
-	gulp.watch(package_manager.getGlobsFor('templates'), ['templates']);
+	gulp.watch(package_manager.getGlobsFor('templates'), {interval: package_manager.configuration.watcherInterval}, ['templates']);
 });
 
 gulp.task('watch-templates.require', ['watch-templates'], function() { });

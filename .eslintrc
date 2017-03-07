@@ -1,0 +1,90 @@
+{
+    "psStandardVersion": "1.0.0-beta3",
+    "basedOn": "eslint-config-airbnb/legacy@13.0.0",
+    "extends": "eslint-config-airbnb/legacy",
+    "env": {
+        "browser": true,
+        "amd":true,
+        "es6": false,
+        "node": false
+    },
+    "plugins": [
+        "requirejs"
+    ],
+    "parserOptions": {
+        "ecmaVersion": 3
+    },
+
+    "rules": {
+        //Requirejs plugin
+        "requirejs/no-invalid-define": 2,
+        "requirejs/no-multiple-define": 2,
+        "requirejs/no-commonjs-wrapper": 2,
+        "requirejs/no-object-define": 1,
+        "requirejs/one-dependency-per-line": 1,
+
+        //extra
+        "indent": ["error", 4], // Changing AirBNB 2 spaces to 4
+        "max-len": ["error", 160, 0], // Longer lines
+        "no-useless-escape": ["warn"], // Lowering from error to warning
+        "complexity": ["warn", 12],
+        "no-underscore-dangle": ["error", {"allowAfterThis": true }], // Allow this._ , mostly because of _render
+        "no-plusplus": ["off"], // Nothing wrong with ++ && --
+        "no-param-reassign": ["error", { "props": false }], // we need to reasign param props (prototype modifications!)
+        "quote-props": ["error", "as-needed", { "keywords": true, "unnecessary": false, "numbers": true }], //mostly tweeaked for routers
+        "no-throw-literal": ["off"], // we throw objects on backend services
+        "new-cap": ["off"] // because of new nlobjColumn :(
+
+    },
+    "globals": {
+        "_gat": false,
+        "badRequestError": true,
+        "CMS": true,
+        "console": true,
+        "context": true,
+        "customer": true,
+        "define": false,
+        "JSON": true,
+        "log": true,
+        "methodNotAllowedError": true,
+        "nlapiAttachRecord": true,
+        "nlapiCreateError": true,
+        "nlapiCreateForm": false,
+        "nlapiCreateRecord": false,
+        "nlapiCreateSearch": true,
+        "nlapiDateToString": false,
+        "nlapiDeleteFile": true,
+        "nlapiGetCache": false,
+        "nlapiGetContext": false,
+        "nlapiGetNewRecord": false,
+        "nlapiGetRecordId": false,
+        "nlapiGetRecordType": false,
+        "nlapiGetUser": true,
+        "nlapiLoadFile": false,
+        "nlapiLoadRecord": false,
+        "nlapiLogExecution": false,
+        "nlapiLookupField": true,
+        "nlapiRequestURL": false,
+        "nlapiResolveURL": false,
+        "nlapiSearchRecord": false,
+        "nlapiSelectNodes": false,
+        "nlapiSelectValue": false,
+        "nlapiSubmitField": false,
+        "nlapiSubmitFile": false,
+        "nlapiSubmitRecord": false,
+        "nlapiYieldScript": true,
+        "nlobjError": true,
+        "nlobjSearchColumn": false,
+        "nlobjSearchFilter": false,
+        "notFoundError": true,
+        "nsglobal": false,
+        "order": true,
+        "request": true,
+        "require": false,
+        "response": true,
+        "SC": false,
+        "session": true,
+        "unauthorizedError": true,
+        "util": true
+    }
+}

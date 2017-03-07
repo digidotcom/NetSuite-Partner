@@ -1,0 +1,5 @@
+User-agent: * 
+Disallow: /sca-dev-vinson/
+
+User-agent: Googlebot-Image
+Disallow: /api/items

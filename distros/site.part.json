@@ -1,0 +1,64 @@
+{
+    "id": "site",
+    "name": "Site",
+    "dependencies": ["boilerplate"],
+    "endpoint": true,
+    "modules": {
+        "site/Configuration.Site": "dev",
+        "site/Heartbeat": "dev",
+        "site/Registration": "dev"
+    },
+    "tasksConfig": {
+        "javascript": [
+            {
+                "entryPoint": "SC.Shopping.Starter",
+                "dependencies": [
+                    {"prepend": "SC.Shopping.Configuration.Site"}
+                ]
+            },
+            {
+                "entryPoint": "SC.MyAccount.Starter",
+                "dependencies": [
+                    {"prepend": "SC.MyAccount.Configuration.Site"},
+                    "Heartbeat",
+                    "Registration"
+                ]
+            },
+            {
+                "entryPoint": "SC.Checkout.Starter",
+                "dependencies": [
+                    {"prepend": "SC.Checkout.Configuration.Site"},
+                    "Heartbeat"
+                ]
+            }
+        ],
+        "ssp-libraries": {
+            "dependencies": [
+                "Configuration.Site",
+                "Heartbeat.ServiceController",
+                "Registration.ServiceController",
+                "Registration.Status.ServiceController"
+            ]
+        },
+        "sass": {
+            "applications": [
+                {
+                    "name": "Shopping",
+                    "dependencies": [
+                    ]
+                },
+                {
+                    "name": "MyAccount",
+                    "dependencies": [
+                        "Registration"
+                    ]
+                },
+                {
+                    "name": "Checkout",
+                    "dependencies": [
+                    ]
+                }
+            ]
+        }
+    }
+}

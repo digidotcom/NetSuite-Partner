@@ -1,0 +1,71 @@
+.registration-list-button-back {
+  @extend .button-back;
+}
+.registration-list-header {
+  border-top: 1px solid $sc-color-theme-border;
+  padding: $sc-base-padding * 3 0;
+}
+.registration-list-button-back-icon {
+  @extend .button-back-icon;
+}
+.registration-list-empty {
+  @extend .list-empty;
+}
+
+.registration-list-recordviews-container{
+  @extend .recordviews-container;
+
+  @media (min-width: $screen-md-min) {
+    .recordviews-id-header,
+    .recordviews-id {
+      width: 15%;
+      text-align: left;
+    }
+    .recordviews-date-header,
+    .recordviews-date {
+      width: 30%;
+      text-align: left;
+    }
+    .recordviews-name-header,
+    .recordviews-name {
+      width: 55%;
+      text-align: left;
+    }
+  }
+}
+
+.registration-list-recordviews-table {
+  @extend .recordviews-table;
+}
+
+.registration-list-recordviews-header{
+  @extend .recordviews-header;
+}
+
+.registration-list-recordviews-id-header{
+  @extend .recordviews-id-header;
+}
+
+.registration-list-recordviews-date-header{
+  @extend .recordviews-date-header;
+}
+
+.registration-list-recordviews-name-header {
+  @extend .recordviews-name-header;
+}
+
+.registration-list-case-list-paginator{
+  @extend .case-list-paginator;
+}
+
+.registration-list-header-nav {
+  margin-bottom: $sc-medium-margin;
+  position:relative;
+}
+
+.registration-list{}
+
+.registration-list-empty-section {
+  padding:$sc-base-padding * 8 $sc-base-padding * 3 $sc-base-padding * 3 $sc-base-padding * 3;
+  text-align:center;
+}
