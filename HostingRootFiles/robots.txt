@@ -1,5 +1,5 @@
 User-agent: * 
-Disallow: /sca-dev-vinson/
+Disallow: /partnerportal/
 
 User-agent: Googlebot-Image
 Disallow: /api/items

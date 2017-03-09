@@ -6,6 +6,7 @@
   "private": true,
   "scripts": {
     "deploy": "gulp deploy --m sandbox --no-backup",
+    "start": "gulp local --nginx",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
