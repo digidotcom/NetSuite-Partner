@@ -1,17 +1,23 @@
 define('Registration.Router', [
     'underscore',
     'Backbone',
+    'Utils',
     'AjaxRequestsKiller',
     'Registration.Collection',
+    'Registration.Model',
     'Registration.Status.Collection',
-    'Registration.List.View'
+    'Registration.List.View',
+    'Registration.Details.View'
 ], function RegistrationRouter(
     _,
     Backbone,
+    Utils,
     AjaxRequestsKiller,
     RegistrationCollection,
+    RegistrationModel,
     RegistrationStatusCollection,
-    RegistrationListView
+    RegistrationListView,
+    RegistrationDetailsView
 ) {
     'use strict';
 
@@ -19,14 +25,20 @@ define('Registration.Router', [
 
         routes: {
             'registrations': 'list',
-            'registrations?:options': 'list'
+            'registrations?:options': 'list',
+            'registrations/new': 'new',
+            'registrations/new?:options': 'new',
+            'registrations/view/:id': 'view',
+            'registrations/view/:id?:options': 'view',
+            'registrations/edit/:id': 'edit',
+            'registrations/edit/:id?:options': 'edit'
         },
 
         initialize: function initialize(application) {
             this.application = application;
         },
 
-        parseDefaultOptions: function parseDefaultOptions(optionsArg) {
+        parseListOptions: function parseListOptions(optionsArg) {
             var defaults = {
                 page: 1, // default to 1
                 show: 10, // default to 10
@@ -34,7 +46,7 @@ define('Registration.Router', [
             };
             var options = defaults;
             if (optionsArg) {
-                options = SC.Utils.parseUrlOptions(optionsArg);
+                options = Utils.parseUrlOptions(optionsArg);
                 options.page = parseInt(options.page, 10) || defaults.page;
                 options.show = parseInt(options.show, 10) || defaults.show;
                 options.status = parseInt(options.status, 10) || defaults.status;
@@ -46,7 +58,7 @@ define('Registration.Router', [
             var collection;
             var statusCollection;
             var view;
-            var options = this.parseDefaultOptions(optionsArg);
+            var options = this.parseListOptions(optionsArg);
 
             collection = new RegistrationCollection({
                 recordsPerPage: options.show,
@@ -68,6 +80,47 @@ define('Registration.Router', [
             });
 
             view.showContent();
+        },
+
+        parseDetailsOptions: function parseDetailsOptions(optionsArg) {
+            return Utils.parseUrlOptions(optionsArg);
+        },
+
+        'new': function newFn(optionsArg) {
+            var options = this.parseDetailsOptions(optionsArg);
+            options.edit = false;
+            this.details(null, options);
+        },
+
+        view: function view(id, optionsArg) {
+            var options = this.parseDetailsOptions(optionsArg);
+            options.edit = false;
+            this.details(id, options);
+        },
+
+        edit: function edit(id, optionsArg) {
+            var options = this.parseDetailsOptions(optionsArg);
+            options.edit = true;
+            this.details(id, options);
+        },
+
+        details: function details(id, options) {
+            var model = new RegistrationModel();
+            var view = new RegistrationDetailsView(_.extend(options, {
+                application: this.application,
+                model: model
+            }));
+            if (!id) {
+                view.showContent();
+            } else {
+                model.fetch({
+                    data: {
+                        internalid: id
+                    }
+                }).done(function done() {
+                    view.showContent();
+                });
+            }
         }
     });
 });

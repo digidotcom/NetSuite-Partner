@@ -12,7 +12,7 @@ define('Registration.AbstractView', [
     return Backbone.View.extend({
 
         getSelectedMenu: function getSelectedMenu() {
-            return 'registrations';
+            return 'registrations_all';
         },
         getTitle: function getTitle() {
             return Utils.translate('Registrations') + this.getTitleSuffix();
@@ -20,7 +20,7 @@ define('Registration.AbstractView', [
         getBreadcrumbPages: function getBreadcrumbPages() {
             return _.union([
                 {
-                    text: this.getTitle(),
+                    text: Utils.translate('Registrations'),
                     href: '/registrations'
                 }
             ], this.getBreadcrumbPart());

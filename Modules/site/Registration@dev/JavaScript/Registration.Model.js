@@ -1,10 +1,15 @@
 define('Registration.Model', [
-    'Backbone'
+    'Backbone',
+    'Utils'
 ], function RegistrationModel(
-    Backbone
+    Backbone,
+    Utils
 ) {
     'use strict';
 
     return Backbone.Model.extend({
+
+        url: Utils.getAbsoluteUrl('services/Registration.Service.ss')
+
     });
 });
