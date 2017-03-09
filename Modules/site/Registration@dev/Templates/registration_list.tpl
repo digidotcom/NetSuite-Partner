@@ -10,7 +10,12 @@
         <h2>{{pageHeader}}</h2>
     </header>
 
-    <div class="registration-list-header-nav" data-view="Registration.Statuses"></div>
+    <div class="registration-list-main-actions">
+        <div class="registration-list-header-nav" data-view="Registration.Statuses"></div>
+        <div class="registration-list-new">
+            <a href="{{newUrl}}" class="registration-list-new-button">{{translate 'New'}}</a>
+        </div>
+    </div>
 
     <div data-view="ListHeader" {{#if openIsActive}}style="display:none;"{{/if}}></div>
 
@@ -18,17 +23,20 @@
         <div class="registration-list-recordviews-container">
             <table class="registration-list-recordviews-table">
                 <thead class="registration-list-recordviews-header">
-                <tr>
-                    <th class="registration-list-recordviews-id-header">
-                        <span>{{translate 'Id'}}</span>
-                    </th>
-                    <th class="registration-list-recordviews-date-header">
-                        <span>{{translate 'Date'}}</span>
-                    </th>
-                    <th class="registration-list-recordviews-name-header">
-                        <span>{{translate 'Name'}}</span>
-                    </th>
-                </tr>
+                    <tr>
+                        <th class="registration-list-recordviews-title-header">
+                            <span>{{translate 'Id'}}</span>
+                        </th>
+                        <th class="registration-list-recordviews-date-header">
+                            <span>{{translate 'Date'}}</span>
+                        </th>
+                        <th class="registration-list-recordviews-name-header">
+                            <span>{{translate 'Name'}}</span>
+                        </th>
+                        <th class="registration-list-recordviews-actions-header">
+                            <span>{{translate 'Actions'}}</span>
+                        </th>
+                    </tr>
                 </thead>
                 <tbody class="registration-list" data-view="ListResults"></tbody>
             </table>

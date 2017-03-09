@@ -10,8 +10,10 @@ define('Registration.List.View', [
     'GlobalViews.Pagination.View',
     'GlobalViews.ShowingCurrent.View',
     'ListHeader.View',
-    'RecordViews.View',
+    'RecordViews.Actionable.View',
+    'Registration.Helper',
     'Registration.AbstractView',
+    'Registration.List.Actions.View',
     'Registration.Status.View',
     'registration_list.tpl'
 ], function RegistrationListView(
@@ -26,8 +28,10 @@ define('Registration.List.View', [
     GlobalViewsPaginationView,
     GlobalViewsShowingCurrentView,
     ListHeaderView,
-    RecordViewsView,
+    RecordViewsActionableView,
+    RegistrationHelper,
     RegistrationAbstractView,
+    RegistrationListActionsView,
     RegistrationStatusView,
     registrationListTpl
 ) {
@@ -39,7 +43,7 @@ define('Registration.List.View', [
 
         template: registrationListTpl,
 
-        pageHeader: Utils.translate('Registrations'),
+        pageHeader: Utils.translate(RegistrationHelper.moduleName),
         titleSuffix: '',
         breadcrumbPart: [],
 
@@ -93,7 +97,7 @@ define('Registration.List.View', [
             if (Utils.isTargetActionable(e)) {
                 return;
             }
-            href = jQuery(e.target).closest('[data-navigation-hashtag]').data('navigation-hashtag');
+            href = RegistrationHelper.getViewUrl(jQuery(e.target).closest('[data-id]').data('id'));
             Backbone.history.navigate(href, { trigger: true });
         },
 
@@ -160,9 +164,10 @@ define('Registration.List.View', [
 
                     return new Backbone.Model({
                         title: new Handlebars.SafeString(_('<span class="tranid">$(0)</span>').translate(model.get('internalid'))),
+                        record: model,
                         touchpoint: 'customercenter',
-                        detailsURL: '/registrations/view/' + model.get('internalid'),
-                        recordType: 'registration',
+                        detailsURL: RegistrationHelper.getViewUrl(model.get('internalid')),
+                        recordType: RegistrationHelper.recordType,
                         id: model.get('internalid'),
                         internalid: model.get('internalid'),
                         columns: columns
@@ -170,9 +175,13 @@ define('Registration.List.View', [
                 }));
 
                 return new BackboneCollectionView({
-                    childView: RecordViewsView,
+                    childView: RecordViewsActionableView,
                     collection: recordsCollection,
-                    viewsPerRow: 1
+                    viewsPerRow: 1,
+                    childViewOptions: {
+                        actionView: RegistrationListActionsView,
+                        actionOptions: {}
+                    }
                 });
             }
         },
@@ -218,6 +227,7 @@ define('Registration.List.View', [
                 showPagination: !!(this.collection.totalRecordsFound && this.collection.recordsPerPage),
                 showCurrentPage: this.options.showCurrentPage,
                 showBackToAccount: true,
+                newUrl: RegistrationHelper.getNewUrl(),
                 allIsActive: this.options.activeTab === 'all',
                 openIsActive: this.options.activeTab === 'open'
             };

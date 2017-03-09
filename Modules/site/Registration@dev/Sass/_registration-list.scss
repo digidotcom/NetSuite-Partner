@@ -16,20 +16,25 @@
   @extend .recordviews-container;
 
   @media (min-width: $screen-md-min) {
-    .recordviews-id-header,
-    .recordviews-id {
+    .recordviews-actionable-title-header,
+    .recordviews-actionable-title {
       width: 15%;
       text-align: left;
     }
-    .recordviews-date-header,
-    .recordviews-date {
-      width: 30%;
+    .recordviews-actionable-date-header,
+    .recordviews-actionable-date {
+      width: 20%;
       text-align: left;
     }
-    .recordviews-name-header,
-    .recordviews-name {
-      width: 55%;
+    .recordviews-actionable-name-header,
+    .recordviews-actionable-name {
+      width: 45%;
       text-align: left;
+    }
+    .recordviews-actionable-actions-header,
+    .recordviews-actionable-actions {
+      width: 20%;
+      text-align: right;
     }
   }
 }
@@ -42,28 +47,50 @@
   @extend .recordviews-header;
 }
 
-.registration-list-recordviews-id-header{
-  @extend .recordviews-id-header;
+.registration-list-recordviews-title-header{
+  @extend .recordviews-actionable-title-header;
 }
 
 .registration-list-recordviews-date-header{
-  @extend .recordviews-date-header;
+  @extend .recordviews-actionable-date-header;
 }
 
 .registration-list-recordviews-name-header {
-  @extend .recordviews-name-header;
+  @extend .recordviews-actionable-name-header;
+}
+
+.registration-list-recordviews-actions-header {
+  @extend .recordviews-actionable-actions-header;
 }
 
 .registration-list-case-list-paginator{
   @extend .case-list-paginator;
 }
 
+.registration-list-main-actions {
+  @extend .row;
+}
 .registration-list-header-nav {
+  @extend .col-xs-12;
+  @extend .col-lg-10;
   margin-bottom: $sc-medium-margin;
   position:relative;
 }
+.registration-list-new {
+  @extend .col-xs-12;
+  @extend .col-lg-2;
+  text-align: right;
+}
+.registration-list-new-button {
+  @extend .list-header-button;
+  border: none;
+}
 
-.registration-list{}
+.registration-list{
+  .recordviews-actionable {
+    cursor: pointer;
+  }
+}
 
 .registration-list-empty-section {
   padding:$sc-base-padding * 8 $sc-base-padding * 3 $sc-base-padding * 3 $sc-base-padding * 3;
