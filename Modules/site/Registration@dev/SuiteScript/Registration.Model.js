@@ -2,12 +2,14 @@ define('Registration.Model', [
     'underscore',
     'SC.Model',
     'Application',
-    'SearchHelper'
+    'SearchHelper',
+    'RecordHelper'
 ], function RegistrationModel(
     _,
     SCModel,
     Application,
-    SearchHelper
+    SearchHelper,
+    RecordHelper
 ) {
     'use strict';
 
@@ -154,6 +156,13 @@ define('Registration.Model', [
             return search.search().getResultsForListHeader();
         },
 
-        get: function get(/* id */) {}
+        get: function get(id) {
+            var record = new RecordHelper()
+                .setRecord(this.record)
+                .setFields(this.columns)
+                .setFieldset(this.fieldsets.details);
+            record.get(id);
+            return record.getResult();
+        }
     });
 });
