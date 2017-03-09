@@ -19,12 +19,12 @@ function jQueryAjaxSetup(
     var $document;
     // example of NProgress setup
     NProgress.configure({
-        minimum: Configuration.themes.nprogress.minimumProgress,
+        minimum: parseFloat(Configuration.themes.nprogress.minimumProgress),
         ease: Configuration.themes.nprogress.ease,
-        speed: Configuration.themes.nprogress.speed,
+        speed: parseInt(Configuration.themes.nprogress.speed, 10),
         showSpinner: Configuration.themes.nprogress.showSpinner,
-        trickleRate: Configuration.themes.nprogress.trickleRate,
-        trickleSpeed: Configuration.themes.nprogress.trickleSpeed
+        trickleRate: parseFloat(Configuration.themes.nprogress.trickleRate),
+        trickleSpeed: parseInt(Configuration.themes.nprogress.trickleSpeed, 10)
     });
 
     // This registers an event listener to any ajax call
