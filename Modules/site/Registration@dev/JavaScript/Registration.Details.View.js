@@ -3,6 +3,7 @@ define('Registration.Details.View', [
     'Backbone',
     'Utils',
     'Backbone.CompositeView',
+    'Registration.Helper',
     'Registration.AbstractView',
     'registration_details.tpl'
 ], function RegistrationDetailsView(
@@ -10,6 +11,7 @@ define('Registration.Details.View', [
     Backbone,
     Utils,
     BackboneCompositeView,
+    RegistrationHelper,
     RegistrationAbstractView,
     registrationDetailsTpl
 ) {
@@ -37,22 +39,20 @@ define('Registration.Details.View', [
             return ' - ' + this.getTitleString();
         },
         getBreadcrumbPart: function getBreadcrumbPart() {
+            var id = this.model.get('internalid');
             var part = [
                 {
                     text: this.getTitleString(null, '$(0)'),
-                    href: this.getUrl()
+                    href: this.isNew() ? RegistrationHelper.getNewUrl() : RegistrationHelper.getViewUrl(id)
                 }
             ];
             if (this.isEdit()) {
                 part.push({
                     text: Utils.translate('Edit'),
-                    href: this.getUrl(true)
+                    href: RegistrationHelper.getEditUrl(id)
                 });
             }
             return part;
-        },
-        getUrl: function getUrl(edit) {
-            return '/registrations' + (this.isNew() ? '/new' : ('/' + (edit ? 'edit' : 'view') + '/' + this.model.get('internalid')));
         },
         getSelectedMenu: function getSelectedMenu() {
             return this.isNew() ? 'registrations_new' : 'registrations_all';

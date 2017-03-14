@@ -3,7 +3,7 @@
         {{#if isActive}}
             <span class="registration-list-header-button-active">{{translate name}}</span>
         {{else}}
-            <a href="/registrations{{#if value}}?status={{value}}{{/if}}" class="registration-list-header-button">{{translate name}}</a>
+            <a href="{{url}}" class="registration-list-header-button">{{translate name}}</a>
         {{/if}}
     {{/each}}
 </div>

@@ -1,17 +1,17 @@
 define('Registration.Collection', [
     'Backbone',
-    'Utils',
+    'Registration.Helper',
     'Registration.Model'
 ], function RegistrationCollection(
     Backbone,
-    Utils,
+    RegistrationHelper,
     RegistrationModel
 ) {
     'use strict';
 
     return Backbone.Collection.extend({
 
-        url: Utils.getAbsoluteUrl('services/Registration.Service.ss'),
+        url: RegistrationHelper.serviceUrl,
 
         model: RegistrationModel,
 
@@ -30,15 +30,18 @@ define('Registration.Collection', [
 
         update: function update(options) {
             var range = options.range || {};
+            var status = options.status || this.status;
             var data = {
                 results_per_page: options.recordsPerPage || this.recordsPerPage,
                 sort: options.sort.value,
                 order: options.order,
-                status: options.status || this.status,
                 from: range.from ? new Date(range.from.replace(/-/g, '/')).getTime() : null,
                 to: range.to ? new Date(range.to.replace(/-/g, '/')).getTime() : null,
                 page: options.page
             };
+            if (status) {
+                data.status = status;
+            }
 
             this.fetch({
                 data: data,

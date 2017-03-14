@@ -3,6 +3,7 @@ define('Registration.Router', [
     'Backbone',
     'Utils',
     'AjaxRequestsKiller',
+    'Registration.Helper',
     'Registration.Collection',
     'Registration.Model',
     'Registration.Status.Collection',
@@ -13,6 +14,7 @@ define('Registration.Router', [
     Backbone,
     Utils,
     AjaxRequestsKiller,
+    RegistrationHelper,
     RegistrationCollection,
     RegistrationModel,
     RegistrationStatusCollection,
@@ -21,17 +23,22 @@ define('Registration.Router', [
 ) {
     'use strict';
 
+
     return Backbone.Router.extend({
 
-        routes: {
-            'registrations': 'list',
-            'registrations?:options': 'list',
-            'registrations/new': 'new',
-            'registrations/new?:options': 'new',
-            'registrations/view/:id': 'view',
-            'registrations/view/:id?:options': 'view',
-            'registrations/edit/:id': 'edit',
-            'registrations/edit/:id?:options': 'edit'
+        routes: function routesFn() {
+            var routes = {};
+            var urls = {
+                list: RegistrationHelper.getListUrl(true),
+                'new': RegistrationHelper.getNewUrl(true),
+                view: RegistrationHelper.getViewUrl(':id', true),
+                edit: RegistrationHelper.getEditUrl(':id', true)
+            };
+            _(urls).each(function eachUrl(url, method) {
+                routes[url] = method;
+                routes[url + '?:options'] = method;
+            });
+            return routes;
         },
 
         initialize: function initialize(application) {
@@ -42,14 +49,18 @@ define('Registration.Router', [
             var defaults = {
                 page: 1, // default to 1
                 show: 10, // default to 10
-                status: 3 // default to Open
+                status: null // default to All
             };
             var options = defaults;
             if (optionsArg) {
                 options = Utils.parseUrlOptions(optionsArg);
                 options.page = parseInt(options.page, 10) || defaults.page;
                 options.show = parseInt(options.show, 10) || defaults.show;
-                options.status = parseInt(options.status, 10) || defaults.status;
+                if (options.status) {
+                    options.status = parseInt(options.status, 10);
+                } else if (defaults.status) {
+                    options.status = defaults.status;
+                }
             }
             return options;
         },

@@ -1,11 +1,13 @@
 define('Registration.AbstractView', [
     'underscore',
     'Backbone',
-    'Utils'
+    'Utils',
+    'Registration.Helper'
 ], function RegistrationAbstractView(
     _,
     Backbone,
-    Utils
+    Utils,
+    RegistrationHelper
 ) {
     'use strict';
 
@@ -21,7 +23,7 @@ define('Registration.AbstractView', [
             return _.union([
                 {
                     text: Utils.translate('Registrations'),
-                    href: '/registrations'
+                    href: RegistrationHelper.getListUrl()
                 }
             ], this.getBreadcrumbPart());
         },

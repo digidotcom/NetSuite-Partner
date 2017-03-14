@@ -5,6 +5,5 @@ define('Registration.Status.Model', [
 ) {
     'use strict';
 
-    return Backbone.Model.extend({
-    });
+    return Backbone.Model.extend({});
 });

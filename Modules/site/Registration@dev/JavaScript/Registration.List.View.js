@@ -93,11 +93,13 @@ define('Registration.List.View', [
 
         navigateToEntry: function navigateToEntry(e) {
             var href;
+            var id;
             // ignore clicks on anchors and buttons
             if (Utils.isTargetActionable(e)) {
                 return;
             }
-            href = RegistrationHelper.getViewUrl(jQuery(e.target).closest('[data-id]').data('id'));
+            id = jQuery(e.target).closest('[data-id]').data('id');
+            href = RegistrationHelper.getViewUrl(id);
             Backbone.history.navigate(href, { trigger: true });
         },
 
@@ -167,7 +169,6 @@ define('Registration.List.View', [
                         record: model,
                         touchpoint: 'customercenter',
                         detailsURL: RegistrationHelper.getViewUrl(model.get('internalid')),
-                        recordType: RegistrationHelper.recordType,
                         id: model.get('internalid'),
                         internalid: model.get('internalid'),
                         columns: columns
