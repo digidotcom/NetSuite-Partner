@@ -1,1 +1,3 @@
-<p>This is a form</p>
+<form>
+    <fieldset data-view="Form.Fieldset"></fieldset>
+</form>

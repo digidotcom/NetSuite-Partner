@@ -1,9 +1,11 @@
 define('Form', [
+    'underscore',
     'Backbone.CompositeView',
     'Backbone.FormView',
     'Mixin',
     'Form.View'
 ], function Form(
+    _,
     BackboneCompositeView,
     BackboneFormView,
     Mixin,
@@ -31,7 +33,8 @@ define('Form', [
             childViews: {
                 'Form': function FormChildView() {
                     return new FormView({
-                        foo: 'bar'
+                        config: this.getFormConfig(),
+                        action: this.getAction()
                     });
                 }
             }
@@ -43,8 +46,23 @@ define('Form', [
             isEdit: function isEdit() {
                 throw new Error('Abstract method Form.isEdit needs overriding.');
             },
+
             isView: function isView() {
-                throw new Error('Abstract method Form.isView needs overriding.');
+                return !this.isNew() && !this.isEdit();
+            },
+            getAction: function getAction() {
+                if (this.isNew()) {
+                    return 'new';
+                } else if (this.isEdit()) {
+                    return 'edit';
+                }
+                return 'view';
+            },
+            getFormConfig: function getFormConfig() {
+                // run this.form if function, or get it if object
+                var config = _.result(this, 'formConfig');
+
+                return config;
             }
         },
         plugins: {

@@ -86,8 +86,31 @@ define('Registration.Details.View', [
     /* Implement the Form abstract methods */
     _(View.prototype).extend({
 
-        formFields: {
-
+        formConfig: {
+            groups: [
+                { id: 'main', name: '' },
+                { id: 'information', name: 'Information' }
+            ],
+            fields: {
+                name: {
+                    group: 'main',
+                    type: 'text',
+                    attribute: 'name',
+                    label: 'Name'
+                },
+                additionalInformation: {
+                    group: 'information',
+                    type: 'text',
+                    attribute: 'additionalInformation',
+                    label: 'Title'
+                },
+                companyName: {
+                    group: 'information',
+                    type: 'text',
+                    attribute: 'companyName',
+                    label: 'Company Name'
+                }
+            }
         },
 
         isNew: function isNew() {
@@ -95,9 +118,6 @@ define('Registration.Details.View', [
         },
         isEdit: function isEdit() {
             return this.edit;
-        },
-        isView: function isView() {
-            return !this.isNew() && !this.isEdit();
         }
 
     });
