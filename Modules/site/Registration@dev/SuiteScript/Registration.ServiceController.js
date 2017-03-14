@@ -12,6 +12,7 @@ define('Registration.ServiceController', [
 
         options: {
             common: {
+                requireSecure: true,
                 requireLogin: true
             }
         },

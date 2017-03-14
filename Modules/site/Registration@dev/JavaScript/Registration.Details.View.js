@@ -69,7 +69,7 @@ define('Registration.Details.View', [
         },
 
         isNew: function isNew() {
-            return !this.model.get('internalid')
+            return !this.model.get('internalid');
         },
         isEdit: function isEdit() {
             return this.edit;

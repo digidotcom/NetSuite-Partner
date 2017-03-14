@@ -27,5 +27,4 @@ define('Registration.List.Actions.View', [
             return {};
         }
     });
-
 });
