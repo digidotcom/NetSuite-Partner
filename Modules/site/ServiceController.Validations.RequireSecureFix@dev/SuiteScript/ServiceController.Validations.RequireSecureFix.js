@@ -1,7 +1,7 @@
-define('ServiceController.Validations.RequireLoginFix', [
+define('ServiceController.Validations.RequireSecureFix', [
     'underscore',
     'ServiceController.Validations'
-], function ServiceControllerValidationsRequireLoginFix(
+], function ServiceControllerValidationsRequireSecureFix(
     _,
     ServiceControllerValidations
 ) {

@@ -7,7 +7,7 @@
         "site/Configuration.Site": "dev",
         "site/Heartbeat": "dev",
         "site/Registration": "dev",
-        "site/ServiceController.Validations.RequireLoginFix": "dev"
+        "site/ServiceController.Validations.RequireSecureFix": "dev"
     },
     "tasksConfig": {
         "javascript": [
@@ -39,7 +39,7 @@
                 "Heartbeat.ServiceController",
                 "Registration.ServiceController",
                 "Registration.Status.ServiceController",
-                "ServiceController.Validations.RequireLoginFix"
+                "ServiceController.Validations.RequireSecureFix"
             ]
         },
         "sass": {
