@@ -84,9 +84,14 @@ define('Mixin', [
         this.mixins = arguments.length ? _.toArray(arguments) : [];
     }
 
+    /* Instance methods */
     _(Mixin.prototype).extend({
 
         methods: ['options', 'extend', 'merge', 'wrap', 'plugins'],
+
+        setMixins: function setMixins(mixins) {
+            this.mixins = mixins;
+        },
 
         compose: function compose() {
             var self = this;
@@ -128,6 +133,19 @@ define('Mixin', [
                     Class.prototype.installPlugin(name, plugin);
                 });
             }
+        }
+
+    });
+
+    /* Class methods */
+    _(Mixin).extend({
+
+        implement: function use(Class) {
+            var mixins = _.toArray(arguments.slice(1));
+            var mixin = new Mixin();
+            mixin.setMixins(mixins);
+            mixin.add(Class);
+            return mixin;
         }
 
     });

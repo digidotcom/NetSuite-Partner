@@ -3,6 +3,8 @@ define('Registration.Details.View', [
     'Backbone',
     'Utils',
     'Backbone.CompositeView',
+    'Mixin',
+    'Form',
     'Registration.Helper',
     'Registration.AbstractView',
     'registration_details.tpl'
@@ -11,13 +13,16 @@ define('Registration.Details.View', [
     Backbone,
     Utils,
     BackboneCompositeView,
+    Mixin,
+    Form,
     RegistrationHelper,
     RegistrationAbstractView,
     registrationDetailsTpl
 ) {
     'use strict';
 
-    return RegistrationAbstractView.extend({
+    /* Define base view */
+    var View = RegistrationAbstractView.extend({
 
         template: registrationDetailsTpl,
 
@@ -58,24 +63,12 @@ define('Registration.Details.View', [
             return this.isNew() ? 'registrations_new' : 'registrations_all';
         },
 
-        events: {},
-
         initialize: function initialize(options) {
             this.application = options.application;
             this.model = options.model;
             this.edit = !!options.edit;
 
             BackboneCompositeView.add(this);
-        },
-
-        isNew: function isNew() {
-            return !this.model.get('internalid');
-        },
-        isEdit: function isEdit() {
-            return this.edit;
-        },
-        isView: function isView() {
-            return !this.isNew() && !this.isEdit();
         },
 
         childViews: {},
@@ -86,4 +79,28 @@ define('Registration.Details.View', [
             };
         }
     });
+
+    /* Add the Form mixin functionality */
+    Form.add(View);
+
+    /* Implement the Form abstract methods */
+    _(View.prototype).extend({
+
+        formFields: {
+
+        },
+
+        isNew: function isNew() {
+            return !this.model.get('internalid');
+        },
+        isEdit: function isEdit() {
+            return this.edit;
+        },
+        isView: function isView() {
+            return !this.isNew() && !this.isEdit();
+        }
+
+    });
+
+    return View;
 });

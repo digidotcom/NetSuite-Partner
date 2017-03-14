@@ -5,6 +5,7 @@
     "endpoint": true,
     "modules": {
         "site/Configuration.Site": "dev",
+        "site/Form": "dev",
         "site/Heartbeat": "dev",
         "site/Mixin": "dev",
         "site/Registration": "dev",
