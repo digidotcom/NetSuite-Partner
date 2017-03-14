@@ -8,6 +8,13 @@ define('Heartbeat.ServiceController', [
     return ServiceController.extend({
         name: 'Heartbeat.ServiceController',
 
+        options: {
+            common: {
+                requireSecure: true,
+                requireLogin: true
+            }
+        },
+
         get: function get() {
             var beatsParam = this.request.getParameter('beats');
             var beats = null;
