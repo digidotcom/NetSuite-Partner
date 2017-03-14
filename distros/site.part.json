@@ -6,6 +6,7 @@
     "modules": {
         "site/Configuration.Site": "dev",
         "site/Heartbeat": "dev",
+        "site/Mixin": "dev",
         "site/Registration": "dev",
         "site/ServiceController.Validations.RequireSecureFix": "dev"
     },
