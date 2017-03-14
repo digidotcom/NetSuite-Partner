@@ -6,7 +6,8 @@
     "modules": {
         "site/Configuration.Site": "dev",
         "site/Heartbeat": "dev",
-        "site/Registration": "dev"
+        "site/Registration": "dev",
+        "site/ServiceController.Validations.RequireLoginFix": "dev"
     },
     "tasksConfig": {
         "javascript": [
@@ -37,7 +38,8 @@
                 "Configuration.Site",
                 "Heartbeat.ServiceController",
                 "Registration.ServiceController",
-                "Registration.Status.ServiceController"
+                "Registration.Status.ServiceController",
+                "ServiceController.Validations.RequireLoginFix"
             ]
         },
         "sass": {
