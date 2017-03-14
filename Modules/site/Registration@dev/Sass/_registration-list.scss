@@ -68,27 +68,41 @@
 }
 
 .registration-list-main-actions {
-  @extend .row;
+  $cell-spacing: $sc-base-padding * 2;
+  display: table;
+  width: calc(100% + #{$cell-spacing * 2});
+  border-collapse: separate;
+  border-spacing: $cell-spacing;
+  margin-left: -$cell-spacing;
+  margin-right: -$cell-spacing;
+  margin-bottom: $sc-base-padding * 3;
+}
+.registration-list-main-actions-row {
+  display: table-row;
+}
+.registration-list-main-actions-cell {
+  display: table-cell;
+  vertical-align: top;
 }
 .registration-list-header-nav {
-  @extend .col-xs-12;
-  @extend .col-lg-10;
-  margin-bottom: $sc-medium-margin;
-  position:relative;
+  @extend .registration-list-main-actions-cell;
 }
 .registration-list-new {
-  @extend .col-xs-12;
-  @extend .col-lg-2;
+  @extend .registration-list-main-actions-cell;
   text-align: right;
+  height: 100%;
 }
 .registration-list-new-button {
   @extend .list-header-button;
-  border: none;
+  height: 100%;
 }
 
 .registration-list{
   .recordviews-actionable {
     cursor: pointer;
+  }
+  .list-header-view-filters {
+    padding-right: 0px;
   }
 }
 

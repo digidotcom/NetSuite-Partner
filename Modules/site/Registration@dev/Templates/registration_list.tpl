@@ -11,9 +11,11 @@
     </header>
 
     <div class="registration-list-main-actions">
-        <div class="registration-list-header-nav" data-view="Registration.Statuses"></div>
-        <div class="registration-list-new">
-            <a href="{{newUrl}}" class="registration-list-new-button">{{translate 'New'}}</a>
+        <div class="registration-list-main-actions-row">
+            <div class="registration-list-header-nav" data-view="Registration.Statuses"></div>
+            <div class="registration-list-new">
+                <a href="{{newUrl}}" class="registration-list-new-button">{{translate 'New'}}</a>
+            </div>
         </div>
     </div>
 
