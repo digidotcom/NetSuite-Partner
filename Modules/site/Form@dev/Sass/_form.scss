@@ -3,6 +3,24 @@
 .form {
   @extend .box-column-bordered;
 }
+.form-action-edit {
+  @extend .button-primary;
+  @extend .button-medium;
+}
+.form-action-submit {
+  @extend .button-primary;
+  @extend .button-medium;
+}
+.form-action-cancel {
+  @extend .button-secondary;
+  @extend .button-medium;
+  margin-top: $sc-base-margin * 2;
+
+  @media (min-width: $screen-sm-min) {
+    margin-left: $sc-base-margin * 2;
+    margin-top: 0;
+  }
+}
 
 /* GROUPS */
 

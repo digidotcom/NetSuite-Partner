@@ -114,9 +114,14 @@ define('Registration.Details.View', [
 
         /* Abstract methods implementation */
         getFormInfo: function getFormInfo() {
+            var id = this.model.get('internalid');
             return {
                 title: this.getPageHeader(),
-                description: null
+                description: null,
+                newUrl: RegistrationHelper.getNewUrl(),
+                editUrl: RegistrationHelper.getEditUrl(id),
+                viewUrl: RegistrationHelper.getViewUrl(id),
+                goBackUrl: RegistrationHelper.getListUrl()
             };
         },
         isNew: function isNew() {

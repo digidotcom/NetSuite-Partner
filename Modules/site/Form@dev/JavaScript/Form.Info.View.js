@@ -1,25 +1,21 @@
-define('Form.View', [
+define('Form.Info.View', [
     'underscore',
     'Backbone',
     'Backbone.CompositeView',
-    'Form.Info.View',
-    'Form.Body.View',
     'Form.Actions.View',
-    'form.tpl'
-], function FormView(
+    'form_info.tpl'
+], function FormInfoView(
     _,
     Backbone,
     BackboneCompositeView,
-    FormInfoView,
-    FormBodyView,
     FormActionsView,
-    formTpl
+    formActionsTpl
 ) {
     'use strict';
 
     return Backbone.View.extend({
 
-        template: formTpl,
+        template: formActionsTpl,
 
         initialize: function initialize(options) {
             this.config = options.config;
@@ -27,17 +23,7 @@ define('Form.View', [
         },
 
         childViews: {
-            'Form.Info': function FormFields() {
-                return new FormInfoView({
-                    config: this.config
-                });
-            },
-            'Form.Body': function FormFields() {
-                return new FormBodyView({
-                    config: this.config
-                });
-            },
-            'Form.Actions': function FormFields() {
+            'Form.Actions': function FormActions() {
                 return new FormActionsView({
                     config: this.config
                 });
@@ -45,7 +31,12 @@ define('Form.View', [
         },
 
         getContext: function getContext() {
-            return {};
+            var config = this.config;
+            var info = config.getInfo();
+            return {
+                title: info.title,
+                description: info.description
+            };
         }
 
     });
