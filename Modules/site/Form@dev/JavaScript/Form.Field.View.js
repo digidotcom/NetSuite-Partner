@@ -17,6 +17,10 @@ define('Form.Field.View', [
 
         getContext: function getContext() {
             var model = this.model;
+            var config = this.config;
+            var formModel = config.model;
+            var attribute = model.get('attribute');
+            var isNew = config.isNew();
             return {
                 model: model,
                 type: model.get('type'),
@@ -24,7 +28,11 @@ define('Form.Field.View', [
                 label: model.get('label'),
                 isRequired: !!model.get('required'),
                 tooltip: model.get('tooltip'),
-                help: model.get('help')
+                help: model.get('help'),
+                isNew: config.isNew(),
+                isEdit: config.isEdit(),
+                isView: config.isView(),
+                value: isNew ? null : formModel.get(attribute)
             };
         }
 

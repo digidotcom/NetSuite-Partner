@@ -13,6 +13,7 @@ define('Form.Config', [
 
     var defaults = {
         application: null,
+        model: null,
         info: {},
         data: {},
         action: 'view'
@@ -22,6 +23,7 @@ define('Form.Config', [
         this.defaults = defaults;
         this.config = _(settings).defaults(defaults);
         this.application = this.config.application;
+        this.model = this.config.model;
         this.parseConfig();
     }
 

@@ -66,7 +66,12 @@
 .form-fields-form-controls {
 }
 .form-fields-input {
-  @extend .input-large
+  @extend .input-large;
+}
+.form-fields-input-readonly {
+  @extend .form-fields-input;
+  padding: 0px;
+  border: none;
 }
 .form-fields-input-required {
   @extend .input-required;

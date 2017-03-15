@@ -40,7 +40,7 @@ define('Form', [
         merge: {
             formData: {},
             events: {
-                'submit form': 'saveForm'
+                'submit form': 'saveFormUnlessView'
             },
             childViews: {
                 'Form': function FormChildView() {
@@ -67,6 +67,7 @@ define('Form', [
             getFormConfig: function getFormConfig() {
                 return new FormConfig({
                     application: this.application || this.options.application,
+                    model: this.model,
                     info: this.getFormInfo(),
                     data: this.getFormData(),
                     action: this.getAction()
@@ -117,6 +118,12 @@ define('Form', [
             },
             isEdit: function isEdit() {
                 throw new Error('Abstract method Form.isEdit needs overriding.');
+            },
+
+            saveFormUnlessView: function saveFormUnlessView(e) {
+                if (!this.isView()) {
+                    this.saveForm(e);
+                }
             }
         },
         plugins: {

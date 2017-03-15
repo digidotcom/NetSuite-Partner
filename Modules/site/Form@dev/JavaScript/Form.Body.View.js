@@ -48,7 +48,7 @@ define('Form.Body.View', [
         },
         parseAdditionalContext: function parseAdditionalContext(options) {
             this.context = _(this.context || {}).extend({
-                hasRequiredFields: this.config.hasRequiredFields()
+                showRequiredMessage: !this.config.isView() && this.config.hasRequiredFields()
             });
             options.context = this.context;
         }
