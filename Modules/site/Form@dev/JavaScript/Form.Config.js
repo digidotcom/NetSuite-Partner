@@ -29,11 +29,14 @@ define('Form.Config', [
         getConfig: function getDataJSON() {
             return this.config;
         },
+        getAction: function getAction() {
+            return this.config.action;
+        },
         getData: function getData() {
             return this.config.data;
         },
-        getAction: function getAction() {
-            return this.config.action;
+        getDataJSON: function getData() {
+            return this.config.dataJSON;
         },
 
         isNew: function isNew() {

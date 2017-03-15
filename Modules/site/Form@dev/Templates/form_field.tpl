@@ -1,3 +1,4 @@
-<div class="form-field" data-id="attribute">
-    <p>Field "{{label}}" of type "{{type}}"</p>
+<div class="form-field">
+    <label for="{{attribute}}">{{label}}</label>
+    <input type="{{type}}" name="{{attribute}}" id="{{attribute}}">
 </div>

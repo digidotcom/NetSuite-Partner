@@ -67,11 +67,7 @@ define('Registration.Details.View', [
             this.application = options.application;
             this.model = options.model;
             this.edit = !!options.edit;
-
-            BackboneCompositeView.add(this);
         },
-
-        childViews: {},
 
         getContext: function getContext() {
             return {

@@ -54,6 +54,7 @@
                 {
                     "name": "MyAccount",
                     "dependencies": [
+                        "Form",
                         "Registration"
                     ]
                 },

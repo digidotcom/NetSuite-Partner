@@ -1,5 +1,6 @@
 define('Form', [
     'underscore',
+    'jQuery',
     'Backbone.CompositeView',
     'Backbone.FormView',
     'Mixin',
@@ -7,6 +8,7 @@ define('Form', [
     'Form.View'
 ], function Form(
     _,
+    jQuery,
     BackboneCompositeView,
     BackboneFormView,
     Mixin,
@@ -21,10 +23,12 @@ define('Form', [
             initialize: function initialize(fn) {
                 var result = fn.apply(this, Array.prototype.slice.call(arguments, 1));
 
+                this.parseFormConfig();
+
                 if (!this.renderChilds) {
                     BackboneCompositeView.add(this);
                 }
-                if (!this.saveForm) {
+                if (!this.formViewFocusHandler) {
                     BackboneFormView.add(this);
                 }
 
@@ -33,10 +37,13 @@ define('Form', [
         },
         merge: {
             formData: {},
+            events: {
+                'submit form': 'saveForm'
+            },
             childViews: {
                 'Form': function FormChildView() {
                     return new FormView({
-                        config: this.getFormConfig()
+                        config: this.formConfig
                     });
                 }
             }
@@ -52,13 +59,26 @@ define('Form', [
             },
             getFormData: function getConfig() {
                 // run this.form if function, or get it if object
-                return _.result(this, 'formData');
+                return jQuery.extend(true, {}, _.result(this, 'formData'));
             },
             getFormConfig: function getFormConfig() {
                 return new FormConfig({
                     application: this.application || this.options.application,
                     data: this.getFormData(),
                     action: this.getAction()
+                });
+            },
+            parseFormConfig: function parseFormConfig() {
+                this.formConfig = this.getFormConfig();
+                this.defineBindings();
+            },
+            defineBindings: function defineBindings() {
+                var self = this;
+                var data = self.formConfig.getDataJSON();
+                self.bindings = self.bindings || {};
+                _(data.fields).each(function eachField(field) {
+                    var attribute = field.attribute;
+                    self.bindings['[name="' + attribute + '"]'] = attribute;
                 });
             },
 
