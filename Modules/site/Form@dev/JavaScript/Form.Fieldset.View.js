@@ -2,18 +2,14 @@ define('Form.Fieldset.View', [
     'underscore',
     'Backbone',
     'Backbone.CollectionView',
-    'Form.Group.Collection',
     'Form.Group.View',
-    'Form.Field.Collection',
     'form_fieldset.tpl',
     'form_fieldset_row.tpl'
 ], function FormFieldsetView(
     _,
     Backbone,
     BackboneCollectionView,
-    FormGroupCollection,
     FormGroupView,
-    FormFieldCollection,
     formFieldsetTpl,
     formFieldsetRowTpl
 ) {
@@ -32,19 +28,22 @@ define('Form.Fieldset.View', [
         viewsPerRow: -1,
 
         initialize: _.wrap(BackboneCollectionView.prototype.initialize, function initialize(fn, options) {
-            this.groups = options.groups;
-            this.parseGroups();
+            this.config = options.config;
 
-            options.collection = this.collection;
+            this.parseChildViewOptions(options);
+            this.parseCollection(options);
+
             return fn.apply(this, Array.prototype.slice.call(arguments, 1));
         }),
 
-        parseGroups: function parseFields() {
-            var groups = this.groups;
-            _(groups).each(function eachFn(group) {
-                group.fields = new FormFieldCollection(_(group.fields).values());
+        parseChildViewOptions: function parseChildViewOptions(options) {
+            this.childViewOptions = _(this.childViewOptions || {}).extend(options.childViewOptions || {}, {
+                config: this.config
             });
-            this.collection = new FormGroupCollection(groups);
+        },
+        parseCollection: function parseFields(options) {
+            this.collection = this.config.getData().groups;
+            options.collection = this.collection;
         }
 
     });

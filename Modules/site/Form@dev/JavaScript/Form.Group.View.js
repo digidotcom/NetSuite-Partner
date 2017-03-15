@@ -15,14 +15,16 @@ define('Form.Group.View', [
 
         template: formGroupTpl,
 
-        initialize: function initialize() {
+        initialize: function initialize(options) {
+            this.config = options.config;
             this.fields = this.model.get('fields');
             BackboneCompositeView.add(this);
         },
 
         childViews: {
-            'Form.Group.Fields': function FormGroupFields() {
+            'Form.Fields': function FormGroupFields() {
                 return new FormFieldsView({
+                    config: this.config,
                     fields: this.fields
                 });
             }

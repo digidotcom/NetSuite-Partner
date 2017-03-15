@@ -22,24 +22,21 @@ define('Form.View', [
             BackboneCompositeView.add(this);
         },
 
-        getGroups: function getFields() {
-            var config = this.config;
-            var groups = config.groups;
-            var fields = config.fields;
-            _(groups).each(function eachFn(group) {
-                group.fields = _(fields).where({
-                    group: group.id
-                });
-            });
-            return this.config.groups;
-        },
-
         childViews: {
             'Form.Fieldset': function FormFields() {
                 return new FormFieldsetView({
-                    groups: this.getGroups()
+                    config: this.config
                 });
             }
+        },
+
+        getContext: function getContext() {
+            var config = this.config;
+            return {
+                isNew: config.isNew(),
+                isEdit: config.isEdit(),
+                isView: config.isView()
+            };
         }
 
     });

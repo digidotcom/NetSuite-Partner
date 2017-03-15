@@ -11,6 +11,10 @@ define('Form.Field.View', [
 
         template: formFieldTpl,
 
+        initialize: function initialize(options) {
+            this.config = options.config;
+        },
+
         getContext: function getContext() {
             return {
                 type: this.model.get('type'),

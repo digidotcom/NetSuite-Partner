@@ -86,7 +86,7 @@ define('Registration.Details.View', [
     /* Implement the Form abstract methods */
     _(View.prototype).extend({
 
-        formConfig: {
+        formData: {
             groups: [
                 { id: 'main', name: '' },
                 { id: 'information', name: 'Information' }

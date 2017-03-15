@@ -33,15 +33,22 @@ define('Form.Fields.View', [
         rowsCount: 12,
 
         initialize: _.wrap(BackboneCollectionView.prototype.initialize, function initialize(fn, options) {
-            this.fields = options.fields;
-            this.parseFields();
+            this.config = options.config;
 
-            options.collection = this.collection;
+            this.parseChildViewOptions(options);
+            this.parseCollection(options);
+
             return fn.apply(this, Array.prototype.slice.call(arguments, 1));
         }),
 
-        parseFields: function parseFields() {
-            this.collection = this.fields;
+        parseChildViewOptions: function parseChildViewOptions(options) {
+            this.childViewOptions = _(this.childViewOptions || {}).extend(options.childViewOptions || {}, {
+                config: this.config
+            });
+        },
+        parseCollection: function parseFields(options) {
+            this.collection = options.fields;
+            options.collection = this.collection;
         }
 
     });

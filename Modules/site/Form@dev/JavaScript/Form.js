@@ -3,12 +3,14 @@ define('Form', [
     'Backbone.CompositeView',
     'Backbone.FormView',
     'Mixin',
+    'Form.Config',
     'Form.View'
 ], function Form(
     _,
     BackboneCompositeView,
     BackboneFormView,
     Mixin,
+    FormConfig,
     FormView
 ) {
     'use strict';
@@ -30,26 +32,16 @@ define('Form', [
             }
         },
         merge: {
+            formData: {},
             childViews: {
                 'Form': function FormChildView() {
                     return new FormView({
-                        config: this.getFormConfig(),
-                        action: this.getAction()
+                        config: this.getFormConfig()
                     });
                 }
             }
         },
         extend: {
-            isNew: function isNew() {
-                throw new Error('Abstract method Form.isNew needs overriding.');
-            },
-            isEdit: function isEdit() {
-                throw new Error('Abstract method Form.isEdit needs overriding.');
-            },
-
-            isView: function isView() {
-                return !this.isNew() && !this.isEdit();
-            },
             getAction: function getAction() {
                 if (this.isNew()) {
                     return 'new';
@@ -58,11 +50,27 @@ define('Form', [
                 }
                 return 'view';
             },
-            getFormConfig: function getFormConfig() {
+            getFormData: function getConfig() {
                 // run this.form if function, or get it if object
-                var config = _.result(this, 'formConfig');
+                return _.result(this, 'formData');
+            },
+            getFormConfig: function getFormConfig() {
+                return new FormConfig({
+                    application: this.application || this.options.application,
+                    data: this.getFormData(),
+                    action: this.getAction()
+                });
+            },
 
-                return config;
+            isView: function isView() {
+                return !this.isNew() && !this.isEdit();
+            },
+            /* ABSTRACT */
+            isNew: function isNew() {
+                throw new Error('Abstract method Form.isNew needs overriding.');
+            },
+            isEdit: function isEdit() {
+                throw new Error('Abstract method Form.isEdit needs overriding.');
             }
         },
         plugins: {
