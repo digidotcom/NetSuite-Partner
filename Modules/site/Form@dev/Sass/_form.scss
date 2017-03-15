@@ -14,6 +14,7 @@
   margin-bottom: $sc-base-margin * 4;
   margin-top: $sc-base-margin * 2;
   display: inline-block;
+  width: 100%;
 }
 .form-fields-row {
   @extend .row;
@@ -54,10 +55,12 @@
 .form-fields-label-optional {
   @extend .input-optional;
   font-weight: $sc-font-weight-normal;
-  display: inline;
+  // display: inline;
+  display: none;
 }
 .form-fields-icon-question-sign {
   @extend .sc-tooltip;
+  padding: 0px;
 }
 /* Input */
 .form-fields-form-controls {

@@ -42,6 +42,9 @@ define('Form.Config', [
         getInfo: function getInfo() {
             return this.config.info;
         },
+        setInfo: function getInfo(info) {
+            this.config.info = info;
+        },
 
         isNew: function isNew() {
             return this.getAction() === 'new';

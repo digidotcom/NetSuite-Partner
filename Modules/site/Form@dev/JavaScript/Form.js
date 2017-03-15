@@ -1,6 +1,7 @@
 define('Form', [
     'underscore',
     'jQuery',
+    'Utils',
     'Backbone.CompositeView',
     'Backbone.FormView',
     'Mixin',
@@ -9,6 +10,7 @@ define('Form', [
 ], function Form(
     _,
     jQuery,
+    Utils,
     BackboneCompositeView,
     BackboneFormView,
     Mixin,
@@ -23,7 +25,7 @@ define('Form', [
             initialize: function initialize(fn) {
                 var result = fn.apply(this, Array.prototype.slice.call(arguments, 1));
 
-                this.parseFormConfig();
+                this.prepareForForm();
 
                 if (!this.renderChilds) {
                     BackboneCompositeView.add(this);
@@ -42,6 +44,7 @@ define('Form', [
             },
             childViews: {
                 'Form': function FormChildView() {
+                    this.refreshFormConfig();
                     return new FormView({
                         config: this.formConfig
                     });
@@ -69,9 +72,28 @@ define('Form', [
                     action: this.getAction()
                 });
             },
-            parseFormConfig: function parseFormConfig() {
+            refreshFormConfig: function refreshFormConfig() {
+                this.formConfig.setInfo(this.getFormInfo());
+            },
+
+            prepareForForm: function prepareForForm() {
                 this.formConfig = this.getFormConfig();
+                this.defineValidation();
                 this.defineBindings();
+            },
+            defineValidation: function defineValidations() {
+                var model = this.model;
+                var data = this.formConfig.getDataJSON();
+                model.validation = model.validation || {};
+                _(data.fields).each(function eachField(field) {
+                    var attribute = field.attribute;
+                    if (field.required) {
+                        model.validation[attribute] = _(model.validation[attribute] || {}).extend({
+                            required: true,
+                            msg: Utils.translate('$(0) is required.', field.label)
+                        });
+                    }
+                });
             },
             defineBindings: function defineBindings() {
                 var self = this;

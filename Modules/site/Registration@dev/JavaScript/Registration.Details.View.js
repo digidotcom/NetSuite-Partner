@@ -116,7 +116,7 @@ define('Registration.Details.View', [
         getFormInfo: function getFormInfo() {
             return {
                 title: this.getPageHeader(),
-                description: 'This is a description'
+                description: null
             };
         },
         isNew: function isNew() {
