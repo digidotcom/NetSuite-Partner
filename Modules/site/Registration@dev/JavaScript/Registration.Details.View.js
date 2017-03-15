@@ -112,6 +112,13 @@ define('Registration.Details.View', [
             }
         },
 
+        /* Abstract methods implementation */
+        getFormInfo: function getFormInfo() {
+            return {
+                title: this.getPageHeader(),
+                description: 'This is a description'
+            };
+        },
         isNew: function isNew() {
             return !this.model.get('internalid');
         },

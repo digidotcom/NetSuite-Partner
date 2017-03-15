@@ -64,6 +64,7 @@ define('Form', [
             getFormConfig: function getFormConfig() {
                 return new FormConfig({
                     application: this.application || this.options.application,
+                    info: this.getFormInfo(),
                     data: this.getFormData(),
                     action: this.getAction()
                 });
@@ -86,6 +87,9 @@ define('Form', [
                 return !this.isNew() && !this.isEdit();
             },
             /* ABSTRACT */
+            getFormInfo: function getFormInfo() {
+                throw new Error('Abstract method Form.getTitle needs overriding.');
+            },
             isNew: function isNew() {
                 throw new Error('Abstract method Form.isNew needs overriding.');
             },

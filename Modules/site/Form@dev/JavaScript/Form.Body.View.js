@@ -1,17 +1,17 @@
-define('Form.Fieldset.View', [
+define('Form.Body.View', [
     'underscore',
     'Backbone',
     'Backbone.CollectionView',
     'Form.Group.View',
-    'form_fieldset.tpl',
-    'form_fieldset_row.tpl'
-], function FormFieldsetView(
+    'form_body.tpl',
+    'form_body_row.tpl'
+], function FormBodyView(
     _,
     Backbone,
     BackboneCollectionView,
     FormGroupView,
-    formFieldsetTpl,
-    formFieldsetRowTpl
+    formBodyTpl,
+    formBodyRowTpl
 ) {
     'use strict';
 
@@ -19,8 +19,8 @@ define('Form.Fieldset.View', [
 
         childView: FormGroupView,
 
-        template: formFieldsetTpl,
-        rowTemplate: formFieldsetRowTpl,
+        template: formBodyTpl,
+        rowTemplate: formBodyRowTpl,
         cellTemplate: null,
 
         childViewOptions: {},

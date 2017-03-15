@@ -1,12 +1,12 @@
-/* GROUPS */
+/* MAIN */
 
 .form {
   @extend .box-column-bordered;
 }
 
-.form-group-name {
-  @extend .message-info;
-}
+/* GROUPS */
+
+.form-group-name {}
 
 /* FIELDS */
 
@@ -15,6 +15,34 @@
   margin-top: $sc-base-margin * 2;
   display: inline-block;
 }
+.form-fields-row {
+  @extend .row;
+}
+.form-fields-cell {
+  @extend .col-xs-12; // 1 per row (default)
+  &.span-2 {
+    @extend .col-xs-12; // 1 per row
+    @extend .col-md-4; // 3 per row
+    @extend .col-lg-2; // 6 per row
+  }
+  &.span-3 {
+    @extend .col-xs-12; // 1 per row
+    @extend .col-sm-6; // 2 per row
+    @extend .col-lg-3; // 4 per row
+  }
+  &.span-4 {
+    @extend .col-xs-12; // 1 per row
+    @extend .col-md-4; // 3 per row
+  }
+  &.span-6 {
+    @extend .col-xs-12; // 1 per row
+    @extend .col-sm-6; // 2 per row
+  }
+  &.span-12 {
+    @extend .col-xs-12; // 1 per row
+  }
+}
+
 /* Label */
 .form-fields-label {
   @extend .input-label;

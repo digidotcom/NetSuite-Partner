@@ -11,7 +11,7 @@
         {{/if}}
     </label>
     <div class="form-fields-form-controls" data-validation="control">
-        <input type="{{type}}" class="form-fields-input" id="{{attribute}}" name="{{attribute}}" value="">
+        <input type="{{type}}" class="form-fields-input" id="{{attribute}}" name="{{attribute}}" value="" {{#if isRequired}}required{{/if}} />
         {{#if help}}
         <p class="form-fields-input-help">{{{translate help}}}</p>
         {{/if}}

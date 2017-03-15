@@ -13,6 +13,7 @@ define('Form.Config', [
 
     var defaults = {
         application: null,
+        info: {},
         data: {},
         action: 'view'
     };
@@ -37,6 +38,9 @@ define('Form.Config', [
         },
         getDataJSON: function getData() {
             return this.config.dataJSON;
+        },
+        getInfo: function getInfo() {
+            return this.config.info;
         },
 
         isNew: function isNew() {

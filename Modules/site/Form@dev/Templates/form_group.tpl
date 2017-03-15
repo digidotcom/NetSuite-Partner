@@ -1,6 +1,7 @@
-<div class="form-group" data-id="{{id}}">
+<section class="form-group" data-id="{{id}}">
     {{#unless isMainGroup}}
-    <p class="form-group-name">{{name}}</p>
+    <h2 class="form-group-name">{{name}}</h2>
+    <hr />
     {{/unless}}
     <div data-view="Form.Fields"></div>
-</div>
+</section>

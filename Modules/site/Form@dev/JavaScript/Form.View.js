@@ -2,13 +2,13 @@ define('Form.View', [
     'underscore',
     'Backbone',
     'Backbone.CompositeView',
-    'Form.Fieldset.View',
+    'Form.Body.View',
     'form.tpl'
 ], function FormView(
     _,
     Backbone,
     BackboneCompositeView,
-    FormFieldsetView,
+    FormBodyView,
     formTpl
 ) {
     'use strict';
@@ -23,8 +23,8 @@ define('Form.View', [
         },
 
         childViews: {
-            'Form.Fieldset': function FormFields() {
-                return new FormFieldsetView({
+            'Form.Body': function FormFields() {
+                return new FormBodyView({
                     config: this.config
                 });
             }
@@ -32,7 +32,10 @@ define('Form.View', [
 
         getContext: function getContext() {
             var config = this.config;
+            var info = config.getInfo();
             return {
+                title: info.title,
+                description: info.description,
                 isNew: config.isNew(),
                 isEdit: config.isEdit(),
                 isView: config.isView()

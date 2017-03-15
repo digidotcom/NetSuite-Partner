@@ -1,4 +1,4 @@
-<div class="form-fieldset">
+<div class="form-body">
     {{#if hasRequiredFields}}
         <small class="form-fields">{{translate 'Required'}} <span class="form-fields-required">*</span></small>
     {{/if}}

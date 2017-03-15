@@ -1,6 +1,13 @@
 <form class="form" action="" method="post">
+    {{#if title}}
+    <h1>{{title}}</h1>
+    {{/if}}
 
-    <fieldset data-view="Form.Fieldset"></fieldset>
+    {{#if description}}
+    <p>{{description}}</p>
+    {{/if}}
+
+    <div data-view="Form.Body"></div>
 
     {{#unless isView}}
     <div class="form-actions">
