@@ -31,9 +31,11 @@ define('Form.Group.View', [
         },
 
         getContext: function getContext() {
+            var model = this.model;
             return {
-                id: this.model.get('id'),
-                name: this.model.get('name')
+                id: model.get('id'),
+                name: model.get('name'),
+                isMainGroup: !model.get('name')
             };
         }
 

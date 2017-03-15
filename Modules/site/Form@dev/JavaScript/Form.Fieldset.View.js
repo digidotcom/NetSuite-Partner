@@ -32,6 +32,7 @@ define('Form.Fieldset.View', [
 
             this.parseChildViewOptions(options);
             this.parseCollection(options);
+            this.parseAdditionalContext(options);
 
             return fn.apply(this, Array.prototype.slice.call(arguments, 1));
         }),
@@ -44,6 +45,12 @@ define('Form.Fieldset.View', [
         parseCollection: function parseFields(options) {
             this.collection = this.config.getData().groups;
             options.collection = this.collection;
+        },
+        parseAdditionalContext: function parseAdditionalContext(options) {
+            this.context = _(this.context || {}).extend({
+                hasRequiredFields: this.config.hasRequiredFields()
+            });
+            options.context = this.context;
         }
 
     });

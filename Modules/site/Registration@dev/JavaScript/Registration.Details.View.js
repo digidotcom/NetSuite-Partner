@@ -92,19 +92,22 @@ define('Registration.Details.View', [
                     group: 'main',
                     type: 'text',
                     attribute: 'name',
-                    label: 'Name'
+                    label: 'Name',
+                    required: true
                 },
                 additionalInformation: {
                     group: 'information',
                     type: 'text',
                     attribute: 'additionalInformation',
-                    label: 'Title'
+                    label: 'Title',
+                    tooltip: 'Put some additional information here'
                 },
                 companyName: {
                     group: 'information',
                     type: 'text',
                     attribute: 'companyName',
-                    label: 'Company Name'
+                    label: 'Company Name',
+                    help: 'Example: NetSuite Inc.'
                 }
             }
         },

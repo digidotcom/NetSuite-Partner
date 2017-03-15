@@ -116,7 +116,7 @@ define('Registration.Router', [
         },
 
         details: function details(id, options) {
-            var model = new RegistrationModel();
+            var model = new RegistrationModel({ internalid: id });
             var view = new RegistrationDetailsView(_.extend(options, {
                 application: this.application,
                 model: model

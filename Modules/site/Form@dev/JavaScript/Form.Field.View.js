@@ -16,10 +16,15 @@ define('Form.Field.View', [
         },
 
         getContext: function getContext() {
+            var model = this.model;
             return {
-                type: this.model.get('type'),
-                attribute: this.model.get('attribute'),
-                label: this.model.get('label')
+                model: model,
+                type: model.get('type'),
+                attribute: model.get('attribute'),
+                label: model.get('label'),
+                isRequired: !!model.get('required'),
+                tooltip: model.get('tooltip'),
+                help: model.get('help')
             };
         }
 

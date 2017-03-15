@@ -63,6 +63,10 @@ define('Form.Config', [
             config.dataJSON = dataJSON;
             data.groups = new FormGroupCollection(data.groups);
             delete data.fields;
+        },
+
+        hasRequiredFields: function hasRequiredFields() {
+            return !!_(this.getDataJSON().fields).findWhere({ required: true });
         }
 
     });
