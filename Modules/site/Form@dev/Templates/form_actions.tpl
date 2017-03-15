@@ -1,13 +1,13 @@
-<section class="form-actions">
+<section class="form-actions {{#if inHeader}}in-header{{/if}}">
     {{#if isView}}
-        <a href="{{editUrl}}" class="form-action-edit">
+        <a href="{{editUrl}}" class="form-actions-edit">
             {{translate 'Edit'}}
         </a>
-        <a href="{{goBackUrl}}" class="form-action-cancel">
+        <a href="{{goBackUrl}}" class="form-actions-cancel">
             {{translate 'View All'}}
         </a>
     {{else}}
-        <button type="submit" class="form-action-submit">
+        <button type="submit" class="form-actions-submit">
             {{#if isNew}}
                 {{translate 'Add'}}
             {{else}}
@@ -15,7 +15,7 @@
             {{/if}}
         </button>
         {{#if showCancelLink}}
-            <a href="{{cancelUrl}}" class="form-action-cancel">
+            <a href="{{cancelUrl}}" class="form-actions-cancel">
                 {{translate 'Cancel'}}
             </a>
         {{/if}}

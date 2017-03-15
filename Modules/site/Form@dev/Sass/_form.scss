@@ -3,15 +3,44 @@
 .form {
   @extend .box-column-bordered;
 }
-.form-action-edit {
+
+/* FORM INFO */
+
+.form-info{
+}
+.form-info-header {
+  @extend .row;
+}
+.form-info-header-title {
+  @extend .col-xs-12;
+  @extend .col-sm-7;
+}
+.form-info-header-actions {
+  @extend .col-xs-12;
+  &.has-title {
+    @extend .col-sm-5;
+  }
+}
+.form-info-body {
+}
+
+/* FORM ACTIONS */
+
+.form-actions {
+  text-align: left;
+  &.in-header {
+    text-align: right;
+  }
+}
+.form-actions-edit {
   @extend .button-primary;
   @extend .button-medium;
 }
-.form-action-submit {
+.form-actions-submit {
   @extend .button-primary;
   @extend .button-medium;
 }
-.form-action-cancel {
+.form-actions-cancel {
   @extend .button-secondary;
   @extend .button-medium;
   margin-top: $sc-base-margin * 2;

@@ -108,6 +108,14 @@ define('Registration.Details.View', [
                     attribute: 'companyName',
                     label: 'Company Name',
                     help: 'Example: NetSuite Inc.'
+                },
+                test: {
+                    group: 'information',
+                    type: 'text',
+                    attribute: 'companyAddress',
+                    label: 'Company Address',
+                    tooltip: 'Address Line 1 of the Company',
+                    required: true
                 }
             }
         },

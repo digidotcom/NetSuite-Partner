@@ -24,6 +24,7 @@ define('Form.Actions.View', [
             var isEdit = config.isEdit();
             var isView = config.isView();
             return {
+                inHeader: this.options.inHeader,
                 newUrl: info.newUrl,
                 editUrl: info.editUrl,
                 viewUrl: info.viewUrl,

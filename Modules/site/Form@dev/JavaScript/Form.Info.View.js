@@ -25,7 +25,8 @@ define('Form.Info.View', [
         childViews: {
             'Form.Actions': function FormActions() {
                 return new FormActionsView({
-                    config: this.config
+                    config: this.config,
+                    inHeader: true
                 });
             }
         },
