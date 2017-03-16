@@ -84,7 +84,7 @@ define('Registration.Details.View', [
 
         formData: {
             groups: [
-                { id: 'main', name: '' },
+                { id: 'main', name: 'Registration Details' },
                 { id: 'information', name: 'Information' }
             ],
             fields: {
@@ -95,26 +95,60 @@ define('Registration.Details.View', [
                     label: 'Name',
                     required: true
                 },
+                email: {
+                    group: 'main',
+                    type: 'email',
+                    attribute: 'email',
+                    label: 'Email',
+                    required: false
+                },
+                phone: {
+                    group: 'main',
+                    type: 'tel',
+                    attribute: 'phone',
+                    label: 'Phone',
+                    required: true
+                },
+                age: {
+                    group: 'main',
+                    type: 'number',
+                    attribute: 'age',
+                    label: 'Age',
+                    required: true
+                },
+                website: {
+                    group: 'main',
+                    type: 'url',
+                    attribute: 'website',
+                    label: 'Web Site',
+                    required: true
+                },
+                dob: {
+                    group: 'main',
+                    type: 'date',
+                    attribute: 'dob',
+                    label: 'Date Of Birth',
+                    required: true
+                },
                 additionalInformation: {
                     group: 'information',
-                    type: 'text',
+                    type: 'longtext',
                     attribute: 'additionalInformation',
-                    label: 'Title',
-                    tooltip: 'Put some additional information here'
+                    label: 'Additional Information',
+                    required: true
                 },
                 companyName: {
                     group: 'information',
                     type: 'text',
                     attribute: 'companyName',
                     label: 'Company Name',
-                    help: 'Example: NetSuite Inc.'
+                    required: true
                 },
                 test: {
                     group: 'information',
                     type: 'text',
                     attribute: 'companyAddress',
                     label: 'Company Address',
-                    tooltip: 'Address Line 1 of the Company',
                     required: true
                 }
             }

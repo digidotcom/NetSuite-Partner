@@ -88,11 +88,31 @@ define('Form', [
                 model.validation = model.validation || {};
                 _(data.fields).each(function eachField(field) {
                     var attribute = field.attribute;
-                    if (field.required) {
-                        model.validation[attribute] = _(model.validation[attribute] || {}).extend({
+                    var required = field.required;
+                    var validations = {};
+                    if (required) {
+                        _(validations).extend({
                             required: true,
                             msg: Utils.translate('$(0) is required.', field.label)
                         });
+                    }
+                    if (field.type === 'email') {
+                        _(validations).extend({
+                            pattern: 'email',
+                            msg: Utils.translate('Valid email is required.')
+                        });
+                    } else if (field.type === 'tel') {
+                        _(validations).extend({
+                            fn: function validatePhone(phone) {
+                                if (!required && !phone) {
+                                    return null;
+                                }
+                                return Utils.validatePhone(phone);
+                            }
+                        });
+                    }
+                    if (_(validations).size() > 0) {
+                        model.validation[attribute] = _(model.validation[attribute] || {}).extend(validations);
                     }
                 });
             },
