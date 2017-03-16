@@ -62,13 +62,27 @@ define('Form.Config', [
             var config = this.getConfig();
             var data = config.data;
             var dataJSON = jQuery.extend(true, {}, data);
-            _(dataJSON.groups).each(function eachFn(groupJSON, i) {
-                var fields = _(dataJSON.fields).where({
-                    group: groupJSON.id
-                });
-                data.groups[i].fields = new FormFieldCollection(fields);
-                groupJSON.fields = fields;
+            var ungroupedGroup = { fields: [] };
+            var hashTemp = {};
+            _(dataJSON.groups).each(function eachGroup(groupJSON, i) {
+                var groupData = data.groups[i];
+                groupData.fields = new FormFieldCollection();
+                groupJSON.fields = [];
+                hashTemp[groupJSON.id || ''] = { data: groupData, json: groupJSON };
             });
+            _(dataJSON.fields).each(function eachField(fieldJSON) {
+                var groupId = fieldJSON.group || '';
+                if (hashTemp[groupId]) {
+                    hashTemp[groupId].data.fields.add(fieldJSON);
+                    hashTemp[groupId].json.fields.push(fieldJSON);
+                } else {
+                    ungroupedGroup.fields.push(fieldJSON);
+                }
+            });
+            if (ungroupedGroup.fields.length > 0) {
+                dataJSON.groups.unshift(ungroupedGroup);
+                data.groups.unshift({ fields: new FormFieldCollection(ungroupedGroup.fields) });
+            }
             config.dataJSON = dataJSON;
             data.groups = new FormGroupCollection(data.groups);
             delete data.fields;
