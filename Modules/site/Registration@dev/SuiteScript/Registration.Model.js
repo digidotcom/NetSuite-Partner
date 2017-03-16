@@ -18,14 +18,21 @@ define('Registration.Model', [
 
         record: 'customrecord_registrationprocess',
         columns: {
+            // registration details
             internalid: { fieldName: 'internalid' },
-            date: { fieldName: 'created' },
             name: { fieldName: 'name' },
+            date: { fieldName: 'created' },
+            channelManager: { fieldName: 'custrecord_channel_manager', type: 'object' }, // List/Record: Employee
+            internalNotes: { fieldName: 'custrecord_internal_notes' }, // Long Text
+            lead: { fieldName: 'custrecord_lead' }, // Free-form Text
+            opportunity: { fieldName: 'custrecord_opportunity', type: 'object' }, // List/Record: Opportunity
+            salesRep: { fieldName: 'custrecord_sales_rep', type: 'object' }, // List/Record: Employee
+            // partner details
             partnerName: { fieldName: 'custrecord_partner_name', type: 'object' }, // List/Record: Account
-            additionalInformation: { fieldName: 'custrecord_additional_information' }, // Long Text
             fieldSalesEngineer: { fieldName: 'custrecord_partner_field_sales_engr', type: 'object' }, // List/Record: Contact
             buyer: { fieldName: 'custrecord_partner_buyer', type: 'object' }, // List/Record: Contact
             fieldSalesRep: { fieldName: 'custrecord_partner_field_sales_rep', type: 'object' }, // List/Record: Contact
+            // end customer details
             companyName: { fieldName: 'custrecord_company_name' }, // Free-form Text
             companyMainPhone: { fieldName: 'custrecord_company_main_phone', type: 'text' }, // Phone Number
             companyAddress: { fieldName: 'custrecord_company_address' }, // Free-form Text
@@ -34,24 +41,22 @@ define('Registration.Model', [
             companyCountry: { fieldName: 'custrecord_company_country', type: 'text' }, // List/Record: Country
             companyState: { fieldName: 'custrecord_company_state', type: 'text' }, // List/Record: State
             companyZipCode: { fieldName: 'custrecord_country_zipcode' }, // Free-form Text
-            contractManufacturer: { fieldName: 'custrecord_contract_manufacturer' }, // Free-form Text
-            developmentDesignConsultant: { fieldName: 'custrecord_development_design_consultant' }, // Free-form Text
             engineerTechnicalContactEmail: { fieldName: 'custrecord_engr_contact_email', type: 'text' }, // Email Address
             engineerTechnicalContactName: { fieldName: 'custrecord_engr_contact_name' }, // Free-form Text
             engineerTechnicalContactPhone: { fieldName: 'custrecord_engr_contact_phone', type: 'text' }, // Phone Number
-            channelManager: { fieldName: 'custrecord_channel_manager', type: 'object' }, // List/Record: Employee
             customerLocation: { fieldName: 'custrecord_customer_location' }, // Free-form Text
             endCustomerAccount: { fieldName: 'custrecord_end_customer_account', type: 'object' }, // List/Record: Account
-            learnAboutDeal: { fieldName: 'custrecord_learn_about_deal' }, // Long Text
-            internalNotes: { fieldName: 'custrecord_internal_notes' }, // Long Text
-            lead: { fieldName: 'custrecord_lead' }, // Free-form Text
-            opportunity: { fieldName: 'custrecord_opportunity', type: 'object' }, // List/Record: Opportunity
+            // supply chain
+            contractManufacturer: { fieldName: 'custrecord_contract_manufacturer' }, // Free-form Text
+            developmentDesignConsultant: { fieldName: 'custrecord_development_design_consultant' }, // Free-form Text
             preferredDistributor: { fieldName: 'custrecord_preferred_distributor' }, // Free-form Text
+            reseller: { fieldName: 'custrecord_reseller' }, // Free-form Text
+            // project details
+            additionalInformation: { fieldName: 'custrecord_additional_information' }, // Long Text
+            learnAboutDeal: { fieldName: 'custrecord_learn_about_deal' }, // Long Text
             productionDate: { fieldName: 'custrecord_production_date' }, // Date
             projectName: { fieldName: 'custrecord_project_name' }, // Free-form Text
-            reseller: { fieldName: 'custrecord_reseller' }, // Free-form Text
             summaryOfApplication: { fieldName: 'custrecord_summary_of_application' }, // Long Text
-            salesRep: { fieldName: 'custrecord_sales_rep', type: 'object' }, // List/Record: Employee
             prototypeEvalDate: { fieldName: 'custrecord_prototype_eval_date' } // Date
         },
         filters: [

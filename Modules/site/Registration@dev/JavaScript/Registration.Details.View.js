@@ -84,74 +84,252 @@ define('Registration.Details.View', [
 
         formData: {
             groups: [
-                { id: 'main', name: 'Registration Details' },
-                { id: 'information', name: 'Information' }
+                { id: 'details', name: 'Registration Details' },
+                { id: 'partner', name: 'Partner Details' },
+                { id: 'customer', name: 'End Customer Details' },
+                { id: 'supply', name: 'Supply Chain' },
+                { id: 'project', name: 'Project Details' }
             ],
-            fields: {
-                name: {
-                    group: 'main',
+            fields: [
+                {
+                    group: 'details',
                     type: 'text',
                     attribute: 'name',
                     label: 'Name',
-                    required: true
-                },
-                email: {
-                    group: 'main',
-                    type: 'email',
-                    attribute: 'email',
-                    label: 'Email',
                     required: false
                 },
-                phone: {
-                    group: 'main',
-                    type: 'tel',
-                    attribute: 'phone',
-                    label: 'Phone',
-                    required: true
-                },
-                age: {
-                    group: 'main',
-                    type: 'number',
-                    attribute: 'age',
-                    label: 'Age',
-                    required: true
-                },
-                website: {
-                    group: 'main',
-                    type: 'url',
-                    attribute: 'website',
-                    label: 'Web Site',
-                    required: true
-                },
-                dob: {
-                    group: 'main',
+                {
+                    group: 'details',
                     type: 'date',
-                    attribute: 'dob',
-                    label: 'Date Of Birth',
-                    required: true
+                    attribute: 'date',
+                    label: 'Date Created',
+                    required: false
                 },
-                additionalInformation: {
-                    group: 'information',
+                {
+                    group: 'details',
+                    type: 'lookup',
+                    attribute: 'channelManager',
+                    label: 'Channel Manager',
+                    required: false
+                },
+                {
+                    group: 'details',
+                    type: 'longtext',
+                    attribute: 'internalNotes',
+                    label: 'Internal Notes',
+                    required: false
+                },
+                {
+                    group: 'details',
+                    type: 'text',
+                    attribute: 'lead',
+                    label: 'Lead',
+                    required: false
+                },
+                {
+                    group: 'details',
+                    type: 'lookup',
+                    attribute: 'opportunity',
+                    label: 'Opportunity',
+                    required: false
+                },
+                {
+                    group: 'details',
+                    type: 'lookup',
+                    attribute: 'salesRep',
+                    label: 'Sales Rep',
+                    required: false
+                },
+                {
+                    group: 'partner',
+                    type: 'lookup',
+                    attribute: 'partnerName',
+                    label: 'Partner Name',
+                    required: false
+                },
+                {
+                    group: 'partner',
+                    type: 'lookup',
+                    attribute: 'fieldSalesEngineer',
+                    label: 'Partner Field Sales Engineer',
+                    required: false
+                },
+                {
+                    group: 'partner',
+                    type: 'lookup',
+                    attribute: 'buyer',
+                    label: 'Partner Buyer',
+                    required: false
+                },
+                {
+                    group: 'partner',
+                    type: 'lookup',
+                    attribute: 'fieldSalesRep',
+                    label: 'Partner Field Sales Rep',
+                    required: false
+                },
+                {
+                    group: 'customer',
+                    type: 'text',
+                    attribute: 'companyName',
+                    label: 'Company Name (End Customer/OEM, ODM)',
+                    required: false
+                },
+                {
+                    group: 'customer',
+                    type: 'phone',
+                    attribute: 'companyMainPhone',
+                    label: 'Main Phone',
+                    required: false
+                },
+                {
+                    group: 'customer',
+                    type: 'text',
+                    attribute: 'companyAddress',
+                    label: 'Address',
+                    required: false
+                },
+                {
+                    group: 'customer',
+                    type: 'text',
+                    attribute: 'companyAddress2',
+                    label: 'Address 2',
+                    required: false
+                },
+                {
+                    group: 'customer',
+                    type: 'text',
+                    attribute: 'companyCity',
+                    label: 'City',
+                    required: false
+                },
+                {
+                    group: 'customer',
+                    type: 'list',
+                    attribute: 'companyCountry',
+                    label: 'Country',
+                    required: false
+                },
+                {
+                    group: 'customer',
+                    type: 'list',
+                    attribute: 'companyState',
+                    label: 'State',
+                    required: false
+                },
+                {
+                    group: 'customer',
+                    type: 'number',
+                    attribute: 'companyZipCode',
+                    label: 'Zip/Postal Code',
+                    required: false
+                },
+                {
+                    group: 'customer',
+                    type: 'email',
+                    attribute: 'engineerTechnicalContactEmail',
+                    label: 'Engineer/Technical Contact Email',
+                    required: false
+                },
+                {
+                    group: 'customer',
+                    type: 'text',
+                    attribute: 'engineerTechnicalContactName',
+                    label: 'Engineer/Technical Contact Name',
+                    required: false
+                },
+                {
+                    group: 'customer',
+                    type: 'phone',
+                    attribute: 'engineerTechnicalContactPhone',
+                    label: 'Engineer/Technical Contact Phone',
+                    required: false
+                },
+                {
+                    group: 'customer',
+                    type: 'text',
+                    attribute: 'customerLocation',
+                    label: 'Customer Location',
+                    required: false
+                },
+                {
+                    group: 'customer',
+                    type: 'lookup',
+                    attribute: 'endCustomerAccount',
+                    label: 'End Customer Account',
+                    required: false
+                },
+                {
+                    group: 'supply',
+                    type: 'text',
+                    attribute: 'contractManufacturer',
+                    label: 'Contract Manufacturer',
+                    required: false
+                },
+                {
+                    group: 'supply',
+                    type: 'text',
+                    attribute: 'developmentDesignConsultant',
+                    label: 'Development/Design Consultant',
+                    required: false
+                },
+                {
+                    group: 'supply',
+                    type: 'text',
+                    attribute: 'preferredDistributor',
+                    label: 'Preferred Distributor',
+                    required: false
+                },
+                {
+                    group: 'supply',
+                    type: 'text',
+                    attribute: 'reseller',
+                    label: 'Reseller',
+                    required: false
+                },
+                {
+                    group: 'project',
                     type: 'longtext',
                     attribute: 'additionalInformation',
                     label: 'Additional Information',
-                    required: true
+                    required: false
                 },
-                companyName: {
-                    group: 'information',
-                    type: 'text',
-                    attribute: 'companyName',
-                    label: 'Company Name',
-                    required: true
+                {
+                    group: 'project',
+                    type: 'longtext',
+                    attribute: 'learnAboutDeal',
+                    label: 'How did you learn about this deal?',
+                    required: false
                 },
-                test: {
-                    group: 'information',
+                {
+                    group: 'project',
+                    type: 'date',
+                    attribute: 'productionDate',
+                    label: 'Production Date',
+                    required: false
+                },
+                {
+                    group: 'project',
                     type: 'text',
-                    attribute: 'companyAddress',
-                    label: 'Company Address',
-                    required: true
+                    attribute: 'projectName',
+                    label: 'Project Name',
+                    required: false
+                },
+                {
+                    group: 'project',
+                    type: 'longtext',
+                    attribute: 'summaryOfApplication',
+                    label: 'Summary Of Application',
+                    required: false
+                },
+                {
+                    group: 'project',
+                    type: 'date',
+                    attribute: 'prototypeEvalDate',
+                    label: 'Prototype/Eval Date',
+                    required: false
                 }
-            }
+            ]
         },
 
         /* Abstract methods implementation */
