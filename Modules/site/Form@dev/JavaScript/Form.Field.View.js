@@ -1,4 +1,5 @@
 define('Form.Field.View', [
+    'underscore',
     'Backbone',
     'Form.Field.Type',
     'form_field.tpl',
@@ -7,6 +8,7 @@ define('Form.Field.View', [
     'form_field_list.tpl',
     'form_field_lookup.tpl'
 ], function FormFieldView(
+    _,
     Backbone,
     FormFieldType,
     formFieldTpl
@@ -23,8 +25,10 @@ define('Form.Field.View', [
         },
 
         setupType: function parseType() {
-            var typeStr = this.model.get('type');
-            var type = new FormFieldType(typeStr);
+            var type = new FormFieldType({
+                model: this.model,
+                config: this.config
+            });
             this.type = type;
             this.template = type.getTemplate();
         },
@@ -36,10 +40,9 @@ define('Form.Field.View', [
             var formModel = config.model;
             var attribute = model.get('attribute');
             var isNew = config.isNew();
-            return {
+            var context = {
                 model: model,
                 type: model.get('type'),
-                inputType: type.getInputType(),
                 attribute: model.get('attribute'),
                 label: model.get('label'),
                 isRequired: !!model.get('required'),
@@ -50,6 +53,7 @@ define('Form.Field.View', [
                 isView: config.isView(),
                 value: isNew ? null : formModel.get(attribute)
             };
+            return _.extend(context, type.getContextAdditions());
         }
 
     });

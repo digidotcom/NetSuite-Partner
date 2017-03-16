@@ -48,6 +48,10 @@ define('Form.Config', [
             this.config.info = info;
         },
 
+
+        getFieldDisplaySuffix: function getFieldDisplaySuffix() {
+            return '_display';
+        },
         isNew: function isNew() {
             return this.getAction() === 'new';
         },

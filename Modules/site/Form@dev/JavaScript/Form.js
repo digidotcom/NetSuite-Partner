@@ -5,6 +5,7 @@ define('Form', [
     'Backbone.CompositeView',
     'Backbone.FormView',
     'Mixin',
+    'Form.Field.Type',
     'Form.Config',
     'Form.View'
 ], function Form(
@@ -14,6 +15,7 @@ define('Form', [
     BackboneCompositeView,
     BackboneFormView,
     Mixin,
+    FormFieldType,
     FormConfig,
     FormView
 ) {
@@ -79,8 +81,31 @@ define('Form', [
 
             prepareForForm: function prepareForForm() {
                 this.formConfig = this.getFormConfig();
+                this.mapListRecordFields();
                 this.defineValidation();
                 this.defineBindings();
+            },
+            mapListRecordFields: function mapListRecordFields() {
+                var model = this.model;
+                var config = this.formConfig;
+                var data = config.getDataJSON();
+                var suffix = config.getFieldDisplaySuffix();
+                if (!model.isParseWrapped) {
+                    model.isParseWrapped = true;
+                    model.parse = _(model.parse).wrap(function modelParseWrap(fn, dataModel) {
+                        _(data.fields).each(function eachField(field) {
+                            var value;
+                            if (FormFieldType.isComplexType(field.type)) {
+                                value = dataModel[field.attribute];
+                                if (value && _(value).isObject()) {
+                                    dataModel[field.attribute] = value.internalid;
+                                    dataModel[field.attribute + suffix] = value.name;
+                                }
+                            }
+                        });
+                        return fn.apply(fn, _.union([dataModel], Array.prototype.slice.call(arguments, 2)));
+                    });
+                }
             },
             defineValidation: function defineValidations() {
                 var model = this.model;
@@ -119,10 +144,15 @@ define('Form', [
             defineBindings: function defineBindings() {
                 var self = this;
                 var data = self.formConfig.getDataJSON();
+                var suffix = self.formConfig.getFieldDisplaySuffix();
                 self.bindings = self.bindings || {};
                 _(data.fields).each(function eachField(field) {
                     var attribute = field.attribute;
+                    var attributeDisplay = attribute + suffix;
                     self.bindings['[name="' + attribute + '"]'] = attribute;
+                    if (FormFieldType.isComplexType(field.type)) {
+                        self.bindings['[name="' + attributeDisplay + '"]'] = attributeDisplay;
+                    }
                 });
             },
 

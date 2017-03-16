@@ -15,14 +15,16 @@ define('Form.Field.Type', [
 ) {
     'use strict';
 
-    function FormFieldType(type) {
-        this.type = type;
+    function FormFieldType(options) {
+        this.model = options.model;
+        this.config = options.config;
         this.initialize();
     }
 
     _(FormFieldType.prototype).extend({
 
         initialize: function initialize() {
+            this.type = this.model.get('type');
             this.template = this.getTemplate();
         },
 
@@ -54,9 +56,41 @@ define('Form.Field.Type', [
             default:
                 return this.type;
             }
+        },
+
+        getContextAdditions: function getContextAdditions() {
+            var modelForm = this.config.model;
+            var modelField = this.model;
+            var fieldValue = modelForm.get(modelField.get('attribute'));
+            var context = {
+                inputType: this.getInputType()
+            };
+            if (fieldValue) {
+                switch (this.type) {
+                case 'list':
+                case 'lookup':
+                    context.nameFieldSuffix = this.config.getFieldDisplaySuffix();
+                    context.selectedValue = fieldValue.internalid;
+                    context.selectedName = fieldValue.name;
+                    break;
+                default:
+                    context.value = fieldValue;
+                }
+            }
+            return context;
         }
 
     });
+
+    FormFieldType.isComplexType = function isComplexType(type) {
+        switch (type) {
+        case 'list':
+        case 'lookup':
+            return true;
+        default:
+            return false;
+        }
+    };
 
     return FormFieldType;
 });

@@ -34,16 +34,16 @@ define('Registration.Model', [
             fieldSalesRep: { fieldName: 'custrecord_partner_field_sales_rep', type: 'object' }, // List/Record: Contact
             // end customer details
             companyName: { fieldName: 'custrecord_company_name' }, // Free-form Text
-            companyMainPhone: { fieldName: 'custrecord_company_main_phone', type: 'text' }, // Phone Number
+            companyMainPhone: { fieldName: 'custrecord_company_main_phone' }, // Phone Number
             companyAddress: { fieldName: 'custrecord_company_address' }, // Free-form Text
             companyAddress2: { fieldName: 'custrecord_company_address2' }, // Free-form Text
             companyCity: { fieldName: 'custrecord_company_city' }, // Free-form Text
-            companyCountry: { fieldName: 'custrecord_company_country', type: 'text' }, // List/Record: Country
-            companyState: { fieldName: 'custrecord_company_state', type: 'text' }, // List/Record: State
+            companyCountry: { fieldName: 'custrecord_company_country', type: 'object' }, // List/Record: Country
+            companyState: { fieldName: 'custrecord_company_state', type: 'object' }, // List/Record: State
             companyZipCode: { fieldName: 'custrecord_country_zipcode' }, // Free-form Text
-            engineerTechnicalContactEmail: { fieldName: 'custrecord_engr_contact_email', type: 'text' }, // Email Address
+            engineerTechnicalContactEmail: { fieldName: 'custrecord_engr_contact_email' }, // Email Address
             engineerTechnicalContactName: { fieldName: 'custrecord_engr_contact_name' }, // Free-form Text
-            engineerTechnicalContactPhone: { fieldName: 'custrecord_engr_contact_phone', type: 'text' }, // Phone Number
+            engineerTechnicalContactPhone: { fieldName: 'custrecord_engr_contact_phone' }, // Phone Number
             customerLocation: { fieldName: 'custrecord_customer_location' }, // Free-form Text
             endCustomerAccount: { fieldName: 'custrecord_end_customer_account', type: 'object' }, // List/Record: Account
             // supply chain
