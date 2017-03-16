@@ -30,7 +30,7 @@ define('Form.Field.Type', [
             switch (this.type) {
             case 'text':
             case 'email':
-            case 'tel':
+            case 'phone':
             case 'number':
             case 'url':
             case 'date':
@@ -48,7 +48,7 @@ define('Form.Field.Type', [
 
         getInputType: function getInputType() {
             switch (this.type) {
-            case 'tel':
+            case 'phone':
             case 'email':
                 return 'text';
             default:
