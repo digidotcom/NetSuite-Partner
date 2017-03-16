@@ -25,6 +25,7 @@ define('Form.Group.View', [
             'Form.Fields': function FormGroupFields() {
                 return new FormFieldsView({
                     config: this.config,
+                    viewsPerRow: this.model.get('columns') || 2,
                     fields: this.fields
                 });
             }
