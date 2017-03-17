@@ -208,6 +208,8 @@ define('Registration.Details.View', [
                 {
                     group: 'customer',
                     type: 'list',
+                    list: 'countries',
+                    nodefault: true,
                     attribute: 'companyCountry',
                     label: 'Country',
                     required: false
@@ -215,6 +217,8 @@ define('Registration.Details.View', [
                 {
                     group: 'customer',
                     type: 'list',
+                    list: 'states',
+                    nodefault: false,
                     attribute: 'companyState',
                     label: 'State',
                     required: false

@@ -23,9 +23,9 @@
             </p>
         {{else}}
             <select class="form-fields-input" id="{{attribute}}" name="{{attribute}}" data-value="{{selectedValue}}">
-                {{#if showDefault}}
+                {{#unless hideDefaultOption}}
                 <option value=""></option>
-                {{/if}}
+                {{/unless}}
                 {{#each options}}
                 <option value="{{value}}">{{name}}</option>
                 {{/each}}

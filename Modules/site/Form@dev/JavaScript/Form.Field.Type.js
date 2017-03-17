@@ -1,5 +1,6 @@
 define('Form.Field.Type', [
     'underscore',
+    'SC.Configuration',
     'form_field.tpl',
     'form_field_text.tpl',
     'form_field_longtext.tpl',
@@ -7,6 +8,7 @@ define('Form.Field.Type', [
     'form_field_lookup.tpl'
 ], function FormFieldTypeModule(
     _,
+    Configuration,
     formFieldTpl,
     formFieldTextTpl,
     formFieldLongTextTpl,
@@ -59,6 +61,41 @@ define('Form.Field.Type', [
             }
         },
 
+        getListCountries: function getListCountries() {
+            var countries = Configuration.get('siteSettings.countries');
+            return _(countries).map(function mapCountries(country) {
+                return {
+                    value: country.name,
+                    name: country.name
+                };
+            });
+        },
+        getListStates: function getListStates(country) {
+            var countries = Configuration.get('siteSettings.countries');
+            if (countries && countries[country] && countries[country].states) {
+                return _(countries[country].states).map(function mapStates(state) {
+                    return {
+                        value: state.name,
+                        name: state.name
+                    };
+                });
+            }
+            return [];
+        },
+        getListOptions: function getListOptions() {
+            var list = this.model.get('list');
+            if (_.isObject(list)) {
+                return _.values(list);
+            } else if (_.isString(list)) {
+                if (list === 'countries') {
+                    return this.getListCountries();
+                } else if (list === 'states') {
+                    return this.getListStates('US');
+                }
+            }
+            return list || [];
+        },
+
         getContextAdditions: function getContextAdditions() {
             var modelForm = this.config.model;
             var modelField = this.model;
@@ -67,6 +104,10 @@ define('Form.Field.Type', [
                 inputType: this.getInputType()
             };
             if (fieldValue) {
+                if (this.type === 'list') {
+                    context.options = this.getListOptions();
+                    context.hideDefaultOption = !!modelField.get('nodefault');
+                }
                 switch (this.type) {
                 case 'list':
                 case 'lookup':
