@@ -14,11 +14,11 @@
     </label>
     <div class="form-fields-form-controls" data-validation="control">
         {{#if showInline}}
-            <p data-type="search" class="form-fields-input-inline" id="{{attribute}}{{nameFieldSuffix}}" data-name="{{attribute}}" data-internalid="{{id}}">
+            <p data-type="search" class="form-fields-input-inline" id="{{attribute}}{{nameFieldSuffix}}" data-name="{{attribute}}" data-value="{{selectedValue}}">
                 {{#if isInlineEmpty}}
                     {{translate '(no data)'}}
                 {{else}}
-                    {{selectedValue}}
+                    {{selectedName}}
                 {{/if}}
             </p>
         {{else}}

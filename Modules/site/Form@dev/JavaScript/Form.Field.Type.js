@@ -100,8 +100,9 @@ define('Form.Field.Type', [
             var modelForm = this.config.model;
             var modelField = this.model;
             var displaySuffix = this.config.getFieldDisplaySuffix();
-            var fieldValue = modelForm.get(modelField.get('attribute'));
-            var fieldValueDisplay = modelForm.get(modelField.get('attribute') + displaySuffix);
+            var attribute = modelField.get('attribute');
+            var fieldValue = modelForm.get(attribute);
+            var fieldValueDisplay = modelForm.get(attribute + displaySuffix);
             var context = {
                 inputType: this.getInputType()
             };
