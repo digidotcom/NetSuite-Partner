@@ -99,7 +99,9 @@ define('Form.Field.Type', [
         getContextAdditions: function getContextAdditions() {
             var modelForm = this.config.model;
             var modelField = this.model;
+            var displaySuffix = this.config.getFieldDisplaySuffix();
             var fieldValue = modelForm.get(modelField.get('attribute'));
+            var fieldValueDisplay = modelForm.get(modelField.get('attribute') + displaySuffix);
             var context = {
                 inputType: this.getInputType()
             };
@@ -111,9 +113,9 @@ define('Form.Field.Type', [
                 switch (this.type) {
                 case 'list':
                 case 'lookup':
-                    context.nameFieldSuffix = this.config.getFieldDisplaySuffix();
-                    context.selectedValue = fieldValue.internalid;
-                    context.selectedName = fieldValue.name;
+                    context.nameFieldSuffix = displaySuffix;
+                    context.selectedValue = fieldValue;
+                    context.selectedName = fieldValueDisplay;
                     break;
                 default:
                     context.value = fieldValue;
