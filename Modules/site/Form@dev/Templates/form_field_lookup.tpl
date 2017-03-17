@@ -1,7 +1,7 @@
 <div class="form-fields form-fields-lookup" data-input="{{attribute}}" data-validation="control-group">
     <label class="form-fields-label" for="{{attribute}}{{nameFieldSuffix}}">
         {{translate label}}
-        {{#unless isView}}
+        {{#unless showInline}}
             {{#if isRequired}}
                 <span class="form-fields-label-required">*</span>
             {{else}}
@@ -13,8 +13,14 @@
         {{/unless}}
     </label>
     <div class="form-fields-form-controls" data-validation="control">
-        {{#if isView}}
-            <p data-type="search" class="form-fields-input-readonly" id="{{attribute}}{{nameFieldSuffix}}" data-name="{{attribute}}" data-internalid="{{id}}">{{value}}</p>
+        {{#if showInline}}
+            <p data-type="search" class="form-fields-input-inline" id="{{attribute}}{{nameFieldSuffix}}" data-name="{{attribute}}" data-internalid="{{id}}">
+                {{#if isInlineEmpty}}
+                    {{translate '(no data)'}}
+                {{else}}
+                    {{selectedValue}}
+                {{/if}}
+            </p>
         {{else}}
             <input type="hidden" class="form-fields-input-hidden" id="{{attribute}}" name="{{attribute}}" data-value="{{id}}" value="" />
             <input type="search" class="form-fields-input" id="{{attribute}}{{nameFieldSuffix}}" name="{{attribute}}{{nameFieldSuffix}}" data-value="{{selectedValue}}" data-selected-name="{{selectedName}}" value="" />

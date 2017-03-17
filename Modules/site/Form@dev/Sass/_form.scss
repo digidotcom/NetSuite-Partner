@@ -119,10 +119,12 @@
 .form-fields-input {
   @extend .input-large;
 }
-.form-fields-input-readonly {
+.form-fields-input-inline {
   @extend .form-fields-input;
   padding: 0px;
   border: none;
+  height: 40px;
+  line-height: 40px;
 }
 .form-fields-input-required {
   @extend .input-required;

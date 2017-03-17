@@ -39,18 +39,24 @@ define('Form.Field.View', [
             var type = this.type;
             var formModel = config.model;
             var attribute = model.get('attribute');
+            var isInline = !!model.get('inline');
             var isNew = config.isNew();
+            var isEdit = config.isEdit();
+            var isView = config.isView();
             var context = {
                 model: model,
                 type: model.get('type'),
                 attribute: model.get('attribute'),
                 label: model.get('label'),
+                isInline: isInline,
                 isRequired: !!model.get('required'),
                 tooltip: model.get('tooltip'),
                 help: model.get('help'),
-                isNew: config.isNew(),
-                isEdit: config.isEdit(),
-                isView: config.isView(),
+                isNew: isNew,
+                isEdit: isEdit,
+                isView: isView,
+                showInline: isInline || isView,
+                isInlineEmpty: isInline && isNew,
                 value: isNew ? null : formModel.get(attribute)
             };
             return _.extend(context, type.getContextAdditions());

@@ -1,7 +1,7 @@
 <div class="form-fields form-fields-text form-fields-text-{{type}}" data-input="{{attribute}}" data-validation="control-group">
     <label class="form-fields-label" for="{{attribute}}">
         {{translate label}}
-        {{#unless isView}}
+        {{#unless showInline}}
             {{#if isRequired}}
                 <span class="form-fields-label-required">*</span>
             {{else}}
@@ -13,8 +13,14 @@
         {{/unless}}
     </label>
     <div class="form-fields-form-controls" data-validation="control">
-        {{#if isView}}
-            <p data-type="{{type}}" class="form-fields-input-readonly" id="{{attribute}}" data-name="{{attribute}}">{{value}}</p>
+        {{#if showInline}}
+            <p data-type="{{type}}" class="form-fields-input-inline" id="{{attribute}}" data-name="{{attribute}}">
+                {{#if isInlineEmpty}}
+                    {{translate '(no data)'}}
+                {{else}}
+                    {{value}}
+                {{/if}}
+            </p>
         {{else}}
             <input type="{{inputType}}" class="form-fields-input" id="{{attribute}}" name="{{attribute}}" data-value="{{value}}" value="" />
             {{#if help}}

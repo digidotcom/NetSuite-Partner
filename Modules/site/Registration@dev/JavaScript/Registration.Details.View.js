@@ -103,6 +103,7 @@ define('Registration.Details.View', [
                     type: 'datetime',
                     attribute: 'date',
                     label: 'Date Created',
+                    inline: true,
                     required: false
                 },
                 {
