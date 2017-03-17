@@ -115,9 +115,16 @@
 }
 /* Input */
 .form-fields-form-controls {
+  position: relative;
 }
+$search-icon-size: 37px;
 .form-fields-input {
   @extend .input-large;
+  @include box-sizing(border-box);
+  width: 100%;
+  .form-fields-lookup & {
+    padding-right: $search-icon-size + ($sc-base-margin * 2);
+  }
 }
 .form-fields-input-inline {
   @extend .form-fields-input;
@@ -128,6 +135,22 @@
 }
 .form-fields-input-required {
   @extend .input-required;
+}
+.form-fields-input-search-icon {
+  @extend .fa;
+  @extend %fa-search;
+  position: absolute;
+  right: 1px;
+  top: 1px;
+  height: $search-icon-size;
+  line-height: $search-icon-size;
+  width: $search-icon-size;
+  text-align: center;
+  font-size: 18px;
+  color: $sc-color-theme;
+  cursor: pointer;
+  background: #ffffff;
+  border-left: 1px solid $sc-color-theme-light;
 }
 .form-fields-input-help {
   @extend .input-help;

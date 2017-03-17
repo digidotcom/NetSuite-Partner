@@ -111,6 +111,7 @@ define('Registration.Details.View', [
                     type: 'lookup',
                     attribute: 'channelManager',
                     label: 'Channel Manager',
+                    help: 'Example: Doe, John',
                     required: false
                 },
                 {
