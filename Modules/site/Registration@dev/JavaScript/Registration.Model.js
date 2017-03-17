@@ -9,7 +9,7 @@ define('Registration.Model', [
 
     return Backbone.Model.extend({
 
-        url: RegistrationHelper.serviceUrl
+        urlRoot: RegistrationHelper.getServiceUrl()
 
     });
 });

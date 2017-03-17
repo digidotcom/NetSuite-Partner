@@ -12,10 +12,14 @@ define('Registration.Helper', [
     return {
         baseUrl: 'registrations',
         moduleName: 'Registration',
-        serviceUrl: Utils.getAbsoluteUrl('services/Registration.Service.ss'),
+        serviceUrl: 'services/Registration.Service.ss',
         statusParamKey: 'status',
         statusAllName: 'All',
         statusServiceUrl: Utils.getAbsoluteUrl('services/Registration.Status.Service.ss'),
+        getServiceUrl: function getServiceUrl(absolute) {
+            var url = this.serviceUrl;
+            return absolute ? Utils.getAbsoluteUrl(url) : url;
+        },
         getListUrl: function getListUrl(noSlash) {
             return slash(noSlash) + this.baseUrl;
         },

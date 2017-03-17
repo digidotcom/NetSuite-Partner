@@ -120,7 +120,7 @@
 $search-icon-size: 37px;
 .form-fields-input {
   @extend .input-large;
-  @include box-sizing(border-box);
+  @include box-sizing(border-box !important);
   width: 100%;
   .form-fields-lookup & {
     padding-right: $search-icon-size + ($sc-base-margin * 2);

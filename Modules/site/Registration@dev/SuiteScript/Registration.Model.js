@@ -3,7 +3,7 @@ define('Registration.Model', [
     'SC.Model',
     'Application',
     'SearchHelper',
-    'RecordHelper'
+    'RecordHelper.CRUD'
 ], function RegistrationModel(
     _,
     SCModel,
@@ -176,6 +176,15 @@ define('Registration.Model', [
                 .setFieldset(this.fieldsets.details);
             record.get(id);
             return record.getResult();
+        },
+
+        create: function create(data) {
+            console.log('create', JSON.stringify(data));
+            return 1;
+        },
+
+        update: function update(id, data) {
+            console.log('update id: ' + id, JSON.stringify(data));
         }
     });
 });

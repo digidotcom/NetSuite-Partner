@@ -11,7 +11,7 @@ define('Registration.Collection', [
 
     return Backbone.Collection.extend({
 
-        url: RegistrationHelper.serviceUrl,
+        url: RegistrationHelper.getServiceUrl(true),
 
         model: RegistrationModel,
 

@@ -30,6 +30,17 @@ define('Registration.ServiceController', [
                 page: this.request.getParameter('page') || 1,
                 resultsPerPage: this.request.getParameter('results_per_page')
             });
+        },
+
+        post: function post() {
+            var id = RegistrationModel.create(this.data);
+            this.sendContent(RegistrationModel.get(id), { status: 201 });
+        },
+
+        put: function put() {
+            var id = this.request.getParameter('internalid');
+            RegistrationModel.update(id, this.data);
+            return RegistrationModel.get(id);
         }
     });
 });
