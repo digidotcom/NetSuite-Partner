@@ -36,6 +36,7 @@ define('Form.Field.Type', [
             case 'number':
             case 'url':
             case 'date':
+            case 'datetime':
                 return formFieldTextTpl;
             case 'longtext':
                 return formFieldLongTextTpl;

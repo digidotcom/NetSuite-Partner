@@ -100,7 +100,7 @@ define('Registration.Details.View', [
                 },
                 {
                     group: 'details',
-                    type: 'date',
+                    type: 'datetime',
                     attribute: 'date',
                     label: 'Date Created',
                     required: false
