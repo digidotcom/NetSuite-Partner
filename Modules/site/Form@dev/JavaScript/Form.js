@@ -126,7 +126,7 @@ define('Form', [
                             pattern: 'email',
                             msg: Utils.translate('Valid email is required.')
                         });
-                    } else if (field.type === 'tel') {
+                    } else if (field.type === 'phone') {
                         _(validations).extend({
                             fn: function validatePhone(phone) {
                                 if (!required && !phone) {
