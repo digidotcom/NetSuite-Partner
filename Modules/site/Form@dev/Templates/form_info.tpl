@@ -2,7 +2,7 @@
     <div class="form-info-header">
         {{#if title}}
         <div class="form-info-header-title">
-            <h1>{{title}}</h1>
+            <h1 class="form-info-header-title-heading">{{title}}</h1>
         </div>
         {{/if}}
         <div class="form-info-header-actions {{#if title}}has-title{{/if}}" data-view="Form.Actions"></div>
