@@ -221,6 +221,7 @@ define('Registration.Details.View', [
                     nodefault: false,
                     attribute: 'companyState',
                     label: 'State',
+                    tooltip: 'Depends on the selected country',
                     required: false
                 },
                 {
