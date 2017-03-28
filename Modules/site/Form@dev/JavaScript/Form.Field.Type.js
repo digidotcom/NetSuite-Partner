@@ -106,21 +106,19 @@ define('Form.Field.Type', [
             var context = {
                 inputType: this.getInputType()
             };
-            if (fieldValue) {
-                if (this.type === 'list') {
-                    context.options = this.getListOptions();
-                    context.hideDefaultOption = !!modelField.get('nodefault');
-                }
-                switch (this.type) {
-                case 'list':
-                case 'lookup':
-                    context.nameFieldSuffix = displaySuffix;
-                    context.selectedValue = fieldValue;
-                    context.selectedName = fieldValueDisplay;
-                    break;
-                default:
-                    context.value = fieldValue;
-                }
+            if (this.type === 'list') {
+                context.options = this.getListOptions();
+                context.hideDefaultOption = !!modelField.get('nodefault');
+            }
+            switch (this.type) {
+            case 'list':
+            case 'lookup':
+                context.nameFieldSuffix = displaySuffix;
+                context.selectedValue = fieldValue;
+                context.selectedName = fieldValueDisplay;
+                break;
+            default:
+                context.value = fieldValue;
             }
             return context;
         }

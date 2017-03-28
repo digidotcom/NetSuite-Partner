@@ -108,12 +108,15 @@ define('Form', [
                 }
             },
             defineValidation: function defineValidations() {
+                var self = this;
                 var model = this.model;
                 var data = this.formConfig.getDataJSON();
                 model.validation = model.validation || {};
                 _(data.fields).each(function eachField(field) {
+                    var suffix = self.formConfig.getFieldDisplaySuffix();
                     var attribute = field.attribute;
                     var required = field.required;
+                    var type = field.type;
                     var validations = {};
                     if (required) {
                         _(validations).extend({
@@ -121,12 +124,12 @@ define('Form', [
                             msg: Utils.translate('$(0) is required.', field.label)
                         });
                     }
-                    if (field.type === 'email') {
+                    if (type === 'email') {
                         _(validations).extend({
                             pattern: 'email',
                             msg: Utils.translate('Valid email is required.')
                         });
-                    } else if (field.type === 'phone') {
+                    } else if (type === 'phone') {
                         _(validations).extend({
                             fn: function validatePhone(phone) {
                                 if (!required && !phone) {
@@ -138,6 +141,9 @@ define('Form', [
                     }
                     if (_(validations).size() > 0) {
                         model.validation[attribute] = _(model.validation[attribute] || {}).extend(validations);
+                        if (type === 'lookup') {
+                            model.validation[attribute + suffix] = _(model.validation[attribute + suffix] || {}).extend(validations);
+                        }
                     }
                 });
             },
