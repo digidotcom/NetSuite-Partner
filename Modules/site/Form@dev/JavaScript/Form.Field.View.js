@@ -37,8 +37,6 @@ define('Form.Field.View', [
             var model = this.model;
             var config = this.config;
             var type = this.type;
-            var formModel = config.model;
-            var attribute = model.get('attribute');
             var isInline = !!model.get('inline');
             var isNew = config.isNew();
             var isEdit = config.isEdit();
@@ -55,9 +53,7 @@ define('Form.Field.View', [
                 isNew: isNew,
                 isEdit: isEdit,
                 isView: isView,
-                showInline: isInline || isView,
-                isInlineEmpty: isInline && isNew,
-                value: isNew ? null : formModel.get(attribute)
+                showInline: isInline || isView
             };
             return _.extend(context, type.getContextAdditions());
         }

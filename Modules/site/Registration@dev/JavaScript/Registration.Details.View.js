@@ -100,9 +100,25 @@ define('Registration.Details.View', [
                 },
                 {
                     group: 'details',
+                    type: 'list',
+                    attribute: 'status',
+                    label: 'Status',
+                    inline: true,
+                    required: true
+                },
+                {
+                    group: 'details',
                     type: 'datetime',
-                    attribute: 'date',
-                    label: 'Date Created',
+                    attribute: 'approvalDate',
+                    label: 'Approval Date',
+                    inline: true,
+                    required: true
+                },
+                {
+                    group: 'details',
+                    type: 'datetime',
+                    attribute: 'expiryDate',
+                    label: 'Expiry Date',
                     inline: true,
                     required: true
                 },

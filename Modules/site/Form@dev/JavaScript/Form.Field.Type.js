@@ -103,8 +103,10 @@ define('Form.Field.Type', [
             var attribute = modelField.get('attribute');
             var fieldValue = modelForm.get(attribute);
             var fieldValueDisplay = modelForm.get(attribute + displaySuffix);
+            var isInline = !!modelField.get('inline');
             var context = {
-                inputType: this.getInputType()
+                inputType: this.getInputType(),
+                isInlineEmpty: isInline && !fieldValue
             };
             if (this.type === 'list') {
                 context.options = this.getListOptions();

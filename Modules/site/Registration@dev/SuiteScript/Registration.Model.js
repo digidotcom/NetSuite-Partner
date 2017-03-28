@@ -117,6 +117,8 @@ define('Registration.Model', [
                 'statusId',
                 'statusName',
                 'statusAllowsEdit',
+                'approvalDate',
+                'expiryDate',
                 'partnerId',
                 'partnerName',
                 'additionalInformation',
