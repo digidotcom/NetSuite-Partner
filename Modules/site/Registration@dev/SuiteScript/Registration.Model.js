@@ -2,12 +2,14 @@ define('Registration.Model', [
     'underscore',
     'SC.Model',
     'Application',
+    'Models.Init',
     'SearchHelper',
     'RecordHelper.CRUD'
 ], function RegistrationModel(
     _,
     SCModel,
     Application,
+    ModelsInit,
     SearchHelper,
     RecordHelper
 ) {
@@ -30,12 +32,16 @@ define('Registration.Model', [
             internalid: { fieldName: 'internalid' },
             name: { fieldName: 'name' },
             date: { fieldName: 'created' },
+            status: { fieldName: 'custrecord_registration_status', type: 'object' }, // List/Record: Registration Status (List)
+            approvalDate: { fieldName: 'custrecord_registration_approval_date' }, // Date
+            expiryDate: { fieldName: 'custrecord_registration_expiry_date' }, // Date
             channelManager: { fieldName: 'custrecord_channel_manager', type: 'object' }, // List/Record: Employee
             internalNotes: { fieldName: 'custrecord_internal_notes' }, // Long Text
             lead: { fieldName: 'custrecord_lead' }, // Free-form Text
             opportunity: { fieldName: 'custrecord_opportunity', type: 'object' }, // List/Record: Opportunity
             salesRep: { fieldName: 'custrecord_sales_rep', type: 'object' }, // List/Record: Employee
             // partner details
+            customer: { fieldName: 'custrecord_partner_customer', type: 'object' },
             partnerName: { fieldName: 'custrecord_partner_name', type: 'object' }, // List/Record: Account
             fieldSalesEngineer: { fieldName: 'custrecord_partner_field_sales_engr', type: 'object' }, // List/Record: Contact
             buyer: { fieldName: 'custrecord_partner_buyer', type: 'object' }, // List/Record: Contact
@@ -68,7 +74,8 @@ define('Registration.Model', [
             prototypeEvalDate: { fieldName: 'custrecord_prototype_eval_date' } // Date
         },
         filters: [
-            { fieldName: 'isinactive', operator: 'is', value1: 'F' }
+            { fieldName: 'isinactive', operator: 'is', value1: 'F' },
+            { fieldName: 'custrecord_partner_customer', operator: 'is', value1: nlapiGetUser() }
         ],
         sort: null,
         fieldsets: {
