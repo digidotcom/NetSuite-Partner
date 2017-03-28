@@ -29,11 +29,23 @@
                         <th class="registration-list-recordviews-title-header">
                             <span>{{translate 'Id'}}</span>
                         </th>
-                        <th class="registration-list-recordviews-date-header">
-                            <span>{{translate 'Date'}}</span>
-                        </th>
-                        <th class="registration-list-recordviews-name-header">
+                        <th class="registration-list-recordviews-text-header">
                             <span>{{translate 'Name'}}</span>
+                        </th>
+                        <th class="registration-list-recordviews-text-header">
+                            <span>{{translate 'Status'}}</span>
+                        </th>
+                        <th class="registration-list-recordviews-date-header">
+                            <span>{{translate 'Approval Date'}}</span>
+                        </th>
+                        <th class="registration-list-recordviews-date-header">
+                            <span>{{translate 'Expiry Date'}}</span>
+                        </th>
+                        <th class="registration-list-recordviews-text-header">
+                            <span>{{translate 'Company Name'}}</span>
+                        </th>
+                        <th class="registration-list-recordviews-text-header">
+                            <span>{{translate 'Partner Name'}}</span>
                         </th>
                         <th class="registration-list-recordviews-actions-header">
                             <span>{{translate 'Actions'}}</span>

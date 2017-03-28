@@ -149,18 +149,44 @@ define('Registration.List.View', [
 
             'ListResults': function RegistrationResults() {
                 var recordsCollection = new Backbone.Collection(this.collection.map(function map(model) {
+                    var status = model.get('status');
+                    var partnerName = model.get('partnerName');
                     var columns = [
                         {
-                            label: Utils.translate('Date:'),
-                            type: 'date',
-                            name: 'date',
-                            value: model.get('date')
-                        },
-                        {
                             label: Utils.translate('Name:'),
-                            type: 'name',
+                            type: 'text',
                             name: 'name',
                             value: model.get('name')
+                        },
+                        {
+                            label: Utils.translate('Status:'),
+                            type: 'name',
+                            name: 'status',
+                            value: status && status.name
+                        },
+                        {
+                            label: Utils.translate('Approval Date:'),
+                            type: 'date',
+                            name: 'approvalDate',
+                            value: model.get('approvalDate')
+                        },
+                        {
+                            label: Utils.translate('Expiry Date:'),
+                            type: 'date',
+                            name: 'expiryDate',
+                            value: model.get('expiryDate')
+                        },
+                        {
+                            label: Utils.translate('Company Name:'),
+                            type: 'text',
+                            name: 'companyName',
+                            value: model.get('companyName')
+                        },
+                        {
+                            label: Utils.translate('Partner Name:'),
+                            type: 'text',
+                            name: 'partnerName',
+                            value: partnerName && partnerName.name
                         }
                     ];
 

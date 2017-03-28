@@ -50,7 +50,11 @@ define('Registration.Model', [
             salesRep: { fieldName: 'custrecord_sales_rep', type: 'object' }, // List/Record: Employee
             // partner details
             customer: { fieldName: 'custrecord_partner_customer', type: 'object' },
-            partnerName: { fieldName: 'custrecord_partner_name', type: 'object' }, // List/Record: Account
+            partnerId: { fieldName: 'custrecord_partner_name' }, // List/Record: Account
+            partnerName: { // List/Record: Account
+                fieldName: 'description',
+                joinKey: 'custrecord_partner_name'
+            },
             fieldSalesEngineer: { fieldName: 'custrecord_partner_field_sales_engr', type: 'object' }, // List/Record: Contact
             buyer: { fieldName: 'custrecord_partner_buyer', type: 'object' }, // List/Record: Contact
             fieldSalesRep: { fieldName: 'custrecord_partner_field_sales_rep', type: 'object' }, // List/Record: Contact
@@ -89,7 +93,8 @@ define('Registration.Model', [
             status: { fieldName: 'custrecord_registration_status', operator: 'is', numberOfValues: 1 }
         },
         joinFields: {
-            status: { idField: 'statusId', nameField: 'statusName' }
+            status: { idField: 'statusId', nameField: 'statusName' },
+            partnerName: { idField: 'partnerId', nameField: 'partnerName' }
         },
         sort: null,
         fieldsets: {
@@ -99,7 +104,12 @@ define('Registration.Model', [
                 'name',
                 'statusId',
                 'statusName',
-                'statusAllowsEdit'
+                'statusAllowsEdit',
+                'approvalDate',
+                'expiryDate',
+                'companyName',
+                'partnerId',
+                'partnerName'
             ],
             details: [
                 'internalid',
@@ -108,6 +118,7 @@ define('Registration.Model', [
                 'statusId',
                 'statusName',
                 'statusAllowsEdit',
+                'partnerId',
                 'partnerName',
                 'additionalInformation',
                 'fieldSalesEngineer',
@@ -209,14 +220,16 @@ define('Registration.Model', [
                 var idField = joinField.idField;
                 var nameField = joinField.nameField;
                 var fields = [idField, nameField];
+                var joined;
                 // if all joinedFields are in fieldset, join them
                 if (_.intersection(fieldset, fields).length === fields.length) {
-                    result[key] = {
+                    joined = {
                         internalid: result[idField],
                         name: result[nameField]
                     };
                     delete result[idField];
                     delete result[nameField];
+                    result[key] = joined;
                 }
             });
         },

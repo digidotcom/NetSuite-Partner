@@ -18,22 +18,22 @@
   @media (min-width: $screen-md-min) {
     .recordviews-actionable-title-header,
     .recordviews-actionable-title {
-      width: 15%;
+      width: auto;
       text-align: left;
     }
     .recordviews-actionable-date-header,
     .recordviews-actionable-date {
-      width: 20%;
+      width: auto;
       text-align: left;
     }
-    .recordviews-actionable-name-header,
-    .recordviews-actionable-name {
-      width: 45%;
+    .recordviews-actionable-text-header,
+    .recordviews-actionable-text {
+      width: auto;
       text-align: left;
     }
     .recordviews-actionable-actions-header,
     .recordviews-actionable-actions {
-      width: 20%;
+      width: auto;
       text-align: right;
     }
   }
@@ -55,8 +55,8 @@
   @extend .recordviews-actionable-date-header;
 }
 
-.registration-list-recordviews-name-header {
-  @extend .recordviews-actionable-name-header;
+.registration-list-recordviews-text-header {
+  @extend .recordviews-actionable-text-header;
 }
 
 .registration-list-recordviews-actions-header {
