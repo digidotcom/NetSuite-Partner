@@ -116,13 +116,6 @@ define('Registration.Details.View', [
                 },
                 {
                     group: 'details',
-                    type: 'longtext',
-                    attribute: 'internalNotes',
-                    label: 'Internal Notes',
-                    required: false
-                },
-                {
-                    group: 'details',
                     type: 'text',
                     attribute: 'lead',
                     label: 'Lead',

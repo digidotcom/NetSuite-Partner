@@ -36,7 +36,6 @@ define('Registration.Model', [
             approvalDate: { fieldName: 'custrecord_registration_approval_date' }, // Date
             expiryDate: { fieldName: 'custrecord_registration_expiry_date' }, // Date
             channelManager: { fieldName: 'custrecord_channel_manager', type: 'object' }, // List/Record: Employee
-            internalNotes: { fieldName: 'custrecord_internal_notes' }, // Long Text
             lead: { fieldName: 'custrecord_lead' }, // Free-form Text
             opportunity: { fieldName: 'custrecord_opportunity', type: 'object' }, // List/Record: Opportunity
             salesRep: { fieldName: 'custrecord_sales_rep', type: 'object' }, // List/Record: Employee
