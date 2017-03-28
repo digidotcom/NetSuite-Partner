@@ -10,13 +10,12 @@ define('Registration.Model', [
     SCModel,
     Application,
     ModelsInit,
-    SearchHelper,
-    RecordHelper
+    SearchHelper
 ) {
     'use strict';
 
-    function stateCountryTempMap(record, v) {
-        var value = record.getFieldText(v.fieldName);
+    function stateCountryTempMap(line, v) {
+        var value = line.getText(v.fieldName);
         return {
             internalid: value,
             name: value
@@ -233,10 +232,13 @@ define('Registration.Model', [
                 }
             });
         },
+        mapResult: function mapResult(result, fieldset) {
+            this.parseJoinObject(result, fieldset);
+        },
         mapResults: function mapResults(results, fieldset) {
             var self = this;
             _(results).each(function reachResult(result) {
-                self.parseJoinObject(result, fieldset);
+                self.mapResult(result, fieldset);
             });
         },
 
@@ -267,12 +269,21 @@ define('Registration.Model', [
         },
 
         get: function get(id) {
-            var record = new RecordHelper()
+            var search;
+            var result;
+            var fieldset = this.fieldsets.details;
+
+            this.filters.push({ fieldName: 'internalid', operator: 'is', value1: id });
+
+            search = new SearchHelper()
                 .setRecord(this.record)
-                .setFields(this.columns)
-                .setFieldset(this.fieldsets.details);
-            record.get(id);
-            return record.getResult();
+                .setFilters(this.filters)
+                .setColumns(this.columns)
+                .setFieldset(fieldset);
+
+            result = search.search().getResult();
+            this.mapResult(result, fieldset);
+            return result;
         },
 
         create: function create(data) {
