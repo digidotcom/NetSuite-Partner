@@ -71,7 +71,7 @@ define('Registration.Router', [
             var view;
             var options = this.parseListOptions(optionsArg);
 
-            collection = new RegistrationCollection({
+            collection = new RegistrationCollection(null, {
                 recordsPerPage: options.show,
                 status: options.status
             });

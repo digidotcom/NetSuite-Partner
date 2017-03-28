@@ -15,7 +15,7 @@ define('Registration.Collection', [
 
         model: RegistrationModel,
 
-        initialize: function initialize(options) {
+        initialize: function initialize(elements, options) {
             this.customFilters = options && options.filters;
             this.recordsPerPage = options && options.recordsPerPage;
             this.status = options && options.status;
