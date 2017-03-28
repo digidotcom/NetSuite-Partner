@@ -1,7 +1,9 @@
 define('Registration.ServiceController', [
+    'underscore',
     'ServiceController',
     'Registration.Model'
 ], function RegistrationServiceController(
+    _,
     ServiceController,
     RegistrationModel
 ) {
@@ -17,19 +19,47 @@ define('Registration.ServiceController', [
             }
         },
 
+        getAllParameters: function getAllParameters() {
+            var parameters = this.request.getAllParameters();
+            var index;
+            var result = {};
+            for (index in parameters) { // eslint-disable-line
+                if (Object.prototype.hasOwnProperty.call(parameters, index)) {
+                    result[index] = parameters[index];
+                }
+            }
+            return result;
+        },
+
+        getListParameters: function getListParameters() {
+            var parameters = this.getAllParameters();
+            var keys = {
+                order: 'order',
+                sort: 'sort',
+                from: 'from',
+                to: 'to',
+                page: 'page',
+                results_per_page: 'resultsPerPage'
+            };
+            var filters = {};
+            var result = {};
+            _(parameters).each(function eachParameter(value, key) {
+                if (key in keys) {
+                    result[keys[key]] = value;
+                } else {
+                    filters[key] = value;
+                }
+            });
+            result.filters = filters;
+            return result;
+        },
+
         get: function get() {
             var id = this.request.getParameter('internalid');
             if (id) {
                 return RegistrationModel.get(id);
             }
-            return RegistrationModel.list({
-                order: this.request.getParameter('order'),
-                sort: this.request.getParameter('sort'),
-                from: this.request.getParameter('from'),
-                to: this.request.getParameter('to'),
-                page: this.request.getParameter('page') || 1,
-                resultsPerPage: this.request.getParameter('results_per_page')
-            });
+            return RegistrationModel.list(this.getListParameters());
         },
 
         post: function post() {

@@ -76,6 +76,9 @@ define('Registration.Model', [
             { fieldName: 'isinactive', operator: 'is', value1: 'F' },
             { fieldName: 'custrecord_partner_customer', operator: 'is', value1: nlapiGetUser() }
         ],
+        filtersDynamic: {
+            status: { fieldName: 'custrecord_registration_status', operator: 'is', numberOfValues: 1 }
+        },
         sort: null,
         fieldsets: {
             list: [
@@ -132,23 +135,53 @@ define('Registration.Model', [
 
         parseListParameters: function parseListParameters() {
             var offset;
+            var self = this;
+            var data = this.data;
+
+            // page number
+            if (!data.page) {
+                data.page = 1;
+            }
 
             // to-from filter
-            if (this.data.from && this.data.to) {
+            if (data.from && data.to) {
                 offset = new Date().getTimezoneOffset() * 60 * 1000;
-                this.filters.push({
+                self.filters.push({
                     fieldName: 'created',
                     operator: 'within',
-                    value1: new Date(parseInt(this.data.from, 10) + offset),
-                    value2: new Date(parseInt(this.data.to, 10) + offset)
+                    value1: new Date(parseInt(data.from, 10) + offset),
+                    value2: new Date(parseInt(data.to, 10) + offset)
+                });
+            }
+
+            // filters
+            if (data.filters) {
+                _(self.filtersDynamic).each(function eachFilterWhitelist(filter, paramName) {
+                    var filterObject;
+                    var value;
+                    if (paramName in data.filters) {
+                        value = data.filters[paramName];
+                        filterObject = {
+                            fieldName: filter.fieldName || paramName,
+                            operator: filter.operator || 'is'
+                        };
+                        if (filter.numberOfValues && filter.numberOfValues === 2) {
+                            value = value.split(',');
+                            filterObject.value1 = value[0];
+                            filterObject.value2 = value[1];
+                        } else {
+                            filterObject.value1 = value;
+                        }
+                        self.filters.push(filterObject);
+                    }
                 });
             }
 
             // sort
-            if (this.data.sort) {
-                this.sort = {
-                    fieldName: this.data.sort,
-                    order: this.data.order >= 0 ? 'asc' : 'desc'
+            if (data.sort) {
+                self.sort = {
+                    fieldName: data.sort,
+                    order: data.order >= 0 ? 'asc' : 'desc'
                 };
             }
         },
