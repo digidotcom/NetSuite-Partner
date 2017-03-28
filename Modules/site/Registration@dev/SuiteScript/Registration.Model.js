@@ -22,6 +22,9 @@ define('Registration.Model', [
             name: value
         };
     }
+    function booleanMap(line, v) {
+        return line.getValue(v.fieldName) === 'T';
+    }
 
     return SCModel.extend({
         name: 'Registration',
@@ -30,9 +33,15 @@ define('Registration.Model', [
         columns: {
             // registration details
             internalid: { fieldName: 'internalid' },
-            name: { fieldName: 'name' },
-            date: { fieldName: 'created' },
-            status: { fieldName: 'custrecord_registration_status', type: 'object' }, // List/Record: Registration Status (List)
+            name: { fieldName: 'name' }, // Free-form Text
+            date: { fieldName: 'created' }, // Date
+            statusId: { fieldName: 'custrecord_registration_status' }, // List/Record: Registration Status
+            statusName: { fieldName: 'custrecord_registration_status_public', joinKey: 'custrecord_registration_status' },  // List/Record: Registration Status
+            statusAllowsEdit: {
+                fieldName: 'custrecord_registration_status_edit',
+                joinKey: 'custrecord_registration_status',
+                applyFunction: booleanMap
+            },  // Checkbox
             approvalDate: { fieldName: 'custrecord_registration_approval_date' }, // Date
             expiryDate: { fieldName: 'custrecord_registration_expiry_date' }, // Date
             channelManager: { fieldName: 'custrecord_channel_manager', type: 'object' }, // List/Record: Employee
@@ -79,17 +88,26 @@ define('Registration.Model', [
         filtersDynamic: {
             status: { fieldName: 'custrecord_registration_status', operator: 'is', numberOfValues: 1 }
         },
+        joinFields: {
+            status: { idField: 'statusId', nameField: 'statusName' }
+        },
         sort: null,
         fieldsets: {
             list: [
                 'internalid',
                 'date',
-                'name'
+                'name',
+                'statusId',
+                'statusName',
+                'statusAllowsEdit'
             ],
             details: [
                 'internalid',
                 'date',
                 'name',
+                'statusId',
+                'statusName',
+                'statusAllowsEdit',
                 'partnerName',
                 'additionalInformation',
                 'fieldSalesEngineer',
@@ -186,8 +204,33 @@ define('Registration.Model', [
             }
         },
 
+        parseJoinObject: function parseJoinObject(result, fieldset) {
+            _(this.joinFields).each(function eachJoinObject(joinField, key) {
+                var idField = joinField.idField;
+                var nameField = joinField.nameField;
+                var fields = [idField, nameField];
+                // if all joinedFields are in fieldset, join them
+                if (_.intersection(fieldset, fields).length === fields.length) {
+                    result[key] = {
+                        internalid: result[idField],
+                        name: result[nameField]
+                    };
+                    delete result[idField];
+                    delete result[nameField];
+                }
+            });
+        },
+        mapResults: function mapResults(results, fieldset) {
+            var self = this;
+            _(results).each(function reachResult(result) {
+                self.parseJoinObject(result, fieldset);
+            });
+        },
+
         list: function list(data) {
             var search;
+            var results;
+            var fieldset = this.fieldsets.list;
 
             this.data = data;
             this.parseListParameters();
@@ -196,7 +239,7 @@ define('Registration.Model', [
                 .setRecord(this.record)
                 .setFilters(this.filters)
                 .setColumns(this.columns)
-                .setFieldset(this.fieldsets.list)
+                .setFieldset(fieldset)
                 .setResultsPerPage(this.data.resultsPerPage)
                 .setPage(this.data.page);
 
@@ -205,7 +248,9 @@ define('Registration.Model', [
                     .setSort(this.sort.fieldName)
                     .setSortOrder(this.sort.order);
             }
-            return search.search().getResultsForListHeader();
+            results = search.search().getResultsForListHeader();
+            this.mapResults(results.records, fieldset);
+            return results;
         },
 
         get: function get(id) {
