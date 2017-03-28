@@ -7,6 +7,7 @@
         "site/Configuration.Site": "dev",
         "site/EFCore.RecordHelper.CRUD": "dev",
         "site/Form": "dev",
+        "site/Header.Site": "dev",
         "site/Heartbeat": "dev",
         "site/Mixin": "dev",
         "site/Registration": "dev",
@@ -17,13 +18,15 @@
             {
                 "entryPoint": "SC.Shopping.Starter",
                 "dependencies": [
-                    {"prepend": "SC.Shopping.Configuration.Site"}
+                    {"prepend": "SC.Shopping.Configuration.Site"},
+                    "Header.Site"
                 ]
             },
             {
                 "entryPoint": "SC.MyAccount.Starter",
                 "dependencies": [
                     {"prepend": "SC.MyAccount.Configuration.Site"},
+                    "Header.Site",
                     "Heartbeat",
                     "Registration"
                 ]
@@ -32,6 +35,7 @@
                 "entryPoint": "SC.Checkout.Starter",
                 "dependencies": [
                     {"prepend": "SC.Checkout.Configuration.Site"},
+                    "Header.Site",
                     "Heartbeat"
                 ]
             }
@@ -50,11 +54,13 @@
                 {
                     "name": "Shopping",
                     "dependencies": [
+                        "Header.Site"
                     ]
                 },
                 {
                     "name": "MyAccount",
                     "dependencies": [
+                        "Header.Site",
                         "Form",
                         "Registration"
                     ]
@@ -62,6 +68,7 @@
                 {
                     "name": "Checkout",
                     "dependencies": [
+                        "Header.Site"
                     ]
                 }
             ]

@@ -31,6 +31,30 @@ define('Registration.Helper', [
         },
         getEditUrl: function getEditUrl(id, noSlash) {
             return slash(noSlash) + this.baseUrl + '/edit/' + id;
+        },
+        getMenuItems: function getMenuItems() {
+            return {
+                id: 'registrations',
+                name: Utils.translate('Registrations'),
+                url: this.getListUrl(true),
+                index: 0,
+                children: [
+                    {
+                        parent: 'registrations',
+                        id: 'registrations_all',
+                        name: Utils.translate('Registrations'),
+                        url: this.getListUrl(true),
+                        index: 1
+                    },
+                    {
+                        parent: 'registrations',
+                        id: 'registrations_new',
+                        name: Utils.translate('New Registration'),
+                        url: this.getNewUrl(true),
+                        qindex: 2
+                    }
+                ]
+            };
         }
     };
 });

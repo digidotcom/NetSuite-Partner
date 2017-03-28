@@ -1,0 +1,11 @@
+.header-menu-profile {
+  .header-menu-myaccount-item-level2 {
+    $margin: $sc-base-padding * 8;
+    width: calc(16.66% - #{$margin} + #{$margin / 6});
+    margin-right: $margin;
+    padding: 0px;
+    &:last-child {
+      margin-right: 0px;
+    }
+  }
+}
