@@ -96,7 +96,7 @@ define('Registration.Details.View', [
                     type: 'text',
                     attribute: 'name',
                     label: 'Name',
-                    required: false
+                    required: true
                 },
                 {
                     group: 'details',
@@ -104,7 +104,7 @@ define('Registration.Details.View', [
                     attribute: 'date',
                     label: 'Date Created',
                     inline: true,
-                    required: false
+                    required: true
                 },
                 {
                     group: 'details',
@@ -140,14 +140,14 @@ define('Registration.Details.View', [
                     type: 'lookup',
                     attribute: 'partnerName',
                     label: 'Partner Name',
-                    required: false
+                    required: true
                 },
                 {
                     group: 'partner',
                     type: 'lookup',
                     attribute: 'fieldSalesEngineer',
                     label: 'Partner Field Sales Engineer',
-                    required: false
+                    required: true
                 },
                 {
                     group: 'partner',
@@ -161,21 +161,21 @@ define('Registration.Details.View', [
                     type: 'lookup',
                     attribute: 'fieldSalesRep',
                     label: 'Partner Field Sales Rep',
-                    required: false
+                    required: true
                 },
                 {
                     group: 'customer',
                     type: 'text',
                     attribute: 'companyName',
                     label: 'Company Name (End Customer/OEM, ODM)',
-                    required: false
+                    required: true
                 },
                 {
                     group: 'customer',
                     type: 'phone',
                     attribute: 'companyMainPhone',
                     label: 'Main Phone',
-                    required: false
+                    required: true
                 },
                 {
                     group: 'customer',
@@ -196,7 +196,7 @@ define('Registration.Details.View', [
                     type: 'text',
                     attribute: 'companyCity',
                     label: 'City',
-                    required: false
+                    required: true
                 },
                 {
                     group: 'customer',
@@ -205,7 +205,7 @@ define('Registration.Details.View', [
                     nodefault: true,
                     attribute: 'companyCountry',
                     label: 'Country',
-                    required: false
+                    required: true
                 },
                 {
                     group: 'customer',
@@ -222,28 +222,28 @@ define('Registration.Details.View', [
                     type: 'number',
                     attribute: 'companyZipCode',
                     label: 'Zip/Postal Code',
-                    required: false
+                    required: true
                 },
                 {
                     group: 'customer',
                     type: 'email',
                     attribute: 'engineerTechnicalContactEmail',
                     label: 'Engineer/Technical Contact Email',
-                    required: false
+                    required: true
                 },
                 {
                     group: 'customer',
                     type: 'text',
                     attribute: 'engineerTechnicalContactName',
                     label: 'Engineer/Technical Contact Name',
-                    required: false
+                    required: true
                 },
                 {
                     group: 'customer',
                     type: 'phone',
                     attribute: 'engineerTechnicalContactPhone',
                     label: 'Engineer/Technical Contact Phone',
-                    required: false
+                    required: true
                 },
                 {
                     group: 'customer',
@@ -299,35 +299,35 @@ define('Registration.Details.View', [
                     type: 'longtext',
                     attribute: 'learnAboutDeal',
                     label: 'How did you learn about this deal?',
-                    required: false
+                    required: true
                 },
                 {
                     group: 'project',
                     type: 'date',
                     attribute: 'productionDate',
                     label: 'Production Date',
-                    required: false
+                    required: true
                 },
                 {
                     group: 'project',
                     type: 'text',
                     attribute: 'projectName',
                     label: 'Project Name',
-                    required: false
+                    required: true
                 },
                 {
                     group: 'project',
                     type: 'longtext',
                     attribute: 'summaryOfApplication',
                     label: 'Summary Of Application',
-                    required: false
+                    required: true
                 },
                 {
                     group: 'project',
                     type: 'date',
                     attribute: 'prototypeEvalDate',
                     label: 'Prototype/Eval Date',
-                    required: false
+                    required: true
                 }
             ]
         },
