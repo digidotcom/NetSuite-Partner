@@ -3,6 +3,7 @@ define('Registration.Router', [
     'Backbone',
     'Utils',
     'AjaxRequestsKiller',
+    'ErrorManagement.ForbiddenError.View',
     'Registration.Helper',
     'Registration.Collection',
     'Registration.Model',
@@ -14,6 +15,7 @@ define('Registration.Router', [
     Backbone,
     Utils,
     AjaxRequestsKiller,
+    ErrorManagementForbiddenErrorView,
     RegistrationHelper,
     RegistrationCollection,
     RegistrationModel,
@@ -27,7 +29,14 @@ define('Registration.Router', [
     return Backbone.Router.extend({
 
         routes: function routesFn() {
+            var self = this;
             var routes = {};
+            var permissions = {
+                list: 'list',
+                'new': 'create',
+                view: 'read',
+                edit: 'update'
+            };
             var urls = {
                 list: RegistrationHelper.getListUrl(true),
                 'new': RegistrationHelper.getNewUrl(true),
@@ -35,8 +44,10 @@ define('Registration.Router', [
                 edit: RegistrationHelper.getEditUrl(':id', true)
             };
             _(urls).each(function eachUrl(url, method) {
-                routes[url] = method;
-                routes[url + '?:options'] = method;
+                if (self.allowRoute(method, permissions)) {
+                    routes[url] = method;
+                    routes[url + '?:options'] = method;
+                }
             });
             return routes;
         },
@@ -65,32 +76,52 @@ define('Registration.Router', [
             return options;
         },
 
+        allowRoute: function allowRoute(method, permissions) {
+            var crudPermissions = RegistrationHelper.getCrudPermissions();
+            return crudPermissions[permissions[method]];
+        },
+
+        allowPage: function allowPage(permission) {
+            var permissions = RegistrationHelper.getCrudPermissions();
+            var view;
+            if (!permissions[permission]) {
+                view = new ErrorManagementForbiddenErrorView();
+                view.options = view.options || {};
+                view.options.application = this.application;
+                view.showContent();
+                return false;
+            }
+            return true;
+        },
+
         list: function list(optionsArg) {
             var collection;
             var statusCollection;
             var view;
             var options = this.parseListOptions(optionsArg);
 
-            collection = new RegistrationCollection(null, {
-                recordsPerPage: options.show,
-                status: options.status
-            });
-            statusCollection = new RegistrationStatusCollection();
-            view = new RegistrationListView(_.extend(options, {
-                application: this.application,
-                collection: collection,
-                statusCollection: statusCollection
-            }));
+            if (this.allowPage('list')) {
+                collection = new RegistrationCollection(null, {
+                    recordsPerPage: options.show,
+                    status: options.status
+                });
+                statusCollection = new RegistrationStatusCollection();
+                view = new RegistrationListView(_.extend(options, {
+                    application: this.application,
+                    collection: collection,
+                    statusCollection: statusCollection
+                }));
 
-            collection.on('reset', view.showContent, view);
-            statusCollection.on('reset', view.refreshStatuses, view);
+                collection.on('reset', view.showContent, view);
+                statusCollection.on('reset', view.refreshStatuses, view);
 
-            statusCollection.fetch({
-                reset: true,
-                killerId: AjaxRequestsKiller.getKillerId()
-            });
+                statusCollection.fetch({
+                    reset: true,
+                    killerId: AjaxRequestsKiller.getKillerId()
+                });
 
-            view.showContent();
+                view.showContent();
+            }
         },
 
         parseDetailsOptions: function parseDetailsOptions(optionsArg) {
@@ -100,19 +131,28 @@ define('Registration.Router', [
         'new': function newFn(optionsArg) {
             var options = this.parseDetailsOptions(optionsArg);
             options.edit = false;
-            this.details(null, options);
+
+            if (this.allowPage('create')) {
+                this.details(null, options);
+            }
         },
 
         view: function view(id, optionsArg) {
             var options = this.parseDetailsOptions(optionsArg);
             options.edit = false;
-            this.details(id, options);
+
+            if (this.allowPage('read')) {
+                this.details(id, options);
+            }
         },
 
         edit: function edit(id, optionsArg) {
             var options = this.parseDetailsOptions(optionsArg);
             options.edit = true;
-            this.details(id, options);
+
+            if (this.allowPage('update')) {
+                this.details(id, options);
+            }
         },
 
         details: function details(id, options) {

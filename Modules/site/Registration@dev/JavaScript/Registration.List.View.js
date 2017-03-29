@@ -214,46 +214,15 @@ define('Registration.List.View', [
         },
 
         getContext: function getContext() {
-            var statuses = [
-                {
-                    name: 'Approved',
-                    value: 'approved',
-                    isActive: false
-                },
-                {
-                    name: 'Expired',
-                    value: 'expired',
-                    isActive: false
-                },
-                {
-                    name: 'Open',
-                    value: '',
-                    isActive: true
-                },
-                {
-                    name: 'Not Submitted',
-                    value: 'notsubmitted',
-                    isActive: false
-                },
-                {
-                    name: 'Pending',
-                    value: 'pending',
-                    isActive: false
-                },
-                {
-                    name: 'Rejected',
-                    value: 'rejected',
-                    isActive: false
-                }
-            ];
+            var permissions = RegistrationHelper.getCrudPermissions();
             return {
                 pageHeader: this.pageHeader,
-                statuses: statuses,
                 collectionLengthGreaterThan0: this.collection.length > 0,
                 isLoading: this.isLoading,
                 showPagination: !!(this.collection.totalRecordsFound && this.collection.recordsPerPage),
                 showCurrentPage: this.options.showCurrentPage,
                 showBackToAccount: true,
+                showNewButton: permissions.create,
                 newUrl: RegistrationHelper.getNewUrl(),
                 allIsActive: this.options.activeTab === 'all',
                 openIsActive: this.options.activeTab === 'open'

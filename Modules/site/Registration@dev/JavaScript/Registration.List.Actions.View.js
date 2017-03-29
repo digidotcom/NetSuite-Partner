@@ -21,6 +21,7 @@ define('Registration.List.Actions.View', [
             var record = this.model.get('record');
             if (record && record.get('internalid')) {
                 return {
+                    isEditEnabled: record.get('statusAllowsEdit'),
                     editUrl: RegistrationHelper.getEditUrl(record.get('internalid'))
                 };
             }

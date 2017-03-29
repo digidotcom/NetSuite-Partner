@@ -14,6 +14,7 @@ define('Form.Config', [
     var defaults = {
         application: null,
         model: null,
+        permissions: {},
         info: {},
         data: {},
         action: 'view'
@@ -41,6 +42,12 @@ define('Form.Config', [
         getDataJSON: function getData() {
             return this.config.dataJSON;
         },
+        getPermissions: function getPermissions() {
+            return this.config.permissions;
+        },
+        setPermissions: function setPermissions(permissions) {
+            this.config.permissions = permissions;
+        },
         getInfo: function getInfo() {
             return this.config.info;
         },
@@ -60,6 +67,19 @@ define('Form.Config', [
         },
         isView: function isView() {
             return this.getAction() === 'view';
+        },
+
+        canList: function canList() {
+            return !!this.getPermissions().list;
+        },
+        canCreate: function canCreate() {
+            return !!this.getPermissions().create;
+        },
+        canView: function canView() {
+            return !!this.getPermissions().view;
+        },
+        canEdit: function canEdit() {
+            return !!this.getPermissions().edit;
         },
 
         parseConfig: function parseData() {

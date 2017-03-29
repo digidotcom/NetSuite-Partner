@@ -36,21 +36,25 @@
     text-align: right;
   }
 }
+%form-actions-button {
+  @extend .button-medium;
+  &:first-child {
+    margin-top: $sc-base-margin * 2;
+  }
+}
 .form-actions-edit {
   @extend .button-primary;
-  @extend .button-medium;
+  @extend %form-actions-button;
 }
 .form-actions-submit {
   @extend .button-primary;
-  @extend .button-medium;
+  @extend %form-actions-button;
 }
 .form-actions-cancel {
   @extend .button-secondary;
-  @extend .button-medium;
-  margin-top: $sc-base-margin * 2;
+  @extend %form-actions-button;
 
   @media (min-width: $screen-sm-min) {
-    margin-left: $sc-base-margin * 2;
     margin-top: 0;
   }
 }

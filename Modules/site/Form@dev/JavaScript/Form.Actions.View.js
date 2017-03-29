@@ -23,17 +23,29 @@ define('Form.Actions.View', [
             var isNew = config.isNew();
             var isEdit = config.isEdit();
             var isView = config.isView();
+            var canList = config.canList();
+            var canCreate = config.canCreate();
+            var canView = config.canView();
+            var canEdit = config.canEdit();
             return {
                 inHeader: this.options.inHeader,
                 newUrl: info.newUrl,
                 editUrl: info.editUrl,
                 viewUrl: info.viewUrl,
-                goBackUrl: info.goBackUrl,
-                showCancelLink: isNew || isEdit,
+                viewAllUrl: info.goBackUrl,
+                showEditLink: (isView && canEdit),
+                showViewAllLink: (isView && canList),
+                showAddButton: (isNew && canCreate),
+                showSaveButton: (isEdit && canEdit),
+                showCancelLink: (isNew && canList) || (isEdit && canView),
                 cancelUrl: isNew || isView ? info.goBackUrl : info.viewUrl,
                 isNew: isNew,
                 isEdit: isEdit,
-                isView: isView
+                isView: isView,
+                canList: canList,
+                canCreate: canCreate,
+                canView: canView,
+                canEdit: canEdit
             };
         }
 

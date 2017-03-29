@@ -349,6 +349,16 @@ define('Registration.Details.View', [
         },
 
         /* Abstract methods implementation */
+        getFormPermissions: function getFormPermissions() {
+            var crudPermissions = RegistrationHelper.getCrudPermissions();
+            var isEditEnabled = this.model.get('statusAllowsEdit');
+            return {
+                list: crudPermissions.list,
+                create: crudPermissions.create,
+                view: crudPermissions.read,
+                edit: crudPermissions.update && isEditEnabled
+            };
+        },
         getFormInfo: function getFormInfo() {
             var id = this.model.get('internalid');
             return {

@@ -15,14 +15,23 @@ define('Registration.Model', [
     'use strict';
 
     function stateCountryTempMap(line, v) {
-        var value = line.getText(v.fieldName);
+        var value = line.getText(
+            v.fieldName,
+            v.joinKey ? v.joinKey : null,
+            v.summary ? v.summary : null
+        );
         return {
             internalid: value,
             name: value
         };
     }
     function booleanMap(line, v) {
-        return line.getValue(v.fieldName) === 'T';
+        var value = line.getValue(
+            v.fieldName,
+            v.joinKey ? v.joinKey : null,
+            v.summary ? v.summary : null
+        );
+        return value === 'T';
     }
 
     return SCModel.extend({

@@ -54,7 +54,7 @@ define('Form', [
             }
         },
         extend: {
-            getAction: function getAction() {
+            getFormAction: function getFormAction() {
                 if (this.isNew()) {
                     return 'new';
                 } else if (this.isEdit()) {
@@ -70,12 +70,14 @@ define('Form', [
                 return new FormConfig({
                     application: this.application || this.options.application,
                     model: this.model,
+                    permissions: this.getFormPermissions(),
                     info: this.getFormInfo(),
                     data: this.getFormData(),
-                    action: this.getAction()
+                    action: this.getFormAction()
                 });
             },
             refreshFormConfig: function refreshFormConfig() {
+                this.formConfig.setPermissions(this.getFormPermissions());
                 this.formConfig.setInfo(this.getFormInfo());
             },
 
@@ -166,6 +168,9 @@ define('Form', [
                 return !this.isNew() && !this.isEdit();
             },
             /* ABSTRACT */
+            getFormPermissions: function getFormPermissions() {
+                throw new Error('Abstract method Form.getFormPermissions needs overriding.');
+            },
             getFormInfo: function getFormInfo() {
                 throw new Error('Abstract method Form.getTitle needs overriding.');
             },
