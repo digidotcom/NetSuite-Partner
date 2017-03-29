@@ -96,15 +96,18 @@ define('Registration.List.View', [
         },
 
         navigateToEntry: function navigateToEntry(e) {
+            var permissions = RegistrationHelper.getCrudPermissions();
             var href;
             var id;
             // ignore clicks on anchors and buttons
             if (Utils.isTargetActionable(e)) {
                 return;
             }
-            id = jQuery(e.target).closest('[data-id]').data('id');
-            href = RegistrationHelper.getViewUrl(id);
-            Backbone.history.navigate(href, { trigger: true });
+            if (permissions.read) {
+                id = jQuery(e.target).closest('[data-id]').data('id');
+                href = RegistrationHelper.getViewUrl(id);
+                Backbone.history.navigate(href, {trigger: true});
+            }
         },
 
         listenCollection: function listenCollection() {
@@ -152,7 +155,9 @@ define('Registration.List.View', [
             },
 
             'ListResults': function RegistrationResults() {
+                var permissions = RegistrationHelper.getCrudPermissions();
                 var recordsCollection = new Backbone.Collection(this.collection.map(function map(model) {
+                    var internalid = model.get('internalid');
                     var status = model.get('status');
                     var partnerName = model.get('partnerName');
                     var columns = [
@@ -195,10 +200,10 @@ define('Registration.List.View', [
                     ];
 
                     return new Backbone.Model({
-                        title: new Handlebars.SafeString(_('<span class="tranid">$(0)</span>').translate(model.get('internalid'))),
+                        title: new Handlebars.SafeString(_('<span class="tranid">$(0)</span>').translate(internalid)),
                         record: model,
                         touchpoint: 'customercenter',
-                        detailsURL: RegistrationHelper.getViewUrl(model.get('internalid')),
+                        detailsURL: permissions.read ? RegistrationHelper.getViewUrl(internalid) : '',
                         id: model.get('internalid'),
                         internalid: model.get('internalid'),
                         columns: columns
@@ -228,8 +233,8 @@ define('Registration.List.View', [
                 showBackToAccount: true,
                 showNewButton: permissions.create,
                 newUrl: RegistrationHelper.getNewUrl(),
-                allIsActive: this.options.activeTab === 'all',
-                openIsActive: this.options.activeTab === 'open'
+                rowsAreClickable: permissions.read,
+                showActionsHeader: permissions.update
             };
         }
     });

@@ -21,11 +21,11 @@
         </div>
     </div>
 
-    <div data-view="ListHeader" {{#if openIsActive}}style="display:none;"{{/if}}></div>
+    <div data-view="ListHeader"></div>
 
     {{#if collectionLengthGreaterThan0}}
         <div class="registration-list-recordviews-container">
-            <table class="registration-list-recordviews-table">
+            <table class="registration-list-recordviews-table {{#if rowsAreClickable}}clickable-rows{{/if}}">
                 <thead class="registration-list-recordviews-header">
                     <tr>
                         <th class="registration-list-recordviews-title-header">
@@ -50,7 +50,7 @@
                             <span>{{translate 'Partner Name'}}</span>
                         </th>
                         <th class="registration-list-recordviews-actions-header">
-                            <span>{{translate 'Actions'}}</span>
+                            {{#if showActionsHeader}}<span>{{translate 'Actions'}}</span>{{/if}}
                         </th>
                     </tr>
                 </thead>

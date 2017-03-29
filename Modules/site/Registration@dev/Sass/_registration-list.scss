@@ -41,6 +41,25 @@
 
 .registration-list-recordviews-table {
   @extend .recordviews-table;
+
+  &:not(.clickable-rows) {
+    .recordviews-actionable-title {
+      a {
+        cursor: default;
+        font-weight: normal;
+        pointer-events: none;
+        color: $sc-color-dark-copy;
+        &:hover {
+          color: $sc-color-dark-copy;
+        }
+      }
+    }
+  }
+  &.clickable-rows {
+    .recordviews-actionable {
+      cursor: pointer;
+    }
+  }
 }
 
 .registration-list-recordviews-header{
@@ -98,9 +117,6 @@
 }
 
 .registration-list{
-  .recordviews-actionable {
-    cursor: pointer;
-  }
   .list-header-view-filters {
     padding-right: 0px;
   }

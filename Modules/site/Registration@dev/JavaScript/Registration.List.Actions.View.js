@@ -18,10 +18,11 @@ define('Registration.List.Actions.View', [
         events: {},
 
         getContext: function getContext() {
+            var permissions = RegistrationHelper.getCrudPermissions();
             var record = this.model.get('record');
             if (record && record.get('internalid')) {
                 return {
-                    isEditEnabled: record.get('statusAllowsEdit'),
+                    isEditEnabled: permissions.update && record.get('statusAllowsEdit'),
                     editUrl: RegistrationHelper.getEditUrl(record.get('internalid'))
                 };
             }
