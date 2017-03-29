@@ -73,6 +73,12 @@ define('Registration.List.View', [
 
             this.listenCollection();
 
+            this.initializeChildViews(options);
+
+            BackboneCompositeView.add(this);
+        },
+
+        initializeChildViews: function initializeChildViews(options) {
             // in initialize to avoid render loop
             this.listHeader = new ListHeaderView({
                 view: this,
@@ -87,8 +93,6 @@ define('Registration.List.View', [
                 collection: this.statusCollection,
                 active: options.status
             });
-
-            BackboneCompositeView.add(this);
         },
 
         navigateToEntry: function navigateToEntry(e) {
