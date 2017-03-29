@@ -82,6 +82,12 @@ define('Form.Config', [
             return !!this.getPermissions().edit;
         },
 
+        canAccess: function canAccess() {
+            return (this.isNew() && this.canCreate()) ||
+                   (this.isView() && this.canView()) ||
+                   (this.isEdit() && this.canEdit());
+        },
+
         parseConfig: function parseData() {
             var config = this.getConfig();
             var data = config.data;

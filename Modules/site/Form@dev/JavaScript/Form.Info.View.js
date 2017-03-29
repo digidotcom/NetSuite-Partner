@@ -35,6 +35,7 @@ define('Form.Info.View', [
             var config = this.config;
             var info = config.getInfo();
             return {
+                showContent: this.config.canAccess(),
                 title: info.title,
                 description: info.description
             };

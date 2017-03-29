@@ -43,6 +43,7 @@ define('Form.Field.View', [
             var isView = config.isView();
             var context = {
                 model: model,
+                showContent: config.canAccess(),
                 type: model.get('type'),
                 attribute: model.get('attribute'),
                 label: model.get('label'),

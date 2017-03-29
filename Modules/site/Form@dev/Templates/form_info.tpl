@@ -1,4 +1,5 @@
 <div class="form-info">
+{{#if showContent}}
     <div class="form-info-header">
         {{#if title}}
         <div class="form-info-header-title">
@@ -12,4 +13,5 @@
             <p>{{description}}</p>
         {{/if}}
     </div>
+{{/if}}
 </div>

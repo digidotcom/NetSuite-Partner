@@ -1,4 +1,5 @@
 <div class="form-fields form-fields-longtext" data-input="{{attribute}}" data-validation="control-group">
+{{#if showContent}}
     <label class="form-fields-label" for="{{attribute}}">
         {{translate label}}
         {{#unless showInline}}
@@ -28,4 +29,5 @@
             {{/if}}
         {{/if}}
     </div>
+{{/if}}
 </div>

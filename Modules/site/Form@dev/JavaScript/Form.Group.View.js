@@ -34,6 +34,7 @@ define('Form.Group.View', [
         getContext: function getContext() {
             var model = this.model;
             return {
+                showContent: this.config.canAccess(),
                 id: model.get('id'),
                 name: model.get('name'),
                 isMainGroup: !model.get('name')

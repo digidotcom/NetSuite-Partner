@@ -45,7 +45,9 @@ define('Form.View', [
         },
 
         getContext: function getContext() {
-            return {};
+            return {
+                showContent: this.config.canAccess()
+            };
         }
 
     });

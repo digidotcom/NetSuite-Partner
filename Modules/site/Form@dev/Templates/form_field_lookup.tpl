@@ -1,4 +1,5 @@
 <div class="form-fields form-fields-lookup" data-input="{{attribute}}" data-validation="control-group">
+{{#if showContent}}
     <label class="form-fields-label" for="{{attribute}}{{nameFieldSuffix}}">
         {{translate label}}
         {{#unless showInline}}
@@ -30,4 +31,5 @@
             {{/if}}
         {{/if}}
     </div>
+{{/if}}
 </div>

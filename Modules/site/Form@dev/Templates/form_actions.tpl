@@ -1,4 +1,5 @@
 <section class="form-actions {{#if inHeader}}in-header{{/if}}">
+{{#if showContent}}
     {{#if showEditLink}}
         <a href="{{editUrl}}" class="form-actions-edit">
             {{translate 'Edit'}}
@@ -24,4 +25,5 @@
             {{translate 'Cancel'}}
         </a>
     {{/if}}
+{{/if}}
 </section>
