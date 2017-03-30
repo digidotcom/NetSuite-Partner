@@ -118,28 +118,31 @@ define('Form', [
                     var suffix = self.formConfig.getFieldDisplaySuffix();
                     var attribute = field.attribute;
                     var required = field.required;
+                    var inline = field.inline;
                     var type = field.type;
                     var validations = {};
-                    if (required) {
-                        _(validations).extend({
-                            required: true,
-                            msg: Utils.translate('$(0) is required.', field.label)
-                        });
-                    }
-                    if (type === 'email') {
-                        _(validations).extend({
-                            pattern: 'email',
-                            msg: Utils.translate('Valid email is required.')
-                        });
-                    } else if (type === 'phone') {
-                        _(validations).extend({
-                            fn: function validatePhone(phone) {
-                                if (!required && !phone) {
-                                    return null;
+                    if (!inline) {
+                        if (required) {
+                            _(validations).extend({
+                                required: true,
+                                msg: Utils.translate('$(0) is required.', field.label)
+                            });
+                        }
+                        if (type === 'email') {
+                            _(validations).extend({
+                                pattern: 'email',
+                                msg: Utils.translate('Valid email is required.')
+                            });
+                        } else if (type === 'phone') {
+                            _(validations).extend({
+                                fn: function validatePhone(phone) {
+                                    if (!required && !phone) {
+                                        return null;
+                                    }
+                                    return Utils.validatePhone(phone);
                                 }
-                                return Utils.validatePhone(phone);
-                            }
-                        });
+                            });
+                        }
                     }
                     if (_(validations).size() > 0) {
                         model.validation[attribute] = _(model.validation[attribute] || {}).extend(validations);

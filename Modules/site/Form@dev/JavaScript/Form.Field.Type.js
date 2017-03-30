@@ -1,6 +1,7 @@
 define('Form.Field.Type', [
     'underscore',
     'SC.Configuration',
+    'Form.Field.Lists',
     'form_field.tpl',
     'form_field_text.tpl',
     'form_field_longtext.tpl',
@@ -9,6 +10,7 @@ define('Form.Field.Type', [
 ], function FormFieldTypeModule(
     _,
     Configuration,
+    FormFieldLists,
     formFieldTpl,
     formFieldTextTpl,
     formFieldLongTextTpl,
@@ -83,17 +85,25 @@ define('Form.Field.Type', [
             return [];
         },
         getListOptions: function getListOptions() {
-            var list = this.model.get('list');
+            var modelField = this.model;
+            var modelForm = this.config.model;
+            var relatedAttribute;
+            var relatedAttributeValue;
+            var list = modelField.get('list');
             if (_.isObject(list)) {
                 return _.values(list);
             } else if (_.isString(list)) {
                 if (list === 'countries') {
-                    return this.getListCountries();
+                    return FormFieldLists.getCountries();
                 } else if (list === 'states') {
-                    return this.getListStates('US');
+                    relatedAttribute = modelField.get('relatedAttribute');
+                    relatedAttributeValue = modelForm.get(relatedAttribute);
+                    if (relatedAttributeValue) {
+                        return FormFieldLists.getStates(relatedAttributeValue);
+                    }
                 }
             }
-            return list || [];
+            return [];
         },
 
         getContextAdditions: function getContextAdditions() {
@@ -108,18 +118,17 @@ define('Form.Field.Type', [
                 inputType: this.getInputType(),
                 isInlineEmpty: isInline && !fieldValue
             };
-            if (this.type === 'list') {
-                context.options = this.getListOptions();
-                context.hideDefaultOption = !!modelField.get('nodefault');
-            }
-            switch (this.type) {
-            case 'list':
-            case 'lookup':
+            if (this.type === 'list' || this.type === 'lookup') {
                 context.nameFieldSuffix = displaySuffix;
                 context.selectedValue = fieldValue;
                 context.selectedName = fieldValueDisplay;
-                break;
-            default:
+                if (this.type === 'list') {
+                    context.options = this.getListOptions();
+                    context.list = modelField.get('list');
+                    context.relatedAttribute = modelField.get('relatedAttribute');
+                    context.hideDefaultOption = !!modelField.get('nodefault');
+                }
+            } else {
                 context.value = fieldValue;
             }
             return context;

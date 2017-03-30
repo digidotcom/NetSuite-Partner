@@ -227,6 +227,7 @@ define('Registration.Details.View', [
                     group: 'customer',
                     type: 'list',
                     list: 'states',
+                    relatedAttribute: 'companyCountry',
                     nodefault: false,
                     attribute: 'companyState',
                     label: 'State',

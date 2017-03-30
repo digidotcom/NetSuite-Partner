@@ -1,4 +1,6 @@
+{{#unless isRerendering}}
 <div class="form-fields form-fields-text form-fields-text-{{type}}" data-input="{{attribute}}" data-validation="control-group">
+{{/unless}}
 {{#if showContent}}
     <label class="form-fields-label" for="{{attribute}}">
         {{translate label}}
@@ -30,4 +32,6 @@
         {{/if}}
     </div>
 {{/if}}
+{{#unless isRerendering}}
 </div>
+{{/unless}}

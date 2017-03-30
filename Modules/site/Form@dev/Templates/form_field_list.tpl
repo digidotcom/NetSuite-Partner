@@ -1,4 +1,6 @@
+{{#unless isRerendering}}
 <div class="form-fields form-fields-list" data-input="{{attribute}}" data-validation="control-group">
+{{/unless}}
 {{#if showContent}}
     <label class="form-fields-label" for="{{attribute}}">
         {{translate label}}
@@ -23,12 +25,12 @@
                 {{/if}}
             </p>
         {{else}}
-            <select class="form-fields-input" id="{{attribute}}" name="{{attribute}}" data-value="{{selectedValue}}">
+            <select class="form-fields-input" id="{{attribute}}" name="{{attribute}}" data-value="{{selectedValue}}" {{#if list}}data-list="{{list}}"{{/if}} {{#if relatedAttribute}}data-related-attribute="{{relatedAttribute}}"{{/if}}>
                 {{#unless hideDefaultOption}}
                 <option value=""></option>
                 {{/unless}}
                 {{#each options}}
-                <option value="{{value}}">{{name}}</option>
+                <option value="{{value}}" {{#if code}}data-code="{{code}}"{{/if}}>{{name}}</option>
                 {{/each}}
             </select>
             {{#if help}}
@@ -37,4 +39,6 @@
         {{/if}}
     </div>
 {{/if}}
+{{#unless isRerendering}}
 </div>
+{{/unless}}

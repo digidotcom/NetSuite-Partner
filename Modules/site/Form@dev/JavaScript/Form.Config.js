@@ -88,6 +88,31 @@ define('Form.Config', [
                    (this.isEdit() && this.canEdit());
         },
 
+        getDependentFields: function getDependentFields(attribute) {
+            var data = this.getDataJSON();
+            var dependentFields = this.dependentFields;
+            if (!dependentFields) {
+                dependentFields = {};
+                _(data.fields).each(function filterField(field) {
+                    var relatedAttribute = field.relatedAttribute;
+                    if (relatedAttribute) {
+                        if (!(relatedAttribute in dependentFields)) {
+                            dependentFields[relatedAttribute] = [];
+                        }
+                        dependentFields[relatedAttribute].push(field.attribute);
+                    }
+                });
+                this.dependentFields = dependentFields;
+            }
+            if (attribute) {
+                if (attribute in dependentFields) {
+                    return dependentFields[attribute];
+                }
+                return [];
+            }
+            return dependentFields;
+        },
+
         parseConfig: function parseData() {
             var config = this.getConfig();
             var data = config.data;
