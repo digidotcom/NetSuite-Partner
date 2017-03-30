@@ -106,7 +106,7 @@ define('Registration.List.View', [
             if (permissions.read) {
                 id = jQuery(e.target).closest('[data-id]').data('id');
                 href = RegistrationHelper.getViewUrl(id);
-                Backbone.history.navigate(href, {trigger: true});
+                Backbone.history.navigate(href, { trigger: true });
             }
         },
 
