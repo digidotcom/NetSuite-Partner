@@ -45,10 +45,13 @@ define('Form.Field.Lists', [
                 });
                 this.statesPerCountry = statesPerCountry;
             }
-            if (countryName && (countryName in statesPerCountry)) {
-                return statesPerCountry[countryName];
+            if (countryName) {
+                if (countryName in statesPerCountry) {
+                    return statesPerCountry[countryName];
+                }
+                return false;
             }
-            return false;
+            return [];
         }
     };
 });

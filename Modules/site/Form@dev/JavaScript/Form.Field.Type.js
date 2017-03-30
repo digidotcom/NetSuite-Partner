@@ -63,44 +63,21 @@ define('Form.Field.Type', [
             }
         },
 
-        getListCountries: function getListCountries() {
-            var countries = Configuration.get('siteSettings.countries');
-            return _(countries).map(function mapCountries(country) {
-                return {
-                    value: country.name,
-                    name: country.name
-                };
-            });
-        },
-        getListStates: function getListStates(country) {
-            var countries = Configuration.get('siteSettings.countries');
-            if (countries && countries[country] && countries[country].states) {
-                return _(countries[country].states).map(function mapStates(state) {
-                    return {
-                        value: state.name,
-                        name: state.name
-                    };
-                });
-            }
-            return [];
-        },
         getListOptions: function getListOptions() {
             var modelField = this.model;
             var modelForm = this.config.model;
-            var relatedAttribute;
-            var relatedAttributeValue;
+            var relatedAttribute = modelField.get('relatedAttribute');
+            var relatedAttributeValue = relatedAttribute ? modelForm.get(relatedAttribute) : null;
             var list = modelField.get('list');
-            if (_.isObject(list)) {
+            if (_.isFunction(list)) {
+                return list(relatedAttributeValue, this);
+            } else if (_.isObject(list)) {
                 return _.values(list);
             } else if (_.isString(list)) {
                 if (list === 'countries') {
                     return FormFieldLists.getCountries();
-                } else if (list === 'states') {
-                    relatedAttribute = modelField.get('relatedAttribute');
-                    relatedAttributeValue = modelForm.get(relatedAttribute);
-                    if (relatedAttributeValue) {
-                        return FormFieldLists.getStates(relatedAttributeValue);
-                    }
+                } else if (list === 'states' && relatedAttributeValue) {
+                    return FormFieldLists.getStates(relatedAttributeValue);
                 }
             }
             return [];
