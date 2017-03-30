@@ -25,6 +25,9 @@
                 {{/if}}
             </p>
         {{else}}
+            {{#if showAsTextField}}
+            <input type="text" class="form-fields-input" id="{{attribute}}" name="{{attribute}}" data-value="{{selectedValue}}" {{#if list}}data-list="{{list}}"{{/if}} {{#if relatedAttribute}}data-related-attribute="{{relatedAttribute}}"{{/if}} />
+            {{else}}
             <select class="form-fields-input" id="{{attribute}}" name="{{attribute}}" data-value="{{selectedValue}}" {{#if list}}data-list="{{list}}"{{/if}} {{#if relatedAttribute}}data-related-attribute="{{relatedAttribute}}"{{/if}}>
                 {{#unless hideDefaultOption}}
                 <option value=""></option>
@@ -33,6 +36,7 @@
                 <option value="{{value}}" {{#if code}}data-code="{{code}}"{{/if}}>{{name}}</option>
                 {{/each}}
             </select>
+            {{/if}}
             {{#if help}}
             <p class="form-fields-input-help">{{{translate help}}}</p>
             {{/if}}

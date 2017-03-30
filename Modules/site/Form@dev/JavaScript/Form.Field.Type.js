@@ -64,11 +64,13 @@ define('Form.Field.Type', [
         },
 
         getListOptions: function getListOptions() {
+            var states;
             var modelField = this.model;
             var modelForm = this.config.model;
             var relatedAttribute = modelField.get('relatedAttribute');
             var relatedAttributeValue = relatedAttribute ? modelForm.get(relatedAttribute) : null;
             var list = modelField.get('list');
+            this.showAsTextField = false;
             if (_.isFunction(list)) {
                 return list(relatedAttributeValue, this);
             } else if (_.isObject(list)) {
@@ -76,8 +78,10 @@ define('Form.Field.Type', [
             } else if (_.isString(list)) {
                 if (list === 'countries') {
                     return FormFieldLists.getCountries();
-                } else if (list === 'states' && relatedAttributeValue) {
-                    return FormFieldLists.getStates(relatedAttributeValue);
+                } else if (list === 'states') {
+                    states = FormFieldLists.getStates(relatedAttributeValue);
+                    this.showAsTextField = (states.length === 0);
+                    return states;
                 }
             }
             return [];
@@ -101,6 +105,7 @@ define('Form.Field.Type', [
                 context.selectedName = fieldValueDisplay;
                 if (this.type === 'list') {
                     context.options = this.getListOptions();
+                    context.showAsTextField = this.showAsTextField; // important to be after this.getListOptions()
                     context.list = modelField.get('list');
                     context.relatedAttribute = modelField.get('relatedAttribute');
                     context.hideDefaultOption = !!modelField.get('nodefault');
