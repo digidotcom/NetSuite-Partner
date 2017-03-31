@@ -1,0 +1,26 @@
+.form-info{
+}
+
+.form-info-header {
+  @extend .row;
+  margin-bottom: $sc-base-margin * 8;
+}
+
+.form-info-header-title {
+  @extend .col-xs-12;
+  @extend .col-sm-7;
+}
+
+.form-info-header-title-heading {
+  line-height: 40px;
+}
+
+.form-info-header-actions {
+  @extend .col-xs-12;
+  &.has-title {
+    @extend .col-sm-5;
+  }
+}
+
+.form-info-body {
+}
