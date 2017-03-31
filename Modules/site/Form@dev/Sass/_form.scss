@@ -38,8 +38,10 @@
 }
 %form-actions-button {
   @extend .button-medium;
-  &:first-child {
-    margin-top: $sc-base-margin * 2;
+  margin-bottom: $sc-base-margin * 2;
+  vertical-align: text-top;
+  &:last-child {
+    margin-bottom: 0;
   }
 }
 .form-actions-edit {
@@ -53,10 +55,6 @@
 .form-actions-cancel {
   @extend .button-secondary;
   @extend %form-actions-button;
-
-  @media (min-width: $screen-sm-min) {
-    margin-top: 0;
-  }
 }
 
 /* GROUPS */
