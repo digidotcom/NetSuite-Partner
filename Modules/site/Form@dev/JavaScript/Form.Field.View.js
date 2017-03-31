@@ -3,6 +3,7 @@ define('Form.Field.View', [
     'Backbone',
     'jQuery',
     'Form.Field.Type',
+    'Form.Lookup',
     'form_field.tpl',
     'form_field_text.tpl',
     'form_field_longtext.tpl',
@@ -13,6 +14,7 @@ define('Form.Field.View', [
     Backbone,
     jQuery,
     FormFieldType,
+    FormLookup,
     formFieldTpl
 ) {
     'use strict';
@@ -20,7 +22,8 @@ define('Form.Field.View', [
     return Backbone.View.extend({
 
         events: {
-            'change :input': 'notifyDependentFields'
+            'change :input': 'notifyDependentFields',
+            'click [data-lookup-trigger]': 'triggerLookup'
         },
 
         template: formFieldTpl,
@@ -29,6 +32,7 @@ define('Form.Field.View', [
             this.config = options.config;
             this.setupType();
             this.bindListenToRelatedAttribute();
+            this.initializeLookup();
         },
 
         destroy: function destroy(softDestroy) {
@@ -73,6 +77,27 @@ define('Form.Field.View', [
             if (relatedAttribute) {
                 jQuery(window).off('formRelatedAttributeChange.' + relatedAttribute);
             }
+        },
+
+        initializeLookup: function initializeLookup() {
+            this.lookup = new FormLookup({
+                fieldView: this,
+                application: this.config.application,
+                config: this.config
+            });
+        },
+        triggerLookup: function triggerLookup() {
+            var displaySuffix = this.config.getFieldDisplaySuffix();
+            var type = this.model.get('type');
+            var attribute = this.model.get('attribute');
+            var query;
+            if (type === 'lookup') {
+                query = this.$('[name="' + attribute + displaySuffix + '"]').val();
+                this.lookup.search(query);
+            }
+        },
+        handleLookupResponse: function handleLookupResponse(selectedModel) {
+            console.log(selectedModel);
         },
 
         getContext: function getContext() {

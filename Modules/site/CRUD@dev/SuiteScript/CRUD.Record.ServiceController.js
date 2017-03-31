@@ -1,12 +1,12 @@
 define('CRUD.Record.ServiceController', [
     'underscore',
     'ServiceController',
-    'CRUD.Configuration',
+    'CRUD.Utils',
     'CRUD.Record.Model'
 ], function CrudRecordServiceController(
     _,
     ServiceController,
-    CrudConfiguration,
+    CrudUtils,
     CrudRecordModel
 ) {
     'use strict';
@@ -21,69 +21,23 @@ define('CRUD.Record.ServiceController', [
             }
         },
 
-        validateCrudId: function validateCrudId(crudId) {
-            if (!crudId || !CrudConfiguration.isValid(crudId)) {
-                throw badRequestError;
-            }
-        },
-        validateId: function validateId(id) {
-            if (!id) {
-                throw badRequestError;
-            }
-        },
-
-        getAllParameters: function getAllParameters() {
-            var parameters = this.request.getAllParameters();
-            var index;
-            var result = {};
-            for (index in parameters) { // eslint-disable-line
-                if (Object.prototype.hasOwnProperty.call(parameters, index)) {
-                    result[index] = parameters[index];
-                }
-            }
-            return result;
-        },
-
-        getListParameters: function getListParameters() {
-            var parameters = this.getAllParameters();
-            var keys = {
-                order: 'order',
-                sort: 'sort',
-                from: 'from',
-                to: 'to',
-                page: 'page',
-                results_per_page: 'resultsPerPage'
-            };
-            var filters = {};
-            var result = {};
-            _(parameters).each(function eachParameter(value, key) {
-                if (key in keys) {
-                    result[keys[key]] = value;
-                } else {
-                    filters[key] = value;
-                }
-            });
-            result.filters = filters;
-            return result;
-        },
-
         get: function get() {
             var crudId = this.request.getParameter('id');
             var id = this.request.getParameter('internalid');
 
-            this.validateCrudId(crudId);
+            CrudUtils.validateCrudId(crudId);
 
             if (id) {
                 return CrudRecordModel.get(crudId, id);
             }
-            return CrudRecordModel.list(crudId, this.getListParameters());
+            return CrudRecordModel.list(crudId, CrudUtils.getListParameters());
         },
 
         post: function post() {
             var crudId = this.request.getParameter('id');
             var id;
 
-            this.validateCrudId(crudId);
+            CrudUtils.validateCrudId(crudId);
 
             id = CrudRecordModel.create(crudId, this.data);
             this.sendContent(CrudRecordModel.get(crudId, id), { status: 201 });
@@ -93,8 +47,8 @@ define('CRUD.Record.ServiceController', [
             var crudId = this.request.getParameter('id');
             var id = this.request.getParameter('internalid');
 
-            this.validateCrudId(crudId);
-            this.validateId(id);
+            CrudUtils.validateCrudId(crudId);
+            CrudUtils.validateId(id);
 
             CrudRecordModel.update(crudId, id, this.data);
             return CrudRecordModel.get(crudId, id);

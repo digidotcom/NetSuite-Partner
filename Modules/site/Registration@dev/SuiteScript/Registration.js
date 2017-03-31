@@ -1,8 +1,7 @@
 define('Registration', [
     'CRUD',
     'Registration.Configuration',
-    'Registration.Status.Configuration',
-    'Registration.Status.ServiceController'
+    'Registration.Status.Configuration'
 ], function Registration(
     Crud,
     RegistrationConfiguration,

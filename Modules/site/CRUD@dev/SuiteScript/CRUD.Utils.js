@@ -1,7 +1,9 @@
 define('CRUD.Utils', [
-    'underscore'
+    'underscore',
+    'CRUD.Configuration'
 ], function CrudUtils(
-    _
+    _,
+    CrudConfiguration
 ) {
     'use strict';
 
@@ -89,7 +91,53 @@ define('CRUD.Utils', [
                     order: data.order >= 0 ? 'asc' : 'desc'
                 };
             }
-        }
+        },
 
+
+        validateCrudId: function validateCrudId(crudId) {
+            if (!crudId || !CrudConfiguration.isValid(crudId)) {
+                throw badRequestError;
+            }
+        },
+        validateId: function validateId(id) {
+            if (!id) {
+                throw badRequestError;
+            }
+        },
+
+        getAllParameters: function getAllParameters() {
+            var parameters = this.request.getAllParameters();
+            var index;
+            var result = {};
+            for (index in parameters) { // eslint-disable-line
+                if (Object.prototype.hasOwnProperty.call(parameters, index)) {
+                    result[index] = parameters[index];
+                }
+            }
+            return result;
+        },
+
+        getListParameters: function getListParameters() {
+            var parameters = this.getAllParameters();
+            var keys = {
+                order: 'order',
+                sort: 'sort',
+                from: 'from',
+                to: 'to',
+                page: 'page',
+                results_per_page: 'resultsPerPage'
+            };
+            var filters = {};
+            var result = {};
+            _(parameters).each(function eachParameter(value, key) {
+                if (key in keys) {
+                    result[keys[key]] = value;
+                } else {
+                    filters[key] = value;
+                }
+            });
+            result.filters = filters;
+            return result;
+        }
     };
 });
