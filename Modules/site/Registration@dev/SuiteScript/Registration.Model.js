@@ -14,7 +14,7 @@ define('Registration.Model', [
 ) {
     'use strict';
 
-    function stateCountryTempMap(line, v) {
+    function sameIdName(line, v) {
         var value = line.getText(
             v.fieldName,
             v.joinKey ? v.joinKey : null,
@@ -79,8 +79,8 @@ define('Registration.Model', [
             companyAddress: { fieldName: 'custrecord_company_address' }, // Free-form Text
             companyAddress2: { fieldName: 'custrecord_company_address2' }, // Free-form Text
             companyCity: { fieldName: 'custrecord_company_city' }, // Free-form Text
-            companyCountry: { fieldName: 'custrecord_company_country', type: 'object', applyFunction: stateCountryTempMap }, // List/Record: Country
-            companyState: { fieldName: 'custrecord_company_state', type: 'object', applyFunction: stateCountryTempMap }, // List/Record: State
+            companyCountry: { fieldName: 'custrecord_company_country', type: 'object', applyFunction: sameIdName }, // List/Record: Country
+            companyState: { fieldName: 'custrecord_company_state', type: 'object', applyFunction: sameIdName }, // List/Record: State
             companyZipCode: { fieldName: 'custrecord_country_zipcode' }, // Free-form Text
             engineerTechnicalContactEmail: { fieldName: 'custrecord_engr_contact_email' }, // Email Address
             engineerTechnicalContactName: { fieldName: 'custrecord_engr_contact_name' }, // Free-form Text

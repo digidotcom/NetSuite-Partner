@@ -8,6 +8,9 @@
         ],
         "templates": [
             "Templates/**/*.tpl"
+        ],
+        "ssp-libraries": [
+            "SuiteScript/**/*.js"
         ]
     }
 }

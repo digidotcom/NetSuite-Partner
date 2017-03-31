@@ -16,19 +16,25 @@ define('Form.Config', [
         model: null,
         permissions: {},
         info: {},
-        data: {},
+        id: null,
         action: 'view'
     };
 
     function FormConfig(settings) {
         this.defaults = defaults;
         this.config = _(settings).defaults(defaults);
+        this.config.data = this.getDataFromPublished(settings.id);
         this.application = this.config.application;
         this.model = this.config.model;
         this.parseConfig();
     }
 
     _(FormConfig.prototype).extend({
+
+        getDataFromPublished: function getDataFromPublished(formId) {
+            var formConfigurationPublished = SC.getPublishedObject('FormConfiguration') || {};
+            return formConfigurationPublished[formId] || {};
+        },
 
         getConfig: function getDataJSON() {
             return this.config;

@@ -44,8 +44,7 @@
             "dependencies": [
                 "Configuration.Site",
                 "Heartbeat.ServiceController",
-                "Registration.ServiceController",
-                "Registration.Status.ServiceController",
+                "Registration",
                 "ServiceController.Validations.RequireSecureFix"
             ]
         },

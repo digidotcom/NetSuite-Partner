@@ -5,6 +5,8 @@ define('Registration.Helper', [
 ) {
     'use strict';
 
+    var publishedConfiguration = SC.getPublishedObject('RegistrationConfiguration');
+
     function slash(noSlash) {
         return noSlash ? '' : '/';
     }
@@ -16,6 +18,9 @@ define('Registration.Helper', [
         statusParamKey: 'status',
         statusAllName: 'All',
         statusServiceUrl: Utils.getAbsoluteUrl('services/Registration.Status.Service.ss'),
+        getConfiguration: function getConfiguration() {
+            return publishedConfiguration;
+        },
         getServiceUrl: function getServiceUrl(absolute) {
             var url = this.serviceUrl;
             return absolute ? Utils.getAbsoluteUrl(url) : url;

@@ -62,9 +62,12 @@ define('Form', [
                 }
                 return 'view';
             },
-            getFormData: function getConfig() {
-                // run this.form if function, or get it if object
-                return jQuery.extend(true, {}, _.result(this, 'formData'));
+            getFormId: function getFormId() {
+                var formId = this.formId;
+                if (!formId) {
+                    throw new Error('Form id not found in property "formId".');
+                }
+                return formId;
             },
             getFormConfig: function getFormConfig() {
                 return new FormConfig({
@@ -72,7 +75,7 @@ define('Form', [
                     model: this.model,
                     permissions: this.getFormPermissions(),
                     info: this.getFormInfo(),
-                    data: this.getFormData(),
+                    id: this.getFormId(),
                     action: this.getFormAction()
                 });
             },
@@ -81,7 +84,11 @@ define('Form', [
                 this.formConfig.setInfo(this.getFormInfo());
             },
 
+            parseMixinOptions: function parseMixinOptions() {
+                _(this).extend(this.mixinOptions);
+            },
             prepareForForm: function prepareForForm() {
+                this.parseMixinOptions();
                 this.formConfig = this.getFormConfig();
                 this.mapListRecordFields();
                 this.defineValidation();
