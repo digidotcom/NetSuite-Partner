@@ -43,8 +43,10 @@ define('Registration.Model', [
             internalid: { fieldName: 'internalid' },
             name: { fieldName: 'name' }, // Free-form Text
             date: { fieldName: 'created' }, // Date
+
             statusId: { fieldName: 'custrecord_registration_status' }, // List/Record: Registration Status
             statusName: { fieldName: 'custrecord_registration_status_public', joinKey: 'custrecord_registration_status' },  // List/Record: Registration Status
+
             statusAllowsEdit: {
                 fieldName: 'custrecord_registration_status_edit',
                 joinKey: 'custrecord_registration_status',
@@ -58,14 +60,19 @@ define('Registration.Model', [
             salesRep: { fieldName: 'custrecord_sales_rep', type: 'object' }, // List/Record: Employee
             // partner details
             customer: { fieldName: 'custrecord_partner_customer', type: 'object' },
+
             partnerId: { fieldName: 'custrecord_partner_name' }, // List/Record: Account
-            partnerName: { // List/Record: Account
-                fieldName: 'description',
-                joinKey: 'custrecord_partner_name'
-            },
-            fieldSalesEngineer: { fieldName: 'custrecord_partner_field_sales_engr', type: 'object' }, // List/Record: Contact
-            buyer: { fieldName: 'custrecord_partner_buyer', type: 'object' }, // List/Record: Contact
-            fieldSalesRep: { fieldName: 'custrecord_partner_field_sales_rep', type: 'object' }, // List/Record: Contact
+            partnerName: { fieldName: 'description', joinKey: 'custrecord_partner_name' },  // List/Record: Account
+
+            fieldSalesEngineerId: { fieldName: 'custrecord_partner_field_sales_engr' }, // List/Record: Contact
+            fieldSalesEngineerName: { fieldName: 'entityid', joinKey: 'custrecord_partner_field_sales_engr' }, // List/Record: Contact
+
+            buyerId: { fieldName: 'custrecord_partner_buyer' }, // List/Record: Contact
+            buyerName: { fieldName: 'entityid', joinKey: 'custrecord_partner_buyer' }, // List/Record: Contact
+
+            fieldSalesRepId: { fieldName: 'custrecord_partner_field_sales_rep' }, // List/Record: Contact
+            fieldSalesRepName: { fieldName: 'entityid', joinKey: 'custrecord_partner_field_sales_rep' }, // List/Record: Contact
+
             // end customer details
             companyName: { fieldName: 'custrecord_company_name' }, // Free-form Text
             companyMainPhone: { fieldName: 'custrecord_company_main_phone' }, // Phone Number
@@ -79,7 +86,10 @@ define('Registration.Model', [
             engineerTechnicalContactName: { fieldName: 'custrecord_engr_contact_name' }, // Free-form Text
             engineerTechnicalContactPhone: { fieldName: 'custrecord_engr_contact_phone' }, // Phone Number
             customerLocation: { fieldName: 'custrecord_customer_location' }, // Free-form Text
-            endCustomerAccount: { fieldName: 'custrecord_end_customer_account', type: 'object' }, // List/Record: Account
+
+            endCustomerAccountId: { fieldName: 'custrecord_end_customer_account' }, // List/Record: Account
+            endCustomerAccountName: { fieldName: 'description', joinKey: 'custrecord_end_customer_account' }, // List/Record: Account
+
             // supply chain
             contractManufacturer: { fieldName: 'custrecord_contract_manufacturer' }, // Free-form Text
             developmentDesignConsultant: { fieldName: 'custrecord_development_design_consultant' }, // Free-form Text
@@ -102,7 +112,11 @@ define('Registration.Model', [
         },
         joinFields: {
             status: { idField: 'statusId', nameField: 'statusName' },
-            partnerName: { idField: 'partnerId', nameField: 'partnerName' }
+            partnerName: { idField: 'partnerId', nameField: 'partnerName' },
+            fieldSalesEngineer: { idField: 'fieldSalesEngineerId', nameField: 'fieldSalesEngineerName' },
+            buyer: { idField: 'buyerId', nameField: 'buyerName' },
+            fieldSalesRep: { idField: 'fieldSalesRepId', nameField: 'fieldSalesRepName' },
+            endCustomerAccount: { idField: 'endCustomerAccountId', nameField: 'endCustomerAccountName' }
         },
         sort: null,
         fieldsets: {
@@ -131,9 +145,12 @@ define('Registration.Model', [
                 'partnerId',
                 'partnerName',
                 'additionalInformation',
-                'fieldSalesEngineer',
-                'buyer',
-                'fieldSalesRep',
+                'fieldSalesEngineerId',
+                'fieldSalesEngineerName',
+                'buyerId',
+                'buyerName',
+                'fieldSalesRepId',
+                'fieldSalesRepName',
                 'companyName',
                 'companyMainPhone',
                 'companyAddress',
@@ -149,7 +166,8 @@ define('Registration.Model', [
                 'engineerTechnicalContactPhone',
                 'channelManager',
                 'customerLocation',
-                'endCustomerAccount',
+                'endCustomerAccountId',
+                'endCustomerAccountName',
                 'learnAboutDeal',
                 'internalNotes',
                 'lead',
@@ -163,14 +181,6 @@ define('Registration.Model', [
                 'prototypeEvalDate'
             ]
         },
-        fieldGroups: {
-            registrationDetails: 'Registration Details',
-            partnerDetails: 'Partner Details',
-            endCustomerDetails: 'End Customer Details',
-            supplyChain: 'Supply Chain',
-            projectDetails: 'Project Details'
-        },
-        fields: {},
 
         parseListParameters: function parseListParameters() {
             var offset;
@@ -297,13 +307,13 @@ define('Registration.Model', [
             return result;
         },
 
-        create: function create(data) {
-            console.log('create', JSON.stringify(data));
+        create: function create(/* data */) {
+            // console.log('create', JSON.stringify(data));
             return 1;
         },
 
-        update: function update(id, data) {
-            console.log('update id: ' + id, JSON.stringify(data));
+        update: function update(/* id, data */) {
+            // console.log('update id: ' + id, JSON.stringify(data));
         }
     });
 });
