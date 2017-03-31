@@ -62,12 +62,9 @@ define('Form', [
                 }
                 return 'view';
             },
-            getFormId: function getFormId() {
-                var formId = this.formId;
-                if (!formId) {
-                    throw new Error('Form id not found in property "formId".');
-                }
-                return formId;
+            getFormData: function getConfig() {
+                // run this.form if function, or get it if object
+                return jQuery.extend(true, {}, _.result(this, 'formData'));
             },
             getFormConfig: function getFormConfig() {
                 return new FormConfig({
@@ -75,7 +72,7 @@ define('Form', [
                     model: this.model,
                     permissions: this.getFormPermissions(),
                     info: this.getFormInfo(),
-                    id: this.getFormId(),
+                    data: this.getFormData(),
                     action: this.getFormAction()
                 });
             },

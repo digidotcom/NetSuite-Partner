@@ -1,13 +1,15 @@
 define('Registration', [
-    'Form',
+    'CRUD',
     'Registration.Configuration',
-    'Registration.ServiceController',
+    'Registration.Status.Configuration',
     'Registration.Status.ServiceController'
 ], function Registration(
-    Form,
-    RegistrationConfiguration
+    Crud,
+    RegistrationConfiguration,
+    RegistrationStatusConfiguration
 ) {
     'use strict';
 
-    Form.add('registration', RegistrationConfiguration.getForForm());
+    Crud.add(RegistrationConfiguration.crudId, RegistrationConfiguration.getForCrud());
+    Crud.add(RegistrationStatusConfiguration.crudId, RegistrationStatusConfiguration.getForCrud());
 });

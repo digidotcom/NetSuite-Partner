@@ -1,21 +1,34 @@
-define('Registration.ServiceController', [
+define('CRUD.Record.ServiceController', [
     'underscore',
     'ServiceController',
-    'Registration.Model'
-], function RegistrationServiceController(
+    'CRUD.Configuration',
+    'CRUD.Record.Model'
+], function CrudRecordServiceController(
     _,
     ServiceController,
-    RegistrationModel
+    CrudConfiguration,
+    CrudRecordModel
 ) {
     'use strict';
 
     return ServiceController.extend({
-        name: 'Registration.ServiceController',
+        name: 'CRUD.Record.ServiceController',
 
         options: {
             common: {
                 requireSecure: true,
                 requireLogin: true
+            }
+        },
+
+        validateCrudId: function validateCrudId(crudId) {
+            if (!crudId || !CrudConfiguration.isValid(crudId)) {
+                throw badRequestError;
+            }
+        },
+        validateId: function validateId(id) {
+            if (!id) {
+                throw badRequestError;
             }
         },
 
@@ -55,22 +68,36 @@ define('Registration.ServiceController', [
         },
 
         get: function get() {
+            var crudId = this.request.getParameter('id');
             var id = this.request.getParameter('internalid');
+
+            this.validateCrudId(crudId);
+
             if (id) {
-                return RegistrationModel.get(id);
+                return CrudRecordModel.get(crudId, id);
             }
-            return RegistrationModel.list(this.getListParameters());
+            return CrudRecordModel.list(crudId, this.getListParameters());
         },
 
         post: function post() {
-            var id = RegistrationModel.create(this.data);
-            this.sendContent(RegistrationModel.get(id), { status: 201 });
+            var crudId = this.request.getParameter('id');
+            var id;
+
+            this.validateCrudId(crudId);
+
+            id = CrudRecordModel.create(crudId, this.data);
+            this.sendContent(CrudRecordModel.get(crudId, id), { status: 201 });
         },
 
         put: function put() {
+            var crudId = this.request.getParameter('id');
             var id = this.request.getParameter('internalid');
-            RegistrationModel.update(id, this.data);
-            return RegistrationModel.get(id);
+
+            this.validateCrudId(crudId);
+            this.validateId(id);
+
+            CrudRecordModel.update(crudId, id, this.data);
+            return CrudRecordModel.get(crudId, id);
         }
     });
 });

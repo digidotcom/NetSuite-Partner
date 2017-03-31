@@ -5,6 +5,7 @@
     "endpoint": true,
     "modules": {
         "site/Configuration.Site": "dev",
+        "site/CRUD": "dev",
         "site/EFCore.RecordHelper.CRUD": "dev",
         "site/Form": "dev",
         "site/Header.Site": "dev",

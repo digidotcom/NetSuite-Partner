@@ -12,12 +12,14 @@ define('Registration.Helper', [
     }
 
     return {
+        crudId: 'registration',
+        crudIdStatus: 'registration_status',
         baseUrl: 'registrations',
         moduleName: 'Registration',
-        serviceUrl: 'services/Registration.Service.ss',
+        serviceUrl: 'services/CRUD.Record.Service.ss?id=registration',
         statusParamKey: 'status',
         statusAllName: 'All',
-        statusServiceUrl: Utils.getAbsoluteUrl('services/Registration.Status.Service.ss'),
+        statusServiceUrl: Utils.getAbsoluteUrl('services/CRUD.Record.Service.ss?id=registration_status'),
         getConfiguration: function getConfiguration() {
             return publishedConfiguration;
         },
