@@ -1,11 +1,11 @@
 define('CRUD.Lookup.ServiceController', [
-    'underscore',
     'ServiceController',
-    'CRUD.Utils'
+    'CRUD.Utils',
+    'CRUD.Lookup.Model'
 ], function CrudLookupServiceController(
-    _,
     ServiceController,
-    CrudUtils
+    CrudUtils,
+    CrudLookupModel
 ) {
     'use strict';
 
@@ -21,15 +21,17 @@ define('CRUD.Lookup.ServiceController', [
 
         get: function get() {
             var crudId = this.request.getParameter('id');
+            var field = this.request.getParameter('field');
             var query = this.request.getParameter('q');
+
+            var data = {
+                field: field,
+                query: query
+            };
 
             CrudUtils.validateCrudId(crudId);
 
-            return [
-                {
-                    query: query
-                }
-            ];
+            return CrudLookupModel.get(crudId, data);
         }
     });
 });

@@ -7,21 +7,17 @@ define('Form.Lookup.Collection', [
 ) {
     'use strict';
 
-    return Backbone.Collection.extend({
+    return Backbone.CachedCollection.extend({
 
         model: FormLookupModel,
 
         initialize: function initialize(data, options) {
             this.config = options.config;
-            this.query = options.query;
             this.setUrl();
         },
 
         setUrl: function setUrl() {
-            var url = this.config.getData().lookupServiceUrl;
-            url += (url.indexOf('?') >= 0) ? '&' : '?';
-            url += 'q=' + encodeURIComponent(this.query);
-            this.url = url;
+            this.url = this.config.getData().lookupServiceUrl;
         }
 
     });

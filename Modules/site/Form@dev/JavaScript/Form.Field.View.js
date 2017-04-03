@@ -22,7 +22,7 @@ define('Form.Field.View', [
     return Backbone.View.extend({
 
         events: {
-            'change :input': 'notifyDependentFields',
+            'change :input': 'handleFieldChange',
             'click [data-lookup-trigger]': 'triggerLookup'
         },
 
@@ -48,6 +48,13 @@ define('Form.Field.View', [
             });
             this.type = type;
             this.template = type.getTemplate();
+        },
+
+        handleFieldChange: function handleFieldChange(e, options) {
+            if (!options || (options && !options.silent)) {
+                this.notifyDependentFields(e);
+                this.triggerLookup();
+            }
         },
 
         notifyDependentFields: function notifyDependentFields(e) {
@@ -87,17 +94,56 @@ define('Form.Field.View', [
             });
         },
         triggerLookup: function triggerLookup() {
-            var displaySuffix = this.config.getFieldDisplaySuffix();
             var type = this.model.get('type');
             var attribute = this.model.get('attribute');
             var query;
             if (type === 'lookup') {
-                query = this.$('[name="' + attribute + displaySuffix + '"]').val();
-                this.lookup.search(query);
+                query = this.getDisplayInput().val();
+                this.query = query;
+                this.setLookupValue();
+                if (query) {
+                    this.lookup.search(attribute, query);
+                }
             }
         },
-        handleLookupResponse: function handleLookupResponse(selectedModel) {
-            console.log(selectedModel);
+        handleLookupResponse: function handleLookupResponse(selectedModel, noSelection) {
+            var $displayInput = this.getDisplayInput();
+            if (!noSelection) {
+                this.setLookupValue(selectedModel);
+            } else {
+                $displayInput.val(this.query);
+                $displayInput.get(0).focus();
+            }
+        },
+
+        setLookupValue: function setLookupResult(model) {
+            var $value = this.getValueInput();
+            var $display = this.getDisplayInput();
+            if (model) {
+                $value.val(model.get('internalid'));
+                $display.val(model.get('name'));
+            } else {
+                $value.val('');
+                $display.val('');
+            }
+            $value.trigger('change', { silent: true });
+            $display.trigger('change', { silent: true });
+        },
+
+        getValueInput: function getValueInput() {
+            var attribute = this.model.get('attribute');
+            if (!this.$valueInput) {
+                this.$valueInput = this.$('[name="' + attribute + '"]');
+            }
+            return this.$valueInput;
+        },
+        getDisplayInput: function getValueInput() {
+            var displaySuffix = this.config.getFieldDisplaySuffix();
+            var attribute = this.model.get('attribute');
+            if (!this.$displayInput) {
+                this.$displayInput = this.$('[name="' + attribute + displaySuffix + '"]');
+            }
+            return this.$displayInput;
         },
 
         getContext: function getContext() {
