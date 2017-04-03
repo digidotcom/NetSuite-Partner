@@ -1,6 +1,6 @@
-define('Form.Lookup.Model', [
+define('CRUD.Lookup.Model', [
     'Backbone'
-], function FormLookupModel(
+], function CrudLookupModel(
     Backbone
 ) {
     'use strict';

@@ -5,6 +5,7 @@ define('Registration.Details.View', [
     'Backbone.CompositeView',
     'Mixin',
     'CRUD.Configuration',
+    'CRUD.Lookup',
     'Form',
     'Registration.Helper',
     'Registration.AbstractView',
@@ -16,6 +17,7 @@ define('Registration.Details.View', [
     BackboneCompositeView,
     Mixin,
     CrudConfiguration,
+    CrudLookup,
     Form,
     RegistrationHelper,
     RegistrationAbstractView,
@@ -82,7 +84,9 @@ define('Registration.Details.View', [
     Form.add({
         target: View,
         mixinOptions: {
-            formData: CrudConfiguration.getForForm(RegistrationHelper.crudId),
+            formData: _.extend({}, CrudConfiguration.getForForm(RegistrationHelper.crudId), {
+                lookupCallback: CrudLookup.getFetchCallback(RegistrationHelper.crudId)
+            }),
 
             /* Abstract methods implementation */
             getFormPermissions: function getFormPermissions() {

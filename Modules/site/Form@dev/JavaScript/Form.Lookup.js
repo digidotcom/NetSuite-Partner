@@ -1,12 +1,10 @@
 define('Form.Lookup', [
     'underscore',
     'jQuery',
-    'Form.Lookup.Collection',
     'Form.Lookup.View'
 ], function Form(
     _,
     jQuery,
-    FormLookupCollection,
     FormLookupView
 ) {
     'use strict';
@@ -19,23 +17,19 @@ define('Form.Lookup', [
 
     _(FormLookup.prototype).extend({
         search: function search(field, queryOriginal) {
+            var lookupCallback = this.config.getData().lookupCallback;
             var query = queryOriginal ? queryOriginal.toLowerCase() : '';
-            var collection = new FormLookupCollection(null, {
-                config: this.config
-            });
             var view = new FormLookupView({
-                collection: collection,
                 application: this.application,
                 config: this.config,
                 query: queryOriginal,
                 fieldView: this.fieldView
             });
-            collection.fetch({
-                data: {
-                    q: query,
-                    field: field
-                }
-            }).done(function done() {
+            lookupCallback({
+                field: field,
+                query: query
+            }).done(function done(collection) {
+                view.collection = collection;
                 if (collection.length === 1) {
                     view.setSelectedModel(collection.at(0));
                     view.handleLookupResponse();
