@@ -80,7 +80,14 @@ define('Mixin', [
 ) {
     'use strict';
 
+    var defaults = {
+        target: null,
+        noPrototype: false,
+        mixinOptions: {}
+    };
+
     function Mixin() {
+        this.defaults = defaults;
         this.mixins = arguments.length ? _.toArray(arguments) : [];
     }
 
@@ -101,36 +108,38 @@ define('Mixin', [
             });
         },
 
-        add: function add(Class, options) {
+        add: function add(optionsArg) {
             var self = this;
+            var options = _.defaults(optionsArg || {}, this.defaults);
+            var target = options.noPrototype ? options.target : options.target.prototype;
             _(self.mixins).each(function eachMixin(mixin) {
                 _(self.methods).each(function eachMethod(method) {
-                    self[method](mixin, Class, options);
+                    self[method](mixin, target, options.mixinOptions);
                 });
             });
         },
 
-        options: function optionsFn(mixin, Class, options) {
-            Class.prototype.mixinOptions = _(Class.prototype.mixinOptions || {}).extend(options || {});
+        options: function optionsFn(mixin, Target, options) {
+            Target.mixinOptions = _(Target.mixinOptions || {}).extend(options || {});
         },
-        extend: function extend(mixin, Class) {
-            Class.prototype = _.extend(Class.prototype, mixin.extend || {});
+        extend: function extend(mixin, Target) {
+            _.extend(Target, mixin.extend || {});
         },
-        merge: function merge(mixin, Class) {
+        merge: function merge(mixin, Target) {
             _(mixin.merge || {}).each(function eachMerge(obj, name) {
-                Class.prototype[name] = _(Class.prototype[name] || {}).extend(obj);
+                Target[name] = _(Target[name] || {}).extend(obj);
             });
         },
-        wrap: function wrap(mixin, Class) {
+        wrap: function wrap(mixin, Target) {
             _(mixin.wrap || {}).each(function eachWrap(wrapper, name) {
-                Class.prototype[name] = _(Class.prototype[name] || function noop() {}).wrap(wrapper);
+                Target[name] = _(Target[name] || function noop() {}).wrap(wrapper);
             });
         },
-        plugins: function extend(mixin, Class) {
+        plugins: function extend(mixin, Target) {
             // only allow this if plugin installer exists (Backbone classes)
-            if (Class.prototype.installPlugin) {
+            if (Target.installPlugin) {
                 _(mixin.plugins || {}).each(function eachPlugin(plugin, name) {
-                    Class.prototype.installPlugin(name, plugin);
+                    Target.installPlugin(name, plugin);
                 });
             }
         }
@@ -140,11 +149,11 @@ define('Mixin', [
     /* Class methods */
     _(Mixin).extend({
 
-        implement: function use(Class) {
+        implement: function use(Target, options, noPrototype) {
             var mixins = _.toArray(arguments.slice(1));
             var mixin = new Mixin();
             mixin.setMixins(mixins);
-            mixin.add(Class);
+            mixin.add(Target, options, noPrototype);
             return mixin;
         }
 

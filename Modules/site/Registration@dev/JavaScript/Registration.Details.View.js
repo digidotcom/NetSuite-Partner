@@ -79,36 +79,39 @@ define('Registration.Details.View', [
     });
 
     /* Add the Form mixin functionality */
-    Form.add(View, {
-        formData: CrudConfiguration.getForForm(RegistrationHelper.crudId),
+    Form.add({
+        target: View,
+        mixinOptions: {
+            formData: CrudConfiguration.getForForm(RegistrationHelper.crudId),
 
-        /* Abstract methods implementation */
-        getFormPermissions: function getFormPermissions() {
-            var crudPermissions = RegistrationHelper.getCrudPermissions();
-            var isEditEnabled = this.model.get('statusAllowsEdit');
-            return {
-                list: crudPermissions.list,
-                create: crudPermissions.create,
-                view: crudPermissions.read,
-                edit: crudPermissions.update && isEditEnabled
-            };
-        },
-        getFormInfo: function getFormInfo() {
-            var id = this.model.get('internalid');
-            return {
-                title: this.getPageHeader(),
-                description: null,
-                newUrl: RegistrationHelper.getNewUrl(),
-                editUrl: RegistrationHelper.getEditUrl(id),
-                viewUrl: RegistrationHelper.getViewUrl(id),
-                goBackUrl: RegistrationHelper.getListUrl()
-            };
-        },
-        isNew: function isNew() {
-            return !this.model.get('internalid');
-        },
-        isEdit: function isEdit() {
-            return this.edit;
+            /* Abstract methods implementation */
+            getFormPermissions: function getFormPermissions() {
+                var crudPermissions = RegistrationHelper.getCrudPermissions();
+                var isEditEnabled = this.model.get('statusAllowsEdit');
+                return {
+                    list: crudPermissions.list,
+                    create: crudPermissions.create,
+                    view: crudPermissions.read,
+                    edit: crudPermissions.update && isEditEnabled
+                };
+            },
+            getFormInfo: function getFormInfo() {
+                var id = this.model.get('internalid');
+                return {
+                    title: this.getPageHeader(),
+                    description: null,
+                    newUrl: RegistrationHelper.getNewUrl(),
+                    editUrl: RegistrationHelper.getEditUrl(id),
+                    viewUrl: RegistrationHelper.getViewUrl(id),
+                    goBackUrl: RegistrationHelper.getListUrl()
+                };
+            },
+            isNew: function isNew() {
+                return !this.model.get('internalid');
+            },
+            isEdit: function isEdit() {
+                return this.edit;
+            }
         }
     });
 
