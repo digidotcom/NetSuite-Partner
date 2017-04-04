@@ -10,6 +10,25 @@ define('CRUD.Configuration', [
     }
 
     return {
+        keySets: {
+            shared: [
+                'fields',
+                'type',
+                'permissions'
+            ],
+            record: [
+                'record',
+                'fieldsets',
+                'filters',
+                'filtersDynamic',
+                'sort'
+            ],
+            bootstrapping: [
+                'frontend',
+                'groups'
+            ]
+        },
+
         cacheRecord: {},
         configuration: {},
 
@@ -25,34 +44,15 @@ define('CRUD.Configuration', [
             return (id in this.configuration);
         },
 
-        getFieldRecord: function getFieldRecord(config, fieldId) {
-            var fieldConfig = config.fields[fieldId];
-            if (fieldConfig && fieldConfig.record) {
-                return fieldConfig.record;
-            }
-            return null;
-        },
-        getFieldNameForField: function getFieldNameForField(field) {
-            if (field.joint) {
-                return field.internalid.fieldName;
-            }
-            return field.fieldName;
-        },
-        getJointFieldId: function getJointFieldId(fieldId, jointKey) {
-            return fieldId + capitalizeFirstLetter(jointKey);
-        },
-        getJointKeys: function getJointKeys(fieldConfig) {
-            return _.without(_.keys(fieldConfig), 'joint');
-        },
-
         getForRecord: function getForRecord(id) {
             var self = this;
             var config;
             var result;
+            var existingKeys;
             if (!this.cacheRecord[id]) {
-                config = this.get(id);
+                config = this.getWithKeySet(id, 'record');
                 result = {
-                    noListHeader: !!config.noListHeader,
+                    noListHeader: config.type !== 'crud',
                     record: config.record,
                     fieldsets: {},
                     filters: [],
@@ -85,7 +85,7 @@ define('CRUD.Configuration', [
                         result.filters.push(filterData);
                     }
                 });
-                _(config.filtersDynamic).each(function eachFilter(filter, fieldId) {
+                _(config.filtersDynamic).each(function eachFilterDynamic(filter, fieldId) {
                     var fieldInfo = self.getFieldRecord(config, fieldId);
                     var filterData = filter;
                     if (fieldInfo) {
@@ -120,29 +120,75 @@ define('CRUD.Configuration', [
                         }
                     }
                 });
+                // add remaining keys as they are
+                existingKeys = _.keys(result);
+                _(config).each(function eachConfig(value, key) {
+                    if (_.indexOf(existingKeys, key) < 0) {
+                        result[key] = value;
+                    }
+                });
                 this.cacheRecord[id] = result;
             }
             return this.cacheRecord[id];
         },
         getForBootstrapping: function getForBootstrapping() {
             var result = {};
-            _(this.configuration).each(function eachConfiguration(config, index) {
-                var fields = [];
-                _(config.fields).each(function mapField(fieldInfo, fieldId) {
-                    var field;
-                    if (fieldInfo.form) {
-                        field = _.extend({}, fieldInfo.form);
-                        field.attribute = fieldId;
-                        fields.push(field);
+            _(this.getWithKeySetAll('bootstrapping')).each(function eachConfiguration(configuration, index) {
+                var configEntry = {};
+                _(configuration).each(function eachConfig(config, key) {
+                    if (key === 'fields') {
+                        configEntry[key] = [];
+                        _(config).each(function mapField(fieldInfo, fieldId) {
+                            var field;
+                            if (fieldInfo.form) {
+                                field = _.extend({}, fieldInfo.form);
+                                field.attribute = fieldId;
+                                configEntry[key].push(field);
+                            }
+                        });
+                    } else {
+                        configEntry[key] = config;
                     }
                 });
-                result[index] = {};
-                if (fields.length) {
-                    result[index].groups = config.groups;
-                    result[index].fields = fields;
-                }
+                result[index] = configEntry;
             });
             return result;
+        },
+
+        getWithKeySet: function getWithKeySet(id, keySet) {
+            var keys = _.uniq(_.union([], this.keySets.shared, this.keySets[keySet]));
+            var config = this.get(id);
+            if (config) {
+                return _(config).pick(keys);
+            }
+            return {};
+        },
+        getWithKeySetAll: function getWithKeySetAll(keySet) {
+            var self = this;
+            var configs = {};
+            _(this.configuration).each(function eachConfigurartion(config, id) {
+                configs[id] = self.getWithKeySet(id, keySet);
+            });
+            return configs;
+        },
+        getFieldRecord: function getFieldRecord(config, fieldId) {
+            var fieldConfig = config.fields[fieldId];
+            if (fieldConfig && fieldConfig.record) {
+                return fieldConfig.record;
+            }
+            return null;
+        },
+        getFieldNameForField: function getFieldNameForField(field) {
+            if (field.joint) {
+                return field.internalid.fieldName;
+            }
+            return field.fieldName;
+        },
+        getJointFieldId: function getJointFieldId(fieldId, jointKey) {
+            return fieldId + capitalizeFirstLetter(jointKey);
+        },
+        getJointKeys: function getJointKeys(fieldConfig) {
+            return _.without(_.keys(fieldConfig), 'joint');
         }
     };
 });

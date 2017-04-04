@@ -31,13 +31,12 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
         statusId: { fieldName: 'custrecord_registration_status' }, // List/Record: Registration Status
         statusName: { // List/Record: Registration Status
             fieldName: 'custrecord_registration_status_public',
-                joinKey: 'custrecord_registration_status'
+            joinKey: 'custrecord_registration_status'
         },
-
         statusAllowsEdit: {
             fieldName: 'custrecord_registration_status_edit',
-                joinKey: 'custrecord_registration_status',
-                applyFunction: booleanMap
+            joinKey: 'custrecord_registration_status',
+            applyFunction: booleanMap
         },
     }
     */
@@ -57,13 +56,20 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
 
     return {
         id: 'registration',
-        record: 'customrecord_registrationprocess',
-        filters: {
-            inactive: { operator: 'is', value1: 'F' },
-            customer: { operator: 'is', value1: nlapiGetUser() }
+        type: 'crud',
+        permissions: {
+            list: true,
+            create: true,
+            read: true,
+            update: true,
+            'delete': false
         },
-        filtersDynamic: {
-            status: { operator: 'is', numberOfValues: 1 }
+        frontend: {
+            baseKey: 'registrations',
+            names: {
+                singular: 'Registrations',
+                plural: 'Registrations'
+            }
         },
         groups: [
             { id: 'details', name: 'Registration Details' },
@@ -72,6 +78,15 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
             { id: 'supply', name: 'Supply Chain' },
             { id: 'project', name: 'Project Details' }
         ],
+        record: 'customrecord_registrationprocess',
+        filters: {
+            inactive: { operator: 'is', value1: 'F' },
+            customer: { operator: 'is', value1: nlapiGetUser() }
+        },
+        filtersDynamic: {
+            status: { operator: 'is', numberOfValues: 1 }
+        },
+        sort: {},
         fieldsets: {
             list: [
                 'internalid',

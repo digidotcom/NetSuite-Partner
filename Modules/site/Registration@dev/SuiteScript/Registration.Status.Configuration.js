@@ -9,7 +9,7 @@ define('Registration.Status.Configuration', [
 
     return {
         id: 'registration_status',
-        noListHeader: true,
+        type: 'service',
         record: 'customrecord_registration_status',
         fields: {
             internalid: {
@@ -37,6 +37,7 @@ define('Registration.Status.Configuration', [
         filters: {
             inactive: { operator: 'is', value1: 'F' }
         },
+        filtersDynamic: {},
         sort: {
             internalid: 'asc'
         },

@@ -164,11 +164,7 @@ define('Registration.Router', [
             if (!id) {
                 view.showContent();
             } else {
-                model.fetch({
-                    data: {
-                        internalid: id
-                    }
-                }).done(function done() {
+                model.fetch().done(function done() {
                     view.showContent();
                 });
             }
