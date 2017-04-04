@@ -9,6 +9,6 @@ define('Registration', [
 ) {
     'use strict';
 
-    Crud.add(RegistrationConfiguration.crudId, RegistrationConfiguration.getForCrud());
-    Crud.add(RegistrationStatusConfiguration.crudId, RegistrationStatusConfiguration.getForCrud());
+    Crud.add(RegistrationConfiguration.id, RegistrationConfiguration);
+    Crud.add(RegistrationStatusConfiguration.id, RegistrationStatusConfiguration);
 });

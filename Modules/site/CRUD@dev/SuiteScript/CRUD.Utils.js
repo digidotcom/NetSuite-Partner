@@ -22,18 +22,15 @@ define('CRUD.Utils', [
 
         parseJoinObject: function parseJoinObject(config, result, fieldset) {
             _(config.joinFields).each(function eachJoinObject(joinField, key) {
-                var idField = joinField.idField;
-                var nameField = joinField.nameField;
-                var fields = [idField, nameField];
+                var fields = _.values(joinField);
                 var joined;
                 // if all joinedFields are in fieldset, join them
                 if (_.intersection(fieldset, fields).length === fields.length) {
-                    joined = {
-                        internalid: result[idField],
-                        name: result[nameField]
-                    };
-                    delete result[idField];
-                    delete result[nameField];
+                    joined = {};
+                    _(joinField).each(function eachJoinField(joinFieldId, joinKey) {
+                        joined[joinKey] = result[joinFieldId];
+                        delete result[joinFieldId];
+                    });
                     result[key] = joined;
                 }
             });
@@ -105,8 +102,8 @@ define('CRUD.Utils', [
             }
         },
 
-        getAllParameters: function getAllParameters() {
-            var parameters = this.request.getAllParameters();
+        getAllParameters: function getAllParameters(request) {
+            var parameters = request.getAllParameters();
             var index;
             var result = {};
             for (index in parameters) { // eslint-disable-line
@@ -117,8 +114,8 @@ define('CRUD.Utils', [
             return result;
         },
 
-        getListParameters: function getListParameters() {
-            var parameters = this.getAllParameters();
+        getListParameters: function getListParameters(request) {
+            var parameters = this.getAllParameters(request);
             var keys = {
                 order: 'order',
                 sort: 'sort',

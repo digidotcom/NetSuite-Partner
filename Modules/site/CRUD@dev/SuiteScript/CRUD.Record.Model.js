@@ -17,7 +17,7 @@ define('CRUD.Record.Model', [
         name: 'CRUD.Record',
 
         list: function list(crudId, data) {
-            var config = CrudConfiguration.get(crudId).record;
+            var config = CrudConfiguration.getForRecord(crudId);
             var listHeader = !config.noListHeader;
             var search;
             var results;
@@ -60,7 +60,7 @@ define('CRUD.Record.Model', [
         },
 
         get: function get(crudId, id) {
-            var config = CrudConfiguration.get(crudId).record;
+            var config = CrudConfiguration.getForRecord(crudId);
             var search;
             var result;
             var fieldset = config.fieldsets.details;

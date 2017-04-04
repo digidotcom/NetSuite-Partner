@@ -8,34 +8,44 @@ define('Registration.Status.Configuration', [
     }
 
     return {
-
-        getForCrud: function getForBootstrapping() {
-            return {
-                record: this.record
-            };
-        },
-
-        crudId: 'registration_status',
-
-        record: {
-            noListHeader: true,
-            record: 'customrecord_registration_status',
-            columns: {
-                internalid: { fieldName: 'internalid' },
-                name: { fieldName: 'custrecord_registration_status_public' },
-                allowsEdit: { fieldName: 'custrecord_registration_status_edit', applyFunction: booleanMap }
+        id: 'registration_status',
+        noListHeader: true,
+        record: 'customrecord_registration_status',
+        fields: {
+            internalid: {
+                record: {
+                    fieldName: 'internalid'
+                }
             },
-            filters: [
-                { fieldName: 'isinactive', operator: 'is', value1: 'F' }
-            ],
-            sort: { fieldName: 'internalid', order: 'asc' },
-            fieldsets: {
-                list: [
-                    'internalid',
-                    'name',
-                    'allowsEdit'
-                ]
+            inactive: {
+                record: {
+                    fieldName: 'isinactive'
+                }
+            },
+            name: {
+                record: {
+                    fieldName: 'custrecord_registration_status_public'
+                }
+            },
+            allowsEdit: {
+                record: {
+                    fieldName: 'custrecord_registration_status_edit',
+                    applyFunction: booleanMap
+                }
             }
+        },
+        filters: {
+            inactive: { operator: 'is', value1: 'F' }
+        },
+        sort: {
+            internalid: 'asc'
+        },
+        fieldsets: {
+            list: [
+                'internalid',
+                'name',
+                'allowsEdit'
+            ]
         }
     };
 });
