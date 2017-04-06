@@ -1,24 +1,28 @@
-define('Registration.Collection', [
+define('CRUD.Collection', [
     'Backbone',
-    'Registration.Helper',
-    'Registration.Model'
-], function RegistrationCollection(
+    'CRUD.Helper',
+    'CRUD.Model'
+], function CrudCollection(
     Backbone,
-    RegistrationHelper,
-    RegistrationModel
+    CrudHelper,
+    CrudModel
 ) {
     'use strict';
 
     return Backbone.Collection.extend({
 
-        url: RegistrationHelper.getServiceUrl(true),
-
-        model: RegistrationModel,
+        model: CrudModel,
 
         initialize: function initialize(elements, options) {
+            this.crudId = options.crudId;
             this.customFilters = options && options.filters;
             this.recordsPerPage = options && options.recordsPerPage;
-            this.status = options && options.status;
+            this.category = options && options.category;
+            this.setUrl();
+        },
+
+        setUrl: function setUrl() {
+            this.url = CrudHelper.getRecordServiceUrl(this.crudId, true);
         },
 
         parse: function parse(response) {
@@ -30,7 +34,7 @@ define('Registration.Collection', [
 
         update: function update(options) {
             var range = options.range || {};
-            var status = options.status || this.status;
+            var category = options.category || this.category;
             var data = {
                 results_per_page: options.recordsPerPage || this.recordsPerPage,
                 sort: options.sort.value,
@@ -39,8 +43,8 @@ define('Registration.Collection', [
                 to: range.to ? new Date(range.to.replace(/-/g, '/')).getTime() : null,
                 page: options.page
             };
-            if (status) {
-                data.status = status;
+            if (category) {
+                data.category = category;
             }
 
             this.fetch({

@@ -1,6 +1,6 @@
-define('Registration.Status.Model', [
+define('CRUD.Category.Model', [
     'Backbone'
-], function RegistrationStatusModel(
+], function CrudCategoryModel(
     Backbone
 ) {
     'use strict';

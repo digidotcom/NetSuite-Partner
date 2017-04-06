@@ -64,6 +64,10 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
             update: true,
             'delete': false
         },
+        category: {
+            crudId: 'registration_status',
+            filterName: 'status'
+        },
         frontend: {
             baseKey: 'registrations',
             names: {
@@ -84,7 +88,7 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
             customer: { operator: 'is', value1: nlapiGetUser() }
         },
         filtersDynamic: {
-            status: { operator: 'is', numberOfValues: 1 }
+            // status: { operator: 'is', numberOfValues: 1 }
         },
         sort: {},
         fieldsets: {

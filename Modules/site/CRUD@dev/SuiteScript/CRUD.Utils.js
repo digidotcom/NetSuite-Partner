@@ -101,6 +101,10 @@ define('CRUD.Utils', [
                 throw badRequestError;
             }
         },
+        getCategoryFieldName: function getCategoryFieldName(id) {
+            var config = CrudConfiguration.get(id);
+            return config && config.category && config.category.filterName;
+        },
 
         getAllParameters: function getAllParameters(request) {
             var parameters = request.getAllParameters();
@@ -114,8 +118,9 @@ define('CRUD.Utils', [
             return result;
         },
 
-        getListParameters: function getListParameters(request) {
+        getListParameters: function getListParameters(crudId, request) {
             var parameters = this.getAllParameters(request);
+            var categoryName;
             var keys = {
                 order: 'order',
                 sort: 'sort',
@@ -126,6 +131,13 @@ define('CRUD.Utils', [
             };
             var filters = {};
             var result = {};
+            if (parameters.category) {
+                categoryName = this.getCategoryFieldName(crudId);
+                if (categoryName) {
+                    filters[categoryName] = parameters.category;
+                    delete parameters.category;
+                }
+            }
             _(parameters).each(function eachParameter(value, key) {
                 if (key in keys) {
                     result[keys[key]] = value;

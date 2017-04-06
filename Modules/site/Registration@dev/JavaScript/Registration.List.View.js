@@ -68,8 +68,10 @@ define('Registration.List.View', [
 
         initialize: function initialize(options) {
             this.application = options.application;
+            this.crudId = options.crudId;
             this.collection = options.collection;
-            this.statusCollection = options.statusCollection;
+            this.categoryCollection = options.categoryCollection;
+            this.hasCategory = !!this.categoryCollection;
 
             this.listenCollection();
 
@@ -89,10 +91,13 @@ define('Registration.List.View', [
                 rangeFilterLabel: Utils.translate('From'),
                 hidePagination: true
             });
-            this.statusesView = new RegistrationStatusView({
-                collection: this.statusCollection,
-                active: options.status
-            });
+            if (this.hasCategory) {
+                this.categoriesView = new RegistrationStatusView({
+                    collection: this.categoryCollection,
+                    crudId: this.crudId,
+                    active: options.category
+                });
+            }
         },
 
         navigateToEntry: function navigateToEntry(e) {
@@ -127,8 +132,8 @@ define('Registration.List.View', [
             this.isLoading = value;
         },
 
-        refreshStatuses: function refreshStatuses() {
-            this.statusesView.render();
+        refreshCategories: function refreshCategories() {
+            this.categoriesView.render();
         },
 
         childViews: {
@@ -137,7 +142,7 @@ define('Registration.List.View', [
             },
 
             'Registration.Statuses': function RegistrationStatuses() {
-                return this.statusesView;
+                return this.categoriesView;
             },
 
             'GlobalViews.Pagination': function GlobalViewsPagination() {

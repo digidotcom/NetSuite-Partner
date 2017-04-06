@@ -30,7 +30,7 @@ define('CRUD.Record.ServiceController', [
             if (id) {
                 return CrudRecordModel.get(crudId, id);
             }
-            return CrudRecordModel.list(crudId, CrudUtils.getListParameters(this.request));
+            return CrudRecordModel.list(crudId, CrudUtils.getListParameters(crudId, this.request));
         },
 
         post: function post() {

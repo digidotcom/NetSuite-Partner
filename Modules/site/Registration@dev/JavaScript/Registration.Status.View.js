@@ -2,13 +2,13 @@ define('Registration.Status.View', [
     'underscore',
     'Backbone',
     'Utils',
-    'Registration.Helper',
+    'CRUD.Helper',
     'registration_status.tpl'
 ], function RegistrationStatusView(
     _,
     Backbone,
     Utils,
-    RegistrationHelper,
+    CrudHelper,
     registrationStatusTpl
 ) {
     'use strict';
@@ -19,24 +19,26 @@ define('Registration.Status.View', [
 
         initialize: function initialize(options) {
             this.collection = options.collection;
-            this.active = options.active;
+            this.crudId = options.crudId;
+            this.active = parseInt(options.active, 10) || null;
         },
 
-        getStatusContext: function getStatusContext(model, active) {
+        getCategoryContext: function getCategoryContext(model, active) {
+            var crudId = this.crudId;
             var params = {};
             var id = null;
-            var name = RegistrationHelper.statusAllName;
+            var name = CrudHelper.getCategoryAllLabel();
             var isActive = !active;
             if (model) {
                 id = parseInt(model.get('internalid'), 10);
                 name = model.get('name');
-                params[RegistrationHelper.statusParamKey] = id;
+                params[CrudHelper.getCategoryFilterName(crudId)] = id;
                 isActive = id === active;
             }
             return {
                 name: name,
                 value: id,
-                url: Utils.addParamsToUrl(RegistrationHelper.getListUrl(), params),
+                url: Utils.addParamsToUrl(CrudHelper.getListUrl(crudId), params),
                 isActive: isActive
             };
         },
@@ -45,16 +47,16 @@ define('Registration.Status.View', [
             var self = this;
             var collection = this.collection;
             var active = this.active;
-            var statuses = [
-                self.getStatusContext(null, active)
+            var categories = [
+                self.getCategoryContext(null, active)
             ];
             if (collection.length) {
-                collection.each(function eachCollection(status) {
-                    statuses.push(self.getStatusContext(status, active));
+                collection.each(function eachCollection(category) {
+                    categories.push(self.getCategoryContext(category, active));
                 });
             }
             return {
-                statuses: statuses
+                categories: categories
             };
         }
     });

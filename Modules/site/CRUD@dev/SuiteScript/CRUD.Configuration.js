@@ -14,6 +14,7 @@ define('CRUD.Configuration', [
             shared: [
                 'fields',
                 'type',
+                'category',
                 'permissions'
             ],
             record: [
@@ -56,7 +57,7 @@ define('CRUD.Configuration', [
                     record: config.record,
                     fieldsets: {},
                     filters: [],
-                    filtersDynamic: [],
+                    filtersDynamic: {},
                     sort: [],
                     joinFields: {},
                     columns: {}
@@ -85,12 +86,19 @@ define('CRUD.Configuration', [
                         result.filters.push(filterData);
                     }
                 });
+                if (config.category && config.category.filterName) {
+                    result.filtersDynamic[config.category.filterName] = {
+                        fieldName: self.getFieldNameForField(self.getFieldRecord(config, config.category.filterName)),
+                        operator: 'is',
+                        numberOfValues: 1
+                    };
+                }
                 _(config.filtersDynamic).each(function eachFilterDynamic(filter, fieldId) {
                     var fieldInfo = self.getFieldRecord(config, fieldId);
                     var filterData = filter;
                     if (fieldInfo) {
                         filterData.fieldName = self.getFieldNameForField(fieldInfo);
-                        result.filtersDynamic.push(filterData);
+                        result.filtersDynamic[fieldId] = filterData;
                     }
                 });
                 _(config.sort).each(function eachSort(order, fieldId) {
@@ -170,6 +178,13 @@ define('CRUD.Configuration', [
                 configs[id] = self.getWithKeySet(id, keySet);
             });
             return configs;
+        },
+        getFieldConfigForRecord: function getFieldConfigForRecord(config, fieldId) {
+            var fieldConfig = config.fields[fieldId];
+            if (fieldConfig && fieldConfig.record) {
+                return fieldConfig.record.joint ? fieldConfig.record.internalid : fieldConfig.record;
+            }
+            return null;
         },
         getFieldRecord: function getFieldRecord(config, fieldId) {
             var fieldConfig = config.fields[fieldId];

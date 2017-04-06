@@ -1,19 +1,19 @@
 define('Registration', [
     'Utils',
-    'Registration.Helper',
-    'Registration.Router'
+    'CRUD',
+    'Registration.Configuration',
+    'Registration.Helper'
 ], function Registration(
     Utils,
-    RegistrationHelper,
-    RegistrationRouter
+    Crud,
+    RegistrationConfiguration,
+    RegistrationHelper
 ) {
     'use strict';
 
-    return {
-        MenuItems: RegistrationHelper.getMenuItems(),
+    Crud.add(RegistrationConfiguration.crudId, RegistrationConfiguration);
 
-        mountToApp: function mountToApp(application) {
-            return new RegistrationRouter(application);
-        }
+    return {
+        MenuItems: RegistrationHelper.getMenuItems()
     };
 });

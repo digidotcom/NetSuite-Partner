@@ -27,6 +27,7 @@
                 "entryPoint": "SC.MyAccount.Starter",
                 "dependencies": [
                     {"prepend": "SC.MyAccount.Configuration.Site"},
+                    "CRUD",
                     "Header.Site",
                     "Heartbeat",
                     "Registration"

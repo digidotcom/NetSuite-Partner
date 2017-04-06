@@ -10,23 +10,17 @@ define('CRUD.Lookup.Model', [
     'use strict';
 
     return SCModel.extend({
-        name: 'CRUD.Record',
+        name: 'CRUD.Lookup',
 
         get: function get(crudId, data) {
-            var config = CrudConfiguration.get(crudId).record;
+            var config = CrudConfiguration.getForRecord(crudId);
             var fieldKey = data.field;
             var query = data.query;
-            var fieldConfig;
+            var fieldConfig = CrudConfiguration.getFieldConfigForRecord(config, fieldKey);
             var record;
             var field;
             var options;
             var optionsValues = [];
-
-            if (fieldKey in config.columns) {
-                fieldConfig = config.columns[fieldKey];
-            } else if (fieldKey in config.joinFields) {
-                fieldConfig = config.columns[config.joinFields[fieldKey].idField];
-            }
 
             if (fieldConfig) {
                 record = nlapiCreateRecord(config.record);

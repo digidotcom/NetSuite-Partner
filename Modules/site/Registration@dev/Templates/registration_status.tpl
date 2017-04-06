@@ -1,5 +1,5 @@
 <div class="registration-list-header-button-group">
-    {{#each statuses}}
+    {{#each categories}}
         {{#if isActive}}
             <span class="registration-list-header-button-active">{{translate name}}</span>
         {{else}}
