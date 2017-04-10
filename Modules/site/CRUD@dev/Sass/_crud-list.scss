@@ -1,18 +1,18 @@
-.registration-list-button-back {
+.crud-list-button-back {
   @extend .button-back;
 }
-.registration-list-header {
+.crud-list-header {
   border-top: 1px solid $sc-color-theme-border;
   padding: $sc-base-padding * 3 0;
 }
-.registration-list-button-back-icon {
+.crud-list-button-back-icon {
   @extend .button-back-icon;
 }
-.registration-list-empty {
+.crud-list-empty {
   @extend .list-empty;
 }
 
-.registration-list-recordviews-container{
+.crud-list-recordviews-container{
   @extend .recordviews-container;
 
   @media (min-width: $screen-md-min) {
@@ -39,7 +39,7 @@
   }
 }
 
-.registration-list-recordviews-table {
+.crud-list-recordviews-table {
   @extend .recordviews-table;
 
   &:not(.clickable-rows) {
@@ -62,31 +62,31 @@
   }
 }
 
-.registration-list-recordviews-header{
+.crud-list-recordviews-header{
   @extend .recordviews-header;
 }
 
-.registration-list-recordviews-title-header{
+.crud-list-recordviews-title-header{
   @extend .recordviews-actionable-title-header;
 }
 
-.registration-list-recordviews-date-header{
+.crud-list-recordviews-date-header{
   @extend .recordviews-actionable-date-header;
 }
 
-.registration-list-recordviews-text-header {
+.crud-list-recordviews-text-header {
   @extend .recordviews-actionable-text-header;
 }
 
-.registration-list-recordviews-actions-header {
+.crud-list-recordviews-actions-header {
   @extend .recordviews-actionable-actions-header;
 }
 
-.registration-list-case-list-paginator{
+.crud-list-case-list-paginator{
   @extend .case-list-paginator;
 }
 
-.registration-list-main-actions {
+.crud-list-main-actions {
   $cell-spacing: $sc-base-padding * 2;
   display: table;
   width: calc(100% + #{$cell-spacing * 2});
@@ -96,33 +96,33 @@
   margin-right: -$cell-spacing;
   margin-bottom: $sc-base-padding * 3;
 }
-.registration-list-main-actions-row {
+.crud-list-main-actions-row {
   display: table-row;
 }
-.registration-list-main-actions-cell {
+.crud-list-main-actions-cell {
   display: table-cell;
   vertical-align: top;
 }
-.registration-list-header-nav {
-  @extend .registration-list-main-actions-cell;
+.crud-list-header-nav {
+  @extend .crud-list-main-actions-cell;
 }
-.registration-list-new {
-  @extend .registration-list-main-actions-cell;
+.crud-list-new {
+  @extend .crud-list-main-actions-cell;
   text-align: right;
   height: 100%;
 }
-.registration-list-new-button {
+.crud-list-new-button {
   @extend .list-header-button;
   height: 100%;
 }
 
-.registration-list{
+.crud-list{
   .list-header-view-filters {
     padding-right: 0px;
   }
 }
 
-.registration-list-empty-section {
+.crud-list-empty-section {
   padding:$sc-base-padding * 8 $sc-base-padding * 3 $sc-base-padding * 3 $sc-base-padding * 3;
   text-align:center;
 }

@@ -38,11 +38,43 @@ define('CRUD.Helper', [
         getCategoryAllLabel: function getCategoryAllLabel() {
             return Utils.translate('All');
         },
+        getFields: function getFields(crudId) {
+            var config = CrudConfiguration.get(crudId);
+            return (config && config.fields) || [];
+        },
+        getNames: function getNames(crudId) {
+            var config = CrudConfiguration.get(crudId);
+            return config.frontend && config.frontend.names;
+        },
+        getBaseKey: function getBaseKey(crudId) {
+            var config = CrudConfiguration.get(crudId);
+            return config.frontend && config.frontend.baseKey;
+        },
         getPermissions: function getPermissions(crudId) {
             return CrudConfiguration.get(crudId).permissions || {};
         },
-        isCrudType: function isCrudType(type) {
-            return type === 'crud';
+        getType: function getType(crudId) {
+            var config = CrudConfiguration.get(crudId);
+            return config && config.type;
+        },
+        getListColumns: function getListColumns(crudId) {
+            var config = CrudConfiguration.get(crudId);
+            return config && config.listColumns;
+        },
+        getListColumnFields: function getListColumnsParsed(crudId) {
+            var listColumnFields = this.getListColumns(crudId);
+            var fields = this.getFields(crudId);
+            var listColumns = [];
+            _(listColumnFields).each(function eachListColumn(fieldName) {
+                var field = _(fields).findWhere({ attribute: fieldName });
+                if (field) {
+                    listColumns.push(field);
+                }
+            });
+            return listColumns;
+        },
+        isCrudType: function isCrudType(crudId) {
+            return this.getType(crudId) === 'crud';
         },
         getIdFromBaseUrl: function getIdFromBaseUrl(baseUrl) {
             var configs = CrudConfiguration.getAll();
@@ -56,13 +88,8 @@ define('CRUD.Helper', [
             });
             return crudId;
         },
-
         getBaseUrl: function getBaseUrl(crudId) {
-            var config = CrudConfiguration.get(crudId);
-            if (this.isCrudType(config.type)) {
-                return config.frontend.baseKey;
-            }
-            return null;
+            return this.getBaseKey(crudId);
         },
         getBaseUrls: function getUrlRegex(permission) {
             var self = this;
@@ -112,6 +139,50 @@ define('CRUD.Helper', [
         },
         getEditUrl: function getEditUrl(crudId, id) {
             return this.getUrl(crudId, '/edit/' + id);
+        },
+
+        getMenuItemsAll: function getMenuItemsAll() {
+            var self = this;
+            var crudIds = CrudConfiguration.getCrudIds();
+            var menuItems = [];
+            _(crudIds).each(function mapCrudIds(crudId) {
+                if (self.isCrudType(crudId)) {
+                    menuItems.push(self.getMenuItems(crudId));
+                }
+            });
+            return menuItems;
+        },
+        getMenuItems: function getMenuItems(crudId) {
+            var names = this.getNames(crudId);
+            var permissions = this.getPermissions(crudId);
+            var baseKey = this.getBaseKey(crudId);
+            var menuItems = {
+                id: baseKey,
+                name: Utils.translate(names.plural),
+                url: '',
+                index: 0,
+                children: []
+            };
+            if (permissions.list) {
+                menuItems.url = this.getListUrl(crudId);
+                menuItems.children.push({
+                    parent: baseKey,
+                    id: baseKey + '_all',
+                    name: Utils.translate(names.plural),
+                    url: this.getListUrl(crudId),
+                    index: 1
+                });
+            }
+            if (permissions.create) {
+                menuItems.children.push({
+                    parent: baseKey,
+                    id: baseKey + '_new',
+                    name: Utils.translate('New $(0)', names.plural),
+                    url: this.getNewUrl(crudId),
+                    qindex: 2
+                });
+            }
+            return menuItems;
         }
     };
 });

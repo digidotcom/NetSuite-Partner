@@ -1,19 +1,13 @@
 define('Registration', [
     'Utils',
     'CRUD',
-    'Registration.Configuration',
-    'Registration.Helper'
+    'Registration.Configuration'
 ], function Registration(
     Utils,
     Crud,
-    RegistrationConfiguration,
-    RegistrationHelper
+    RegistrationConfiguration
 ) {
     'use strict';
 
     Crud.add(RegistrationConfiguration.crudId, RegistrationConfiguration);
-
-    return {
-        MenuItems: RegistrationHelper.getMenuItems()
-    };
 });

@@ -28,8 +28,7 @@
 		</a>
 	</li>
 
-    {{#if registrationsMenu}}
-    {{#with registrationsMenu}}
+    {{#each crudMenus}}
     <li class="header-menu-myaccount-item-level2">
         <a class="header-menu-myaccount-anchor-level2" href="#" data-touchpoint="customercenter" data-hashtag="#{{url}}"{{#if hasChildren}} data-action="push-menu"{{/if}} name="{{id}}">
             {{name}}
@@ -53,8 +52,7 @@
         </ul>
         {{/if}}
     </li>
-    {{/with}}
-    {{/if}}
+    {{/each}}
 
 	<li class="header-menu-myaccount-item-level2 header-menu-myaccount-level2-orders" data-permissions="{{purchasesPermissions}}" data-permissions-operator="OR">
 		<a class="header-menu-myaccount-anchor-level2" href="#" data-action="push-menu" name="orders">

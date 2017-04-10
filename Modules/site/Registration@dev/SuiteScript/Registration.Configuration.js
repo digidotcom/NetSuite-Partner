@@ -71,10 +71,18 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
         frontend: {
             baseKey: 'registrations',
             names: {
-                singular: 'Registrations',
+                singular: 'Registration',
                 plural: 'Registrations'
             }
         },
+        listColumns: [
+            'name',
+            'status',
+            'approvalDate',
+            'expiryDate',
+            'companyName',
+            'partnerName'
+        ],
         groups: [
             { id: 'details', name: 'Registration Details' },
             { id: 'partner', name: 'Partner Details' },
@@ -364,6 +372,7 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                     group: 'customer',
                     type: 'text',
                     label: 'Company Name (End Customer/OEM, ODM)',
+                    labelShort: 'Company Name',
                     required: true
                 },
                 record: {

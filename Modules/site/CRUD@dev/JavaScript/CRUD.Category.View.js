@@ -1,21 +1,21 @@
-define('Registration.Status.View', [
+define('CRUD.Category.View', [
     'underscore',
     'Backbone',
     'Utils',
     'CRUD.Helper',
-    'registration_status.tpl'
-], function RegistrationStatusView(
+    'crud_category.tpl'
+], function CrudCategoryView(
     _,
     Backbone,
     Utils,
     CrudHelper,
-    registrationStatusTpl
+    crudCategoryTpl
 ) {
     'use strict';
 
     return Backbone.View.extend({
 
-        template: registrationStatusTpl,
+        template: crudCategoryTpl,
 
         initialize: function initialize(options) {
             this.collection = options.collection;

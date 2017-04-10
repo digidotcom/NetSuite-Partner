@@ -11,6 +11,11 @@ define('CRUD.Configuration', [
 
     return {
         keySets: {
+            guest: [
+                'type',
+                'frontend',
+                'permissions'
+            ],
             shared: [
                 'fields',
                 'type',
@@ -26,6 +31,7 @@ define('CRUD.Configuration', [
             ],
             bootstrapping: [
                 'frontend',
+                'listColumns',
                 'groups'
             ]
         },
@@ -139,9 +145,9 @@ define('CRUD.Configuration', [
             }
             return this.cacheRecord[id];
         },
-        getForBootstrapping: function getForBootstrapping() {
+        getForBootstrapping: function getForBootstrapping(keySet, excludeShared) {
             var result = {};
-            _(this.getWithKeySetAll('bootstrapping')).each(function eachConfiguration(configuration, index) {
+            _(this.getWithKeySetAll(keySet, excludeShared)).each(function eachConfiguration(configuration, index) {
                 var configEntry = {};
                 _(configuration).each(function eachConfig(config, key) {
                     if (key === 'fields') {
@@ -162,20 +168,26 @@ define('CRUD.Configuration', [
             });
             return result;
         },
+        getForBootstrappingPublic: function getForBootstrappingPublic() {
+            return this.getForBootstrapping('guest', true);
+        },
+        getForBootstrappingPrivate: function getForBootstrappingPrivate() {
+            return this.getForBootstrapping('bootstrapping', false);
+        },
 
-        getWithKeySet: function getWithKeySet(id, keySet) {
-            var keys = _.uniq(_.union([], this.keySets.shared, this.keySets[keySet]));
+        getWithKeySet: function getWithKeySet(id, keySet, excludeShared) {
+            var keys = _.uniq(_.union([], (!excludeShared) ? this.keySets.shared : [], this.keySets[keySet]));
             var config = this.get(id);
             if (config) {
                 return _(config).pick(keys);
             }
             return {};
         },
-        getWithKeySetAll: function getWithKeySetAll(keySet) {
+        getWithKeySetAll: function getWithKeySetAll(keySet, excludeShared) {
             var self = this;
             var configs = {};
             _(this.configuration).each(function eachConfigurartion(config, id) {
-                configs[id] = self.getWithKeySet(id, keySet);
+                configs[id] = self.getWithKeySet(id, keySet, excludeShared);
             });
             return configs;
         },

@@ -8,8 +8,8 @@ define('CRUD.Router', [
     'CRUD.Collection',
     'CRUD.Model',
     'CRUD.Category.Collection',
-    'Registration.List.View',
-    'Registration.Details.View'
+    'CRUD.List.View',
+    'CRUD.Details.View'
 ], function CrudRouter(
     _,
     Backbone,
@@ -20,8 +20,8 @@ define('CRUD.Router', [
     CrudCollection,
     CrudModel,
     CrudCategoryCollection,
-    RegistrationListView,
-    RegistrationDetailsView
+    CrudListView,
+    CrudDetailsView
 ) {
     'use strict';
 
@@ -69,7 +69,7 @@ define('CRUD.Router', [
                     });
                 }
 
-                view = new RegistrationListView(_.extend(options, {
+                view = new CrudListView(_.extend(options, {
                     application: this.application,
                     crudId: crudId,
                     collection: collection,
@@ -126,8 +126,9 @@ define('CRUD.Router', [
                 internalid: id,
                 crudId: crudId
             });
-            var view = new RegistrationDetailsView(_.extend(options, {
+            var view = new CrudDetailsView(_.extend(options, {
                 application: this.application,
+                crudId: crudId,
                 model: model
             }));
             if (!id) {

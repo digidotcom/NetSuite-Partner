@@ -6,9 +6,9 @@
     "modules": {
         "site/Configuration.Site": "dev",
         "site/CRUD": "dev",
-        "site/EFCore.RecordHelper.CRUD": "dev",
+        "site/EFCore.CRUD": "dev",
         "site/Form": "dev",
-        "site/Header.Site": "dev",
+        "site/Header.CRUD": "dev",
         "site/Heartbeat": "dev",
         "site/Mixin": "dev",
         "site/Registration": "dev",
@@ -20,7 +20,7 @@
                 "entryPoint": "SC.Shopping.Starter",
                 "dependencies": [
                     {"prepend": "SC.Shopping.Configuration.Site"},
-                    "Header.Site"
+                    "Header.CRUD"
                 ]
             },
             {
@@ -28,7 +28,7 @@
                 "dependencies": [
                     {"prepend": "SC.MyAccount.Configuration.Site"},
                     "CRUD",
-                    "Header.Site",
+                    "Header.CRUD",
                     "Heartbeat",
                     "Registration"
                 ]
@@ -37,7 +37,7 @@
                 "entryPoint": "SC.Checkout.Starter",
                 "dependencies": [
                     {"prepend": "SC.Checkout.Configuration.Site"},
-                    "Header.Site",
+                    "Header.CRUD",
                     "Heartbeat"
                 ]
             }
@@ -55,21 +55,21 @@
                 {
                     "name": "Shopping",
                     "dependencies": [
-                        "Header.Site"
+                        "Header.CRUD"
                     ]
                 },
                 {
                     "name": "MyAccount",
                     "dependencies": [
-                        "Header.Site",
-                        "Form",
-                        "Registration"
+                        "Header.CRUD",
+                        "CRUD",
+                        "Form"
                     ]
                 },
                 {
                     "name": "Checkout",
                     "dependencies": [
-                        "Header.Site"
+                        "Header.CRUD"
                     ]
                 }
             ]

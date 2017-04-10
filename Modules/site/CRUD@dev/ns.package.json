@@ -3,6 +3,12 @@
         "javascript": [
             "JavaScript/**/*.js"
         ],
+        "templates": [
+            "Templates/**/*"
+        ],
+        "sass": [
+            "Sass/**/*.scss"
+        ],
         "ssp-libraries": [
             "SuiteScript/**/*.js"
         ],

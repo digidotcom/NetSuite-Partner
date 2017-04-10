@@ -1,4 +1,4 @@
-define('Registration.List.View', [
+define('CRUD.List.View', [
     'underscore',
     'Backbone',
     'jQuery',
@@ -11,12 +11,12 @@ define('Registration.List.View', [
     'GlobalViews.ShowingCurrent.View',
     'ListHeader.View',
     'RecordViews.Actionable.View',
-    'Registration.Helper',
-    'Registration.AbstractView',
-    'Registration.List.Actions.View',
-    'Registration.Status.View',
-    'registration_list.tpl'
-], function RegistrationListView(
+    'CRUD.Helper',
+    'CRUD.AbstractView',
+    'CRUD.List.Actions.View',
+    'CRUD.Category.View',
+    'crud_list.tpl'
+], function CrudListView(
     _,
     Backbone,
     jQuery,
@@ -29,21 +29,21 @@ define('Registration.List.View', [
     GlobalViewsShowingCurrentView,
     ListHeaderView,
     RecordViewsActionableView,
-    RegistrationHelper,
-    RegistrationAbstractView,
-    RegistrationListActionsView,
-    RegistrationStatusView,
-    registrationListTpl
+    CrudHelper,
+    CrudAbstractView,
+    CrudListActionsView,
+    CrudCategoryView,
+    crudListTpl
 ) {
     'use strict';
 
     var isoDate = Utils.dateToString(new Date());
 
-    return RegistrationAbstractView.extend({
+    return CrudAbstractView.extend({
 
-        template: registrationListTpl,
+        template: crudListTpl,
 
-        pageHeader: Utils.translate(RegistrationHelper.moduleName),
+        pageHeader: '',
         titleSuffix: '',
         breadcrumbPart: [],
 
@@ -72,10 +72,13 @@ define('Registration.List.View', [
             this.collection = options.collection;
             this.categoryCollection = options.categoryCollection;
             this.hasCategory = !!this.categoryCollection;
+            this.pageHeader = CrudHelper.getNames(this.crudId).singular;
 
             this.listenCollection();
 
             this.initializeChildViews(options);
+
+            this.prepareListColumns();
 
             BackboneCompositeView.add(this);
         },
@@ -92,7 +95,7 @@ define('Registration.List.View', [
                 hidePagination: true
             });
             if (this.hasCategory) {
-                this.categoriesView = new RegistrationStatusView({
+                this.categoriesView = new CrudCategoryView({
                     collection: this.categoryCollection,
                     crudId: this.crudId,
                     active: options.category
@@ -100,8 +103,29 @@ define('Registration.List.View', [
             }
         },
 
+        prepareListColumns: function prepareListColumns() {
+            var crudId = this.crudId;
+            var listColumns = CrudHelper.getListColumnFields(crudId);
+            var columns = [];
+            _(listColumns).each(function eachListColumn(field) {
+                var attribute = field.attribute;
+                var isDate = _.indexOf(['datetime', 'date'], field.type) >= 0;
+                var type = isDate ? 'date' : 'text';
+                var label = field.labelShort ? field.labelShort : field.label;
+                columns.push({
+                    field: field,
+                    title: label,
+                    label: Utils.translate('$(0):', label),
+                    type: type,
+                    attribute: attribute
+                });
+            });
+            this.listColumns = columns;
+        },
+
         navigateToEntry: function navigateToEntry(e) {
-            var permissions = RegistrationHelper.getCrudPermissions();
+            var crudId = this.crudId;
+            var permissions = CrudHelper.getPermissions(crudId);
             var href;
             var id;
             // ignore clicks on anchors and buttons
@@ -110,7 +134,7 @@ define('Registration.List.View', [
             }
             if (permissions.read) {
                 id = jQuery(e.target).closest('[data-id]').data('id');
-                href = RegistrationHelper.getViewUrl(id);
+                href = CrudHelper.getViewUrl(crudId, id);
                 Backbone.history.navigate(href, { trigger: true });
             }
         },
@@ -141,7 +165,7 @@ define('Registration.List.View', [
                 return this.listHeader;
             },
 
-            'Registration.Statuses': function RegistrationStatuses() {
+            'CRUD.Categories': function CrudCategories() {
                 return this.categoriesView;
             },
 
@@ -159,58 +183,32 @@ define('Registration.List.View', [
                 });
             },
 
-            'ListResults': function RegistrationResults() {
-                var permissions = RegistrationHelper.getCrudPermissions();
+            'ListResults': function ListResults() {
+                var crudId = this.crudId;
+                var permissions = CrudHelper.getPermissions(crudId);
+                var listColumns = this.listColumns;
                 var recordsCollection = new Backbone.Collection(this.collection.map(function map(model) {
                     var internalid = model.get('internalid');
-                    var status = model.get('status');
-                    var partnerName = model.get('partnerName');
-                    var columns = [
-                        {
-                            label: Utils.translate('Name:'),
-                            type: 'text',
-                            name: 'name',
-                            value: model.get('name')
-                        },
-                        {
-                            label: Utils.translate('Status:'),
-                            type: 'name',
-                            name: 'status',
-                            value: status && status.name
-                        },
-                        {
-                            label: Utils.translate('Approval Date:'),
-                            type: 'date',
-                            name: 'approvalDate',
-                            value: model.get('approvalDate')
-                        },
-                        {
-                            label: Utils.translate('Expiry Date:'),
-                            type: 'date',
-                            name: 'expiryDate',
-                            value: model.get('expiryDate')
-                        },
-                        {
-                            label: Utils.translate('Company Name:'),
-                            type: 'text',
-                            name: 'companyName',
-                            value: model.get('companyName')
-                        },
-                        {
-                            label: Utils.translate('Partner Name:'),
-                            type: 'text',
-                            name: 'partnerName',
-                            value: partnerName && partnerName.name
-                        }
-                    ];
+                    var columns = [];
+                    _(listColumns).each(function eachListColumn(column) {
+                        var attribute = column.attribute;
+                        var value = model.get(attribute);
+                        var isComplex = _.isObject(value);
+                        columns.push({
+                            label: column.label,
+                            type: column.type,
+                            name: attribute,
+                            value: isComplex ? value.name : value
+                        });
+                    });
 
                     return new Backbone.Model({
-                        title: new Handlebars.SafeString(_('<span class="tranid">$(0)</span>').translate(internalid)),
+                        title: new Handlebars.SafeString(Utils.translate('<span class="tranid">$(0)</span>', internalid)),
                         record: model,
                         touchpoint: 'customercenter',
-                        detailsURL: permissions.read ? RegistrationHelper.getViewUrl(internalid) : '',
-                        id: model.get('internalid'),
-                        internalid: model.get('internalid'),
+                        detailsURL: permissions.read ? CrudHelper.getViewUrl(crudId, internalid) : '',
+                        id: internalid,
+                        internalid: internalid,
                         columns: columns
                     });
                 }));
@@ -220,24 +218,29 @@ define('Registration.List.View', [
                     collection: recordsCollection,
                     viewsPerRow: 1,
                     childViewOptions: {
-                        actionView: RegistrationListActionsView,
-                        actionOptions: {}
+                        actionView: CrudListActionsView,
+                        actionOptions: {
+                            crudId: crudId
+                        }
                     }
                 });
             }
         },
 
         getContext: function getContext() {
-            var permissions = RegistrationHelper.getCrudPermissions();
+            var crudId = this.crudId;
+            var permissions = CrudHelper.getPermissions(crudId);
             return {
+                crudId: crudId,
                 pageHeader: this.pageHeader,
                 collectionLengthGreaterThan0: this.collection.length > 0,
                 isLoading: this.isLoading,
+                listColumns: this.listColumns,
                 showPagination: !!(this.collection.totalRecordsFound && this.collection.recordsPerPage),
                 showCurrentPage: this.options.showCurrentPage,
                 showBackToAccount: true,
                 showNewButton: permissions.create,
-                newUrl: RegistrationHelper.getNewUrl(),
+                newUrl: CrudHelper.getNewUrl(crudId),
                 rowsAreClickable: permissions.read,
                 showActionsHeader: permissions.update
             };

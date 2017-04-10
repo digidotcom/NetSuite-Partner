@@ -1,29 +1,32 @@
-define('Registration.AbstractView', [
+define('CRUD.AbstractView', [
     'underscore',
     'Backbone',
     'Utils',
-    'Registration.Helper'
-], function RegistrationAbstractView(
+    'CRUD.Helper'
+], function CrudAbstractView(
     _,
     Backbone,
     Utils,
-    RegistrationHelper
+    CrudHelper
 ) {
     'use strict';
 
     return Backbone.View.extend({
 
         getSelectedMenu: function getSelectedMenu() {
-            return 'registrations_all';
+            return CrudHelper.getBaseKey(this.crudId) + '_all';
         },
         getTitle: function getTitle() {
-            return Utils.translate('Registrations') + this.getTitleSuffix();
+            var names = CrudHelper.getNames(this.crudId);
+            return Utils.translate(names.plural) + this.getTitleSuffix();
         },
         getBreadcrumbPages: function getBreadcrumbPages() {
+            var crudId = this.crudId;
+            var names = CrudHelper.getNames(crudId);
             return _.union([
                 {
-                    text: Utils.translate('Registrations'),
-                    href: RegistrationHelper.getListUrl()
+                    text: Utils.translate(names.plural),
+                    href: CrudHelper.getListUrl(crudId)
                 }
             ], this.getBreadcrumbPart());
         },

@@ -1,7 +1,9 @@
 define('CRUD.Configuration', [
-    'underscore'
+    'underscore',
+    'jQuery'
 ], function CrudConfiguration(
-    _
+    _,
+    jQuery
 ) {
     'use strict';
 
@@ -16,27 +18,40 @@ define('CRUD.Configuration', [
                 lookupServiceUrl: 'services/CRUD.Lookup.Service.ss?id=' + crudId
             };
         },
+        getPublishedAll: function getPublished() {
+            var publishedPublic;
+            var published;
+            if (!this.published) {
+                publishedPublic = SC.getPublishedObject('CrudConfigurationPublic') || {};
+                published = SC.getPublishedObject('CrudConfiguration') || {};
+                this.published = jQuery.extend(true, {}, publishedPublic, published);
+            }
+            return this.published;
+        },
+        getPublished: function getPublished(crudId) {
+            var published = this.getPublishedAll();
+            return published[crudId] || {};
+        },
         getCrudIds: function getCrudIds() {
             if (!this.crudIds) {
-                this.crudIds = _.keys(SC.getPublishedObject('CrudConfiguration') || {});
+                this.crudIds = _.keys(this.getPublishedAll());
             }
             return this.crudIds;
         },
         getAll: function getAll() {
             var self = this;
-            var configurationPublished = SC.getPublishedObject('CrudConfiguration') || {};
-            _(configurationPublished).each(function eachConfig(config, crudId) {
+            _(this.getCrudIds()).each(function eachConfig(crudId) {
                 self.get(crudId);
             });
             return this.config;
         },
         get: function get(crudId) {
-            var configurationPublished;
+            var published;
             var configuration;
             if (!this.config[crudId]) {
-                configurationPublished = SC.getPublishedObject('CrudConfiguration') || {};
+                published = this.getPublished(crudId);
                 configuration = this.getStatic(crudId);
-                this.config[crudId] = _.extend({}, configurationPublished[crudId] || {}, configuration);
+                this.config[crudId] = jQuery.extend(true, {}, published, configuration);
             }
             return this.config[crudId];
         },
