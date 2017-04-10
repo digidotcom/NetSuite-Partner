@@ -1,13 +1,11 @@
 define('Registration', [
     'Utils',
-    'CRUD',
-    'Registration.Configuration'
+    'CRUD'
 ], function Registration(
     Utils,
-    Crud,
-    RegistrationConfiguration
+    Crud
 ) {
     'use strict';
 
-    Crud.add(RegistrationConfiguration.crudId, RegistrationConfiguration);
+    Crud.add('registration');
 });

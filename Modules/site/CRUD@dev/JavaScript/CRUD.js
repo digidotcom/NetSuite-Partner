@@ -13,7 +13,7 @@ define('CRUD', [
         MenuItems: CrudHelper.getMenuItemsAll(),
 
         add: function add(crudId, settings) {
-            CrudConfiguration.addSettings(crudId, settings);
+            CrudConfiguration.addSettings(crudId, settings || {});
         },
 
         mountToApp: function mountToApp(application) {
