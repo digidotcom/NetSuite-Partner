@@ -101,6 +101,15 @@ define('CRUD.Utils', [
                 throw badRequestError;
             }
         },
+        isAllowed: function isAllowed(crudId, permission) {
+            var config = CrudConfiguration.get(crudId);
+            var permissions = config && config.permissions;
+            if (permissions && !permissions[permission]) {
+                throw methodNotAllowedError;
+            }
+            return true;
+        },
+
         getCategoryFieldName: function getCategoryFieldName(id) {
             var config = CrudConfiguration.get(id);
             return config && config.category && config.category.filterName;
@@ -147,6 +156,23 @@ define('CRUD.Utils', [
             });
             result.filters = filters;
             return result;
+        },
+
+        parseCrudData: function parseCrudData(config, dataArg) {
+            var data = {};
+            _(dataArg).each(function eachDataArg(value, key) {
+                var fieldInfo = config.fields[key];
+                if (!/_display$/.test(key)) {
+                    if (fieldInfo && fieldInfo.record) {
+                        if (fieldInfo.record.joint && fieldInfo.record.internalid) {
+                            data[key + 'Internalid'] = value;
+                        } else {
+                            data[key] = value;
+                        }
+                    }
+                }
+            });
+            return data;
         }
     };
 });

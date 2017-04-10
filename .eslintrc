@@ -72,6 +72,7 @@
         "nlapiSubmitField": false,
         "nlapiSubmitFile": false,
         "nlapiSubmitRecord": false,
+        "nlapiDeleteRecord": true,
         "nlapiYieldScript": true,
         "nlobjError": true,
         "nlobjSearchColumn": false,

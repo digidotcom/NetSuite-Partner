@@ -2,12 +2,14 @@ define('CRUD.Record.Model', [
     'underscore',
     'SC.Model',
     'SearchHelper',
+    'RecordHelper.CRUD',
     'CRUD.Utils',
     'CRUD.Configuration'
 ], function CrudRecordModel(
     _,
     SCModel,
     SearchHelper,
+    RecordHelper,
     CrudUtils,
     CrudConfiguration
 ) {
@@ -61,9 +63,9 @@ define('CRUD.Record.Model', [
 
         get: function get(crudId, id) {
             var config = CrudConfiguration.getForRecord(crudId);
+            var fieldset = config.fieldsets.details;
             var search;
             var result;
-            var fieldset = config.fieldsets.details;
 
             config.filters.push({ fieldName: 'internalid', operator: 'is', value1: id });
 
@@ -74,17 +76,57 @@ define('CRUD.Record.Model', [
                 .setFieldset(fieldset);
 
             result = search.search().getResult();
-            CrudUtils.mapResult(config, result, fieldset);
+            if (result) {
+                CrudUtils.mapResult(config, result, fieldset);
+            } else {
+                throw notFoundError;
+            }
             return result;
         },
 
-        create: function create(/* crudId, data */) {
-            // console.log('create', JSON.stringify(data));
-            return 1;
+        create: function create(crudId, dataRaw) {
+            var config = CrudConfiguration.getForRecord(crudId);
+            var record;
+
+            var data = CrudUtils.parseCrudData(config, dataRaw);
+
+            record = new RecordHelper()
+                .setRecord(config.record)
+                .setFields(config.columns)
+                .setFieldset(config.fieldsets.save)
+                .setData(data);
+
+            record.create();
+
+            return record.getResult();
         },
 
-        update: function update(/* crudId, id, data */) {
-            // console.log('update id: ' + id, JSON.stringify(data));
+        update: function update(crudId, id, dataRaw) {
+            var config = CrudConfiguration.getForRecord(crudId);
+            var record;
+
+            var data = CrudUtils.parseCrudData(config, dataRaw);
+
+            record = new RecordHelper()
+                .setRecord(config.record)
+                .setFields(config.columns)
+                .setFieldset(config.fieldsets.save)
+                .setData(data);
+
+            record.update(id);
+
+            return record.getResult();
+        },
+
+        'delete': function deleteFn(crudId, id) {
+            var config = CrudConfiguration.getForRecord(crudId);
+
+            var record = new RecordHelper()
+                .setRecord(config.record);
+
+            record.delete(id);
+
+            return record.getResult();
         }
     });
 });

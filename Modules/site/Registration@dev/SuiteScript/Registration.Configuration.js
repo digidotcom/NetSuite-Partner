@@ -20,39 +20,9 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
         );
         return value === 'T';
     }
-    /* SEARCH
-    record: 'customrecord_registrationprocess',
-    filters: [
-        { fieldName: 'isinactive', operator: 'is', value1: 'F' },
-        { fieldName: 'custrecord_partner_customer', operator: 'is', value1: nlapiGetUser() }
-    ],
-    sort: { fieldName: 'internalid', order: 'asc' },
-    columns: {
-        statusId: { fieldName: 'custrecord_registration_status' }, // List/Record: Registration Status
-        statusName: { // List/Record: Registration Status
-            fieldName: 'custrecord_registration_status_public',
-            joinKey: 'custrecord_registration_status'
-        },
-        statusAllowsEdit: {
-            fieldName: 'custrecord_registration_status_edit',
-            joinKey: 'custrecord_registration_status',
-            applyFunction: booleanMap
-        },
+    function setText(record, fieldInfo, value) {
+        record.setFieldText(fieldInfo.fieldName, value);
     }
-    */
-    /* FORM
-    {
-        group: 'customer',
-        type: 'list',
-        list: 'states',
-        relatedAttribute: 'companyCountry',
-        nodefault: false,
-        atttribute: 'companyState',
-        label: 'State',
-        tooltip: 'Depends on the selected country',
-        required: false
-    }
-    */
 
     return {
         id: 'registration',
@@ -119,6 +89,41 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                 'statusAllowsEdit',
                 'approvalDate',
                 'expiryDate',
+                'partnerName',
+                'additionalInformation',
+                'fieldSalesEngineer',
+                'buyer',
+                'fieldSalesRep',
+                'companyName',
+                'companyMainPhone',
+                'companyAddress',
+                'companyAddress2',
+                'companyCity',
+                'companyCountry',
+                'companyState',
+                'companyZipCode',
+                'contractManufacturer',
+                'developmentDesignConsultant',
+                'engineerTechnicalContactEmail',
+                'engineerTechnicalContactName',
+                'engineerTechnicalContactPhone',
+                'channelManager',
+                'customerLocation',
+                'endCustomerAccount',
+                'learnAboutDeal',
+                'internalNotes',
+                'lead',
+                'opportunity',
+                'preferredDistributor',
+                'productionDate',
+                'projectName',
+                'reseller',
+                'summaryOfApplication',
+                'salesRep',
+                'prototypeEvalDate'
+            ],
+            save: [
+                'name',
                 'partnerName',
                 'additionalInformation',
                 'fieldSalesEngineer',
@@ -435,7 +440,8 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                 record: {
                     fieldName: 'custrecord_company_country',
                     type: 'object',
-                    applyFunction: sameIdName
+                    applyFunction: sameIdName,
+                    applySetFunction: setText
                 }
             },
             companyState: {
@@ -452,7 +458,8 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                 record: {
                     fieldName: 'custrecord_company_state',
                     type: 'object',
-                    applyFunction: sameIdName
+                    applyFunction: sameIdName,
+                    applySetFunction: setText
                 }
             },
             companyZipCode: {

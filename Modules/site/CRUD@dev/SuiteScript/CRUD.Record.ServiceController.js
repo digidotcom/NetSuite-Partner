@@ -28,19 +28,32 @@ define('CRUD.Record.ServiceController', [
             CrudUtils.validateCrudId(crudId);
 
             if (id) {
-                return CrudRecordModel.get(crudId, id);
+                if (CrudUtils.isAllowed(crudId, 'read')) {
+                    return CrudRecordModel.get(crudId, id);
+                }
+                return null;
             }
-            return CrudRecordModel.list(crudId, CrudUtils.getListParameters(crudId, this.request));
+            if (CrudUtils.isAllowed(crudId, 'list')) {
+                return CrudRecordModel.list(crudId, CrudUtils.getListParameters(crudId, this.request));
+            }
+            return null;
         },
 
         post: function post() {
             var crudId = this.request.getParameter('id');
             var id;
+            var result;
 
             CrudUtils.validateCrudId(crudId);
 
-            id = CrudRecordModel.create(crudId, this.data);
-            this.sendContent(CrudRecordModel.get(crudId, id), { status: 201 });
+            if (CrudUtils.isAllowed(crudId, 'create')) {
+                id = CrudRecordModel.create(crudId, this.data);
+                result = { internalid: id };
+                if (CrudUtils.isAllowed(crudId, 'read')) {
+                    result = CrudRecordModel.get(crudId, id);
+                }
+                this.sendContent(result, { status: 201 });
+            }
         },
 
         put: function put() {
@@ -50,8 +63,25 @@ define('CRUD.Record.ServiceController', [
             CrudUtils.validateCrudId(crudId);
             CrudUtils.validateId(id);
 
-            CrudRecordModel.update(crudId, id, this.data);
-            return CrudRecordModel.get(crudId, id);
+            if (CrudUtils.isAllowed(crudId, 'update')) {
+                CrudRecordModel.update(crudId, id, this.data);
+                return CrudRecordModel.get(crudId, id);
+            }
+            return null;
+        },
+
+        'delete': function deleteFn() {
+            var crudId = this.request.getParameter('id');
+            var id = this.request.getParameter('internalid');
+
+            CrudUtils.validateCrudId(crudId);
+            CrudUtils.validateId(id);
+
+            if (CrudUtils.isAllowed(crudId, 'delete')) {
+                CrudRecordModel.delete(crudId, id);
+                return { internalid: id };
+            }
+            return null;
         }
     });
 });
