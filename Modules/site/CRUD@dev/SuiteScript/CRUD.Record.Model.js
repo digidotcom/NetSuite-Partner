@@ -94,7 +94,8 @@ define('CRUD.Record.Model', [
                 .setRecord(config.record)
                 .setFields(config.columns)
                 .setFieldset(config.fieldsets.save)
-                .setData(data);
+                .setData(data)
+                .setFilters(config.filters);
 
             record.create();
 
@@ -111,7 +112,8 @@ define('CRUD.Record.Model', [
                 .setRecord(config.record)
                 .setFields(config.columns)
                 .setFieldset(config.fieldsets.save)
-                .setData(data);
+                .setData(data)
+                .setFilters(config.filters);
 
             record.update(id);
 
@@ -122,7 +124,8 @@ define('CRUD.Record.Model', [
             var config = CrudConfiguration.getForRecord(crudId);
 
             var record = new RecordHelper()
-                .setRecord(config.record);
+                .setRecord(config.record)
+                .setFilters(config.filters);
 
             record.delete(id);
 

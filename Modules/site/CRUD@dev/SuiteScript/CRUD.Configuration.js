@@ -24,6 +24,7 @@ define('CRUD.Configuration', [
             ],
             record: [
                 'record',
+                'loggedInFilterField',
                 'fieldsets',
                 'filters',
                 'filtersDynamic',
@@ -92,6 +93,13 @@ define('CRUD.Configuration', [
                         result.filters.push(filterData);
                     }
                 });
+                if (config.loggedInFilterField) {
+                    result.filters.push({
+                        fieldName: self.getFieldNameForField(self.getFieldRecord(config, config.loggedInFilterField)),
+                        operator: 'is',
+                        value1: nlapiGetUser()
+                    });
+                }
                 if (config.category && config.category.filterName) {
                     result.filtersDynamic[config.category.filterName] = {
                         fieldName: self.getFieldNameForField(self.getFieldRecord(config, config.category.filterName)),

@@ -49,7 +49,7 @@ define('CRUD.Record.ServiceController', [
             if (CrudUtils.isAllowed(crudId, 'create')) {
                 id = CrudRecordModel.create(crudId, this.data);
                 result = { internalid: id };
-                if (CrudUtils.isAllowed(crudId, 'read')) {
+                if (id && CrudUtils.isAllowed(crudId, 'read')) {
                     result = CrudRecordModel.get(crudId, id);
                 }
                 this.sendContent(result, { status: 201 });

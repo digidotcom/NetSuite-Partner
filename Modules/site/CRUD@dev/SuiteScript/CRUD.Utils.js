@@ -172,6 +172,12 @@ define('CRUD.Utils', [
                     }
                 }
             });
+            if (config.loggedInFilterField) {
+                data[config.loggedInFilterField] = nlapiGetUser(); // eslint-disable-line
+                _(config.fieldsets).each(function eachFieldset(fieldset) {
+                    fieldset.push(config.loggedInFilterField);
+                });
+            }
             return data;
         }
     };

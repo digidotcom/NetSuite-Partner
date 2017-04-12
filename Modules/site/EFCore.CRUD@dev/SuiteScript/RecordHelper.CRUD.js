@@ -7,9 +7,10 @@ define('RecordHelper.CRUD', [
 ) {
     'use strict';
 
-    function RecordHelperCrud(record, fields, fieldset, data) {
+    function RecordHelperCrud(record, fields, fieldset, data, filters) {
         RecordHelper.apply(this, _(arguments).toArray());
         this.setData(data || {});
+        this.setFilters(filters);
     }
 
     /* extend from RecordHelper */
@@ -20,6 +21,11 @@ define('RecordHelper.CRUD', [
 
         setData: function setData(data) {
             this._data = _.clone(data);
+            return this;
+        },
+
+        setFilters: function setFilters(filters) {
+            this._filters = filters;
             return this;
         },
 
@@ -80,6 +86,24 @@ define('RecordHelper.CRUD', [
             });
         },
 
+        _canEdit: function _canEdit() {
+            var record = this._recordObj;
+            var filters = this._filters;
+            var canSave = true;
+            if (filters && filters.length) {
+                _(filters).each(function eachFilter(filter) {
+                    var value;
+                    if (filter.operator === 'is') {
+                        value = record.getFieldValue(filter.fieldName);
+                        if (value != filter.value1) { // eslint-disable-line
+                            canSave = false;
+                        }
+                    }
+                });
+            }
+            return canSave;
+        },
+
         _save: function save(optionsArg) {
             var options = optionsArg || {};
             this._setDataToRecord();
@@ -99,12 +123,17 @@ define('RecordHelper.CRUD', [
 
         update: function update(id, options) {
             this._recordObj = nlapiLoadRecord(this._record, id);
-            this._save(options);
+            if (this._canEdit()) {
+                this._save(options);
+            }
             return this;
         },
 
         'delete': function deleteFn(id) {
-            this._lastResultCrud = nlapiDeleteRecord(this._record, id);
+            this._recordObj = nlapiLoadRecord(this._record, id);
+            if (this._canEdit()) {
+                this._lastResultCrud = nlapiDeleteRecord(this._record, id);
+            }
             return this;
         },
 

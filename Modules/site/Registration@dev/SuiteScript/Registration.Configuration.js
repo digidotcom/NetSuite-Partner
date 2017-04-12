@@ -61,9 +61,9 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
             { id: 'project', name: 'Project Details' }
         ],
         record: 'customrecord_registrationprocess',
+        loggedInFilterField: 'customer',
         filters: {
-            inactive: { operator: 'is', value1: 'F' },
-            customer: { operator: 'is', value1: nlapiGetUser() }
+            inactive: { operator: 'is', value1: 'F' }
         },
         filtersDynamic: {
             // status: { operator: 'is', numberOfValues: 1 }
@@ -525,14 +525,8 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                     required: false
                 },
                 record: {
-                    joint: true,
-                    internalid: {
-                        fieldName: 'custrecord_end_customer_account'
-                    },
-                    name: {
-                        fieldName: 'description',
-                        joinKey: 'custrecord_end_customer_account'
-                    }
+                    fieldName: 'custrecord_end_customer_account',
+                    type: 'object'
                 }
             },
 
