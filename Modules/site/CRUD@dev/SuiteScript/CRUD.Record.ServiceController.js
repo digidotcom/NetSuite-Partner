@@ -42,15 +42,14 @@ define('CRUD.Record.ServiceController', [
         post: function post() {
             var crudId = this.request.getParameter('id');
             var id;
-            var result;
+            var result = {};
 
             CrudUtils.validateCrudId(crudId);
 
             if (CrudUtils.isAllowed(crudId, 'create')) {
                 id = CrudRecordModel.create(crudId, this.data);
-                result = { internalid: id };
-                if (id && CrudUtils.isAllowed(crudId, 'read')) {
-                    result = CrudRecordModel.get(crudId, id);
+                if (id) {
+                    result = { internalid: id };
                 }
                 this.sendContent(result, { status: 201 });
             }
@@ -65,7 +64,7 @@ define('CRUD.Record.ServiceController', [
 
             if (CrudUtils.isAllowed(crudId, 'update')) {
                 CrudRecordModel.update(crudId, id, this.data);
-                return CrudRecordModel.get(crudId, id);
+                return { internalid: id };
             }
             return null;
         },

@@ -1,6 +1,7 @@
 define('Form.Mixin.View', [
     'underscore',
     'jQuery',
+    'Backbone',
     'Backbone.CompositeView',
     'Backbone.FormView',
     'Mixin',
@@ -11,6 +12,7 @@ define('Form.Mixin.View', [
 ], function FormMixinView(
     _,
     jQuery,
+    Backbone,
     BackboneCompositeView,
     BackboneFormView,
     Mixin,
@@ -35,6 +37,8 @@ define('Form.Mixin.View', [
                 if (!this.formViewFocusHandler) {
                     BackboneFormView.add(this);
                 }
+
+                this.bindSubmitCallbacks();
 
                 return result;
             }
@@ -119,6 +123,21 @@ define('Form.Mixin.View', [
                 if (!this.isView()) {
                     this.saveForm(e);
                 }
+            },
+            bindSubmitCallbacks: function bindSubmitCallbacks() {
+                var config = this.formConfig;
+                this.model.on('saveCompleted', function onModelSaveCompleted() {
+                    var info = config.getInfo();
+                    if (config.isEdit()) {
+                        if (config.canView()) {
+                            Backbone.history.navigate(info.viewUrl, { trigger: true });
+                        }
+                    } else if (config.isNew()) {
+                        if (config.canList()) {
+                            Backbone.history.navigate(info.goBackUrl, { trigger: true });
+                        }
+                    }
+                });
             },
 
             isView: function isView() {

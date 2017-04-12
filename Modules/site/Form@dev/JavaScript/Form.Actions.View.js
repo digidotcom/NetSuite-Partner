@@ -28,7 +28,7 @@ define('Form.Actions.View', [
             var canView = config.canView();
             var canEdit = config.canEdit();
             return {
-                showContent: this.config.canAccess(),
+                showContent: config.canAccess(),
                 inHeader: this.options.inHeader,
                 newUrl: info.newUrl,
                 editUrl: info.editUrl,
