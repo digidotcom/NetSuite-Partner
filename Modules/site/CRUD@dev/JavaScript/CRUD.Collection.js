@@ -17,7 +17,7 @@ define('CRUD.Collection', [
             this.crudId = options.crudId;
             this.customFilters = options && options.filters;
             this.recordsPerPage = options && options.recordsPerPage;
-            this.category = options && options.category;
+            this.status = options && options.status;
             this.setUrl();
         },
 
@@ -34,7 +34,7 @@ define('CRUD.Collection', [
 
         update: function update(options) {
             var range = options.range || {};
-            var category = options.category || this.category;
+            var status = options.status || this.status;
             var data = {
                 results_per_page: options.recordsPerPage || this.recordsPerPage,
                 sort: options.sort.value,
@@ -43,8 +43,8 @@ define('CRUD.Collection', [
                 to: range.to ? new Date(range.to.replace(/-/g, '/')).getTime() : null,
                 page: options.page
             };
-            if (category) {
-                data.category = category;
+            if (status) {
+                data.status = status;
             }
 
             this.fetch({

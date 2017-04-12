@@ -12,7 +12,7 @@
 
     <div class="crud-list-main-actions">
         <div class="crud-list-main-actions-row">
-            <div class="crud-list-header-nav" data-view="CRUD.Categories"></div>
+            <div class="crud-list-header-nav" data-view="CRUD.Statuses"></div>
             {{#if showNewButton}}
             <div class="crud-list-new">
                 <a href="{{newUrl}}" class="crud-list-new-button">{{translate 'New'}}</a>
@@ -36,24 +36,6 @@
                             <span>{{translate title}}</span>
                         </th>
                         {{/each}}
-                        <!-- th class="crud-list-recordviews-text-header">
-                            <span>{{translate 'Name'}}</span>
-                        </th>
-                        <th class="crud-list-recordviews-text-header">
-                            <span>{{translate 'Status'}}</span>
-                        </th>
-                        <th class="crud-list-recordviews-date-header">
-                            <span>{{translate 'Approval Date'}}</span>
-                        </th>
-                        <th class="crud-list-recordviews-date-header">
-                            <span>{{translate 'Expiry Date'}}</span>
-                        </th>
-                        <th class="crud-list-recordviews-text-header">
-                            <span>{{translate 'Company Name'}}</span>
-                        </th>
-                        <th class="crud-list-recordviews-text-header">
-                            <span>{{translate 'Partner Name'}}</span>
-                        </th -->
                         <th class="crud-list-recordviews-actions-header">
                             {{#if showActionsHeader}}<span>{{translate 'Actions'}}</span>{{/if}}
                         </th>

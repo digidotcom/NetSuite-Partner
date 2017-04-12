@@ -34,7 +34,7 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
             update: true,
             'delete': false
         },
-        category: {
+        status: {
             crudId: 'registration_status',
             filterName: 'status'
         },

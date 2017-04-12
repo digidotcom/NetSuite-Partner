@@ -7,7 +7,7 @@ define('CRUD.Router', [
     'CRUD.Helper',
     'CRUD.Collection',
     'CRUD.Model',
-    'CRUD.Category.Collection',
+    'CRUD.Status.Collection',
     'CRUD.List.View',
     'CRUD.Details.View'
 ], function CrudRouter(
@@ -19,7 +19,7 @@ define('CRUD.Router', [
     CrudHelper,
     CrudCollection,
     CrudModel,
-    CrudCategoryCollection,
+    CrudStatusCollection,
     CrudListView,
     CrudDetailsView
 ) {
@@ -48,23 +48,23 @@ define('CRUD.Router', [
 
         list: function list(crudUrl, optionsArg) {
             var crudId = CrudHelper.getIdFromBaseUrl(crudUrl);
-            var hasCategory = CrudHelper.hasCategory(crudId);
-            var categoryFilterName = CrudHelper.getCategoryFilterName(crudId);
+            var hasStatus = CrudHelper.hasStatus(crudId);
+            var statusFilterName = CrudHelper.getStatusFilterName(crudId);
             var collection;
-            var categoryCollection;
+            var statusCollection;
             var view;
             var options = this.parseListOptions(optionsArg);
-            var category = hasCategory ? options[categoryFilterName] : null;
+            var status = hasStatus ? options[statusFilterName] : null;
 
             if (this.allowPage(crudId, 'list')) {
                 collection = new CrudCollection(null, {
                     crudId: crudId,
                     recordsPerPage: options.show,
-                    category: category
+                    status: status
                 });
 
-                if (hasCategory) {
-                    categoryCollection = new CrudCategoryCollection(null, {
+                if (hasStatus) {
+                    statusCollection = new CrudStatusCollection(null, {
                         crudId: crudId
                     });
                 }
@@ -73,15 +73,15 @@ define('CRUD.Router', [
                     application: this.application,
                     crudId: crudId,
                     collection: collection,
-                    category: category,
-                    categoryCollection: hasCategory ? categoryCollection : null
+                    status: status,
+                    statusCollection: hasStatus ? statusCollection : null
                 }));
 
                 collection.on('reset', view.showContent, view);
 
-                if (hasCategory) {
-                    categoryCollection.on('reset', view.refreshCategories, view);
-                    categoryCollection.fetch({
+                if (hasStatus) {
+                    statusCollection.on('reset', view.refreshStatuses, view);
+                    statusCollection.fetch({
                         reset: true,
                         killerId: AjaxRequestsKiller.getKillerId()
                     });
@@ -156,17 +156,17 @@ define('CRUD.Router', [
             var defaults = {
                 page: 1, // default to 1
                 show: 10, // default to 10
-                category: null // default to All
+                status: null // default to All
             };
             var options = defaults;
             if (optionsArg) {
                 options = Utils.parseUrlOptions(optionsArg);
                 options.page = parseInt(options.page, 10) || defaults.page;
                 options.show = parseInt(options.show, 10) || defaults.show;
-                if (options.category) {
-                    options.category = parseInt(options.category, 10);
-                } else if (defaults.category) {
-                    options.category = defaults.category;
+                if (options.status) {
+                    options.status = parseInt(options.status, 10);
+                } else if (defaults.status) {
+                    options.status = defaults.status;
                 }
             }
             return options;

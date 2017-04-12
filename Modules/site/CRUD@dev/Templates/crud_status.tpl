@@ -1,5 +1,5 @@
 <div class="crud-list-header-button-group">
-    {{#each categories}}
+    {{#each statuses}}
         {{#if isActive}}
             <span class="crud-list-header-button-active">{{translate name}}</span>
         {{else}}

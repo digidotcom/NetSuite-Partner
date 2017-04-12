@@ -14,7 +14,7 @@ define('CRUD.List.View', [
     'CRUD.Helper',
     'CRUD.AbstractView',
     'CRUD.List.Actions.View',
-    'CRUD.Category.View',
+    'CRUD.Status.View',
     'crud_list.tpl'
 ], function CrudListView(
     _,
@@ -32,7 +32,7 @@ define('CRUD.List.View', [
     CrudHelper,
     CrudAbstractView,
     CrudListActionsView,
-    CrudCategoryView,
+    CrudStatusView,
     crudListTpl
 ) {
     'use strict';
@@ -70,8 +70,8 @@ define('CRUD.List.View', [
             this.application = options.application;
             this.crudId = options.crudId;
             this.collection = options.collection;
-            this.categoryCollection = options.categoryCollection;
-            this.hasCategory = !!this.categoryCollection;
+            this.statusCollection = options.statusCollection;
+            this.hasStatus = !!this.statusCollection;
             this.pageHeader = CrudHelper.getNames(this.crudId).singular;
 
             this.listenCollection();
@@ -94,11 +94,11 @@ define('CRUD.List.View', [
                 rangeFilterLabel: Utils.translate('From'),
                 hidePagination: true
             });
-            if (this.hasCategory) {
-                this.categoriesView = new CrudCategoryView({
-                    collection: this.categoryCollection,
+            if (this.hasStatus) {
+                this.statusesView = new CrudStatusView({
+                    collection: this.statusCollection,
                     crudId: this.crudId,
-                    active: options.category
+                    active: options.status
                 });
             }
         },
@@ -156,8 +156,8 @@ define('CRUD.List.View', [
             this.isLoading = value;
         },
 
-        refreshCategories: function refreshCategories() {
-            this.categoriesView.render();
+        refreshStatuses: function refreshStatuses() {
+            this.statusesView.render();
         },
 
         childViews: {
@@ -165,8 +165,8 @@ define('CRUD.List.View', [
                 return this.listHeader;
             },
 
-            'CRUD.Categories': function CrudCategories() {
-                return this.categoriesView;
+            'CRUD.Statuses': function CrudStatuses() {
+                return this.statusesView;
             },
 
             'GlobalViews.Pagination': function GlobalViewsPagination() {

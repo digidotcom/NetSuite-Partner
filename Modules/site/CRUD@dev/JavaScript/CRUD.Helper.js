@@ -14,28 +14,28 @@ define('CRUD.Helper', [
             var url = CrudConfiguration.get(crudId).recordServiceUrl;
             return absolute ? Utils.getAbsoluteUrl(url) : url;
         },
-        getCategoryServiceUrl: function getCategoryServiceUrl(crudId, absolute) {
-            var categoryId = this.getCategoryId(crudId);
-            if (categoryId) {
-                return this.getRecordServiceUrl(categoryId, absolute);
+        getStatusServiceUrl: function getStatusServiceUrl(crudId, absolute) {
+            var statusId = this.getStatusId(crudId);
+            if (statusId) {
+                return this.getRecordServiceUrl(statusId, absolute);
             }
             return null;
         },
-        hasCategory: function hasCategory(crudId) {
-            return !!this.getCategory(crudId);
+        hasStatus: function hasStatus(crudId) {
+            return !!this.getStatus(crudId);
         },
-        getCategory: function getCategory(crudId) {
-            return CrudConfiguration.get(crudId).category;
+        getStatus: function getStatus(crudId) {
+            return CrudConfiguration.get(crudId).status;
         },
-        getCategoryId: function getCategoryId(crudId) {
-            var category = this.getCategory(crudId);
-            return category && category.crudId;
+        getStatusId: function getStatusId(crudId) {
+            var status = this.getStatus(crudId);
+            return status && status.crudId;
         },
-        getCategoryFilterName: function getCategoryId(crudId) {
-            var category = this.getCategory(crudId);
-            return category && category.filterName;
+        getStatusFilterName: function getStatusId(crudId) {
+            var status = this.getStatus(crudId);
+            return status && status.filterName;
         },
-        getCategoryAllLabel: function getCategoryAllLabel() {
+        getStatusAllLabel: function getStatusAllLabel() {
             return Utils.translate('All');
         },
         getFields: function getFields(crudId) {

@@ -19,7 +19,7 @@ define('CRUD.Configuration', [
             shared: [
                 'fields',
                 'type',
-                'category',
+                'status',
                 'permissions'
             ],
             record: [
@@ -100,9 +100,9 @@ define('CRUD.Configuration', [
                         value1: nlapiGetUser()
                     });
                 }
-                if (config.category && config.category.filterName) {
-                    result.filtersDynamic[config.category.filterName] = {
-                        fieldName: self.getFieldNameForField(self.getFieldRecord(config, config.category.filterName)),
+                if (config.status && config.status.filterName) {
+                    result.filtersDynamic[config.status.filterName] = {
+                        fieldName: self.getFieldNameForField(self.getFieldRecord(config, config.status.filterName)),
                         operator: 'is',
                         numberOfValues: 1
                     };

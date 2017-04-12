@@ -1,21 +1,21 @@
-define('CRUD.Category.View', [
+define('CRUD.Status.View', [
     'underscore',
     'Backbone',
     'Utils',
     'CRUD.Helper',
-    'crud_category.tpl'
-], function CrudCategoryView(
+    'crud_status.tpl'
+], function CrudStatusView(
     _,
     Backbone,
     Utils,
     CrudHelper,
-    crudCategoryTpl
+    crudStatusTpl
 ) {
     'use strict';
 
     return Backbone.View.extend({
 
-        template: crudCategoryTpl,
+        template: crudStatusTpl,
 
         initialize: function initialize(options) {
             this.collection = options.collection;
@@ -23,16 +23,16 @@ define('CRUD.Category.View', [
             this.active = parseInt(options.active, 10) || null;
         },
 
-        getCategoryContext: function getCategoryContext(model, active) {
+        getStatusContext: function getStatusContext(model, active) {
             var crudId = this.crudId;
             var params = {};
             var id = null;
-            var name = CrudHelper.getCategoryAllLabel();
+            var name = CrudHelper.getStatusAllLabel();
             var isActive = !active;
             if (model) {
                 id = parseInt(model.get('internalid'), 10);
                 name = model.get('name');
-                params[CrudHelper.getCategoryFilterName(crudId)] = id;
+                params[CrudHelper.getStatusFilterName(crudId)] = id;
                 isActive = id === active;
             }
             return {
@@ -47,16 +47,16 @@ define('CRUD.Category.View', [
             var self = this;
             var collection = this.collection;
             var active = this.active;
-            var categories = [
-                self.getCategoryContext(null, active)
+            var statuses = [
+                self.getStatusContext(null, active)
             ];
             if (collection.length) {
-                collection.each(function eachCollection(category) {
-                    categories.push(self.getCategoryContext(category, active));
+                collection.each(function eachCollection(status) {
+                    statuses.push(self.getStatusContext(status, active));
                 });
             }
             return {
-                categories: categories
+                statuses: statuses
             };
         }
     });

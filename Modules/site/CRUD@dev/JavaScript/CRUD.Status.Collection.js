@@ -1,17 +1,17 @@
-define('CRUD.Category.Collection', [
+define('CRUD.Status.Collection', [
     'Backbone',
     'CRUD.Helper',
-    'CRUD.Category.Model'
-], function CrudCategoryCollection(
+    'CRUD.Status.Model'
+], function CrudStatusCollection(
     Backbone,
     CrudHelper,
-    CrudCategoryModel
+    CrudStatusModel
 ) {
     'use strict';
 
     return Backbone.CachedCollection.extend({
 
-        model: CrudCategoryModel,
+        model: CrudStatusModel,
 
         initialize: function initialize(elements, options) {
             this.crudId = options.crudId;
@@ -19,7 +19,7 @@ define('CRUD.Category.Collection', [
         },
 
         setUrl: function setUrl() {
-            this.url = CrudHelper.getCategoryServiceUrl(this.crudId, true);
+            this.url = CrudHelper.getStatusServiceUrl(this.crudId, true);
         }
 
     });
