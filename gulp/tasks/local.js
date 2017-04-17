@@ -39,12 +39,17 @@ var gulp = require('gulp')
 ,	args   = require('yargs').argv
 ,	express = require('express')
 ,	child_process = require('child_process')
-,	serveIndex = require('serve-index');
+,	serveIndex = require('serve-index')
+,	del = require('del')
+,	livereload = require('../livereload');
 
 function initServer(cb)
 {
 	var http_config = package_manager.getTaskConfig('local.http', false)
 	,	https_config = package_manager.getTaskConfig('local.https', false);
+
+	// PS: added flag in distro
+    var use_nginx = package_manager.getTaskConfig('local.nginx', false);
 
 	if (!http_config && !https_config)
 	{
@@ -52,7 +57,7 @@ function initServer(cb)
 		cb();
 	}
 
-	(args.nginx ? initServerNginx : initServerExpress)(http_config, https_config, cb);
+	((args.nginx || use_nginx) ? initServerNginx : initServerExpress)(http_config, https_config, cb);
 }
 
 function initServerExpress(http_config, https_config, cb)
@@ -120,10 +125,32 @@ function initServerExpress(http_config, https_config, cb)
 		}
 	}
 
+	if(livereload.isEnabled()) {
+		logger.push('+- LiveReload server running at: ', gutil.colors.cyan('ws://localhost:' + livereload.getPort() + '/livereload'));
+		if (https_config) {
+			logger.push('+- LiveReload secure server running at: ', gutil.colors.cyan('wss://localhost:' + livereload.getSecurePort() + '/livereload'));
+		}
+	}
+
 	// cb();
 	logger.push('+- Watching current folder: ', gutil.colors.cyan(path.join(process.cwd(), 'Modules')));
 	logger.push('+- To cancel Gulp Watch enter: ', gutil.colors.cyan('control + c'));
 	logger.flush();
+}
+
+function prepareNginxFolders(nginxBasePath) {
+    var nginxDestPath = path.join(process.cwd(), package_manager.distro.folders.binaries || process.gulp_dest, 'nginx');
+
+    // delete folder if exists
+    try {
+        del.sync([nginxDestPath]);
+    } catch(e) {}
+    // create it again
+    fs.mkdirSync(nginxDestPath);
+    // copy mime.types file that is not compiled
+    fs.createReadStream(path.join(nginxBasePath, 'mime.types')).pipe(fs.createWriteStream(path.join(nginxDestPath, 'mime.types')));
+
+    return nginxDestPath;
 }
 
 function initServerNginx(http_config, https_config, cb)
@@ -133,38 +160,55 @@ function initServerNginx(http_config, https_config, cb)
 	var httpTemplate  = fs.readFileSync(path.join(nginxBasePath, 'http.conf.tpl'), 'utf8');
 	var httpsTemplate  = fs.readFileSync(path.join(nginxBasePath, 'https.conf.tpl'), 'utf8');
 
+	// PS: added different destination path and create logger
+    var nginxDestPath = prepareNginxFolders(nginxBasePath);
+    var logger = batch_logger();
+
 	var templateOptions = {
 		http_config: !!http_config
 	,	https_config: !!https_config
 	,	rootDir: path.resolve('.')
 	,	localDistributionPath: JSON.stringify(process.gulp_dest)
+		// PS: added config ports to templates
+	,	http_port: http_config && http_config.port
+	,	https_port: https_config && https_config.port
 	};
 
 	var configResult = _.template(configTemplate, templateOptions);
-	fs.writeFileSync(path.join(nginxBasePath, 'configuration'), configResult, 'utf8');
+	fs.writeFileSync(path.join(nginxDestPath, 'configuration'), configResult, 'utf8'); // PS: change destination folder
 
 	if(http_config)
 	{
 		var httpResult = _.template(httpTemplate, templateOptions);
-		fs.writeFileSync(path.join(nginxBasePath, 'http.conf'), httpResult, 'utf8');
+		fs.writeFileSync(path.join(nginxDestPath, 'http.conf'), httpResult, 'utf8'); // PS: change destination folder
+
+        // PS: add http message to logger
+        logger.push('+- Local http server available at: ', gutil.colors.cyan(
+            'http://localhost:' + http_config.port + '/'
+        ));
 	}
 
 	if(https_config)
 	{
-		templateOptions.keyfile = process.env[https_config.key] || https_config.key;
-		templateOptions.certFile = process.env[https_config.cert] || https_config.cert;
+		templateOptions.keyfile = JSON.stringify(process.env[https_config.key] || path.join(process.cwd(), https_config.key)); // PS: make path to file absolute
+		templateOptions.certFile = JSON.stringify(process.env[https_config.cert] || path.join(process.cwd(), https_config.cert)); // PS: make path to file absolute
 		var httpsResult = _.template(httpsTemplate, templateOptions);
-		fs.writeFileSync(path.join(nginxBasePath, 'https.conf'), httpsResult, 'utf8');
+		fs.writeFileSync(path.join(nginxDestPath, 'https.conf'), httpsResult, 'utf8'); // PS: change destination folder
+
+        // PS: add https message to logger
+        logger.push('+- Local https server available at: ', gutil.colors.cyan(
+            'https://localhost:' + https_config.port + '/'
+        ));
 	}
 
 	var nginxArguments = [
 		'-c', 'configuration'
-	,	'-p', nginxBasePath
+	,	'-p', nginxDestPath // PS: change destination folder
 	];
 
 	try
 	{
-		fs.mkdirSync(path.join(nginxBasePath, 'temp'));
+		fs.mkdirSync(path.join(nginxDestPath, 'temp')); // PS: change destination folder
 	}
 	catch(err)
 	{
@@ -172,17 +216,26 @@ function initServerNginx(http_config, https_config, cb)
 
 	try
 	{
-		fs.mkdirSync(path.join(nginxBasePath, 'logs'));
+		fs.mkdirSync(path.join(nginxDestPath, 'logs')); // PS: change destination folder
 	}
 	catch(err)
 	{
 	}
 
+    // PS: add output messages for live reload and watcher
+    if(livereload.isEnabled()) {
+        logger.push('+- LiveReload server running at: ', gutil.colors.cyan('ws://localhost:' + livereload.getPort() + '/livereload'));
+        if (https_config) {
+            logger.push('+- LiveReload secure server running at: ', gutil.colors.cyan('wss://localhost:' + livereload.getSecurePort() + '/livereload'));
+        }
+    }
+    logger.push('+- Watching current folder: ', gutil.colors.cyan(path.join(process.cwd(), 'Modules')));
+    logger.push('+- To cancel Gulp Watch enter: ', gutil.colors.cyan('control + c'));
 
 	var nginx_process = child_process.spawn('nginx', nginxArguments, { stdio: [0,1,2] });
 	cb = _.once(cb);
 	nginx_process.on('error', cb);
-	setTimeout(function(){ cb(null, nginx_process); }, 2000);
+	setTimeout(function(){ cb(null, nginx_process); logger.flush(); }, 2000); // PS: added printing the logger to the callback
 }
 
 module.exports = {
@@ -197,7 +250,7 @@ gulp.task('local-install', function()
 	package_manager.isGulpLocal = true;
 });
 
-gulp.task('local', ['local-install', 'frontend', 'watch', 'javascript-entrypoints'], initServer);
+gulp.task('local', ['local-install', 'frontend', 'watch', 'javascript-entrypoints', 'hosting-root-files'], initServer);
 
 // TODO remove in the future
 gulp.task('local-nginx', [], function(cb)

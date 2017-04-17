@@ -1,0 +1,53 @@
+{
+  "type": "object",
+  "subtab": {
+    "id": "nprogress",
+    "title": "NProgress Bar",
+    "group": "themes",
+    "description": "Progress Bar"
+  },
+  "properties": {
+    "themes.nprogress.showSpinner": {
+      "group": "themes",
+      "subtab": "nprogress",
+      "type": "boolean",
+      "title": "Show also spinner",
+      "default": false
+    },
+    "themes.nprogress.trickleRate": {
+      "group": "themes",
+      "subtab": "nprogress",
+      "type": "number",
+      "title": "Trickle Rate",
+      "default": 0.08
+    },
+    "themes.nprogress.trickleSpeed": {
+      "group": "themes",
+      "subtab": "nprogress",
+      "type": "integer",
+      "title": "Trickle Speed (ms)",
+      "default": 140
+    },
+    "themes.nprogress.speed": {
+      "group": "themes",
+      "subtab": "nprogress",
+      "type": "integer",
+      "title": "Speed (ms)",
+      "default": 200
+    },
+    "themes.nprogress.ease": {
+      "group": "themes",
+      "subtab": "nprogress",
+      "type": "string",
+      "title": "Easing",
+      "default": "ease-in-out"
+    },
+    "themes.nprogress.minimumProgress": {
+      "group": "themes",
+      "subtab": "nprogress",
+      "type": "number",
+      "title": "Progress Start",
+      "default": 0.1
+    }
+  }
+}

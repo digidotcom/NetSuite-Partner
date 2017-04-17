@@ -10,4 +10,6 @@ gulp.task('watch',
 	,	'watch-languages'
 	,	'watch-fonts'
 	,	'watch-images'
+	,	'watch-hosting-root-files'
+	,	'watch-distros'
 ]);

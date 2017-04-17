@@ -1,0 +1,78 @@
+{
+    "id": "site",
+    "name": "Site",
+    "dependencies": ["boilerplate"],
+    "endpoint": true,
+    "modules": {
+        "site/Configuration.Site": "dev",
+        "site/CRUD": "dev",
+        "site/EFCore.CRUD": "dev",
+        "site/Form": "dev",
+        "site/Header.CRUD": "dev",
+        "site/Heartbeat": "dev",
+        "site/Mixin": "dev",
+        "site/Registration": "dev",
+        "site/ServiceController.Validations.RequireSecureFix": "dev"
+    },
+    "tasksConfig": {
+        "javascript": [
+            {
+                "entryPoint": "SC.Shopping.Starter",
+                "dependencies": [
+                    {"prepend": "SC.Shopping.Configuration.Site"},
+                    "Header.CRUD"
+                ]
+            },
+            {
+                "entryPoint": "SC.MyAccount.Starter",
+                "dependencies": [
+                    {"prepend": "SC.MyAccount.Configuration.Site"},
+                    "CRUD",
+                    "Header.CRUD",
+                    "Heartbeat",
+                    "Registration"
+                ]
+            },
+            {
+                "entryPoint": "SC.Checkout.Starter",
+                "dependencies": [
+                    {"prepend": "SC.Checkout.Configuration.Site"},
+                    "Header.CRUD",
+                    "Heartbeat"
+                ]
+            }
+        ],
+        "ssp-libraries": {
+            "dependencies": [
+                "Configuration.Site",
+                "Heartbeat.ServiceController",
+                "Registration",
+                "ServiceController.Validations.RequireSecureFix"
+            ]
+        },
+        "sass": {
+            "applications": [
+                {
+                    "name": "Shopping",
+                    "dependencies": [
+                        "Header.CRUD"
+                    ]
+                },
+                {
+                    "name": "MyAccount",
+                    "dependencies": [
+                        "CRUD",
+                        "Header.CRUD",
+                        "Form"
+                    ]
+                },
+                {
+                    "name": "Checkout",
+                    "dependencies": [
+                        "Header.CRUD"
+                    ]
+                }
+            ]
+        }
+    }
+}

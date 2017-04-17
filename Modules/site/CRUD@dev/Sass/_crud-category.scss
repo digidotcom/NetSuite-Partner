@@ -1,0 +1,20 @@
+.crud-list-header-button-group {
+  display: table;
+  border-spacing: 0px;
+}
+
+%crud-list-header-button-common {
+  @extend .button-medium;
+  display:table-cell;
+  vertical-align: middle;
+}
+
+.crud-list-header-button {
+  @extend %crud-list-header-button-common;
+  @extend .button-pill;
+}
+
+.crud-list-header-button-active {
+  @extend %crud-list-header-button-common;
+  @extend .button-pill-active;
+}

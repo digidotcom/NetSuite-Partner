@@ -45,7 +45,9 @@ var path = require('path')
 ,	package_manager = require('../package-manager')
 ,	Handlebars = require('handlebars')
 ,	args   = require('yargs').argv
-,	gif = require('gulp-if');
+,	gif = require('gulp-if')
+
+,	livereload = require('../livereload');
 
 var tmp = path.join(process.gulp_dest, 'sass')
 ,	dest = path.join(process.gulp_dest, 'css')
@@ -267,6 +269,9 @@ gulp.task('sass', ['generate-sass-index'], function ()
   		.pipe(gif(useSourcemaps, sourcemaps.write('.')))
 		.pipe(gulp.dest(dest))
 
+		// only fire live reload for local setup!
+		.pipe(gif(livereload.isEnabledForTask('sass'), livereload.getForGulp()))
+
 		.pipe(gif(blessSASS, bless({
 			imports: false
 		})))
@@ -281,5 +286,5 @@ gulp.task('sass', ['generate-sass-index'], function ()
 gulp.task('watch-sass', [], function()
 {
 	// need to watch every file because package_manager.getGlobsFor('sass') doesn't return dependencies
-	gulp.watch('./Modules/**/*.scss', ['sass']);
+	gulp.watch('./Modules/**/*.scss', {interval: package_manager.configuration.watcherInterval}, ['sass']);
 });

@@ -69,5 +69,5 @@ gulp.task('less', function()
 gulp.task('watch-less', [], function()
 {
 	// need to watch every file because package_manager.getGlobsFor('less') doesn't return dependencies
-	gulp.watch(package_manager.getGlobsFor('less'), ['less']);
+	gulp.watch(package_manager.getGlobsFor('less'), {interval: package_manager.configuration.watcherInterval}, ['less']);
 });

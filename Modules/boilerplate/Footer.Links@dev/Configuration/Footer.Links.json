@@ -1,0 +1,23 @@
+{
+    "type": "object",
+    "modifications": [
+        {
+            "target": "$.properties[footer.navigationLinks].items.properties",
+            "action": "add",
+            "value": {
+                "hashtag": {
+                    "type": "string",
+                    "title": "Hashtag",
+                    "description": ""
+                },
+                "touchpoint": {
+                    "type": "string",
+                    "title": "Touchpoint",
+                    "enum": ["home", "checkout", "customercenter"],
+                    "default": "home",
+                    "description": ""
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,72 @@
+/* Label */
+
+.form-fields-label {
+  @extend .input-label;
+}
+
+.form-fields-required,
+.form-fields-label-required {
+  @extend .input-required
+}
+
+.form-fields-label-optional {
+  @extend .input-optional;
+  font-weight: $sc-font-weight-normal;
+  // display: inline;
+  display: none;
+}
+
+.form-fields-icon-question-sign {
+  @extend .sc-tooltip;
+  padding: 0px;
+}
+
+/* Input */
+
+.form-fields-form-controls {
+  position: relative;
+}
+
+$search-icon-size: 37px;
+.form-fields-input {
+  @extend .input-large;
+  @include box-sizing(border-box !important);
+  width: 100%;
+  .form-fields-lookup & {
+    padding-right: $search-icon-size + ($sc-base-margin * 2);
+  }
+}
+
+.form-fields-input-inline {
+  @extend .form-fields-input;
+  padding: 0px;
+  border: none;
+  height: 40px;
+  line-height: 40px;
+}
+
+.form-fields-input-required {
+  @extend .input-required;
+}
+
+.form-fields-input-search-icon {
+  @extend .fa;
+  @extend %fa-search;
+  position: absolute;
+  right: 1px;
+  top: 1px;
+  height: $search-icon-size;
+  line-height: $search-icon-size;
+  width: $search-icon-size;
+  text-align: center;
+  font-size: 18px;
+  color: $sc-color-theme;
+  cursor: pointer;
+  background: #ffffff;
+  border-left: 1px solid $sc-color-theme-light;
+}
+
+.form-fields-input-help {
+  @extend .input-help;
+  margin-bottom: $sc-base-margin * 3;
+}

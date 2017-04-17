@@ -23,5 +23,5 @@ gulp.task('fonts', function()
 
 gulp.task('watch-fonts', [], function()
 {
-	gulp.watch(package_manager.getGlobsFor('fonts'), ['fonts']);
+	gulp.watch(package_manager.getGlobsFor('fonts'), {interval: package_manager.configuration.watcherInterval}, ['fonts']);
 });

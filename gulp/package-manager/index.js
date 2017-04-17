@@ -11,7 +11,8 @@ var fs = require('fs')
 ,	gutil = require('gulp-util')
 ,	xml2js = require('xml2js')
 ,	override_logger = require('../library/batch-logger')()
-,	error_logger = require('../library/batch-logger')();
+,	error_logger = require('../library/batch-logger')()
+,	distros = require('../distros'); // jgatica: added distro generator tool
 
 
 function getPathFromObject (object, path, default_value)
@@ -60,6 +61,7 @@ function parseDistroAndModules()
 	{
 		PackageManager.configuration = distro.tasksConfig;
 	}
+	PackageManager.configuration.watcherInterval = PackageManager.configuration.watcherInterval || 100; //100 is default Watcher
 
 	Object.keys(distro.modules)
 		.map(function(m) { return './Modules/' + m + '@' + distro.modules[m] + '/ns.package.json'; })
@@ -80,6 +82,27 @@ function parseDistroAndModules()
 			}
 		});
 
+
+	/* BEGIN ADDED BY PS (jgatica) */
+	var logChainOverrides = function logChainOverrides(override_logger_arguments, override_info) {
+		if(override_info.parentOverride) {
+			logChainOverrides(override_logger_arguments, override_info.parentOverride);
+			override_logger_arguments.push('\n overridden with:');
+		}
+		override_logger_arguments.push(absoluteToModulesPath(override_info.overridePath));
+	};
+	_.each(PackageManager.overrides.map, function(override_info, original_path) {
+		var is_override_file = !!PackageManager.overrides.index[original_path];
+		if(!is_override_file) {
+			var override_logger_arguments = [
+				'+- Original file:', gutil.colors.cyan(absoluteToModulesPath(original_path)), '\n overridden with:'
+			];
+			logChainOverrides(override_logger_arguments, PackageManager.getOverrideInfo(original_path));
+			override_logger.push.apply(override_logger, override_logger_arguments);
+		}
+	});
+	/* END ADDED BY PS (jgatica) */
+
 	if (!error_logger.isEmpty())
 	{
 		error_logger.flush('+- SUMMARY OF OVERRIDE ERRORS');
@@ -91,6 +114,9 @@ function parseDistroAndModules()
 	}
 }
 
+function absoluteToModulesPath(original_path) {
+	return original_path.replace(path.join(process.gulp_init_cwd, PackageManager.distro.folders.modules) + path.sep, '');
+};
 
 var PackageManager = {
 
@@ -111,6 +137,16 @@ var PackageManager = {
 		{
 			override_info = { isOverriden: false };
 		}
+		/* BEGIN ADDED BY PS (jgatica) */
+		else
+		{
+			var chain_override_info = this.getOverrideInfo(override_info.overridePath);
+			if(chain_override_info && chain_override_info.isOverriden) {
+				chain_override_info.parentOverride = override_info;
+				override_info = chain_override_info;
+			}
+		}
+		/* END ADDED BY PS (jgatica) */
 
 		return override_info;
 	}
@@ -157,7 +193,7 @@ var PackageManager = {
 			if (override_info.isOverriden)
 			{
 				error_logger.push(
-					'+- ', gutil.colors.cyan(path.normalize(original_path)),
+					'+- ', gutil.colors.cyan(path.normalize(absoluteToModulesPath(original_path))),
 					' is overridden more than once. Overridden in modules: ', gutil.colors.cyan(override_info.moduleName), ' and ', gutil.colors.cyan(module_name));
 			}
 
@@ -165,7 +201,7 @@ var PackageManager = {
 			if (!fs.existsSync(original_path))
 			{
 				error_logger.push(
-					'+- Source file: ', gutil.colors.cyan(original_path),
+					'+- Source file: ', gutil.colors.cyan(absoluteToModulesPath(original_path)),
 					' does not exists. Defined in module ', gutil.colors.cyan(module_name));
 			}
 
@@ -173,7 +209,7 @@ var PackageManager = {
 			if (!fs.existsSync(override_path))
 			{
 				error_logger.push(
-					'+- Override file: ', gutil.colors.cyan(override_path),
+					'+- Override file: ', gutil.colors.cyan(absoluteToModulesPath(override_path)),
 					' does not exists. Defined in module ', gutil.colors.cyan(module_name));
 			}
 
@@ -184,7 +220,8 @@ var PackageManager = {
 			};
 			self.overrides.index[override_path] = true;
 
-			override_logger.push('+- File: ', gutil.colors.cyan(original_path), ' overridden with: ', gutil.colors.cyan(override_path));
+			// COMMENTED BY PS (jgatica)
+			//override_logger.push('+- File: ', gutil.colors.cyan(original_path), ' overridden with: ', gutil.colors.cyan(override_path));
 		});
 	}
 
@@ -514,6 +551,10 @@ PackageManager.pipeErrorHandler = function(error)
 	}
 };
 
+// Let's not use the tool if you specify a distro
+if(!args.distro && !args.distros) {
+	distros.generate(); //JGatica
+}
 parseDistroAndModules();
 
 

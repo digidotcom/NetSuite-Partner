@@ -6,6 +6,7 @@ var fs = require('fs')
 ,	_ = require('lodash')
 ,	mime = require('mime')
 ,	path = require('path')
+,	args = require('yargs').argv
 ,	archiver = require('../library/archiver');
 
 var binary_types = [
@@ -64,7 +65,17 @@ module.exports = {
 				if(!deploy.options.newDeploy)
 				{
 					var saved_info = JSON.parse(file);
+					// jgatica - check if password in .nsdeploy
+					if (saved_info.password) {
+						process.nsdeploy_has_password = true;
+					}
 					deploy.info = _.extend(deploy.info, saved_info);
+
+					// jgatica - use molecule stored in .nsdeploy if present
+					if(!args.m && deploy.info.molecule) {
+						args.m = deploy.info.molecule;
+						deploy.options.molecule = deploy.info.molecule
+					}
 				}
 				return cb(null, deploy);
 			}
@@ -73,8 +84,16 @@ module.exports = {
 
 ,	write: function(deploy, cb)
 	{
+		// jgatica - save molecule in .nsdeploy if present
+		if(deploy.options.molecule) {
+			deploy.info.molecule = deploy.options.molecule;
+		}
+
 		var saving_info = _.extend({}, deploy.info);
-		delete saving_info.password;
+		// jgatica - allow saving password if it was already in the .nsdeploy
+		if (!process.nsdeploy_has_password) {
+			delete saving_info.password;
+		}
 		delete saving_info.script;
 		delete saving_info.deploy;
 
@@ -111,7 +130,7 @@ module.exports = {
 			,	files: files
 		});
 
-		var payload_path = path.join(process.gulp_init_cwd,'payload.json');
+		var payload_path = path.join(process.gulp_init_cwd,'bin','payload.json');
 		fs.writeFile(payload_path, data, function(error)
 		{
 			cb(error, deploy);
@@ -134,6 +153,8 @@ module.exports = {
 			,	sources: [
 						{ expand: true, src: ['Modules/**/*']}
 					,	{ expand: true, src: ['gulp/**/*'] }
+					,	{ expand: false, src: args.distro || 'distro.json' }
+					,	{ expand: true, src: ['distros/**/*']}
 					,	{ expand: false, src: ['*.*', '!payload*']}
 				]
 		};

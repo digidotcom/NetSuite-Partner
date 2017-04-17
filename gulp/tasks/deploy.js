@@ -267,12 +267,14 @@ else if (args.skipCompilation)
 }
 else if (args.dev)
 {
-	source = ['services','ssp-libraries','ssp-files', 'scripts'];
+	source = ['services','ssp-libraries','ssp-files', 'scripts', 'hosting-root-files-zip'];
 }
 source.push('deploy-version');
 
 gulp.task('deploy-version', deployVersion);
 
+
+source.push('eslint');
 
 gulp.task('deploy',	source, deploy);
 gulp.task('deploy-no-deps', deploy);
