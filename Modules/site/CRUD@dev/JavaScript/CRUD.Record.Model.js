@@ -1,7 +1,7 @@
-define('CRUD.Model', [
+define('CRUD.Record.Model', [
     'Backbone',
     'CRUD.Helper'
-], function CrudModel(
+], function CrudRecordModel(
     Backbone,
     CrudHelper
 ) {

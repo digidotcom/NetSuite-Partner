@@ -5,8 +5,8 @@ define('CRUD.Router', [
     'AjaxRequestsKiller',
     'ErrorManagement.ForbiddenError.View',
     'CRUD.Helper',
-    'CRUD.Collection',
-    'CRUD.Model',
+    'CRUD.Record.Collection',
+    'CRUD.Record.Model',
     'CRUD.Status.Collection',
     'CRUD.List.View',
     'CRUD.Details.View'
@@ -17,8 +17,8 @@ define('CRUD.Router', [
     AjaxRequestsKiller,
     ErrorManagementForbiddenErrorView,
     CrudHelper,
-    CrudCollection,
-    CrudModel,
+    CrudRecordCollection,
+    CrudRecordModel,
     CrudStatusCollection,
     CrudListView,
     CrudDetailsView
@@ -57,7 +57,7 @@ define('CRUD.Router', [
             var status = hasStatus ? options[statusFilterName] : null;
 
             if (this.allowPage(crudId, 'list')) {
-                collection = new CrudCollection(null, {
+                collection = new CrudRecordCollection(null, {
                     crudId: crudId,
                     recordsPerPage: options.show,
                     status: status
@@ -122,7 +122,7 @@ define('CRUD.Router', [
         },
 
         details: function details(crudId, id, options) {
-            var model = new CrudModel({
+            var model = new CrudRecordModel({
                 internalid: id,
                 crudId: crudId
             });
