@@ -5,6 +5,7 @@
     "endpoint": true,
     "modules": {
         "site/Configuration.Site": "dev",
+        "site/CRUD.Settings": "dev",
         "site/CRUD": "dev",
         "site/EFCore.CRUD": "dev",
         "site/Form": "dev",

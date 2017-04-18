@@ -38,13 +38,6 @@ define('CRUD.Configuration', [
             }
             return this.crudIds;
         },
-        getAll: function getAll() {
-            var self = this;
-            _(this.getCrudIds()).each(function eachConfig(crudId) {
-                self.get(crudId);
-            });
-            return this.config;
-        },
         get: function get(crudId) {
             var published;
             var configuration;
@@ -54,6 +47,13 @@ define('CRUD.Configuration', [
                 this.config[crudId] = jQuery.extend(true, {}, published, configuration);
             }
             return this.config[crudId];
+        },
+        getAll: function getAll() {
+            var self = this;
+            _(this.getCrudIds()).each(function eachConfig(crudId) {
+                self.get(crudId);
+            });
+            return this.config;
         },
         getForForm: function getForForm(crudId) {
             return this.get(crudId);
