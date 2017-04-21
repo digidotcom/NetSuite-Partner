@@ -37,7 +37,7 @@ define('CRUD.Record.Collection', [
             var status = options.status || this.status;
             var data = {
                 results_per_page: options.recordsPerPage || this.recordsPerPage,
-                sort: options.sort.value,
+                sort: options.sort && options.sort.value,
                 order: options.order,
                 from: range.from ? new Date(range.from.replace(/-/g, '/')).getTime() : null,
                 to: range.to ? new Date(range.to.replace(/-/g, '/')).getTime() : null,

@@ -23,6 +23,8 @@ define('CRUD.Configuration', [
                 'permissions'
             ],
             record: [
+                'parentFieldName',
+                'listHeaderDisabled',
                 'record',
                 'loggedInFilterField',
                 'fieldsets',
@@ -31,6 +33,7 @@ define('CRUD.Configuration', [
                 'sort'
             ],
             bootstrapping: [
+                'subrecords',
                 'frontend',
                 'listColumns',
                 'groups'
@@ -60,7 +63,7 @@ define('CRUD.Configuration', [
             if (!this.cacheRecord[id]) {
                 config = this.getWithKeySet(id, 'record');
                 result = {
-                    noListHeader: config.type !== 'crud',
+                    noListHeader: config.listHeaderDisabled,
                     record: config.record,
                     fieldsets: {},
                     filters: [],

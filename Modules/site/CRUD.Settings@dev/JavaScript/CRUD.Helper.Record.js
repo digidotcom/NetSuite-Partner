@@ -13,6 +13,10 @@ define('CRUD.Helper.Record', [
         getPermissions: function getPermissions(crudId) {
             return CrudConfiguration.get(crudId).permissions || {};
         },
+        isPermissionAllowed: function isPermissionAllowed(crudId, permission) {
+            var permissions = this.getPermissions(crudId);
+            return !!permissions[permission];
+        },
         getNames: function getNames(crudId) {
             var config = CrudConfiguration.get(crudId);
             return config.frontend && config.frontend.names;

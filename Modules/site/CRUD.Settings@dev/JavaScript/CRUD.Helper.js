@@ -3,12 +3,14 @@ define('CRUD.Helper', [
     'CRUD.Helper.Menus',
     'CRUD.Helper.Record',
     'CRUD.Helper.Status',
+    'CRUD.Helper.Subrecord',
     'CRUD.Helper.Urls'
 ], function CrudHelper(
     _,
     CrudHelperMenus,
     CrudHelperRecord,
     CrudHelperStatus,
+    CrudHelperSubrecord,
     CrudHelperUrls
 ) {
     'use strict';
@@ -20,6 +22,7 @@ define('CRUD.Helper', [
         CrudHelperMenus,
         CrudHelperRecord,
         CrudHelperStatus,
+        CrudHelperSubrecord,
         CrudHelperUrls
     );
 });

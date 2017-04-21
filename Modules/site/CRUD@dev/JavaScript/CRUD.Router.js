@@ -141,9 +141,8 @@ define('CRUD.Router', [
         },
 
         allowPage: function allowPage(crudId, permission) {
-            var permissions = CrudHelper.getPermissions(crudId);
             var view;
-            if (!permissions[permission]) {
+            if (!CrudHelper.isPermissionAllowed(crudId, permission)) {
                 view = new ErrorManagementForbiddenErrorView();
                 view.options = view.options || {};
                 view.options.application = this.application;

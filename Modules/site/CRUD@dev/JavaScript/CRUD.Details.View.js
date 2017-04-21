@@ -3,24 +3,30 @@ define('CRUD.Details.View', [
     'Backbone',
     'Utils',
     'Backbone.CompositeView',
+    'Backbone.CollectionView',
+    'Backbone.View.Multiple',
     'Mixin',
     'Form',
     'CRUD.Configuration',
     'CRUD.Lookup',
     'CRUD.Helper',
     'CRUD.AbstractView',
+    'CRUD.Subrecord',
     'crud_details.tpl'
 ], function CrudDetailsView(
     _,
     Backbone,
     Utils,
     BackboneCompositeView,
+    BackboneCollectionView,
+    BackboneViewMultiple,
     Mixin,
     Form,
     CrudConfiguration,
     CrudLookup,
     CrudHelper,
     CrudAbstractView,
+    CrudSubrecord,
     crudDetailsTpl
 ) {
     'use strict';
@@ -77,9 +83,38 @@ define('CRUD.Details.View', [
             this.edit = !!options.edit;
         },
 
+        getSubrecords: function getSubrecords() {
+            if (!this.subrecords) {
+                this.subrecords = CrudHelper.getSubrecordsInPage(this.crudId, 'view');
+            }
+            return this.subrecords;
+        },
+        hasSubrecords: function hasSubrecords() {
+            return this.getSubrecords().length > 0;
+        },
+
+        childViews: {
+            'Subrecords': function Subrecord() {
+                var application = this.application;
+                var subrecords = this.getSubrecords();
+                var subrecordViews = [];
+                _(subrecords).each(function eachSubrecord(subrecord) {
+                    var view = CrudSubrecord.list(application, subrecord.crudId);
+                    if (view) {
+                        subrecordViews.push(view);
+                    }
+                });
+                return new BackboneViewMultiple({
+                    views: subrecordViews
+                });
+            }
+        },
+
         getContext: function getContext() {
+            var crudId = this.crudId;
             return {
-                crudId: this.crudId,
+                crudId: crudId,
+                showSubrecords: this.isView() && this.hasSubrecords(),
                 pageHeader: this.getPageHeader()
             };
         }

@@ -38,6 +38,13 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
             crudId: 'registration_status',
             filterName: 'status'
         },
+        subrecords: [
+            {
+                crudId: 'registration_product',
+                name: 'products',
+                pages: ['view']
+            }
+        ],
         frontend: {
             baseKey: 'registrations',
             names: {
