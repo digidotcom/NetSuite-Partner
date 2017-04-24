@@ -36,7 +36,8 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
         },
         status: {
             crudId: 'registration_status',
-            filterName: 'status'
+            filterName: 'status',
+            allowEditControlField: 'statusAllowsEdit'
         },
         subrecords: [
             {
@@ -72,9 +73,7 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
         filters: {
             inactive: { operator: 'is', value1: 'F' }
         },
-        filtersDynamic: {
-            // status: { operator: 'is', numberOfValues: 1 }
-        },
+        filtersDynamic: {},
         sort: {},
         fieldsets: {
             list: [

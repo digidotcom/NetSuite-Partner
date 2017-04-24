@@ -12,7 +12,7 @@ define('CRUD.Helper.Urls', [
             var configs = CrudConfiguration.getAll();
             var crudId = null;
             _(configs).find(function eachConfig(config, id) {
-                if (config.frontend.baseKey === baseUrl) {
+                if (config && config.frontend && config.frontend.baseKey === baseUrl) {
                     crudId = id;
                     return true;
                 }
@@ -20,28 +20,37 @@ define('CRUD.Helper.Urls', [
             });
             return crudId;
         },
+        getParentBaseUrl: function getParentBaseUrl(crudId) {
+            var parentCrudId = this.getParentCrudId(crudId);
+            return parentCrudId && this.getBaseUrl(parentCrudId);
+        },
         getBaseUrl: function getBaseUrl(crudId) {
             return this.getBaseKey(crudId);
         },
-        getBaseUrls: function getUrlRegex(permission) {
+        getUrlsRegex: function getUrlsRegex(permission, urlComponent) {
             var self = this;
             var urls = [];
             var crudIds = CrudConfiguration.getCrudIds();
             _(crudIds).each(function eachConfig(crudId) {
                 var permissions = self.getPermissions(crudId);
-                var baseUrl;
+                var baseUrl = '';
+                var parentBaseUrl;
+                var regex;
                 if (permissions[permission]) {
-                    baseUrl = self.getBaseUrl(crudId);
+                    parentBaseUrl = self.getParentBaseUrl(crudId);
+                    if (parentBaseUrl) {
+                        baseUrl += '(' + parentBaseUrl + ')/(\\d+)/';
+                    } else {
+                        baseUrl += '()?()?'; // dummy groups to ease router matching
+                    }
+                    baseUrl += '(' + self.getBaseUrl(crudId) + ')';
                     if (baseUrl) {
-                        urls.push(baseUrl);
+                        regex = new RegExp('^' + baseUrl + (urlComponent || '') + '\\??(.*)$');
+                        urls.push(regex);
                     }
                 }
             });
             return urls;
-        },
-        getUrlsRegex: function getUrlsRegex(permission, urlComponent) {
-            var urls = this.getBaseUrls(permission);
-            return new RegExp('^(' + urls.join('|') + ')' + (urlComponent || '') + '\\??(.*)$');
         },
         getListUrlRegex: function getListUrlRegex(permission) {
             return this.getUrlsRegex(permission);
@@ -55,20 +64,42 @@ define('CRUD.Helper.Urls', [
         getEditUrlRegex: function getEditUrlRegex(permission) {
             return this.getUrlsRegex(permission, '/edit/(\\d+)');
         },
-        getUrl: function getUrl(crudId, urlComponent) {
-            return this.getBaseUrl(crudId) + (urlComponent || '');
+        getParentUrl: function getParentUrl(crudId, parentId) {
+            return this.getParentBaseUrl(crudId) + '/' + parentId;
         },
-        getListUrl: function getListUrl(crudId) {
-            return this.getUrl(crudId);
+        getUrl: function getUrl(crudId, urlComponent, parentId) {
+            var parentUrl = '';
+            if (parentId) {
+                parentUrl = this.getParentUrl(crudId, parentId) + '/';
+            }
+            return parentUrl + this.getBaseUrl(crudId) + (urlComponent || '');
         },
-        getNewUrl: function getNewUrl(crudId) {
-            return this.getUrl(crudId, '/new');
+        getListUrl: function getListUrl(crudId, parentId) {
+            return this.getUrl(crudId, null, parentId);
         },
-        getViewUrl: function getViewUrl(crudId, id) {
-            return this.getUrl(crudId, '/view/' + id);
+        getNewUrl: function getNewUrl(crudId, parentId) {
+            return this.getUrl(crudId, '/new', parentId);
         },
-        getEditUrl: function getEditUrl(crudId, id) {
-            return this.getUrl(crudId, '/edit/' + id);
+        getViewUrl: function getViewUrl(crudId, id, parentId) {
+            return this.getUrl(crudId, '/view/' + id, parentId);
+        },
+        getEditUrl: function getEditUrl(crudId, id, parentId) {
+            return this.getUrl(crudId, '/edit/' + id, parentId);
+        },
+
+        getUrlForPage: function getUrlForPage(page, crudId, id, parentId) {
+            switch (page) {
+            case 'list':
+                return this.getListUrl(crudId, parentId);
+            case 'new':
+                return this.getNewUrl(crudId, parentId);
+            case 'view':
+                return this.getViewUrl(crudId, id, parentId);
+            case 'edit':
+                return this.getEditUrl(crudId, id, parentId);
+            default:
+                return null;
+            }
         }
     };
 });

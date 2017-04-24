@@ -116,9 +116,11 @@ define('Form.Config', [
         parseConfig: function parseData() {
             var config = this.getConfig();
             var data = config.data;
-            var dataJSON = jQuery.extend(true, {}, data);
+            var dataJSON;
             var ungroupedGroup = { fields: [] };
             var hashTemp = {};
+            data.groups = data.groups || [];
+            dataJSON = jQuery.extend(true, {}, data);
             _(dataJSON.groups).each(function eachGroup(groupJSON, i) {
                 var groupData = data.groups[i];
                 groupData.fields = new FormFieldCollection();

@@ -38,12 +38,16 @@ define('CRUD.Details.View', [
 
         getTitleString: function getTitleString(newStr, editStr) {
             var title;
+            var name;
             if (this.isNew()) {
                 title = Utils.translate(newStr || 'New');
-            } else if (this.isEdit()) {
-                title = Utils.translate(editStr || '$(0) - Edit', this.model.get('name'));
             } else {
-                title = this.model.get('name');
+                name = this.model.get('name') || this.model.get('internalid');
+                if (this.isEdit()) {
+                    title = Utils.translate(editStr || '$(0) - Edit', name);
+                } else {
+                    title = name;
+                }
             }
             return title;
         },
@@ -57,16 +61,17 @@ define('CRUD.Details.View', [
         getBreadcrumbPart: function getBreadcrumbPart() {
             var crudId = this.crudId;
             var id = this.model.get('internalid');
+            var parentId = this.parent;
             var part = [
                 {
                     text: this.getTitleString(null, '$(0)'),
-                    href: this.isNew() ? CrudHelper.getNewUrl(crudId) : CrudHelper.getViewUrl(crudId, id)
+                    href: this.isNew() ? CrudHelper.getNewUrl(crudId, parentId) : CrudHelper.getViewUrl(crudId, id, parentId)
                 }
             ];
             if (this.isEdit()) {
                 part.push({
                     text: Utils.translate('Edit'),
-                    href: CrudHelper.getEditUrl(crudId, id)
+                    href: CrudHelper.getEditUrl(crudId, id, parentId)
                 });
             }
             return part;
@@ -78,6 +83,7 @@ define('CRUD.Details.View', [
 
         initialize: function initialize(options) {
             this.crudId = options.crudId;
+            this.parent = options.parent;
             this.application = options.application;
             this.model = options.model;
             this.edit = !!options.edit;
@@ -91,6 +97,15 @@ define('CRUD.Details.View', [
         },
         hasSubrecords: function hasSubrecords() {
             return this.getSubrecords().length > 0;
+        },
+
+        getGoBackUrl: function getGoBackUrl() {
+            var crudId = this.crudId;
+            var parentId = this.parent;
+            if (parentId) {
+                return CrudHelper.getParentUrlWithSubrecord(crudId, parentId);
+            }
+            return CrudHelper.getListUrl(crudId, parentId);
         },
 
         childViews: {
@@ -136,7 +151,7 @@ define('CRUD.Details.View', [
             getFormPermissions: function getFormPermissions() {
                 var crudId = this.crudId;
                 var crudPermissions = CrudHelper.getPermissions(crudId);
-                var isEditEnabled = this.model.get('statusAllowsEdit');
+                var isEditEnabled = CrudHelper.isEditEnabledForModel(crudId, this.model);
                 return {
                     list: crudPermissions.list,
                     create: crudPermissions.create,
@@ -146,14 +161,15 @@ define('CRUD.Details.View', [
             },
             getFormInfo: function getFormInfo() {
                 var crudId = this.crudId;
+                var parentId = this.parent;
                 var id = this.model.get('internalid');
                 return {
                     title: this.getPageHeader(),
                     description: null,
-                    newUrl: CrudHelper.getNewUrl(crudId),
-                    editUrl: CrudHelper.getEditUrl(crudId, id),
-                    viewUrl: CrudHelper.getViewUrl(crudId, id),
-                    goBackUrl: CrudHelper.getListUrl(crudId)
+                    newUrl: CrudHelper.getNewUrl(crudId, parentId),
+                    editUrl: CrudHelper.getEditUrl(crudId, id, parentId),
+                    viewUrl: CrudHelper.getViewUrl(crudId, id, parentId),
+                    goBackUrl: this.getGoBackUrl()
                 };
             },
             isNew: function isNew() {

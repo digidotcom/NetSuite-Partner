@@ -35,6 +35,45 @@ define('Registration.Product.Configuration', [
             'total' */
         ],
         record: 'customrecord_registration_product',
+        filters: {
+            inactive: { operator: 'is', value1: 'F' }
+        },
+        filtersDynamic: {},
+        sort: {
+            internalid: 'asc'
+        },
+        fieldsets: {
+            list: [
+                'internalid',
+                'registration',
+                'item',
+                'partNumber',
+                // 'productType',
+                'quantity',
+                'targetResalePrice'// ,
+                // 'distributorPrice'
+            ],
+            details: [
+                'internalid',
+                'registration',
+                'item',
+                'partNumber',
+                // 'productType',
+                'quantity',
+                'targetResalePrice'// ,
+                // 'distributorPrice'
+            ],
+            save: [
+                'internalid',
+                'registration',
+                'item',
+                'partNumber',
+                // 'productType',
+                'quantity',
+                'targetResalePrice'// ,
+                // 'distributorPrice'
+            ]
+        },
         fields: {
             internalid: {
                 record: {
@@ -47,6 +86,9 @@ define('Registration.Product.Configuration', [
                 }
             },
             registration: {
+                form: {
+                    type: 'hidden'
+                },
                 record: {
                     fieldName: 'custrecord_registration_process'
                 }
@@ -54,7 +96,8 @@ define('Registration.Product.Configuration', [
             item: {
                 form: {
                     type: 'lookup',
-                    label: 'Product'
+                    label: 'Product',
+                    required: true
                 },
                 record: {
                     fieldName: 'custrecord_reg_item',
@@ -88,7 +131,8 @@ define('Registration.Product.Configuration', [
             quantity: {
                 form: {
                     type: 'number',
-                    label: 'Quantity'
+                    label: 'Quantity',
+                    required: true
                 },
                 record: {
                     fieldName: 'custrecord_reg_quantity'
@@ -102,7 +146,7 @@ define('Registration.Product.Configuration', [
                 record: {
                     fieldName: 'custrecord_target_resale_price'
                 }
-            },
+            }/* ,
             distributorPrice: {
                 form: {
                     type: 'currency',
@@ -114,26 +158,7 @@ define('Registration.Product.Configuration', [
                     fieldName: 'onlinecustomerprice',
                     joinKey: 'custrecord_reg_item'
                 }
-            }
-        },
-        filters: {
-            inactive: { operator: 'is', value1: 'F' }
-        },
-        filtersDynamic: {},
-        sort: {
-            internalid: 'asc'
-        },
-        fieldsets: {
-            list: [
-                'internalid',
-                'registration',
-                'item',
-                'partNumber',
-                // 'productType',
-                'quantity',
-                'targetResalePrice',
-                'distributorPrice'
-            ]
+            }*/
         }
     };
 });

@@ -59,6 +59,7 @@ define('CRUD.Record.List.View', [
             this.collection = this.collection || options.collection;
             this.statusCollection = this.statusCollection || options.statusCollection;
             this.hasStatus = !!this.statusCollection;
+            this.parent = this.collection.parent;
 
             this.listenCollection();
 
@@ -84,6 +85,7 @@ define('CRUD.Record.List.View', [
                 this.statusesView = new CrudStatusView({
                     collection: this.statusCollection,
                     crudId: this.crudId,
+                    parent: this.parent,
                     active: options.status
                 });
             }
@@ -111,6 +113,7 @@ define('CRUD.Record.List.View', [
 
         navigateToEntry: function navigateToEntry(e) {
             var crudId = this.crudId;
+            var parentId = this.parent;
             var permissions = CrudHelper.getPermissions(crudId);
             var href;
             var id;
@@ -120,7 +123,7 @@ define('CRUD.Record.List.View', [
             }
             if (permissions.read) {
                 id = jQuery(e.target).closest('[data-id]').data('id');
-                href = CrudHelper.getViewUrl(crudId, id);
+                href = CrudHelper.getViewUrl(crudId, id, parentId);
                 Backbone.history.navigate(href, { trigger: true });
             }
         },
@@ -175,6 +178,7 @@ define('CRUD.Record.List.View', [
 
             'ListResults': function ListResults() {
                 var crudId = this.crudId;
+                var parentId = this.parent;
                 var permissions = CrudHelper.getPermissions(crudId);
                 var listColumns = this.listColumns;
                 var recordsCollection = new Backbone.Collection(this.collection.map(function map(model) {
@@ -196,7 +200,7 @@ define('CRUD.Record.List.View', [
                         title: new Handlebars.SafeString(Utils.translate('<span class="tranid">$(0)</span>', internalid)),
                         record: model,
                         touchpoint: 'customercenter',
-                        detailsURL: permissions.read ? CrudHelper.getViewUrl(crudId, internalid) : '',
+                        detailsURL: permissions.read ? CrudHelper.getViewUrl(crudId, internalid, parentId) : '',
                         id: internalid,
                         internalid: internalid,
                         columns: columns
@@ -210,7 +214,8 @@ define('CRUD.Record.List.View', [
                     childViewOptions: {
                         actionView: CrudListActionsView,
                         actionOptions: {
-                            crudId: crudId
+                            crudId: crudId,
+                            parent: parentId
                         }
                     }
                 });
@@ -220,6 +225,7 @@ define('CRUD.Record.List.View', [
         getContext: function getContext() {
             var crudId = this.crudId;
             var permissions = CrudHelper.getPermissions(crudId);
+            var parentId = this.parent;
             return {
                 crudId: crudId,
                 pageHeader: this.getPageHeader(),
@@ -232,7 +238,7 @@ define('CRUD.Record.List.View', [
                 showCurrentPage: this.options.showCurrentPage,
                 showBackToAccount: true,
                 showNewButton: permissions.create,
-                newUrl: CrudHelper.getNewUrl(crudId),
+                newUrl: CrudHelper.getNewUrl(crudId, parentId),
                 rowsAreClickable: permissions.read,
                 showActionsHeader: permissions.update
             };

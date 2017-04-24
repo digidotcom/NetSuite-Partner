@@ -10,10 +10,11 @@
         <h2>{{pageHeader}}</h2>
     </header>
 
-    {{#if showStatuses}}
     <div class="crud-list-main-actions">
         <div class="crud-list-main-actions-row">
+            {{#if showStatuses}}
             <div class="crud-list-header-nav" data-view="CRUD.Statuses"></div>
+            {{/if}}
             {{#if showNewButton}}
             <div class="crud-list-new">
                 <a href="{{newUrl}}" class="crud-list-new-button">{{translate 'New'}}</a>
@@ -21,7 +22,6 @@
             {{/if}}
         </div>
     </div>
-    {{/if}}
 
     <div data-view="ListHeader"></div>
 

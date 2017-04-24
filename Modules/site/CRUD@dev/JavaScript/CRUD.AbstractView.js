@@ -22,11 +22,12 @@ define('CRUD.AbstractView', [
         },
         getBreadcrumbPages: function getBreadcrumbPages() {
             var crudId = this.crudId;
+            var parentId = this.parent;
             var names = CrudHelper.getNames(crudId);
             return _.union([
                 {
                     text: Utils.translate(names.plural),
-                    href: CrudHelper.getListUrl(crudId)
+                    href: CrudHelper.getListUrl(crudId, parentId)
                 }
             ], this.getBreadcrumbPart());
         },

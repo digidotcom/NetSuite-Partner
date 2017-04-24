@@ -27,6 +27,14 @@ define('CRUD.Helper.Status', [
         getStatusAllLabel: function getStatusAllLabel() {
             return Utils.translate('All');
         },
+        getAllowEditControlField: function statusAllowsEdit(crudId) {
+            var status = this.getStatus(crudId);
+            return status && status.allowEditControlField;
+        },
+        isEditEnabledForModel: function isEditEnabledForModel(crudId, model) {
+            var allowEditControlField = this.getAllowEditControlField(crudId);
+            return !allowEditControlField || !!model.get(allowEditControlField);
+        },
         getStatusServiceUrl: function getStatusServiceUrl(crudId, absolute) {
             var statusId = this.getStatusId(crudId);
             if (statusId) {

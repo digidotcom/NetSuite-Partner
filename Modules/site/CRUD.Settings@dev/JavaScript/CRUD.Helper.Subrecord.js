@@ -10,6 +10,18 @@ define('CRUD.Helper.Subrecord', [
     'use strict';
 
     return {
+        getParent: function getBaseKey(crudId) {
+            var config = CrudConfiguration.get(crudId);
+            return config.parent;
+        },
+        getParentCrudId: function getBaseKey(crudId) {
+            var parent = this.getParent(crudId);
+            return parent && parent.crudId;
+        },
+        getParentFieldName: function getBaseKey(crudId) {
+            var parent = this.getParent(crudId);
+            return parent && parent.filterName;
+        },
         getSubrecords: function hasSubrecords(crudId) {
             var subrecords = CrudConfiguration.get(crudId).subrecords;
             return _(subrecords).filter(function filterSubrecord(subrecord) {
@@ -25,6 +37,26 @@ define('CRUD.Helper.Subrecord', [
                 }
                 return true;
             });
+        },
+        getParentPageWithSubrecord: function getParentPageWithSubrecord(crudId) {
+            var parentCrudId = this.getParentCrudId(crudId);
+            var subrecords = this.getSubrecords(parentCrudId) || [];
+            var page = 'view';
+            _(subrecords).find(function findSubrecord(subrecord) {
+                if (subrecord.crudId === crudId) {
+                    if (subrecord.pages && subrecord.pages.length) {
+                        page = subrecord.pages[0];
+                    }
+                    return true;
+                }
+                return false;
+            });
+            return page;
+        },
+        getParentUrlWithSubrecord: function getParentUrlWithSubrecord(crudId, parentId) {
+            var parentCrudId = this.getParentCrudId(crudId);
+            var page = this.getParentPageWithSubrecord(crudId);
+            return this.getUrlForPage(page, parentCrudId, parentId);
         }
     };
 });

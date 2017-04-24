@@ -33,6 +33,12 @@ define('CRUD.Helper.Record', [
             var config = CrudConfiguration.get(crudId);
             return config && config.type;
         },
+        isCrudType: function isCrudType(crudId) {
+            return this.getType(crudId) === 'crud';
+        },
+        isSubrecordType: function isCrudType(crudId) {
+            return this.getType(crudId) === 'subrecord';
+        },
         getRecordServiceUrl: function getServiceUrl(crudId, absolute) {
             var url = CrudConfiguration.get(crudId).recordServiceUrl;
             return absolute ? Utils.getAbsoluteUrl(url) : url;

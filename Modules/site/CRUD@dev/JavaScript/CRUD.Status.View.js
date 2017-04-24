@@ -20,11 +20,13 @@ define('CRUD.Status.View', [
         initialize: function initialize(options) {
             this.collection = options.collection;
             this.crudId = options.crudId;
+            this.parent = options.parent;
             this.active = parseInt(options.active, 10) || null;
         },
 
         getStatusContext: function getStatusContext(model, active) {
             var crudId = this.crudId;
+            var parentId = this.parent;
             var params = {};
             var id = null;
             var name = CrudHelper.getStatusAllLabel();
@@ -38,7 +40,7 @@ define('CRUD.Status.View', [
             return {
                 name: name,
                 value: id,
-                url: Utils.addParamsToUrl(CrudHelper.getListUrl(crudId), params),
+                url: Utils.addParamsToUrl(CrudHelper.getListUrl(crudId, parentId), params),
                 isActive: isActive
             };
         },

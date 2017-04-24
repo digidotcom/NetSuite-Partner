@@ -41,12 +41,14 @@ define('CRUD.Router', [
                 view: CrudHelper.getViewUrlRegex('read'),
                 edit: CrudHelper.getEditUrlRegex('update')
             };
-            _(regexes).each(function eachUrl(regex, method) {
-                self.route(regex, method);
+            _(regexes).each(function eachRegexes(regexGroup, method) {
+                _(regexGroup).each(function eachRegexGroup(regex) {
+                    self.route(regex, method);
+                });
             });
         },
 
-        list: function list(crudUrl, optionsArg) {
+        list: function list(parentUrl, parentId, crudUrl, optionsArg) {
             var crudId = CrudHelper.getIdFromBaseUrl(crudUrl);
             var hasStatus = CrudHelper.hasStatus(crudId);
             var statusFilterName = CrudHelper.getStatusFilterName(crudId);
@@ -60,6 +62,7 @@ define('CRUD.Router', [
                 collection = new CrudRecordCollection(null, {
                     crudId: crudId,
                     recordsPerPage: options.show,
+                    parent: parentId,
                     status: status
                 });
 
@@ -73,6 +76,7 @@ define('CRUD.Router', [
                     application: this.application,
                     crudId: crudId,
                     collection: collection,
+                    parent: parentId,
                     status: status,
                     statusCollection: hasStatus ? statusCollection : null
                 }));
@@ -91,44 +95,46 @@ define('CRUD.Router', [
             }
         },
 
-        'new': function newFn(crudUrl, optionsArg) {
+        'new': function newFn(parentUrl, parentId, crudUrl, optionsArg) {
             var crudId = CrudHelper.getIdFromBaseUrl(crudUrl);
             var options = this.parseDetailsOptions(optionsArg);
             options.edit = false;
 
             if (this.allowPage(crudId, 'create')) {
-                this.details(crudId, null, options);
+                this.details(crudId, parentId, null, options);
             }
         },
 
-        view: function view(crudUrl, id, optionsArg) {
+        view: function view(parentUrl, parentId, crudUrl, id, optionsArg) {
             var crudId = CrudHelper.getIdFromBaseUrl(crudUrl);
             var options = this.parseDetailsOptions(optionsArg);
             options.edit = false;
 
             if (this.allowPage(crudId, 'read')) {
-                this.details(crudId, id, options);
+                this.details(crudId, parentId, id, options);
             }
         },
 
-        edit: function edit(crudUrl, id, optionsArg) {
+        edit: function edit(parentUrl, parentId, crudUrl, id, optionsArg) {
             var crudId = CrudHelper.getIdFromBaseUrl(crudUrl);
             var options = this.parseDetailsOptions(optionsArg);
             options.edit = true;
 
             if (this.allowPage(crudId, 'update')) {
-                this.details(crudId, id, options);
+                this.details(crudId, parentId, id, options);
             }
         },
 
-        details: function details(crudId, id, options) {
+        details: function details(crudId, parentId, id, options) {
             var model = new CrudRecordModel({
                 internalid: id,
+                parent: parentId,
                 crudId: crudId
             });
             var view = new CrudDetailsView(_.extend(options, {
                 application: this.application,
                 crudId: crudId,
+                parent: parentId,
                 model: model
             }));
             if (!id) {

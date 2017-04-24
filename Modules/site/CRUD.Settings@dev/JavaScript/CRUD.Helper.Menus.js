@@ -10,9 +10,6 @@ define('CRUD.Helper.Menus', [
     'use strict';
 
     return {
-        isCrudType: function isCrudType(crudId) {
-            return this.getType(crudId) === 'crud';
-        },
         getMenuItems: function getMenuItems(crudId) {
             var names = this.getNames(crudId);
             var permissions = this.getPermissions(crudId);
