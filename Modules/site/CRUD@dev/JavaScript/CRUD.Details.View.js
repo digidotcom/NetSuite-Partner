@@ -96,10 +96,11 @@ define('CRUD.Details.View', [
         childViews: {
             'Subrecords': function Subrecord() {
                 var application = this.application;
+                var parentId = this.model.get('internalid');
                 var subrecords = this.getSubrecords();
                 var subrecordViews = [];
                 _(subrecords).each(function eachSubrecord(subrecord) {
-                    var view = CrudSubrecord.list(application, subrecord.crudId);
+                    var view = CrudSubrecord.list(application, subrecord.crudId, parentId);
                     if (view) {
                         subrecordViews.push(view);
                     }

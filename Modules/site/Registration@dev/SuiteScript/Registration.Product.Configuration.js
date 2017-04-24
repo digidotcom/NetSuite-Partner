@@ -21,7 +21,10 @@ define('Registration.Product.Configuration', [
                 plural: 'Registration Products'
             }
         },
-        parentFieldName: 'registration',
+        parent: {
+            crudId: 'registration',
+            filterName: 'registration'
+        },
         listColumns: [
             'item',
             'partNumber',

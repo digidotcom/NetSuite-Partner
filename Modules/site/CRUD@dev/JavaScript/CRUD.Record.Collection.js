@@ -18,6 +18,7 @@ define('CRUD.Record.Collection', [
             this.customFilters = options && options.filters;
             this.recordsPerPage = options && options.recordsPerPage;
             this.status = options && options.status;
+            this.parent = options && options.parent;
             this.setUrl();
         },
 
@@ -35,6 +36,7 @@ define('CRUD.Record.Collection', [
         update: function update(options) {
             var range = options.range || {};
             var status = options.status || this.status;
+            var parent = options.parent || this.parent;
             var data = {
                 results_per_page: options.recordsPerPage || this.recordsPerPage,
                 sort: options.sort && options.sort.value,
@@ -45,6 +47,9 @@ define('CRUD.Record.Collection', [
             };
             if (status) {
                 data.status = status;
+            }
+            if (parent) {
+                data.parent = parent;
             }
 
             this.fetch({

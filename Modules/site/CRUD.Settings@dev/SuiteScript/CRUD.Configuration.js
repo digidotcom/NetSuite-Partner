@@ -20,10 +20,10 @@ define('CRUD.Configuration', [
                 'fields',
                 'type',
                 'status',
+                'parent',
                 'permissions'
             ],
             record: [
-                'parentFieldName',
                 'listHeaderDisabled',
                 'record',
                 'loggedInFilterField',
@@ -102,6 +102,13 @@ define('CRUD.Configuration', [
                         operator: 'is',
                         value1: nlapiGetUser()
                     });
+                }
+                if (config.parent && config.parent.filterName) {
+                    result.filtersDynamic[config.parent.filterName] = {
+                        fieldName: self.getFieldNameForField(self.getFieldRecord(config, config.parent.filterName)),
+                        operator: 'is',
+                        numberOfValues: 1
+                    };
                 }
                 if (config.status && config.status.filterName) {
                     result.filtersDynamic[config.status.filterName] = {

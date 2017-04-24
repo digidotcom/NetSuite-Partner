@@ -11,13 +11,14 @@ define('CRUD.Subrecord', [
 
 
     return {
-        list: function list(application, crudId) {
+        list: function list(application, crudId, parentId) {
             var collection;
             var view;
 
             if (CrudHelper.isPermissionAllowed(crudId, 'list')) {
                 collection = new CrudRecordCollection(null, {
-                    crudId: crudId
+                    crudId: crudId,
+                    parent: parentId
                 });
 
                 view = new CrudSubrecordListView({
