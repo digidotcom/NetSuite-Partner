@@ -1,0 +1,1 @@
+<input type="hidden" class="form-fields-input-hidden" id="{{attribute}}" name="{{attribute}}" data-value="{{value}}" value="" />

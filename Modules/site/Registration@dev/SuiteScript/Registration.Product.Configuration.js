@@ -34,6 +34,9 @@ define('Registration.Product.Configuration', [
             'distributorPrice'/* ,
             'total' */
         ],
+        groups: [
+            { id: 'default', name: '' }
+        ],
         record: 'customrecord_registration_product',
         filters: {
             inactive: { operator: 'is', value1: 'F' }
@@ -95,6 +98,7 @@ define('Registration.Product.Configuration', [
             },
             item: {
                 form: {
+                    group: 'default',
                     type: 'lookup',
                     label: 'Product',
                     required: true
@@ -106,6 +110,7 @@ define('Registration.Product.Configuration', [
             },
             partNumber: {
                 form: {
+                    group: 'default',
                     type: 'text',
                     label: 'Part Number',
                     relatedAttribute: 'item',
@@ -118,6 +123,7 @@ define('Registration.Product.Configuration', [
             },
             /* productType: {
                 form: {
+                    group: 'default',
                     type: 'text',
                     label: 'Product Type',
                     relatedAttribute: 'item',
@@ -130,6 +136,7 @@ define('Registration.Product.Configuration', [
             },*/
             quantity: {
                 form: {
+                    group: 'default',
                     type: 'number',
                     label: 'Quantity',
                     required: true
@@ -140,8 +147,10 @@ define('Registration.Product.Configuration', [
             },
             targetResalePrice: {
                 form: {
+                    group: 'default',
                     type: 'currency',
-                    label: 'Target Resale Price'
+                    label: 'Target Resale Price',
+                    required: true
                 },
                 record: {
                     fieldName: 'custrecord_target_resale_price'
@@ -149,6 +158,7 @@ define('Registration.Product.Configuration', [
             }/* ,
             distributorPrice: {
                 form: {
+                    group: 'default',
                     type: 'currency',
                     label: 'Distributor Price',
                     relatedAttribute: 'item',
