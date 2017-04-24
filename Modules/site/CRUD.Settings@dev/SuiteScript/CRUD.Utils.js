@@ -155,10 +155,8 @@ define('CRUD.Utils', [
             }
             if (parameters.parent) {
                 parentName = this.getParentFieldName(crudId);
-                console.log('parentName', parentName);
                 if (parentName) {
                     filters[parentName] = parameters.parent;
-                    console.log('filters[parentName]', filters[parentName]);
                     delete parameters.parent;
                 }
             }
