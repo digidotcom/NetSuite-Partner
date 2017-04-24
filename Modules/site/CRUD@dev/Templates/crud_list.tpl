@@ -6,24 +6,30 @@
 {{/if}}
 
 <section class="crud-list crud-id-{{crudId}}">
-    <header class="crud-list-header">
-        <h2>{{pageHeader}}</h2>
-    </header>
-
-    <div class="crud-list-main-actions">
-        <div class="crud-list-main-actions-row">
-            {{#if showStatuses}}
-            <div class="crud-list-header-nav" data-view="CRUD.Statuses"></div>
-            {{/if}}
-            {{#if showNewButton}}
-            <div class="crud-list-new">
-                <a href="{{newUrl}}" class="crud-list-new-button">{{translate 'New'}}</a>
-            </div>
-            {{/if}}
+    <header>
+        <div class="crud-list-header">
+        {{#if showStatuses}}
+            <h2>{{pageHeader}}</h2>
+        {{/if}}
         </div>
-    </div>
+        <div class="crud-list-main-actions">
+            <div class="crud-list-main-actions-row">
+                {{#if showStatuses}}
+                <div class="crud-list-header-nav" data-view="CRUD.Statuses"></div>
+                {{else}}
+                <h2>{{pageHeader}}</h2>
+                {{/if}}
+                {{#if showNewButton}}
+                <div class="crud-list-new">
+                    <a href="{{newUrl}}" class="crud-list-new-button">{{translate 'New'}}</a>
+                </div>
+                {{/if}}
+            </div>
+        </div>
 
-    <div data-view="ListHeader"></div>
+        <div class="crud-list-list-header {{#if showListHeader}}hide{{/if}}" data-view="ListHeader"></div>
+
+    </header>
 
     {{#if collectionLengthGreaterThan0}}
         <div class="crud-list-recordviews-container">

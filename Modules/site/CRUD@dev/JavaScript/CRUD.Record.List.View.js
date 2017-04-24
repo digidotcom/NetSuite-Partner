@@ -70,6 +70,10 @@ define('CRUD.Record.List.View', [
             BackboneCompositeView.add(this);
         },
 
+        hasListHeader: function hasListHeader() {
+            return !this.sortOptions && !this.rangeFilterOptions && !this.hidePagination;
+        },
+
         initializeChildViews: function initializeChildViews(options) {
             // in initialize to avoid render loop
             this.listHeader = new ListHeaderView({
@@ -231,7 +235,7 @@ define('CRUD.Record.List.View', [
                 pageHeader: this.getPageHeader(),
                 collectionLengthGreaterThan0: this.collection.length > 0,
                 isLoading: this.isLoading,
-                showListHeader: this.showListHeader,
+                showListHeader: this.hasListHeader(),
                 showStatuses: this.hasStatus,
                 listColumns: this.listColumns,
                 showPagination: !!(this.collection.totalRecordsFound && this.collection.recordsPerPage),
