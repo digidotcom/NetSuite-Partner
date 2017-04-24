@@ -21,7 +21,7 @@ define('CRUD.Record.Model', [
         },
 
         parseAttributes: function parseAttributes() {
-            var parentAttribute = CrudHelper.getParentFieldName();
+            var parentAttribute = CrudHelper.getParentFieldName(this.crudId);
             this.set(parentAttribute, this.parent);
         }
 

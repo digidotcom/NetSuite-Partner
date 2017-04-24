@@ -67,7 +67,6 @@ define('Registration.Product.Configuration', [
                 // 'distributorPrice'
             ],
             save: [
-                'internalid',
                 'registration',
                 'item',
                 'partNumber',
