@@ -36,49 +36,47 @@ define('CRUD.Details.View', [
 
         template: crudDetailsTpl,
 
-        getTitleString: function getTitleString(newStr, editStr) {
-            var title;
-            var name;
-            if (this.isNew()) {
-                title = Utils.translate(newStr || 'New');
-            } else {
-                name = this.model.get('name') || this.model.get('internalid');
-                if (this.isEdit()) {
-                    title = Utils.translate(editStr || '$(0) - Edit', name);
-                } else {
-                    title = name;
-                }
-            }
-            return title;
-        },
         getPageHeader: function getPageHeader() {
             var names = CrudHelper.getNames(this.crudId);
-            return this.getTitleString(Utils.translate('New $(0)', names.singular));
+            var internalid = this.model.get('internalid');
+            var pageHeader;
+            if (this.isNew()) {
+                pageHeader = Utils.translate('New $(0)', names.singular);
+            } else if (this.isEdit()) {
+                pageHeader = Utils.translate('Edit $(0) #$(1)', names.singular, internalid);
+            } else {
+                pageHeader = Utils.translate('$(0) #$(1)', names.singular, internalid);
+            }
+            return pageHeader;
         },
         getTitleSuffix: function getTitleSuffix() {
-            return ' - ' + this.getTitleString();
+            var suffix = ' - ';
+            if (this.isNew()) {
+                suffix += 'New';
+            } else if (this.isEdit()) {
+                suffix += 'Edit';
+            } else {
+                suffix += 'Details';
+            }
+            return suffix;
         },
         getBreadcrumbPart: function getBreadcrumbPart() {
             var crudId = this.crudId;
             var id = this.model.get('internalid');
             var parentId = this.parent;
-            var part = [
-                {
-                    text: this.getTitleString(null, '$(0)'),
-                    href: this.isNew() ? CrudHelper.getNewUrl(crudId, parentId) : CrudHelper.getViewUrl(crudId, id, parentId)
-                }
-            ];
+            var part = [];
             if (this.isEdit()) {
                 part.push({
                     text: Utils.translate('Edit'),
                     href: CrudHelper.getEditUrl(crudId, id, parentId)
                 });
+            } else if (this.isNew()) {
+                part.push({
+                    text: Utils.translate('New'),
+                    href: CrudHelper.getNewUrl(crudId, parentId)
+                });
             }
             return part;
-        },
-        getSelectedMenu: function getSelectedMenu() {
-            var baseKey = CrudHelper.getBaseKey(this.crudId);
-            return this.isNew() ? baseKey + '_new' : baseKey + '_all';
         },
 
         initialize: function initialize(options) {

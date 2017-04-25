@@ -10,6 +10,27 @@ define('CRUD.Helper.Menus', [
     'use strict';
 
     return {
+        getBreadcrumbBase: function getBreadcrumbParts(crudId, id, parentId) {
+            var parentCrudId = this.getParentCrudId(crudId);
+            var names = this.getNames(crudId);
+            var breadcrumb = [];
+            var listUrl = this.getListUrl(crudId, parentId);
+            if (parentCrudId) {
+                breadcrumb = _.union(breadcrumb, this.getBreadcrumbBase(parentCrudId, parentId));
+                listUrl = this.getParentUrlWithSubrecord(crudId, parentId);
+            }
+            breadcrumb.push({
+                text: Utils.translate(names.plural),
+                href: listUrl
+            });
+            if (id) {
+                breadcrumb.push({
+                    text: Utils.translate('#$(0)', id),
+                    href: this.getViewUrl(crudId, id, parentId)
+                });
+            }
+            return breadcrumb;
+        },
         getMenuItems: function getMenuItems(crudId) {
             var names = this.getNames(crudId);
             var permissions = this.getPermissions(crudId);
