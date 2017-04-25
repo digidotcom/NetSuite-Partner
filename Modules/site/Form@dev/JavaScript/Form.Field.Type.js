@@ -34,6 +34,7 @@ define('Form.Field.Type', [
             this.template = this.getTemplate();
         },
 
+        /* eslint-disable complexity */
         getTemplate: function parseType() {
             switch (this.type) {
             case 'hidden':
@@ -57,6 +58,7 @@ define('Form.Field.Type', [
                 return formFieldTpl;
             }
         },
+        /* eslint-enable complexity */
 
         getInputType: function getInputType() {
             switch (this.type) {
