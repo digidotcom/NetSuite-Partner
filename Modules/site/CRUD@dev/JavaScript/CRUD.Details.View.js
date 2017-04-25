@@ -148,6 +148,11 @@ define('CRUD.Details.View', [
             },
 
             /* Abstract methods implementation */
+            isFormAsync: function isFormAsync() {
+                var crudId = this.crudId;
+                var page = this.getFormAction();
+                return CrudHelper.isFormAsync(crudId, page);
+            },
             getFormPermissions: function getFormPermissions() {
                 var crudId = this.crudId;
                 var crudPermissions = CrudHelper.getPermissions(crudId);

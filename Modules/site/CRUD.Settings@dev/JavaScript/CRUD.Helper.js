@@ -15,7 +15,11 @@ define('CRUD.Helper', [
 ) {
     'use strict';
 
-    var CrudHelperBase = {};
+    var CrudHelperBase = {
+        isFormAsync: function isFormAsync(crudId, page) {
+            return this.getSubrecordsInPage(crudId, page).length > 0;
+        }
+    };
 
     return _({}).extend(
         CrudHelperBase,

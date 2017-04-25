@@ -55,6 +55,12 @@ define('Form.Config', [
             this.config.info = info;
         },
 
+        isLoading: function isLoading() {
+            return !!this.isLoadingFlag;
+        },
+        setLoading: function setLoading(isLoading) {
+            this.isLoadingFlag = isLoading;
+        },
 
         getFieldDisplaySuffix: function getFieldDisplaySuffix() {
             return '_display';

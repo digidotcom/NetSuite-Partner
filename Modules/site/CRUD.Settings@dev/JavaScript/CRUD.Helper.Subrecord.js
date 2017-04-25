@@ -28,7 +28,7 @@ define('CRUD.Helper.Subrecord', [
                 return !!subrecord.crudId;
             });
         },
-        /* page can be 'view' or 'edit' */
+        /* page can be 'view', 'edit' or 'new' */
         getSubrecordsInPage: function hasSubrecordsInPage(crudId, page) {
             var subrecords = this.getSubrecords(crudId) || [];
             return _(subrecords).filter(function filterSubrecord(subrecord) {

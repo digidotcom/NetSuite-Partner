@@ -140,8 +140,9 @@ define('CRUD.Router', [
             if (!id) {
                 view.showContent();
             } else {
+                view.showContentBefore();
                 model.fetch().done(function done() {
-                    view.showContent();
+                    view.showContentAfter();
                 });
             }
         },
