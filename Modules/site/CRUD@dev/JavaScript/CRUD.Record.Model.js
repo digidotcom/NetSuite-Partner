@@ -1,7 +1,7 @@
-define('CRUD.Model', [
+define('CRUD.Record.Model', [
     'Backbone',
     'CRUD.Helper'
-], function CrudModel(
+], function CrudRecordModel(
     Backbone,
     CrudHelper
 ) {
@@ -11,11 +11,18 @@ define('CRUD.Model', [
 
         initialize: function initialize(attributes) {
             this.crudId = attributes.crudId;
+            this.parent = attributes.parent;
             this.setUrlRoot();
+            this.parseAttributes();
         },
 
         setUrlRoot: function setUrlRoot() {
             this.urlRoot = CrudHelper.getRecordServiceUrl(this.crudId || this.get('crudId'));
+        },
+
+        parseAttributes: function parseAttributes() {
+            var parentAttribute = CrudHelper.getParentFieldName(this.crudId);
+            this.set(parentAttribute, this.parent);
         }
 
     });

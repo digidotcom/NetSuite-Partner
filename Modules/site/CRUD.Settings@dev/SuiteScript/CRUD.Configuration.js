@@ -20,9 +20,11 @@ define('CRUD.Configuration', [
                 'fields',
                 'type',
                 'status',
+                'parent',
                 'permissions'
             ],
             record: [
+                'listHeaderDisabled',
                 'record',
                 'loggedInFilterField',
                 'fieldsets',
@@ -31,6 +33,7 @@ define('CRUD.Configuration', [
                 'sort'
             ],
             bootstrapping: [
+                'subrecords',
                 'frontend',
                 'listColumns',
                 'groups'
@@ -60,7 +63,7 @@ define('CRUD.Configuration', [
             if (!this.cacheRecord[id]) {
                 config = this.getWithKeySet(id, 'record');
                 result = {
-                    noListHeader: config.type !== 'crud',
+                    noListHeader: config.listHeaderDisabled,
                     record: config.record,
                     fieldsets: {},
                     filters: [],
@@ -99,6 +102,13 @@ define('CRUD.Configuration', [
                         operator: 'is',
                         value1: nlapiGetUser()
                     });
+                }
+                if (config.parent && config.parent.filterName) {
+                    result.filtersDynamic[config.parent.filterName] = {
+                        fieldName: self.getFieldNameForField(self.getFieldRecord(config, config.parent.filterName)),
+                        operator: 'is',
+                        numberOfValues: 1
+                    };
                 }
                 if (config.status && config.status.filterName) {
                     result.filtersDynamic[config.status.filterName] = {

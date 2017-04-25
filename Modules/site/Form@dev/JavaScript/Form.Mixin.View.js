@@ -39,6 +39,7 @@ define('Form.Mixin.View', [
                 }
 
                 this.bindSubmitCallbacks();
+                this.initializeFormView();
 
                 return result;
             }
@@ -51,13 +52,16 @@ define('Form.Mixin.View', [
             childViews: {
                 'Form': function FormChildView() {
                     this.refreshFormConfig();
-                    return new FormView({
-                        config: this.formConfig
-                    });
+                    return this.formChildView;
                 }
             }
         },
         extend: {
+            initializeFormView: function initializeFormView() {
+                this.formChildView = new FormView({
+                    config: this.formConfig
+                });
+            },
             getFormAction: function getFormAction() {
                 if (this.isNew()) {
                     return 'new';
@@ -83,6 +87,31 @@ define('Form.Mixin.View', [
             refreshFormConfig: function refreshFormConfig() {
                 this.formConfig.setPermissions(this.getFormPermissions());
                 this.formConfig.setInfo(this.getFormInfo());
+            },
+            refreshFormView: function refreshFormView() {
+                this.refreshFormConfig();
+                if (this.formChildView) {
+                    this.formChildView.render();
+                }
+            },
+            setLoading: function setLoading(isLoading) {
+                this.formConfig.setLoading(isLoading);
+            },
+            showContentBefore: function showContentBefore() {
+                var isAsync = this.isFormAsync();
+                if (isAsync) {
+                    this.setLoading(true);
+                    this.showContent();
+                }
+            },
+            showContentAfter: function showContentAfter() {
+                var isAsync = this.isFormAsync();
+                if (isAsync) {
+                    this.setLoading(false);
+                    this.refreshFormView();
+                } else {
+                    this.showContent();
+                }
             },
 
             parseMixinOptions: function parseMixinOptions() {
@@ -142,6 +171,11 @@ define('Form.Mixin.View', [
 
             isView: function isView() {
                 return !this.isNew() && !this.isEdit();
+            },
+
+            /* VIRTUAL */
+            isFormAsync: function isFormAsync() {
+                return false;
             },
 
             /* ABSTRACT */

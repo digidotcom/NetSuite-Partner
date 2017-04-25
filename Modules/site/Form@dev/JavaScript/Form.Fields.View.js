@@ -23,10 +23,6 @@ define('Form.Fields.View', [
 
         childView: FormFieldView,
 
-        template: formFieldsTpl,
-        rowTemplate: formFieldsRowTpl,
-        cellTemplate: formFieldsCellTpl,
-
         childViewOptions: {},
 
         viewsPerRow: 2,
@@ -37,6 +33,7 @@ define('Form.Fields.View', [
 
             this.parseChildViewOptions(options);
             this.parseCollection(options);
+            this.setTemplates(options);
 
             return fn.apply(this, Array.prototype.slice.call(arguments, 1));
         }),
@@ -49,6 +46,13 @@ define('Form.Fields.View', [
         parseCollection: function parseFields(options) {
             this.collection = options.fields;
             options.collection = this.collection;
+        },
+        setTemplates: function setTemplates(options) {
+            if (!options.isHidden) {
+                this.template = formFieldsTpl;
+                this.rowTemplate = formFieldsRowTpl;
+                this.cellTemplate = formFieldsCellTpl;
+            }
         }
 
     });

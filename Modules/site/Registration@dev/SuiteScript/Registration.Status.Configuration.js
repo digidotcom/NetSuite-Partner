@@ -10,6 +10,7 @@ define('Registration.Status.Configuration', [
     return {
         id: 'registration_status',
         type: 'service',
+        listHeaderDisabled: true,
         record: 'customrecord_registration_status',
         fields: {
             internalid: {

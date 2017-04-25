@@ -4,7 +4,9 @@
     "dependencies": ["boilerplate"],
     "endpoint": true,
     "modules": {
+        "site/Backbone.View.Multiple": "dev",
         "site/Configuration.Site": "dev",
+        "site/CRUD.Settings": "dev",
         "site/CRUD": "dev",
         "site/EFCore.CRUD": "dev",
         "site/Form": "dev",
@@ -12,6 +14,7 @@
         "site/Heartbeat": "dev",
         "site/Mixin": "dev",
         "site/Registration": "dev",
+        "site/SafariHtmlClass": "dev",
         "site/ServiceController.Validations.RequireSecureFix": "dev"
     },
     "tasksConfig": {

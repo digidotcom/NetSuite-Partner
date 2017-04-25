@@ -12,6 +12,9 @@
   &:last-child {
     margin-bottom: 0;
   }
+  @media (min-width: $screen-sm-min) {
+    margin-bottom: 0;
+  }
 }
 
 .form-actions-edit {

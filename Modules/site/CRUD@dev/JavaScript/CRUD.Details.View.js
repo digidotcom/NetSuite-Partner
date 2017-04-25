@@ -3,24 +3,30 @@ define('CRUD.Details.View', [
     'Backbone',
     'Utils',
     'Backbone.CompositeView',
+    'Backbone.CollectionView',
+    'Backbone.View.Multiple',
     'Mixin',
     'Form',
     'CRUD.Configuration',
     'CRUD.Lookup',
     'CRUD.Helper',
     'CRUD.AbstractView',
+    'CRUD.Subrecord',
     'crud_details.tpl'
 ], function CrudDetailsView(
     _,
     Backbone,
     Utils,
     BackboneCompositeView,
+    BackboneCollectionView,
+    BackboneViewMultiple,
     Mixin,
     Form,
     CrudConfiguration,
     CrudLookup,
     CrudHelper,
     CrudAbstractView,
+    CrudSubrecord,
     crudDetailsTpl
 ) {
     'use strict';
@@ -30,56 +36,99 @@ define('CRUD.Details.View', [
 
         template: crudDetailsTpl,
 
-        getTitleString: function getTitleString(newStr, editStr) {
-            var title;
-            if (this.isNew()) {
-                title = Utils.translate(newStr || 'New');
-            } else if (this.isEdit()) {
-                title = Utils.translate(editStr || '$(0) - Edit', this.model.get('name'));
-            } else {
-                title = this.model.get('name');
-            }
-            return title;
-        },
         getPageHeader: function getPageHeader() {
             var names = CrudHelper.getNames(this.crudId);
-            return this.getTitleString(Utils.translate('New $(0)', names.singular));
+            var internalid = this.model.get('internalid');
+            var pageHeader;
+            if (this.isNew()) {
+                pageHeader = Utils.translate('New $(0)', names.singular);
+            } else if (this.isEdit()) {
+                pageHeader = Utils.translate('Edit $(0) #$(1)', names.singular, internalid);
+            } else {
+                pageHeader = Utils.translate('$(0) #$(1)', names.singular, internalid);
+            }
+            return pageHeader;
         },
         getTitleSuffix: function getTitleSuffix() {
-            return ' - ' + this.getTitleString();
+            var suffix = ' - ';
+            if (this.isNew()) {
+                suffix += 'New';
+            } else if (this.isEdit()) {
+                suffix += 'Edit';
+            } else {
+                suffix += 'Details';
+            }
+            return suffix;
         },
         getBreadcrumbPart: function getBreadcrumbPart() {
             var crudId = this.crudId;
             var id = this.model.get('internalid');
-            var part = [
-                {
-                    text: this.getTitleString(null, '$(0)'),
-                    href: this.isNew() ? CrudHelper.getNewUrl(crudId) : CrudHelper.getViewUrl(crudId, id)
-                }
-            ];
+            var parentId = this.parent;
+            var part = [];
             if (this.isEdit()) {
                 part.push({
                     text: Utils.translate('Edit'),
-                    href: CrudHelper.getEditUrl(crudId, id)
+                    href: CrudHelper.getEditUrl(crudId, id, parentId)
+                });
+            } else if (this.isNew()) {
+                part.push({
+                    text: Utils.translate('New'),
+                    href: CrudHelper.getNewUrl(crudId, parentId)
                 });
             }
             return part;
         },
-        getSelectedMenu: function getSelectedMenu() {
-            var baseKey = CrudHelper.getBaseKey(this.crudId);
-            return this.isNew() ? baseKey + '_new' : baseKey + '_all';
-        },
 
         initialize: function initialize(options) {
             this.crudId = options.crudId;
+            this.parent = options.parent;
             this.application = options.application;
             this.model = options.model;
             this.edit = !!options.edit;
         },
 
+        getSubrecords: function getSubrecords() {
+            if (!this.subrecords) {
+                this.subrecords = CrudHelper.getSubrecordsInPage(this.crudId, 'view');
+            }
+            return this.subrecords;
+        },
+        hasSubrecords: function hasSubrecords() {
+            return this.getSubrecords().length > 0;
+        },
+
+        getGoBackUrl: function getGoBackUrl() {
+            var crudId = this.crudId;
+            var parentId = this.parent;
+            if (parentId) {
+                return CrudHelper.getParentUrlWithSubrecord(crudId, parentId);
+            }
+            return CrudHelper.getListUrl(crudId, parentId);
+        },
+
+        childViews: {
+            'Subrecords': function Subrecord() {
+                var application = this.application;
+                var parentId = this.model.get('internalid');
+                var subrecords = this.getSubrecords();
+                var subrecordViews = [];
+                _(subrecords).each(function eachSubrecord(subrecord) {
+                    var view = CrudSubrecord.list(application, subrecord.crudId, parentId);
+                    if (view) {
+                        subrecordViews.push(view);
+                    }
+                });
+                return new BackboneViewMultiple({
+                    views: subrecordViews
+                });
+            }
+        },
+
         getContext: function getContext() {
+            var crudId = this.crudId;
             return {
-                crudId: this.crudId,
+                crudId: crudId,
+                showSubrecords: this.isView() && this.hasSubrecords(),
                 pageHeader: this.getPageHeader()
             };
         }
@@ -97,10 +146,15 @@ define('CRUD.Details.View', [
             },
 
             /* Abstract methods implementation */
+            isFormAsync: function isFormAsync() {
+                var crudId = this.crudId;
+                var page = this.getFormAction();
+                return CrudHelper.isFormAsync(crudId, page);
+            },
             getFormPermissions: function getFormPermissions() {
                 var crudId = this.crudId;
                 var crudPermissions = CrudHelper.getPermissions(crudId);
-                var isEditEnabled = this.model.get('statusAllowsEdit');
+                var isEditEnabled = CrudHelper.isEditEnabledForModel(crudId, this.model);
                 return {
                     list: crudPermissions.list,
                     create: crudPermissions.create,
@@ -110,14 +164,15 @@ define('CRUD.Details.View', [
             },
             getFormInfo: function getFormInfo() {
                 var crudId = this.crudId;
+                var parentId = this.parent;
                 var id = this.model.get('internalid');
                 return {
                     title: this.getPageHeader(),
                     description: null,
-                    newUrl: CrudHelper.getNewUrl(crudId),
-                    editUrl: CrudHelper.getEditUrl(crudId, id),
-                    viewUrl: CrudHelper.getViewUrl(crudId, id),
-                    goBackUrl: CrudHelper.getListUrl(crudId)
+                    newUrl: CrudHelper.getNewUrl(crudId, parentId),
+                    editUrl: CrudHelper.getEditUrl(crudId, id, parentId),
+                    viewUrl: CrudHelper.getViewUrl(crudId, id, parentId),
+                    goBackUrl: this.getGoBackUrl()
                 };
             },
             isNew: function isNew() {

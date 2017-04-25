@@ -115,6 +115,11 @@ define('CRUD.Utils', [
             return config && config.status && config.status.filterName;
         },
 
+        getParentFieldName: function getParentFieldName(id) {
+            var config = CrudConfiguration.get(id);
+            return config && config.parent && config.parent.filterName;
+        },
+
         getAllParameters: function getAllParameters(request) {
             var parameters = request.getAllParameters();
             var index;
@@ -130,6 +135,7 @@ define('CRUD.Utils', [
         getListParameters: function getListParameters(crudId, request) {
             var parameters = this.getAllParameters(request);
             var statusName;
+            var parentName;
             var keys = {
                 order: 'order',
                 sort: 'sort',
@@ -145,6 +151,13 @@ define('CRUD.Utils', [
                 if (statusName) {
                     filters[statusName] = parameters.status;
                     delete parameters.status;
+                }
+            }
+            if (parameters.parent) {
+                parentName = this.getParentFieldName(crudId);
+                if (parentName) {
+                    filters[parentName] = parameters.parent;
+                    delete parameters.parent;
                 }
             }
             _(parameters).each(function eachParameter(value, key) {

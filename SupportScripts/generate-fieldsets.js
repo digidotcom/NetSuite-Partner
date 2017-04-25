@@ -21,9 +21,7 @@ var settings = {
                 'urlcomponent',
                 'isbackorderable',
                 'ispurchasable',
-                'isinstock',
-                'custitem_ns_pr_rating',
-                'custitem_ns_pr_count'
+                'isinstock'
             ]
         },
         {
@@ -89,11 +87,6 @@ var settings = {
                 'isbackorderable',
                 'ispurchasable',
                 'isinstock',
-                'custitem_ns_pr_attributes_rating',
-                'custitem_ns_pr_item_attributes',
-                'custitem_ns_pr_rating',
-                'custitem_ns_pr_rating_by_rate',
-                'custitem_ns_pr_count',
                 'storedescription'
             ]
         },

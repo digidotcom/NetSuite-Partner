@@ -3,6 +3,7 @@ define('Form.Field.Type', [
     'SC.Configuration',
     'Form.Field.Lists',
     'form_field.tpl',
+    'form_field_hidden.tpl',
     'form_field_text.tpl',
     'form_field_longtext.tpl',
     'form_field_list.tpl',
@@ -12,6 +13,7 @@ define('Form.Field.Type', [
     Configuration,
     FormFieldLists,
     formFieldTpl,
+    formFieldHiddenTpl,
     formFieldTextTpl,
     formFieldLongTextTpl,
     formFieldListTpl,
@@ -32,12 +34,16 @@ define('Form.Field.Type', [
             this.template = this.getTemplate();
         },
 
+        /* eslint-disable complexity */
         getTemplate: function parseType() {
             switch (this.type) {
+            case 'hidden':
+                return formFieldHiddenTpl;
             case 'text':
             case 'email':
             case 'phone':
             case 'number':
+            case 'currency':
             case 'url':
             case 'date':
             case 'datetime':
@@ -52,12 +58,15 @@ define('Form.Field.Type', [
                 return formFieldTpl;
             }
         },
+        /* eslint-enable complexity */
 
         getInputType: function getInputType() {
             switch (this.type) {
             case 'phone':
             case 'email':
                 return 'text';
+            case 'currency':
+                return 'number';
             default:
                 return this.type;
             }
@@ -112,6 +121,9 @@ define('Form.Field.Type', [
                 }
             } else {
                 context.value = fieldValue;
+                if (this.type === 'currency') {
+                    context.isCurrency = true;
+                }
             }
             return context;
         }
