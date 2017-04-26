@@ -54,7 +54,7 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
             }
         },
         listColumns: [
-            'name',
+            'number',
             'status',
             'approvalDate',
             'expiryDate',
@@ -79,7 +79,7 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
             list: [
                 'internalid',
                 'date',
-                'name',
+                'number',
                 'status',
                 'statusAllowsEdit',
                 'approvalDate',
@@ -90,7 +90,7 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
             details: [
                 'internalid',
                 'date',
-                'name',
+                'number',
                 'status',
                 'statusAllowsEdit',
                 'approvalDate',
@@ -100,6 +100,7 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                 'fieldSalesEngineer',
                 'buyer',
                 'fieldSalesRep',
+                'registrationProgram',
                 'companyName',
                 'companyMainPhone',
                 'companyAddress',
@@ -115,26 +116,25 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                 'engineerTechnicalContactPhone',
                 'channelManager',
                 'customerLocation',
-                'endCustomerAccount',
+                'webAddress',
                 'learnAboutDeal',
-                'internalNotes',
-                'lead',
-                'opportunity',
                 'preferredDistributor',
                 'productionDate',
                 'projectName',
                 'reseller',
                 'summaryOfApplication',
                 'salesRep',
-                'prototypeEvalDate'
+                'prototypeEvalDate',
+                'projectType',
+                'projectStatus'
             ],
             save: [
-                'name',
                 'partnerName',
                 'additionalInformation',
                 'fieldSalesEngineer',
                 'buyer',
                 'fieldSalesRep',
+                'registrationProgram',
                 'companyName',
                 'companyMainPhone',
                 'companyAddress',
@@ -148,20 +148,17 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                 'engineerTechnicalContactEmail',
                 'engineerTechnicalContactName',
                 'engineerTechnicalContactPhone',
-                'channelManager',
                 'customerLocation',
-                'endCustomerAccount',
+                'webAddress',
                 'learnAboutDeal',
-                'internalNotes',
-                'lead',
-                'opportunity',
                 'preferredDistributor',
                 'productionDate',
                 'projectName',
                 'reseller',
                 'summaryOfApplication',
-                'salesRep',
-                'prototypeEvalDate'
+                'prototypeEvalDate',
+                'projectType',
+                'projectStatus'
             ]
         },
         fields: {
@@ -182,18 +179,24 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                     fieldName: 'created'
                 }
             },
+            customer: {
+                record: {
+                    fieldName: 'custrecord_partner_customer',
+                    type: 'object'
+                }
+            },
 
             /* ******* registration details ******* */
 
-            name: {
+            number: {
                 form: {
                     group: 'details',
                     type: 'text',
-                    label: 'Name',
-                    required: true
+                    label: 'Number',
+                    inline: true
                 },
                 record: { // Free-form Text
-                    fieldName: 'name'
+                    fieldName: 'custrecord_reg_number'
                 }
             },
             status: {
@@ -251,34 +254,11 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                     group: 'details',
                     type: 'lookup',
                     label: 'Channel Manager',
-                    help: 'Example: Doe, John',
+                    inline: true,
                     required: false
                 },
                 record: {
                     fieldName: 'custrecord_channel_manager',
-                    type: 'object'
-                }
-            },
-            lead: {
-                form: {
-                    group: 'details',
-                    type: 'text',
-                    label: 'Lead',
-                    required: false
-                },
-                record: {
-                    fieldName: 'custrecord_lead'
-                }
-            },
-            opportunity: {
-                form: {
-                    group: 'details',
-                    type: 'lookup',
-                    label: 'Opportunity',
-                    required: false
-                },
-                record: {
-                    fieldName: 'custrecord_opportunity',
                     type: 'object'
                 }
             },
@@ -287,6 +267,7 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                     group: 'details',
                     type: 'lookup',
                     label: 'Sales Rep',
+                    inline: true,
                     required: false
                 },
                 record: {
@@ -294,9 +275,15 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                     type: 'object'
                 }
             },
-            customer: {
+            registrationProgram: {
+                form: {
+                    group: 'details',
+                    type: 'lookup',
+                    label: 'Registration Program',
+                    required: true
+                },
                 record: {
-                    fieldName: 'custrecord_partner_customer',
+                    fieldName: 'custrecord_reg_program',
                     type: 'object'
                 }
             },
@@ -523,16 +510,15 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                     fieldName: 'custrecord_customer_location'
                 }
             },
-            endCustomerAccount: {
+            webAddress: {
                 form: {
                     group: 'customer',
-                    type: 'lookup',
-                    label: 'End Customer Account',
-                    required: false
+                    type: 'text',
+                    label: 'Web Address',
+                    required: true
                 },
                 record: {
-                    fieldName: 'custrecord_end_customer_account',
-                    type: 'object'
+                    fieldName: 'custrecord_reg_web_address'
                 }
             },
 
@@ -649,6 +635,28 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                 },
                 record: {
                     fieldName: 'custrecord_prototype_eval_date'
+                }
+            },
+            projectType: {
+                form: {
+                    group: 'project',
+                    type: 'lookup',
+                    label: 'Project Type',
+                    required: true
+                },
+                record: {
+                    fieldName: 'custrecord_reg_project_type'
+                }
+            },
+            projectStatus: {
+                form: {
+                    group: 'project',
+                    type: 'lookup',
+                    label: 'Project Status',
+                    required: true
+                },
+                record: {
+                    fieldName: 'custrecord_reg_project_status'
                 }
             }
         }

@@ -69,7 +69,7 @@ define('Registration.Product.Configuration', [
             save: [
                 'registration',
                 'item',
-                'partNumber',
+                // 'partNumber',
                 // 'productType',
                 'quantity',
                 'targetResalePrice'// ,

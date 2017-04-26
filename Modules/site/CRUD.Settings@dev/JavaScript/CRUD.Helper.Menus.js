@@ -56,7 +56,7 @@ define('CRUD.Helper.Menus', [
                 menuItems.children.push({
                     parent: baseKey,
                     id: baseKey + '_new',
-                    name: Utils.translate('New $(0)', names.plural),
+                    name: Utils.translate('New $(0)', names.singular),
                     url: this.getNewUrl(crudId),
                     qindex: 2
                 });
