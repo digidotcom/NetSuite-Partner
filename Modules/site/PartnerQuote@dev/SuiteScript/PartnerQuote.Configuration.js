@@ -25,7 +25,7 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
     }
 
     return {
-        id: 'registration',
+        id: 'partner_quote',
         type: 'crud',
         permissions: {
             list: true,
@@ -35,22 +35,22 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
             'delete': false
         },
         status: {
-            crudId: 'registration_status',
+            crudId: 'partner_quote_status',
             filterName: 'status',
             allowEditControlField: 'statusAllowsEdit'
         },
         subrecords: [
             {
-                crudId: 'registration_product',
+                crudId: 'partner_quote_product',
                 name: 'products',
                 pages: ['view']
             }
         ],
         frontend: {
-            baseKey: 'registrations',
+            baseKey: 'partner-quotes',
             names: {
-                singular: 'Registration',
-                plural: 'Registrations'
+                singular: 'Partner Quote',
+                plural: 'Partner Quotes'
             }
         },
         listColumns: [
@@ -62,13 +62,13 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
             'partnerName'
         ],
         groups: [
-            { id: 'details', name: 'Registration Details' },
-            { id: 'partner', name: 'Partner Details' },
-            { id: 'customer', name: 'End Customer Details' },
+            { id: 'details', name: 'Partner Quote Details' },
+            { id: 'distributor', name: 'Distributor Information' },
+            { id: 'customer', name: 'Customer Information' },
             { id: 'supply', name: 'Supply Chain' },
-            { id: 'project', name: 'Project Details' }
+            { id: 'quote', name: 'Quote Information' }
         ],
-        record: 'customrecord_registrationprocess',
+        record: 'customrecord_partnerquoterequest',
         loggedInFilterField: 'customer',
         filters: {
             inactive: { operator: 'is', value1: 'F' }
@@ -78,87 +78,91 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
         fieldsets: {
             list: [
                 'internalid',
-                'date',
-                'number',
                 'status',
-                'statusAllowsEdit',
-                'approvalDate',
-                'expiryDate',
-                'companyName',
-                'partnerName'
+                'date',
+                'statusAllowsEdit'
             ],
             details: [
                 'internalid',
+                'inactive',
                 'date',
-                'number',
                 'status',
                 'statusAllowsEdit',
-                'approvalDate',
-                'expiryDate',
-                'partnerName',
-                'additionalInformation',
-                'fieldSalesEngineer',
-                'buyer',
-                'fieldSalesRep',
-                'registrationProgram',
-                'companyName',
-                'companyMainPhone',
-                'companyAddress',
-                'companyAddress2',
-                'companyCity',
-                'companyCountry',
-                'companyState',
-                'companyZipCode',
+                'approveRejectDate',
+                'distributor',
+                'distributorBuyerName',
+                'distributorBuyerPhone',
+                'distributorBuyerEmail',
+                'distributorSalesRepName',
+                'distributorSalesRepPhone',
+                'distributorSalesRepEmail',
+                'endCustomerName',
+                'endCustomerMainAddress',
+                'endCustomerMainAddress2',
+                'endCustomerCity',
+                'endCustomerCountry',
+                'endCustomerState',
+                'endCustomerPostalCode',
+                'endCustomerWebsite',
+                'commentsCustomerAdditionalInfo',
+                'resellerName',
+                'resellerBillToCountry',
+                'resellerBillToState',
                 'contractManufacturer',
-                'developmentDesignConsultant',
-                'engineerTechnicalContactEmail',
-                'engineerTechnicalContactName',
-                'engineerTechnicalContactPhone',
-                'channelManager',
-                'customerLocation',
-                'webAddress',
-                'learnAboutDeal',
-                'preferredDistributor',
-                'productionDate',
-                'projectName',
-                'reseller',
-                'summaryOfApplication',
-                'salesRep',
-                'prototypeEvalDate',
-                'projectType',
-                'projectStatus'
+                'contractManufacturerBillToCountry',
+                'contractManufacturerBillToState',
+                'quoteType',
+                'productInterest',
+                'targetPurchaseDate',
+                'vertical',
+                'application',
+                'registrationExists',
+                'registration',
+                'currencyForQuote',
+                'justificationForDiscount',
+                'competitor',
+                'competitorPartNumbers',
+                'competitorUnitPrices',
+                'commentsAdditionalInfo',
+                'requireDebit'
             ],
             save: [
-                'partnerName',
-                'additionalInformation',
-                'fieldSalesEngineer',
-                'buyer',
-                'fieldSalesRep',
-                'registrationProgram',
-                'companyName',
-                'companyMainPhone',
-                'companyAddress',
-                'companyAddress2',
-                'companyCity',
-                'companyCountry',
-                'companyState',
-                'companyZipCode',
+                'distributor',
+                'distributorBuyerName',
+                'distributorBuyerPhone',
+                'distributorBuyerEmail',
+                'distributorSalesRepName',
+                'distributorSalesRepPhone',
+                'distributorSalesRepEmail',
+                'endCustomerName',
+                'endCustomerMainAddress',
+                'endCustomerMainAddress2',
+                'endCustomerCity',
+                'endCustomerCountry',
+                'endCustomerState',
+                'endCustomerPostalCode',
+                'endCustomerWebsite',
+                'commentsCustomerAdditionalInfo',
+                'resellerName',
+                'resellerBillToCountry',
+                'resellerBillToState',
                 'contractManufacturer',
-                'developmentDesignConsultant',
-                'engineerTechnicalContactEmail',
-                'engineerTechnicalContactName',
-                'engineerTechnicalContactPhone',
-                'customerLocation',
-                'webAddress',
-                'learnAboutDeal',
-                'preferredDistributor',
-                'productionDate',
-                'projectName',
-                'reseller',
-                'summaryOfApplication',
-                'prototypeEvalDate',
-                'projectType',
-                'projectStatus'
+                'contractManufacturerBillToCountry',
+                'contractManufacturerBillToState',
+                'quoteType',
+                'productInterest',
+                'targetPurchaseDate',
+                'vertical',
+                'application',
+                'registrationExists',
+                'registration',
+                'currencyForQuote',
+                'justificationForDiscount',
+                'competitor',
+                'competitorPartNumbers',
+                'competitorUnitPrices',
+                'commentsAdditionalInfo',
+                'requireDebit'
             ]
         },
         fields: {
@@ -174,29 +178,24 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
                     fieldName: 'isinactive'
                 }
             },
-            date: {
-                record: { // Date
-                    fieldName: 'created'
-                }
-            },
             customer: {
                 record: {
-                    fieldName: 'custrecord_partner_customer',
+                    fieldName: 'custrecord_partnercustomer',
                     type: 'object'
                 }
             },
 
-            /* ******* registration details ******* */
+            /* ******* partner quote details ******* */
 
-            number: {
+            date: {
                 form: {
                     group: 'details',
-                    type: 'text',
-                    label: 'Number',
+                    type: 'date',
+                    label: 'Creation Date',
                     inline: true
                 },
-                record: { // Free-form Text
-                    fieldName: 'custrecord_reg_number'
+                record: {
+                    fieldName: 'created'
                 }
             },
             status: {
@@ -207,456 +206,448 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
                     inline: true,
                     required: true
                 },
-                record: { // List/Record: Registration Status
+                record: {
                     joint: true,
                     internalid: {
-                        fieldName: 'custrecord_registration_status'
+                        fieldName: 'custrecord_partnerquotestatus'
                     },
                     name: {
-                        fieldName: 'custrecord_registration_status_public',
-                        joinKey: 'custrecord_registration_status'
+                        fieldName: 'custrecord_partnerquotestatuspublic',
+                        joinKey: 'custrecord_partnerquotestatus'
                     }
                 }
             },
             statusAllowsEdit: {
-                record: { // Checkbox
-                    fieldName: 'custrecord_registration_status_edit',
-                    joinKey: 'custrecord_registration_status',
+                record: {
+                    fieldName: 'custrecord_partnerquotestatusedit',
+                    joinKey: 'custrecord_partnerquotestatus',
                     applyFunction: booleanMap
                 }
             },
-            approvalDate: {
+            approveRejectDate: {
                 form: {
                     group: 'details',
-                    type: 'datetime',
-                    label: 'Approval Date',
-                    inline: true,
-                    required: true
-                },
-                record: { // Date
-                    fieldName: 'custrecord_registration_approval_date'
-                }
-            },
-            expiryDate: {
-                form: {
-                    group: 'details',
-                    type: 'datetime',
-                    label: 'Expiry Date',
-                    inline: true,
-                    required: true
+                    type: 'date',
+                    label: 'Approve Reject Date',
+                    inline: true
                 },
                 record: {
-                    fieldName: 'custrecord_registration_expiry_date'
+                    fieldName: 'custrecord_approverejectdate'
                 }
             },
-            channelManager: {
+
+            /* ******* distributor information ******* */
+
+            distributor: {
                 form: {
-                    group: 'details',
+                    group: 'distributor',
                     type: 'lookup',
-                    label: 'Channel Manager',
-                    inline: true,
-                    required: false
+                    label: 'Distributor Name'
                 },
                 record: {
-                    fieldName: 'custrecord_channel_manager',
+                    fieldName: 'custrecord_distributor',
                     type: 'object'
                 }
             },
-            salesRep: {
+            distributorBuyerName: {
                 form: {
-                    group: 'details',
-                    type: 'lookup',
-                    label: 'Sales Rep',
-                    inline: true,
-                    required: false
+                    group: 'distributor',
+                    type: 'text',
+                    label: 'Distributor Buyer Name'
                 },
                 record: {
-                    fieldName: 'custrecord_sales_rep',
-                    type: 'object'
+                    fieldName: 'custrecord_distbuyername'
                 }
             },
-            registrationProgram: {
+            distributorBuyerPhone: {
                 form: {
-                    group: 'details',
-                    type: 'lookup',
-                    label: 'Registration Program',
-                    required: true
+                    group: 'distributor',
+                    type: 'text',
+                    label: 'Distributor Buyer Phone'
                 },
                 record: {
-                    fieldName: 'custrecord_reg_program',
-                    type: 'object'
+                    fieldName: 'custrecord_distbuyerphone'
+                }
+            },
+            distributorBuyerEmail: {
+                form: {
+                    group: 'distributor',
+                    type: 'text',
+                    label: 'Distributor Buyer Email'
+                },
+                record: {
+                    fieldName: 'custrecord_distbuyeremail'
+                }
+            },
+            distributorSalesRepName: {
+                form: {
+                    group: 'distributor',
+                    type: 'text',
+                    label: 'Distributor Sales Rep Name'
+                },
+                record: {
+                    fieldName: 'custrecord_distsalesrepname'
+                }
+            },
+            distributorSalesRepPhone: {
+                form: {
+                    group: 'distributor',
+                    type: 'text',
+                    label: 'Distributor Sales Rep Phone'
+                },
+                record: {
+                    fieldName: 'custrecord_distsalesrepphone'
+                }
+            },
+            distributorSalesRepEmail: {
+                form: {
+                    group: 'distributor',
+                    type: 'text',
+                    label: 'Distributor Sales Rep Email'
+                },
+                record: {
+                    fieldName: 'custrecord_distsalesrepemail'
+                }
+            },
+            endCustomerName: {
+                form: {
+                    group: 'distributor',
+                    type: 'text',
+                    label: 'End Customer Name'
+                },
+                record: {
+                    fieldName: 'custrecord_endcustomername'
                 }
             },
 
-            /* ******* partner details ******* */
+            /* ******* customer information ******* */
 
-            partnerName: {
-                form: {
-                    group: 'partner',
-                    type: 'lookup',
-                    label: 'Partner Name',
-                    required: true
-                },
-                record: {
-                    joint: true,
-                    internalid: {
-                        fieldName: 'custrecord_partner_name'
-                    },
-                    name: {
-                        fieldName: 'description',
-                        joinKey: 'custrecord_partner_name'
-                    }
-                }
-            },
-            fieldSalesEngineer: {
-                form: {
-                    group: 'partner',
-                    type: 'lookup',
-                    label: 'Partner Field Sales Engineer',
-                    required: true
-                },
-                record: {
-                    joint: true,
-                    internalid: {
-                        fieldName: 'custrecord_partner_field_sales_engr'
-                    },
-                    name: {
-                        fieldName: 'entityid',
-                        joinKey: 'custrecord_partner_field_sales_engr'
-                    }
-                }
-            },
-            buyer: {
-                form: {
-                    group: 'partner',
-                    type: 'lookup',
-                    label: 'Partner Buyer',
-                    required: false
-                },
-                record: {
-                    joint: true,
-                    internalid: {
-                        fieldName: 'custrecord_partner_buyer'
-                    },
-                    name: {
-                        fieldName: 'entityid',
-                        joinKey: 'custrecord_partner_buyer'
-                    }
-                }
-            },
-            fieldSalesRep: {
-                form: {
-                    group: 'partner',
-                    type: 'lookup',
-                    label: 'Partner Field Sales Rep',
-                    required: true
-                },
-                record: {
-                    joint: true,
-                    internalid: {
-                        fieldName: 'custrecord_partner_field_sales_rep'
-                    },
-                    name: {
-                        fieldName: 'entityid',
-                        joinKey: 'custrecord_partner_field_sales_rep'
-                    }
-                }
-            },
-
-            /* ******* end customer details ******* */
-
-            companyName: {
+            endCustomerMainAddress: {
                 form: {
                     group: 'customer',
                     type: 'text',
-                    label: 'Company Name (End Customer/OEM, ODM)',
-                    labelShort: 'Company Name',
-                    required: true
+                    label: 'End Customer Main Address'
                 },
                 record: {
-                    fieldName: 'custrecord_company_name'
+                    fieldName: 'custrecord_endcustomermainaddress'
                 }
             },
-            companyMainPhone: {
-                form: {
-                    group: 'customer',
-                    type: 'phone',
-                    label: 'Main Phone',
-                    required: true
-                },
-                record: {
-                    fieldName: 'custrecord_company_main_phone'
-                }
-            },
-            companyAddress: {
+            endCustomerMainAddress2: {
                 form: {
                     group: 'customer',
                     type: 'text',
-                    label: 'Address',
-                    required: false
+                    label: 'End Customer Main Address 2'
                 },
                 record: {
-                    fieldName: 'custrecord_company_address'
+                    fieldName: 'custrecord_endcustomermainaddress2'
                 }
             },
-            companyAddress2: {
+            endCustomerCity: {
                 form: {
                     group: 'customer',
                     type: 'text',
-                    label: 'Address 2',
-                    required: false
+                    label: 'End Customer City'
                 },
                 record: {
-                    fieldName: 'custrecord_company_address2'
+                    fieldName: 'custrecord_endcustomercity'
                 }
             },
-            companyCity: {
-                form: {
-                    group: 'customer',
-                    type: 'text',
-                    label: 'City',
-                    required: true
-                },
-                record: {
-                    fieldName: 'custrecord_company_city'
-                }
-            },
-            companyCountry: {
+            endCustomerCountry: {
                 form: {
                     group: 'customer',
                     type: 'list',
                     list: 'countries',
                     nodefault: true,
-                    label: 'Country',
-                    required: true
+                    label: 'End Customer Country'
                 },
                 record: {
-                    fieldName: 'custrecord_company_country',
+                    fieldName: 'custrecord_endcustomercountry',
                     type: 'object',
                     applyFunction: sameIdName,
                     applySetFunction: setText
                 }
             },
-            companyState: {
+            endCustomerState: {
                 form: {
                     group: 'customer',
                     type: 'list',
                     list: 'states',
-                    relatedAttribute: 'companyCountry',
+                    relatedAttribute: 'endCustomerCountry',
                     nodefault: false,
-                    label: 'State',
-                    tooltip: 'Depends on the selected country',
-                    required: false
+                    label: 'End Customer State'
                 },
                 record: {
-                    fieldName: 'custrecord_company_state',
+                    fieldName: 'custrecord_endcustomerstate',
                     type: 'object',
                     applyFunction: sameIdName,
                     applySetFunction: setText
                 }
             },
-            companyZipCode: {
-                form: {
-                    group: 'customer',
-                    type: 'number',
-                    label: 'Zip/Postal Code',
-                    required: true
-                },
-                record: {
-                    fieldName: 'custrecord_country_zipcode'
-                }
-            },
-            engineerTechnicalContactEmail: {
-                form: {
-                    group: 'customer',
-                    type: 'email',
-                    label: 'Engineer/Technical Contact Email',
-                    required: true
-                },
-                record: {
-                    fieldName: 'custrecord_engr_contact_email'
-                }
-            },
-            engineerTechnicalContactName: {
+            endCustomerPostalCode: {
                 form: {
                     group: 'customer',
                     type: 'text',
-                    label: 'Engineer/Technical Contact Name',
-                    required: true
+                    label: 'End Customer Postal Code'
                 },
                 record: {
-                    fieldName: 'custrecord_engr_contact_name'
+                    fieldName: 'custrecord_endcustomerpostalcode'
                 }
             },
-            engineerTechnicalContactPhone: {
-                form: {
-                    group: 'customer',
-                    type: 'phone',
-                    label: 'Engineer/Technical Contact Phone',
-                    required: true
-                },
-                record: {
-                    fieldName: 'custrecord_engr_contact_phone'
-                }
-            },
-            customerLocation: {
+            endCustomerWebsite: {
                 form: {
                     group: 'customer',
                     type: 'text',
-                    label: 'Customer Location',
-                    required: false
+                    label: 'End Customer Website'
                 },
                 record: {
-                    fieldName: 'custrecord_customer_location'
+                    fieldName: 'custrecord_endcustomerwebsite'
                 }
             },
-            webAddress: {
+            commentsCustomerAdditionalInfo: {
                 form: {
                     group: 'customer',
-                    type: 'text',
-                    label: 'Web Address',
-                    required: true
+                    type: 'longtext',
+                    label: 'Comments/Customer Additional Info'
                 },
                 record: {
-                    fieldName: 'custrecord_reg_web_address'
+                    fieldName: 'custrecord_commentscustaddlinfo'
                 }
             },
 
             /* ******* supply chain ******* */
 
+            resellerName: {
+                form: {
+                    group: 'supply',
+                    type: 'text',
+                    label: 'Reseller Name'
+                },
+                record: {
+                    fieldName: 'custrecord_resellername'
+                }
+            },
+            resellerBillToCountry: {
+                form: {
+                    group: 'supply',
+                    type: 'list',
+                    list: 'countries',
+                    nodefault: true,
+                    label: 'Reseller Bill To Country'
+                },
+                record: {
+                    fieldName: 'custrecord_resellerbilltocountry',
+                    type: 'object',
+                    applyFunction: sameIdName,
+                    applySetFunction: setText
+                }
+            },
+            resellerBillToState: {
+                form: {
+                    group: 'supply',
+                    type: 'list',
+                    list: 'states',
+                    relatedAttribute: 'resellerBillToCountry',
+                    nodefault: false,
+                    label: 'Reseller Bill to State'
+                },
+                record: {
+                    fieldName: 'custrecord_resellerbilltostate',
+                    type: 'object',
+                    applyFunction: sameIdName,
+                    applySetFunction: setText
+                }
+            },
             contractManufacturer: {
                 form: {
                     group: 'supply',
                     type: 'text',
-                    label: 'Contract Manufacturer',
-                    required: false
+                    label: 'Contract Manufacturer'
                 },
                 record: {
-                    fieldName: 'custrecord_contract_manufacturer'
+                    fieldName: 'custrecord_contractmanufacturer'
                 }
             },
-            developmentDesignConsultant: {
+            contractManufacturerBillToCountry: {
                 form: {
                     group: 'supply',
-                    type: 'text',
-                    label: 'Development/Design Consultant',
-                    required: false
+                    type: 'list',
+                    list: 'countries',
+                    nodefault: true,
+                    label: 'Contract Manufacturer Bill to Country'
                 },
                 record: {
-                    fieldName: 'custrecord_development_design_consultant'
+                    fieldName: 'custrecord_contmfrbilltocountry',
+                    type: 'object',
+                    applyFunction: sameIdName,
+                    applySetFunction: setText
                 }
             },
-            preferredDistributor: {
+            contractManufacturerBillToState: {
                 form: {
                     group: 'supply',
-                    type: 'text',
-                    label: 'Preferred Distributor',
-                    required: false
+                    type: 'list',
+                    list: 'states',
+                    relatedAttribute: 'contractManufacturerBillToCountry',
+                    nodefault: false,
+                    label: 'Contract Manufacturer Bill to State'
                 },
                 record: {
-                    fieldName: 'custrecord_preferred_distributor'
-                }
-            },
-            reseller: {
-                form: {
-                    group: 'supply',
-                    type: 'text',
-                    label: 'Reseller',
-                    required: false
-                },
-                record: {
-                    fieldName: 'custrecord_reseller'
+                    fieldName: 'custrecord_contmfrbilltostate',
+                    type: 'object',
+                    applyFunction: sameIdName,
+                    applySetFunction: setText
                 }
             },
 
-            /* ******* project details ******* */
+            /* ******* quote information ******* */
 
-            additionalInformation: {
+            quoteType: {
                 form: {
-                    group: 'project',
-                    type: 'longtext',
-                    label: 'Additional Information',
-                    required: false
+                    group: 'quote',
+                    type: 'lookup',
+                    label: 'Quote Type'
                 },
                 record: {
-                    fieldName: 'custrecord_additional_information'
+                    fieldName: 'custrecord_quotetype',
+                    type: 'object'
                 }
             },
-            learnAboutDeal: {
+            productInterest: {
                 form: {
-                    group: 'project',
-                    type: 'longtext',
-                    label: 'How did you learn about this deal?',
-                    required: true
+                    group: 'quote',
+                    type: 'lookup',
+                    label: 'Product Interest'
                 },
                 record: {
-                    fieldName: 'custrecord_learn_about_deal'
+                    fieldName: 'custrecord_quotereqproductinterest',
+                    type: 'object'
                 }
             },
-            productionDate: {
+            targetPurchaseDate: {
                 form: {
-                    group: 'project',
+                    group: 'quote',
                     type: 'date',
-                    label: 'Production Date',
-                    required: true
+                    label: 'Target Purchase Date'
                 },
                 record: {
-                    fieldName: 'custrecord_production_date'
+                    fieldName: 'custrecord_targetpurchasedate'
                 }
             },
-            projectName: {
+            vertical: {
                 form: {
-                    group: 'project',
+                    group: 'quote',
+                    type: 'lookup',
+                    label: 'Vertical'
+                },
+                record: {
+                    fieldName: 'custrecord_quotereqvertical',
+                    type: 'object'
+                }
+            },
+            application: {
+                form: {
+                    group: 'quote',
+                    type: 'lookup',
+                    label: 'Application'
+                },
+                record: {
+                    fieldName: 'custrecord_application',
+                    type: 'object'
+                }
+            },
+            registrationExists: {
+                form: {
+                    group: 'quote',
+                    type: 'lookup',
+                    label: 'Registration for this project?'
+                },
+                record: {
+                    fieldName: 'custrecord_registrationexists',
+                    type: 'object'
+                }
+            },
+            registration: {
+                form: {
+                    group: 'quote',
+                    type: 'lookup',
+                    label: 'Registration'
+                },
+                record: {
+                    fieldName: 'custrecord_quotereqregistration',
+                    type: 'object'
+                }
+            },
+            currencyForQuote: {
+                form: {
+                    group: 'quote',
+                    type: 'lookup',
+                    label: 'Currency for Quote'
+                },
+                record: {
+                    fieldName: 'custrecord_currencyforquote',
+                    type: 'object'
+                }
+            },
+            justificationForDiscount: {
+                form: {
+                    group: 'quote',
                     type: 'text',
-                    label: 'Project Name',
-                    required: true
+                    label: 'Justification for Price Discount'
                 },
                 record: {
-                    fieldName: 'custrecord_project_name'
+                    fieldName: 'custrecord_justificationfordiscount'
                 }
             },
-            summaryOfApplication: {
+            competitor: {
                 form: {
-                    group: 'project',
+                    group: 'quote',
+                    type: 'lookup',
+                    label: 'Competitor'
+                },
+                record: {
+                    fieldName: 'custrecord_competitor',
+                    type: 'object'
+                }
+            },
+            competitorPartNumbers: {
+                form: {
+                    group: 'quote',
+                    type: 'text',
+                    label: 'Competitor Part Number(s)'
+                },
+                record: {
+                    fieldName: 'custrecord_comppartnumbers'
+                }
+            },
+            competitorUnitPrices: {
+                form: {
+                    group: 'quote',
+                    type: 'text',
+                    label: 'Competitor Unit Prices(s)'
+                },
+                record: {
+                    fieldName: 'custrecord_compunitprices'
+                }
+            },
+            commentsAdditionalInfo: {
+                form: {
+                    group: 'quote',
                     type: 'longtext',
-                    label: 'Summary Of Application',
-                    required: true
+                    label: 'Comments/Additional Info'
                 },
                 record: {
-                    fieldName: 'custrecord_summary_of_application'
+                    fieldName: 'custrecord_commentsaddlinfo'
                 }
             },
-            prototypeEvalDate: {
+            requireDebit: {
                 form: {
-                    group: 'project',
-                    type: 'date',
-                    label: 'Prototype/Eval Date',
-                    required: true
-                },
-                record: {
-                    fieldName: 'custrecord_prototype_eval_date'
-                }
-            },
-            projectType: {
-                form: {
-                    group: 'project',
+                    group: 'quote',
                     type: 'lookup',
-                    label: 'Project Type',
-                    required: true
+                    label: 'Require a Debit?'
                 },
                 record: {
-                    fieldName: 'custrecord_reg_project_type'
-                }
-            },
-            projectStatus: {
-                form: {
-                    group: 'project',
-                    type: 'lookup',
-                    label: 'Project Status',
-                    required: true
-                },
-                record: {
-                    fieldName: 'custrecord_reg_project_status'
+                    fieldName: 'custrecord_requireadebit',
+                    type: 'object'
                 }
             }
         }

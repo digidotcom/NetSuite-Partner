@@ -4,40 +4,37 @@ define('PartnerQuote.Product.Configuration', [
     'use strict';
 
     return {
-        id: 'registration_product',
+        id: 'partner_quote_product',
         type: 'subrecord',
         permissions: {
             list: true,
             create: true,
             read: true,
             update: true,
-            'delete': true
+            'delete': false
         },
         frontend: {
             baseKey: 'products',
             inlineEdit: true,
             names: {
-                singular: 'Registration Product',
-                plural: 'Registration Products'
+                singular: 'Partner Quote Product',
+                plural: 'Partner Quote Products'
             }
         },
         parent: {
-            crudId: 'registration',
-            filterName: 'registration'
+            crudId: 'partner_quote',
+            filterName: 'partnerQuote'
         },
         listColumns: [
             'item',
             'partNumber',
-            'productType',
-            'quantity',
-            'targetResalePrice',
-            'distributorPrice'/* ,
-            'total' */
+            'estimatedAnnualQuantity',
+            'targetResalePrice'
         ],
         groups: [
             { id: 'default', name: '' }
         ],
-        record: 'customrecord_registration_product',
+        record: 'customrecord_partnerquoteproduct',
         filters: {
             inactive: { operator: 'is', value1: 'F' }
         },
@@ -48,32 +45,25 @@ define('PartnerQuote.Product.Configuration', [
         fieldsets: {
             list: [
                 'internalid',
-                'registration',
+                'partnerQuote',
                 'item',
                 'partNumber',
-                // 'productType',
-                'quantity',
-                'targetResalePrice'// ,
-                // 'distributorPrice'
+                'estimatedAnnualQuantity',
+                'targetResalePrice'
             ],
             details: [
                 'internalid',
-                'registration',
+                'partnerQuote',
                 'item',
                 'partNumber',
-                // 'productType',
-                'quantity',
-                'targetResalePrice'// ,
-                // 'distributorPrice'
+                'estimatedAnnualQuantity',
+                'targetResalePrice'
             ],
             save: [
-                'registration',
+                'partnerQuote',
                 'item',
-                // 'partNumber',
-                // 'productType',
-                'quantity',
-                'targetResalePrice'// ,
-                // 'distributorPrice'
+                'estimatedAnnualQuantity',
+                'targetResalePrice'
             ]
         },
         fields: {
@@ -87,12 +77,12 @@ define('PartnerQuote.Product.Configuration', [
                     fieldName: 'isinactive'
                 }
             },
-            registration: {
+            partnerQuote: {
                 form: {
                     type: 'hidden'
                 },
                 record: {
-                    fieldName: 'custrecord_registration_process'
+                    fieldName: 'custrecord_partnerquoterequest'
                 }
             },
             item: {
@@ -103,7 +93,7 @@ define('PartnerQuote.Product.Configuration', [
                     required: true
                 },
                 record: {
-                    fieldName: 'custrecord_reg_item',
+                    fieldName: 'custrecord_item',
                     type: 'object'
                 }
             },
@@ -117,31 +107,18 @@ define('PartnerQuote.Product.Configuration', [
                 },
                 record: {
                     fieldName: 'itemid',
-                    joinKey: 'custrecord_reg_item'
+                    joinKey: 'custrecord_item'
                 }
             },
-            /* productType: {
-                form: {
-                    group: 'default',
-                    type: 'text',
-                    label: 'Product Type',
-                    relatedAttribute: 'item',
-                    inline: true
-                },
-                record: {
-                    fieldName: 'custitem_cseg_cs_producttype',
-                    joinKey: 'custrecord_reg_item'
-                }
-            },*/
-            quantity: {
+            estimatedAnnualQuantity: {
                 form: {
                     group: 'default',
                     type: 'number',
-                    label: 'Quantity',
+                    label: 'Estimated Annual Quantity',
                     required: true
                 },
                 record: {
-                    fieldName: 'custrecord_reg_quantity'
+                    fieldName: 'custrecord_estannualqty'
                 }
             },
             targetResalePrice: {
@@ -152,22 +129,9 @@ define('PartnerQuote.Product.Configuration', [
                     required: true
                 },
                 record: {
-                    fieldName: 'custrecord_target_resale_price'
+                    fieldName: 'custrecord_targetresaleprice'
                 }
-            }/* ,
-            distributorPrice: {
-                form: {
-                    group: 'default',
-                    type: 'currency',
-                    label: 'Distributor Price',
-                    relatedAttribute: 'item',
-                    inline: true
-                },
-                record: {
-                    fieldName: 'onlinecustomerprice',
-                    joinKey: 'custrecord_reg_item'
-                }
-            }*/
+            }
         }
     };
 });
