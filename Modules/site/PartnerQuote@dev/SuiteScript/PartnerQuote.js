@@ -3,13 +3,15 @@ define('PartnerQuote', [
     'CRUD',
     'PartnerQuote.Configuration',
     'PartnerQuote.Status.Configuration',
-    'PartnerQuote.Product.Configuration'
+    'PartnerQuote.Product.Configuration',
+    'PartnerQuote.Lists.Configuration'
 ], function PartnerQuote(
     _,
     Crud,
     PartnerQuoteConfiguration,
     PartnerQuoteStatusConfiguration,
-    PartnerQuoteProductConfiguration
+    PartnerQuoteProductConfiguration,
+    PartnerQuoteListsConfiguration
 ) {
     'use strict';
 
@@ -21,5 +23,9 @@ define('PartnerQuote', [
 
     _(cruds).each(function eachCrud(crud) {
         Crud.add(crud.id, crud);
+    });
+
+    _(PartnerQuoteListsConfiguration).each(function eachList(listConfig, listId) {
+        Crud.addList(listId, listConfig);
     });
 });

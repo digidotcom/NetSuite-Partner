@@ -14,7 +14,7 @@ define('PartnerQuote.Product.Configuration', [
             'delete': false
         },
         frontend: {
-            baseKey: 'products',
+            baseKey: 'quote-products',
             inlineEdit: true,
             names: {
                 singular: 'Partner Quote Product',

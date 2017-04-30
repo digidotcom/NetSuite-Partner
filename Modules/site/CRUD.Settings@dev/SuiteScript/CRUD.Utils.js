@@ -110,6 +110,20 @@ define('CRUD.Utils', [
             return true;
         },
 
+        validateListId: function validateListId(id) {
+            if (!id) {
+                throw badRequestError;
+            }
+        },
+        isListAllowed: function isAllowed(crudId, permission) {
+            var config = CrudConfiguration.get(crudId);
+            var permissions = config && config.permissions;
+            if (permissions && !permissions[permission]) {
+                throw methodNotAllowedError;
+            }
+            return true;
+        },
+
         getStatusFieldName: function getStatusFieldName(id) {
             var config = CrudConfiguration.get(id);
             return config && config.status && config.status.filterName;
