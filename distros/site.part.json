@@ -13,6 +13,7 @@
         "site/Header.CRUD": "dev",
         "site/Heartbeat": "dev",
         "site/Mixin": "dev",
+        "site/PartnerQuote": "dev",
         "site/Registration": "dev",
         "site/SafariHtmlClass": "dev",
         "site/ServiceController.Validations.RequireSecureFix": "dev"
@@ -33,6 +34,7 @@
                     "CRUD",
                     "Header.CRUD",
                     "Heartbeat",
+                    "PartnerQuote",
                     "Registration"
                 ]
             },
@@ -49,6 +51,7 @@
             "dependencies": [
                 "Configuration.Site",
                 "Heartbeat.ServiceController",
+                "PartnerQuote",
                 "Registration",
                 "ServiceController.Validations.RequireSecureFix"
             ]
