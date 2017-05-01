@@ -9,6 +9,7 @@ define('CRUD.Details.View', [
     'Form',
     'CRUD.Configuration',
     'CRUD.Lookup',
+    'CRUD.Action',
     'CRUD.Helper',
     'CRUD.AbstractView',
     'CRUD.Subrecord',
@@ -24,6 +25,7 @@ define('CRUD.Details.View', [
     Form,
     CrudConfiguration,
     CrudLookup,
+    CrudAction,
     CrudHelper,
     CrudAbstractView,
     CrudSubrecord,
@@ -140,8 +142,10 @@ define('CRUD.Details.View', [
         mixinOptions: {
             formData: function formDataFn() {
                 var crudId = this.crudId;
+                var parentId = this.parent;
                 return _.extend({}, CrudConfiguration.getForForm(crudId), {
-                    lookupCallback: CrudLookup.getFetchCallback(crudId)
+                    lookupPromiseCallback: CrudLookup.getPromiseCallback(crudId, parentId),
+                    actionPromiseCallback: CrudAction.getPromiseCallback(crudId, parentId)
                 });
             },
 
@@ -172,7 +176,11 @@ define('CRUD.Details.View', [
                     newUrl: CrudHelper.getNewUrl(crudId, parentId),
                     editUrl: CrudHelper.getEditUrl(crudId, id, parentId),
                     viewUrl: CrudHelper.getViewUrl(crudId, id, parentId),
-                    goBackUrl: this.getGoBackUrl()
+                    goBackUrl: this.getGoBackUrl(),
+                    customActions: CrudHelper.getActionsForForm(crudId, {
+                        page: this.getFormAction(),
+                        model: this.model
+                    })
                 };
             },
             isNew: function isNew() {

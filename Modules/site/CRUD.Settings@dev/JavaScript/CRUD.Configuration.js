@@ -15,7 +15,8 @@ define('CRUD.Configuration', [
         getStatic: function configuration(crudId) {
             return {
                 recordServiceUrl: 'services/CRUD.Record.Service.ss?id=' + crudId,
-                lookupServiceUrl: 'services/CRUD.Lookup.Service.ss?id=' + crudId
+                lookupServiceUrl: 'services/CRUD.Lookup.Service.ss?id=' + crudId,
+                actionServiceUrl: 'services/CRUD.Action.Service.ss?id=' + crudId
             };
         },
         getPublishedAll: function getPublished() {

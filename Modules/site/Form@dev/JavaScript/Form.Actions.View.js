@@ -1,10 +1,14 @@
 define('Form.Actions.View', [
     'underscore',
     'Backbone',
+    'jQuery',
+    'Form.Action',
     'form_actions.tpl'
 ], function FormActionsView(
     _,
     Backbone,
+    jQuery,
+    FormAction,
     formActionsTpl
 ) {
     'use strict';
@@ -13,8 +17,28 @@ define('Form.Actions.View', [
 
         template: formActionsTpl,
 
+        events: {
+            'click [data-action]': 'clickCustomAction'
+        },
+
         initialize: function initialize(options) {
             this.config = options.config;
+        },
+
+        clickCustomAction: function clickCustomAction(e) {
+            var action = jQuery(e.currentTarget).data('action');
+            if (action) {
+                this.runCustomAction(action);
+            }
+        },
+        runCustomAction: function runAction(actionName) {
+            var action = new FormAction({
+                view: this,
+                action: actionName,
+                application: this.config.application,
+                config: this.config
+            });
+            action.run();
         },
 
         getContext: function getContext() {
@@ -34,6 +58,7 @@ define('Form.Actions.View', [
                 editUrl: info.editUrl,
                 viewUrl: info.viewUrl,
                 viewAllUrl: info.goBackUrl,
+                customActions: info.customActions,
                 showEditLink: (isView && canEdit),
                 showViewAllLink: (isView && canList),
                 showAddButton: (isNew && canCreate),
