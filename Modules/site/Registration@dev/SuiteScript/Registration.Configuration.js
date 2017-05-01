@@ -39,6 +39,34 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
             filterName: 'status',
             allowEditControlField: 'statusAllowsEdit'
         },
+        actions: [
+            {
+                name: 'submit',
+                label: 'Submit',
+                conditions: [
+                    {
+                        type: 'page',
+                        values: ['view']
+                    },
+                    {
+                        type: 'field',
+                        fieldName: 'statusAllowsEdit',
+                        values: [true]
+                    }
+                ],
+                execute: [
+                    {
+                        type: 'field',
+                        fieldName: 'partnerApprovalSubmission',
+                        value: 'T'
+                    }
+                ],
+                result: {
+                    type: 'redirect',
+                    page: 'view'
+                }
+            }
+        ],
         subrecords: [
             {
                 crudId: 'registration_product',
@@ -183,6 +211,11 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                 record: {
                     fieldName: 'custrecord_partner_customer',
                     type: 'object'
+                }
+            },
+            partnerApprovalSubmission: {
+                record: {
+                    fieldName: 'custrecord_partner_approval_submission'
                 }
             },
 

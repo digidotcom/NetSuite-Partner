@@ -31,3 +31,8 @@
   @extend .button-secondary;
   @extend %form-actions-button;
 }
+
+.form-actions-custom {
+  @extend .button-secondary;
+  @extend %form-actions-button;
+}

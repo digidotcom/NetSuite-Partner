@@ -2,7 +2,7 @@ define('Form.Lookup', [
     'underscore',
     'jQuery',
     'Form.Lookup.View'
-], function Form(
+], function FormLookupModule(
     _,
     jQuery,
     FormLookupView
@@ -17,7 +17,7 @@ define('Form.Lookup', [
 
     _(FormLookup.prototype).extend({
         search: function search(field, queryOriginal) {
-            var lookupCallback = this.config.getData().lookupCallback;
+            var getLookupPromise = this.config.getData().lookupPromiseCallback;
             var query = queryOriginal ? queryOriginal.toLowerCase() : '';
             var view = new FormLookupView({
                 application: this.application,
@@ -25,7 +25,7 @@ define('Form.Lookup', [
                 query: queryOriginal,
                 fieldView: this.fieldView
             });
-            lookupCallback({
+            getLookupPromise({
                 field: field,
                 query: query
             }).done(function done(collection) {
