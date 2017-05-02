@@ -25,7 +25,7 @@ define('CRUD.Configuration.Lists', [
                     inactive: { operator: 'is', value1: 'F' }
                 },
                 sort: {
-                    // internalid: 'asc'
+                    internalid: 'asc'
                 },
                 fieldsets: {
                     list: [

@@ -16,7 +16,7 @@
             "CRUD.Record.Service.ss": "CRUD.Record.ServiceController",
             "CRUD.Lookup.Service.ss": "CRUD.Lookup.ServiceController",
             "CRUD.Action.Service.ss": "CRUD.Action.ServiceController",
-            "CRUD.List.Service.ss": "CRUD.Lookup.ServiceController"
+            "CRUD.List.Service.ss": "CRUD.List.ServiceController"
         }
     }
 }

@@ -10,49 +10,7 @@ define('CRUD.Configuration.Main', [
     }
 
     return {
-        keySets: {
-            guest: [
-                'type',
-                'frontend',
-                'permissions'
-            ],
-            shared: [
-                'fields',
-                'type',
-                'status',
-                'parent',
-                'permissions'
-            ],
-            record: [
-                'listHeaderDisabled',
-                'record',
-                'loggedInFilterField',
-                'fieldsets',
-                'filters',
-                'filtersDynamic',
-                'sort'
-            ],
-            bootstrapping: [
-                'subrecords',
-                'frontend',
-                'listColumns',
-                'groups'
-            ]
-        },
-
         cacheRecord: {},
-
-        add: function add(id, configuration) {
-            this.configuration[id] = configuration;
-        },
-
-        get: function get(id) {
-            return this.configuration[id] || {};
-        },
-
-        isValid: function isValid(id) {
-            return (id in this.configuration);
-        },
 
         getForRecord: function getForRecord(id) {
             var self = this;
@@ -192,22 +150,6 @@ define('CRUD.Configuration.Main', [
             return this.getForBootstrapping('bootstrapping', false);
         },
 
-        getWithKeySet: function getWithKeySet(id, keySet, excludeShared) {
-            var keys = _.uniq(_.union([], (!excludeShared) ? this.keySets.shared : [], this.keySets[keySet]));
-            var config = this.get(id);
-            if (config) {
-                return _(config).pick(keys);
-            }
-            return {};
-        },
-        getWithKeySetAll: function getWithKeySetAll(keySet, excludeShared) {
-            var self = this;
-            var configs = {};
-            _(this.configuration).each(function eachConfigurartion(config, id) {
-                configs[id] = self.getWithKeySet(id, keySet, excludeShared);
-            });
-            return configs;
-        },
         getFieldConfigForRecord: function getFieldConfigForRecord(config, fieldId) {
             var fieldConfig = config.fields[fieldId];
             if (fieldConfig && fieldConfig.record) {
