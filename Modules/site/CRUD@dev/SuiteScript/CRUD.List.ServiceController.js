@@ -22,14 +22,24 @@ define('CRUD.List.ServiceController', [
         },
 
         get: function get() {
-            var crudId = this.request.getParameter('id');
+            var crudIdsStr = this.request.getParameter('ids');
+            var crudIds = (crudIdsStr && crudIdsStr.split(',')) || [];
+            var lists = [];
 
-            CrudUtils.validateCrudId(crudId);
+            CrudUtils.validateCrudIds(crudIds);
 
-            if (CrudUtils.isAllowed(crudId, 'list')) {
-                return CrudListModel.list(crudId);
-            }
-            return null;
+            _(crudIds).each(function eachCrudId(crudId) {
+                var values;
+                if (CrudUtils.isAllowed(crudId, 'list')) {
+                    values = CrudListModel.list(crudId);
+                    lists.push({
+                        name: crudId,
+                        values: values
+                    });
+                }
+            });
+
+            return lists;
         }
     });
 });

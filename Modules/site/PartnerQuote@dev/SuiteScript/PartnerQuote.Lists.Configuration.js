@@ -9,15 +9,6 @@ define('PartnerQuote.Lists.Configuration', [
         },
         'quote_request_application': {
             id: 'customlist_quotereqapplication'
-        },
-        'product_interest': {
-            id: 'customlist_productinterest'
-        },
-        'vertical': {
-            id: 'customlist_vertical'
-        },
-        'yes_no': {
-            id: 'customlist_nsts_rm_yesno'
         }
     };
 });

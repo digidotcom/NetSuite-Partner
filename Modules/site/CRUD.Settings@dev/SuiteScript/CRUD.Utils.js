@@ -96,6 +96,16 @@ define('CRUD.Utils', [
                 throw badRequestError;
             }
         },
+        validateCrudIds: function validateCrudId(crudIds) {
+            var self = this;
+            if (crudIds && crudIds.length > 0) {
+                _(crudIds).each(function eachCrudIds(crudId) {
+                    self.validateCrudId(crudId);
+                });
+            } else {
+                throw badRequestError;
+            }
+        },
         validateId: function validateId(id) {
             if (!id) {
                 throw badRequestError;

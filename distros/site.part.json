@@ -12,6 +12,7 @@
         "site/Form": "dev",
         "site/Header.CRUD": "dev",
         "site/Heartbeat": "dev",
+        "site/Lists": "dev",
         "site/Mixin": "dev",
         "site/PartnerQuote": "dev",
         "site/Registration": "dev",
@@ -51,6 +52,7 @@
             "dependencies": [
                 "Configuration.Site",
                 "Heartbeat.ServiceController",
+                "Lists",
                 "PartnerQuote",
                 "Registration",
                 "ServiceController.Validations.RequireSecureFix"
