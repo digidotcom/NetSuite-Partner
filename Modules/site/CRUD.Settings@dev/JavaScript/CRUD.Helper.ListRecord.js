@@ -1,8 +1,8 @@
-define('CRUD.Helper.List', [
+define('CRUD.Helper.ListRecord', [
     'underscore',
     'Utils',
     'CRUD.Configuration'
-], function CrudHelperList(
+], function CrudHelperListRecord(
     _,
     Utils,
     CrudConfiguration

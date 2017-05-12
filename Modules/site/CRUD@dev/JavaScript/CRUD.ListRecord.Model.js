@@ -1,7 +1,7 @@
-define('CRUD.Record.List.Model', [
+define('CRUD.ListRecord.Model', [
     'Backbone',
     'CRUD.Helper'
-], function CrudRecordListModel(
+], function CrudListRecordModel(
     Backbone,
     CrudHelper
 ) {

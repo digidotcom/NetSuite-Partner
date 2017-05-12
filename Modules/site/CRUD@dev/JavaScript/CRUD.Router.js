@@ -8,7 +8,7 @@ define('CRUD.Router', [
     'CRUD.Helper',
     'CRUD.Record.Collection',
     'CRUD.Record.Model',
-    'CRUD.Record.List.Collection',
+    'CRUD.ListRecord.Collection',
     'CRUD.Status.Collection',
     'CRUD.List.View',
     'CRUD.Details.View'

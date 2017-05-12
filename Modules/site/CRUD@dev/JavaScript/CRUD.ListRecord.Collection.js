@@ -1,17 +1,17 @@
-define('CRUD.Record.List.Collection', [
+define('CRUD.ListRecord.Collection', [
     'Backbone',
     'CRUD.Helper',
-    'CRUD.Record.List.Model'
-], function CrudRecordListCollection(
+    'CRUD.ListRecord.Model'
+], function CrudListRecordCollection(
     Backbone,
     CrudHelper,
-    CrudRecordListModel
+    CrudListRecordModel
 ) {
     'use strict';
 
     return Backbone.Collection.extend({
 
-        model: CrudRecordListModel,
+        model: CrudListRecordModel,
 
         initialize: function initialize(elements, options) {
             this.crudId = options.crudId;
