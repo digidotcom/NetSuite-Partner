@@ -35,6 +35,11 @@ define('CRUD.Helper.Status', [
             var allowEditControlField = this.getAllowEditControlField(crudId);
             return !allowEditControlField || !!model.get(allowEditControlField);
         },
+        isEditEnabledForSubrecord: function isEditEnabledForSubrecord(crudId, parentModel) {
+            var parentCrudId = this.getParentCrudId(crudId);
+            return this.isParentAllowsEditSync(crudId) &&
+                   this.isEditEnabledForModel(parentCrudId, parentModel);
+        },
         getStatusServiceUrl: function getStatusServiceUrl(crudId, absolute) {
             var statusId = this.getStatusId(crudId);
             if (statusId) {

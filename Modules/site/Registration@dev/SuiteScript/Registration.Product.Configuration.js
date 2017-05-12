@@ -23,16 +23,14 @@ define('Registration.Product.Configuration', [
         },
         parent: {
             crudId: 'registration',
-            filterName: 'registration'
+            filterName: 'registration',
+            allowEditSync: true
         },
         listColumns: [
             'item',
             'partNumber',
-            'productType',
             'quantity',
-            'targetResalePrice',
-            'distributorPrice'/* ,
-            'total' */
+            'targetResalePrice'
         ],
         groups: [
             { id: 'default', name: '' }
@@ -51,29 +49,22 @@ define('Registration.Product.Configuration', [
                 'registration',
                 'item',
                 'partNumber',
-                // 'productType',
                 'quantity',
-                'targetResalePrice'// ,
-                // 'distributorPrice'
+                'targetResalePrice'
             ],
             details: [
                 'internalid',
                 'registration',
                 'item',
                 'partNumber',
-                // 'productType',
                 'quantity',
-                'targetResalePrice'// ,
-                // 'distributorPrice'
+                'targetResalePrice'
             ],
             save: [
                 'registration',
                 'item',
-                // 'partNumber',
-                // 'productType',
                 'quantity',
-                'targetResalePrice'// ,
-                // 'distributorPrice'
+                'targetResalePrice'
             ]
         },
         fields: {
@@ -120,19 +111,6 @@ define('Registration.Product.Configuration', [
                     joinKey: 'custrecord_reg_item'
                 }
             },
-            /* productType: {
-                form: {
-                    group: 'default',
-                    type: 'text',
-                    label: 'Product Type',
-                    relatedAttribute: 'item',
-                    inline: true
-                },
-                record: {
-                    fieldName: 'custitem_cseg_cs_producttype',
-                    joinKey: 'custrecord_reg_item'
-                }
-            },*/
             quantity: {
                 form: {
                     group: 'default',
@@ -154,20 +132,7 @@ define('Registration.Product.Configuration', [
                 record: {
                     fieldName: 'custrecord_target_resale_price'
                 }
-            }/* ,
-            distributorPrice: {
-                form: {
-                    group: 'default',
-                    type: 'currency',
-                    label: 'Distributor Price',
-                    relatedAttribute: 'item',
-                    inline: true
-                },
-                record: {
-                    fieldName: 'onlinecustomerprice',
-                    joinKey: 'custrecord_reg_item'
-                }
-            }*/
+            }
         }
     };
 });

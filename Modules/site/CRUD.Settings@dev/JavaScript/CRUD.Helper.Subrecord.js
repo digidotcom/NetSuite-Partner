@@ -22,6 +22,10 @@ define('CRUD.Helper.Subrecord', [
             var parent = this.getParent(crudId);
             return parent && parent.filterName;
         },
+        isParentAllowsEditSync: function getBaseKey(crudId) {
+            var parent = this.getParent(crudId);
+            return parent && parent.allowEditSync;
+        },
         getSubrecords: function hasSubrecords(crudId) {
             var subrecords = CrudConfiguration.get(crudId).subrecords;
             return _(subrecords).filter(function filterSubrecord(subrecord) {
