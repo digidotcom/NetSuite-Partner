@@ -1,7 +1,7 @@
 define('CRUD.Settings', [
     'CRUD.Bootstrapping',
     'CRUD.Configuration'
-], function Crud(
+], function CrudSettings(
     CrudBootstrapping,
     CrudConfiguration
 ) {
@@ -12,6 +12,9 @@ define('CRUD.Settings', [
     return {
         add: function add(id, config) {
             CrudConfiguration.add(id, config);
+        },
+        addList: function addList(id, config) {
+            CrudConfiguration.addList(id, config);
         }
     };
 });

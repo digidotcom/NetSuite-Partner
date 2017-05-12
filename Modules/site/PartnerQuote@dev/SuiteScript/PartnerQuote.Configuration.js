@@ -504,7 +504,8 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
             quoteType: {
                 form: {
                     group: 'quote',
-                    type: 'lookup',
+                    type: 'list',
+                    list: 'quote_request_type',
                     label: 'Quote Type'
                 },
                 record: {
@@ -515,7 +516,8 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
             productInterest: {
                 form: {
                     group: 'quote',
-                    type: 'lookup',
+                    type: 'list',
+                    list: 'product_interest',
                     label: 'Product Interest'
                 },
                 record: {

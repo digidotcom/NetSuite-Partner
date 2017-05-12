@@ -1,24 +1,28 @@
 define('CRUD.Router', [
     'underscore',
     'Backbone',
+    'jQuery',
     'Utils',
     'AjaxRequestsKiller',
     'ErrorManagement.ForbiddenError.View',
     'CRUD.Helper',
     'CRUD.Record.Collection',
     'CRUD.Record.Model',
+    'CRUD.ListRecord.Collection',
     'CRUD.Status.Collection',
     'CRUD.List.View',
     'CRUD.Details.View'
 ], function CrudRouter(
     _,
     Backbone,
+    jQuery,
     Utils,
     AjaxRequestsKiller,
     ErrorManagementForbiddenErrorView,
     CrudHelper,
     CrudRecordCollection,
     CrudRecordModel,
+    CrudRecordListCollection,
     CrudStatusCollection,
     CrudListView,
     CrudDetailsView
@@ -125,7 +129,33 @@ define('CRUD.Router', [
             }
         },
 
+        getListsPromise: function getListsPromise(crudId) {
+            var fieldLists = CrudHelper.getFieldListNames(crudId);
+            var deferred = jQuery.Deferred();
+            var collection;
+            var fetchPromise;
+            if (fieldLists.length > 0) {
+                collection = new CrudRecordListCollection(null, {
+                    crudId: crudId,
+                    listIds: fieldLists
+                });
+                fetchPromise = collection.fetch();
+                fetchPromise.done(function doneFn() {
+                    CrudHelper.addLists(collection);
+                    deferred.resolveWith(fetchPromise, arguments);
+                }).fail(function failFn() {
+                    deferred.rejectWith(fetchPromise, arguments);
+                });
+            } else {
+                deferred.resolve();
+            }
+            return deferred.promise();
+        },
+
         details: function details(crudId, parentId, id, options) {
+            var promises = [
+                this.getListsPromise(crudId)
+            ];
             var model = new CrudRecordModel({
                 internalid: id,
                 parent: parentId,
@@ -137,14 +167,13 @@ define('CRUD.Router', [
                 parent: parentId,
                 model: model
             }));
-            if (!id) {
-                view.showContent();
-            } else {
-                view.showContentBefore();
-                model.fetch().done(function done() {
-                    view.showContentAfter();
-                });
+            view.showContentBefore();
+            if (id) {
+                promises.push(model.fetch());
             }
+            jQuery.when.apply(jQuery, promises).done(function done() {
+                view.showContentAfter();
+            });
         },
 
         allowPage: function allowPage(crudId, permission) {

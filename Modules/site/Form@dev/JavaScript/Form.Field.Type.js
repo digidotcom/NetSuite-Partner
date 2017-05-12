@@ -78,12 +78,15 @@ define('Form.Field.Type', [
             var modelForm = this.config.model;
             var relatedAttribute = modelField.get('relatedAttribute');
             var relatedAttributeValue = relatedAttribute ? modelForm.get(relatedAttribute) : null;
+            var lists = this.config.getLists();
             var list = modelField.get('list');
             this.showAsTextField = false;
             if (_.isFunction(list)) {
                 return list(relatedAttributeValue, this);
             } else if (_.isObject(list)) {
                 return _.values(list);
+            } else if (_.isArray(list)) {
+                return list;
             } else if (_.isString(list)) {
                 if (list === 'countries') {
                     return FormFieldLists.getCountries();
@@ -91,6 +94,8 @@ define('Form.Field.Type', [
                     states = FormFieldLists.getStates(relatedAttributeValue);
                     this.showAsTextField = (states.length === 0);
                     return states;
+                } else if (list in lists) {
+                    return lists[list];
                 }
             }
             return [];

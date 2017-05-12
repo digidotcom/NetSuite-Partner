@@ -311,7 +311,8 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
             registrationProgram: {
                 form: {
                     group: 'details',
-                    type: 'lookup',
+                    type: 'list',
+                    list: 'registration_program',
                     label: 'Registration Program',
                     required: true
                 },
@@ -673,7 +674,8 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
             projectType: {
                 form: {
                     group: 'project',
-                    type: 'lookup',
+                    type: 'list',
+                    list: 'registration_project_type',
                     label: 'Project Type',
                     required: true
                 },
@@ -684,7 +686,8 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
             projectStatus: {
                 form: {
                     group: 'project',
-                    type: 'lookup',
+                    type: 'list',
+                    list: 'registration_project_status',
                     label: 'Project Status',
                     required: true
                 },
