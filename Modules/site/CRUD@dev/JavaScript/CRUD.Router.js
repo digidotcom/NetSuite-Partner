@@ -130,7 +130,7 @@ define('CRUD.Router', [
         },
 
         getListsPromise: function getListsPromise(crudId) {
-            var fieldLists = CrudHelper.getFieldListNames(crudId);
+            var fieldLists = CrudHelper.getFieldListNamesForService(crudId);
             var deferred = jQuery.Deferred();
             var collection;
             var fetchPromise;
@@ -141,7 +141,7 @@ define('CRUD.Router', [
                 });
                 fetchPromise = collection.fetch();
                 fetchPromise.done(function doneFn() {
-                    CrudHelper.addLists(collection);
+                    CrudHelper.addListsFromCollection(collection);
                     deferred.resolveWith(fetchPromise, arguments);
                 }).fail(function failFn() {
                     deferred.rejectWith(fetchPromise, arguments);
