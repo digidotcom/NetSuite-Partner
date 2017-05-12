@@ -680,7 +680,8 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                     required: true
                 },
                 record: {
-                    fieldName: 'custrecord_reg_project_type'
+                    fieldName: 'custrecord_reg_project_type',
+                    type: 'object'
                 }
             },
             projectStatus: {
@@ -692,7 +693,8 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                     required: true
                 },
                 record: {
-                    fieldName: 'custrecord_reg_project_status'
+                    fieldName: 'custrecord_reg_project_status',
+                    type: 'object'
                 }
             }
         }
