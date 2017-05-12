@@ -21,6 +21,7 @@ define('CRUD.Configuration', [
                 'type',
                 'status',
                 'parent',
+                'actions',
                 'permissions'
             ],
             record: [
