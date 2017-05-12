@@ -1,6 +1,8 @@
 define('CRUD.Helper', [
     'underscore',
     'CRUD.Helper.Action',
+    'CRUD.Helper.Form',
+    'CRUD.Helper.List',
     'CRUD.Helper.Menus',
     'CRUD.Helper.Record',
     'CRUD.Helper.Status',
@@ -9,6 +11,8 @@ define('CRUD.Helper', [
 ], function CrudHelper(
     _,
     CrudHelperAction,
+    CrudHelperForm,
+    CrudHelperList,
     CrudHelperMenus,
     CrudHelperRecord,
     CrudHelperStatus,
@@ -17,15 +21,13 @@ define('CRUD.Helper', [
 ) {
     'use strict';
 
-    var CrudHelperBase = {
-        isFormAsync: function isFormAsync(crudId, page) {
-            return this.getSubrecordsInPage(crudId, page).length > 0;
-        }
-    };
+    var CrudHelperBase = {};
 
     return _({}).extend(
         CrudHelperBase,
         CrudHelperAction,
+        CrudHelperForm,
+        CrudHelperList,
         CrudHelperMenus,
         CrudHelperRecord,
         CrudHelperStatus,

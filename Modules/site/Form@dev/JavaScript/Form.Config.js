@@ -94,6 +94,10 @@ define('Form.Config', [
                    (this.isEdit() && this.canEdit());
         },
 
+        getLists: function getLists() {
+            return this.getInfo().lists;
+        },
+
         getDependentFields: function getDependentFields(attribute) {
             var data = this.getDataJSON();
             var dependentFields = this.dependentFields;

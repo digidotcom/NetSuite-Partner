@@ -7,7 +7,6 @@ define('CRUD.Details.View', [
     'Backbone.View.Multiple',
     'Mixin',
     'Form',
-    'CRUD.Configuration',
     'CRUD.Lookup',
     'CRUD.Action',
     'CRUD.Helper',
@@ -23,7 +22,6 @@ define('CRUD.Details.View', [
     BackboneViewMultiple,
     Mixin,
     Form,
-    CrudConfiguration,
     CrudLookup,
     CrudAction,
     CrudHelper,
@@ -143,7 +141,7 @@ define('CRUD.Details.View', [
             formData: function formDataFn() {
                 var crudId = this.crudId;
                 var parentId = this.parent;
-                return _.extend({}, CrudConfiguration.getForForm(crudId), {
+                return _.extend({}, CrudHelper.getConfigForForm(crudId), {
                     lookupPromiseCallback: CrudLookup.getPromiseCallback(crudId, parentId),
                     actionPromiseCallback: CrudAction.getPromiseCallback(crudId, parentId)
                 });
@@ -176,6 +174,7 @@ define('CRUD.Details.View', [
                     newUrl: CrudHelper.getNewUrl(crudId, parentId),
                     editUrl: CrudHelper.getEditUrl(crudId, id, parentId),
                     viewUrl: CrudHelper.getViewUrl(crudId, id, parentId),
+                    lists: CrudHelper.getListsForForm(crudId),
                     goBackUrl: this.getGoBackUrl(),
                     customActions: CrudHelper.getActionsForForm(crudId, {
                         page: this.getFormAction(),

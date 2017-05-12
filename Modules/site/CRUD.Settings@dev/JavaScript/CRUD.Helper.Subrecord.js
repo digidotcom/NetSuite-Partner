@@ -29,6 +29,9 @@ define('CRUD.Helper.Subrecord', [
             });
         },
         /* page can be 'view', 'edit' or 'new' */
+        hasSubrecordsInPage: function hasSubrecordsInPage(crudId, page) {
+            return this.getSubrecordsInPage(crudId, page).length > 0;
+        },
         getSubrecordsInPage: function hasSubrecordsInPage(crudId, page) {
             var subrecords = this.getSubrecords(crudId) || [];
             return _(subrecords).filter(function filterSubrecord(subrecord) {
