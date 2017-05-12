@@ -10,8 +10,16 @@ define('CRUD.Helper.Record', [
     'use strict';
 
     return {
-        getPermissions: function getPermissions(crudId) {
-            return CrudConfiguration.get(crudId).permissions || {};
+        getPermissions: function getPermissions(crudId, parentModel) {
+            var permissions = CrudConfiguration.get(crudId).permissions || {};
+            if (parentModel && !this.isEditEnabledForSubrecord(crudId, parentModel)) {
+                return _.extend({}, permissions, {
+                    create: false,
+                    update: false,
+                    'delete': false
+                });
+            }
+            return permissions;
         },
         isPermissionAllowed: function isPermissionAllowed(crudId, permission) {
             var permissions = this.getPermissions(crudId);
@@ -24,6 +32,14 @@ define('CRUD.Helper.Record', [
         getBaseKey: function getBaseKey(crudId) {
             var config = CrudConfiguration.get(crudId);
             return config.frontend && config.frontend.baseKey;
+        },
+        isInlineEdit: function isInlineEdit(crudId) {
+            var config = CrudConfiguration.get(crudId);
+            return config.frontend && !!config.frontend.inlineEdit;
+        },
+        allowNavigateToView: function allowNavigateToView(crudId, parentModel) {
+            var permissions = this.getPermissions(crudId, parentModel);
+            return permissions.read && !this.isInlineEdit(crudId);
         },
         getFields: function getFields(crudId) {
             var config = CrudConfiguration.get(crudId);

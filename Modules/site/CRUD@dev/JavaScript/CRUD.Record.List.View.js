@@ -13,7 +13,7 @@ define('CRUD.Record.List.View', [
     'RecordViews.Actionable.View',
     'CRUD.Helper',
     'CRUD.AbstractView',
-    'CRUD.List.Actions.View',
+    'CRUD.Record.List.Actions.View',
     'CRUD.Status.View',
     'crud_list.tpl'
 ], function CrudRecordListView(
@@ -31,7 +31,7 @@ define('CRUD.Record.List.View', [
     RecordViewsActionableView,
     CrudHelper,
     CrudAbstractView,
-    CrudListActionsView,
+    CrudRecordListActionsView,
     CrudStatusView,
     crudListTpl
 ) {
@@ -60,6 +60,7 @@ define('CRUD.Record.List.View', [
             this.statusCollection = this.statusCollection || options.statusCollection;
             this.hasStatus = !!this.statusCollection;
             this.parent = this.collection.parent;
+            this.parentModel = this.parentModel || options.parentModel;
 
             this.listenCollection();
 
@@ -118,14 +119,14 @@ define('CRUD.Record.List.View', [
         navigateToEntry: function navigateToEntry(e) {
             var crudId = this.crudId;
             var parentId = this.parent;
-            var permissions = CrudHelper.getPermissions(crudId);
+            var parentModel = this.parentModel;
             var href;
             var id;
             // ignore clicks on anchors and buttons
             if (Utils.isTargetActionable(e)) {
                 return;
             }
-            if (permissions.read) {
+            if (CrudHelper.allowNavigateToView(crudId, parentModel)) {
                 id = jQuery(e.target).closest('[data-id]').data('id');
                 href = CrudHelper.getViewUrl(crudId, id, parentId);
                 Backbone.history.navigate(href, { trigger: true });
@@ -183,7 +184,7 @@ define('CRUD.Record.List.View', [
             'ListResults': function ListResults() {
                 var crudId = this.crudId;
                 var parentId = this.parent;
-                var permissions = CrudHelper.getPermissions(crudId);
+                var parentModel = this.parentModel;
                 var listColumns = this.listColumns;
                 var recordsCollection = new Backbone.Collection(this.collection.map(function map(model) {
                     var internalid = model.get('internalid');
@@ -204,7 +205,7 @@ define('CRUD.Record.List.View', [
                         title: new Handlebars.SafeString(Utils.translate('<span class="tranid">$(0)</span>', internalid)),
                         record: model,
                         touchpoint: 'customercenter',
-                        detailsURL: permissions.read ? CrudHelper.getViewUrl(crudId, internalid, parentId) : '',
+                        detailsURL: CrudHelper.allowNavigateToView(crudId, parentModel) ? CrudHelper.getViewUrl(crudId, internalid, parentId) : '',
                         id: internalid,
                         internalid: internalid,
                         columns: columns
@@ -216,10 +217,11 @@ define('CRUD.Record.List.View', [
                     collection: recordsCollection,
                     viewsPerRow: 1,
                     childViewOptions: {
-                        actionView: CrudListActionsView,
+                        actionView: CrudRecordListActionsView,
                         actionOptions: {
                             crudId: crudId,
-                            parent: parentId
+                            parent: parentId,
+                            parentModel: parentModel
                         }
                     }
                 });
@@ -228,7 +230,8 @@ define('CRUD.Record.List.View', [
 
         getContext: function getContext() {
             var crudId = this.crudId;
-            var permissions = CrudHelper.getPermissions(crudId);
+            var parentModel = this.parentModel;
+            var permissions = CrudHelper.getPermissions(crudId, parentModel);
             var parentId = this.parent;
             return {
                 crudId: crudId,

@@ -1,9 +1,9 @@
-define('CRUD.List.Actions.View', [
+define('CRUD.Record.List.Actions.View', [
     'underscore',
     'Backbone',
     'CRUD.Helper',
     'crud_list_actions.tpl'
-], function CrudListActionsView(
+], function CrudRecordListActionsView(
     _,
     Backbone,
     CrudHelper,
@@ -20,11 +20,12 @@ define('CRUD.List.Actions.View', [
         initialize: function initialize(options) {
             this.crudId = options.crudId;
             this.parent = options.parent;
+            this.parentModel = options.parentModel;
         },
 
         getContext: function getContext() {
             var crudId = this.crudId;
-            var permissions = CrudHelper.getPermissions(crudId);
+            var permissions = CrudHelper.getPermissions(crudId, this.parentModel);
             var record = this.model.get('record');
             var parentId = this.parent;
             if (record && record.get('internalid')) {

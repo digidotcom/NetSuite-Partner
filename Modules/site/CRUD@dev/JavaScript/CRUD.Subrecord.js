@@ -11,7 +11,7 @@ define('CRUD.Subrecord', [
 
 
     return {
-        list: function list(application, crudId, parentId) {
+        list: function list(application, crudId, parentId, parentModel) {
             var collection;
             var view;
 
@@ -24,6 +24,7 @@ define('CRUD.Subrecord', [
                 view = new CrudSubrecordListView({
                     application: application,
                     crudId: crudId,
+                    parentModel: parentModel,
                     collection: collection
                 });
 

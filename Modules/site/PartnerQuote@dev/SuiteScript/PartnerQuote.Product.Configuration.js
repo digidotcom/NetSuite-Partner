@@ -23,7 +23,8 @@ define('PartnerQuote.Product.Configuration', [
         },
         parent: {
             crudId: 'partner_quote',
-            filterName: 'partnerQuote'
+            filterName: 'partnerQuote',
+            allowEditSync: true
         },
         listColumns: [
             'item',
