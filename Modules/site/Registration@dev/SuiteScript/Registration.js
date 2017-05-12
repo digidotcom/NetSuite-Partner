@@ -3,13 +3,15 @@ define('Registration', [
     'CRUD',
     'Registration.Configuration',
     'Registration.Status.Configuration',
-    'Registration.Product.Configuration'
+    'Registration.Product.Configuration',
+    'Registration.Lists.Configuration'
 ], function Registration(
     _,
     Crud,
     RegistrationConfiguration,
     RegistrationStatusConfiguration,
-    RegistrationProductConfiguration
+    RegistrationProductConfiguration,
+    RegistrationListsConfiguration
 ) {
     'use strict';
 
@@ -21,5 +23,9 @@ define('Registration', [
 
     _(cruds).each(function eachCrud(crud) {
         Crud.add(crud.id, crud);
+    });
+
+    _(RegistrationListsConfiguration).each(function eachList(listConfig, listId) {
+        Crud.addList(listId, listConfig);
     });
 });
