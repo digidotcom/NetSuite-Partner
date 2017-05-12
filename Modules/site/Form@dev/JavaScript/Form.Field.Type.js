@@ -1,7 +1,6 @@
 define('Form.Field.Type', [
     'underscore',
     'SC.Configuration',
-    'Form.Field.Lists',
     'form_field.tpl',
     'form_field_hidden.tpl',
     'form_field_text.tpl',
@@ -11,7 +10,6 @@ define('Form.Field.Type', [
 ], function FormFieldTypeModule(
     _,
     Configuration,
-    FormFieldLists,
     formFieldTpl,
     formFieldHiddenTpl,
     formFieldTextTpl,
@@ -72,33 +70,29 @@ define('Form.Field.Type', [
             }
         },
 
-        getListOptions: function getListOptions() {
-            var states;
-            var modelField = this.model;
-            var modelForm = this.config.model;
-            var relatedAttribute = modelField.get('relatedAttribute');
-            var relatedAttributeValue = relatedAttribute ? modelForm.get(relatedAttribute) : null;
-            var lists = this.config.getLists();
-            var list = modelField.get('list');
-            this.showAsTextField = false;
+        getValidatedList: function getValidatedList(list, relatedAttributeValue, listsAvailable) {
             if (_.isFunction(list)) {
-                return list(relatedAttributeValue, this);
+                return this.getValidatedList(list(relatedAttributeValue, this));
             } else if (_.isObject(list)) {
                 return _.values(list);
             } else if (_.isArray(list)) {
                 return list;
-            } else if (_.isString(list)) {
-                if (list === 'countries') {
-                    return FormFieldLists.getCountries();
-                } else if (list === 'states') {
-                    states = FormFieldLists.getStates(relatedAttributeValue);
-                    this.showAsTextField = (states.length === 0);
-                    return states;
-                } else if (list in lists) {
-                    return lists[list];
-                }
+            } else if (_.isString(list) && (list in listsAvailable)) {
+                return this.getValidatedList(listsAvailable[list], relatedAttributeValue, listsAvailable);
             }
             return [];
+        },
+
+        getListOptions: function getListOptions() {
+            var modelField = this.model;
+            var modelForm = this.config.model;
+            var relatedAttribute = modelField.get('relatedAttribute');
+            var relatedAttributeValue = relatedAttribute ? modelForm.get(relatedAttribute) : null;
+            var listsAvailable = this.config.getLists();
+            var list = modelField.get('list');
+            var validatedList = this.getValidatedList(list, relatedAttributeValue, listsAvailable);
+            this.showAsTextField = (validatedList.length === 0);
+            return validatedList;
         },
 
         getContextAdditions: function getContextAdditions() {

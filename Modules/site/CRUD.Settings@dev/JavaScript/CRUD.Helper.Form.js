@@ -18,15 +18,19 @@ define('CRUD.Helper.Form', [
         },
         getListForForm: function getListForForm(name) {
             var list = this.getList(name);
-            var values;
             if (list) {
-                values = list.get('values');
-                return _(values).map(function mapListValues(value) {
-                    return {
-                        value: value.internalid,
-                        name: value.name
-                    };
-                });
+                if (_.isArray(list)) {
+                    return _(list).map(function mapListValues(value) {
+                        return _.extend({}, value, {
+                            value: value.internalid,
+                            name: value.name
+                        });
+                    });
+                } else if (_.isFunction(list)) {
+                    return list;
+                } else if (_.isObject(list)) {
+                    return _.values(list);
+                }
             }
             return [];
         },
