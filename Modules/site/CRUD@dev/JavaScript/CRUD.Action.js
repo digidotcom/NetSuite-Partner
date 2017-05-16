@@ -15,7 +15,7 @@ define('CRUD.Action', [
         executeRedirect: function executeRedirect(options) {
             var crudId = options.crudId;
             var parentId = options.parent;
-            var page = options.model.get('page');
+            var page = options.result.page;
             var internalid = options.id;
             var url = CrudHelper.getUrlForPage(page, crudId, internalid, parentId);
             var isSameUrl = (url === Backbone.history.fragment);
@@ -27,7 +27,7 @@ define('CRUD.Action', [
             }
         },
         executeActionResponse: function executeActionResponse(options) {
-            var type = options.model.get('type');
+            var type = options.result.type;
             switch (type) {
             case 'redirect':
                 this.executeRedirect(options);
@@ -35,33 +35,55 @@ define('CRUD.Action', [
             default:
             }
         },
+        getActionStaticPromise: function getActionSubmitPromise(crudId, parentId, data, actionInfo) {
+            var self = this;
+            var deferred = jQuery.Deferred();
+            var model = data.model;
+            var internalid = model && model.get('internalid');
+            deferred.resolve();
+            self.executeActionResponse({
+                crudId: crudId,
+                parent: parentId,
+                result: actionInfo.result,
+                id: internalid
+            });
+            return deferred.promise();
+        },
+        getActionRequestPromise: function getServicePromise(crudId, parentId, data, actionName) {
+            var self = this;
+            var deferred = jQuery.Deferred();
+            var internalid = data.model && data.model.get('internalid');
+            var actionModel = new CrudActionModel({
+                crudId: crudId
+            });
+            actionModel.fetch({
+                data: {
+                    id: crudId,
+                    internalid: internalid,
+                    action: actionName
+                }
+            }).done(function doneFn() {
+                deferred.resolveWith(actionModel, [actionModel]);
+                self.executeActionResponse({
+                    crudId: crudId,
+                    parent: parentId,
+                    result: actionModel.get('type'),
+                    id: internalid
+                });
+            }).fail(function failFn() {
+                deferred.rejectWith(actionModel, [actionModel]);
+            });
+            return deferred.promise();
+        },
         getPromiseCallback: function getPromiseCallback(crudId, parentId) {
             var self = this;
             return function callback(data) {
-                var deferred = jQuery.Deferred();
-                var action = data.action;
-                var internalid = data.model && data.model.get('internalid');
-                var model = new CrudActionModel({
-                    crudId: crudId
-                });
-                model.fetch({
-                    data: {
-                        id: crudId,
-                        internalid: internalid,
-                        action: action
-                    }
-                }).done(function doneFn() {
-                    deferred.resolveWith(model, [model]);
-                    self.executeActionResponse({
-                        crudId: crudId,
-                        parent: parentId,
-                        model: model,
-                        id: internalid
-                    });
-                }).fail(function failFn() {
-                    deferred.rejectWith(model, [model]);
-                });
-                return deferred.promise();
+                var actionName = data.action;
+                var actionInfo = CrudHelper.getActionInfo(crudId, data, actionName);
+                if (CrudHelper.isActionStatic(actionInfo)) {
+                    return self.getActionStaticPromise(crudId, parentId, data, actionInfo);
+                }
+                return self.getActionRequestPromise(crudId, parentId, data, actionName);
             };
         }
     };

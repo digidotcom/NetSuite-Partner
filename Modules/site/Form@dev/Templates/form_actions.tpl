@@ -1,9 +1,15 @@
 <section class="form-actions {{#if inHeader}}in-header{{/if}}">
 {{#if showContent}}
     {{#each customActions}}
+        {{#if isSubmit}}
+        <button type="submit" class="form-actions-custom" data-action="{{name}}">
+            {{translate label}}
+        </button>
+        {{else}}
         <a class="form-actions-custom" data-action="{{name}}">
             {{translate label}}
         </a>
+        {{/if}}
     {{/each}}
     {{#if showEditLink}}
         <a href="{{editUrl}}" class="form-actions-edit">
