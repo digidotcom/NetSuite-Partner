@@ -533,17 +533,6 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                     fieldName: 'custrecord_engr_contact_phone'
                 }
             },
-            customerLocation: {
-                form: {
-                    group: 'customer',
-                    type: 'text',
-                    label: 'Customer Location',
-                    required: false
-                },
-                record: {
-                    fieldName: 'custrecord_customer_location'
-                }
-            },
             webAddress: {
                 form: {
                     group: 'customer',
