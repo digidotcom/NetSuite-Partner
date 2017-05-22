@@ -83,6 +83,8 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
         },
         listColumns: [
             'number',
+            'projectName',
+            'productInterest',
             'status',
             'approvalDate',
             'expiryDate',
