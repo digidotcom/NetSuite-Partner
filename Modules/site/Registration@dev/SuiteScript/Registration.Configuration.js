@@ -164,7 +164,6 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                 'engineerTechnicalContactName',
                 'engineerTechnicalContactPhone',
                 'channelManager',
-                'customerLocation',
                 'webAddress',
                 'learnAboutDeal',
                 'preferredDistributor',
@@ -200,7 +199,6 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                 'engineerTechnicalContactEmail',
                 'engineerTechnicalContactName',
                 'engineerTechnicalContactPhone',
-                'customerLocation',
                 'webAddress',
                 'learnAboutDeal',
                 'preferredDistributor',
@@ -733,7 +731,8 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
             productInterest: {
                 form: {
                     group: 'project',
-                    type: 'text',
+                    type: 'list',
+                    list: 'product_interest',
                     label: 'Product Interest',
                     required: false
                 },
