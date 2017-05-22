@@ -209,10 +209,10 @@ define('CRUD.Utils', [
                     }
                 }
             });
-            if (config.loggedInFilterField) {
-                data[config.loggedInFilterField] = nlapiGetUser(); // eslint-disable-line
+            if (config.loggedIn && config.loggedIn.customer) {
+                data[config.loggedIn.customer] = nlapiGetUser(); // eslint-disable-line
                 _(config.fieldsets).each(function eachFieldset(fieldset) {
-                    fieldset.push(config.loggedInFilterField);
+                    fieldset.push(config.loggedIn.customer);
                 });
             }
             return data;

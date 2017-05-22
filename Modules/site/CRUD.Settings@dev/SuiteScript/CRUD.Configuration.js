@@ -27,7 +27,7 @@ define('CRUD.Configuration', [
             record: [
                 'listHeaderDisabled',
                 'record',
-                'loggedInFilterField',
+                'loggedIn',
                 'fieldsets',
                 'filters',
                 'filtersDynamic',

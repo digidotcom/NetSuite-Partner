@@ -99,7 +99,10 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
             { id: 'project', name: 'Project Details' }
         ],
         record: 'customrecord_registrationprocess',
-        loggedInFilterField: 'customer',
+        loggedIn: {
+            customer: 'customer',
+            contact: 'contact'
+        },
         filters: {
             inactive: { operator: 'is', value1: 'F' }
         },
@@ -214,6 +217,12 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
             customer: {
                 record: {
                     fieldName: 'custrecord_partner_customer',
+                    type: 'object'
+                }
+            },
+            contact: {
+                record: {
+                    fieldName: 'custrecord_partner_contact',
                     type: 'object'
                 }
             },
