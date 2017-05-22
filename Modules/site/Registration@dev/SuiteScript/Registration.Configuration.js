@@ -134,6 +134,7 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                 'buyer',
                 'fieldSalesRep',
                 'registrationProgram',
+                'externalReferenceNumber',
                 'companyName',
                 'companyMainPhone',
                 'companyAddress',
@@ -169,6 +170,7 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                 'buyer',
                 'fieldSalesRep',
                 'registrationProgram',
+                'externalReferenceNumber',
                 'companyName',
                 'companyMainPhone',
                 'companyAddress',
@@ -333,6 +335,17 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                 record: {
                     fieldName: 'custrecord_reg_program',
                     type: 'object'
+                }
+            },
+            externalReferenceNumber: {
+                form: {
+                    group: 'details',
+                    type: 'text',
+                    label: 'External Reference #',
+                    required: false
+                },
+                record: {
+                    fieldName: 'custrecord_external_reference_numb'
                 }
             },
 
