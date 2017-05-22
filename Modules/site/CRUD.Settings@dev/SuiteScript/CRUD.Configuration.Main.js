@@ -132,6 +132,9 @@ define('CRUD.Configuration.Main', [
                             if (fieldInfo.form) {
                                 field = _.extend({}, fieldInfo.form);
                                 field.attribute = fieldId;
+                                if (_.isFunction(field.defaultValue)) {
+                                    field.defaultValue = field.defaultValue();
+                                }
                                 configEntry[key].push(field);
                             }
                         });

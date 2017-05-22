@@ -24,6 +24,20 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
         record.setFieldText(fieldInfo.fieldName, value);
     }
 
+    function partnerNameDefaultValue() {
+        var customerRecord = nlapiLoadRecord('customer', nlapiGetUser());
+        var texts = customerRecord.getFieldTexts('otherrelationships');
+        var values = customerRecord.getFieldValues('otherrelationships');
+        var indexOfPartner;
+        if (texts && texts.length && values && values.length) {
+            indexOfPartner = texts.indexOf('Partner');
+            if (indexOfPartner >= 0) {
+                return values[indexOfPartner];
+            }
+        }
+        return null;
+    }
+
     return {
         id: 'registration',
         type: 'crud',
@@ -369,6 +383,7 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                     group: 'partner',
                     type: 'lookup',
                     label: 'Partner Name',
+                    defaultValue: partnerNameDefaultValue,
                     required: true
                 },
                 record: {
