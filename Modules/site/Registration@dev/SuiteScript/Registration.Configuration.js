@@ -555,17 +555,6 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                     fieldName: 'custrecord_country_zipcode'
                 }
             },
-            engineerTechnicalContactEmail: {
-                form: {
-                    group: 'customer',
-                    type: 'email',
-                    label: 'Engineer/Technical Contact Email',
-                    required: true
-                },
-                record: {
-                    fieldName: 'custrecord_engr_contact_email'
-                }
-            },
             engineerTechnicalContactName: {
                 form: {
                     group: 'customer',
@@ -575,6 +564,17 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                 },
                 record: {
                     fieldName: 'custrecord_engr_contact_name'
+                }
+            },
+            engineerTechnicalContactEmail: {
+                form: {
+                    group: 'customer',
+                    type: 'email',
+                    label: 'Engineer/Technical Contact Email',
+                    required: true
+                },
+                record: {
+                    fieldName: 'custrecord_engr_contact_email'
                 }
             },
             engineerTechnicalContactPhone: {
