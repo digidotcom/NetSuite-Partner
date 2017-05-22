@@ -21,6 +21,11 @@
             {{translate 'View All'}}
         </a>
     {{/if}}
+    {{#if showAddAndNewButton}}
+        <button type="submit" class="form-actions-submit-secondary" data-add-and-new>
+            {{translate 'Add & New'}}
+        </button>
+    {{/if}}
     {{#if showAddButton}}
         <button type="submit" class="form-actions-submit">
             {{translate 'Add'}}

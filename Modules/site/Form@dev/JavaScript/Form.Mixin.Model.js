@@ -86,6 +86,12 @@ define('Form.Mixin.Model', [
                         }
                     }
                 });
+            },
+            setAddAndNew: function setAddAndNew(value) {
+                this.addAndNew = value;
+            },
+            isAddAndNew: function isAddAndNew() {
+                return !!this.addAndNew;
             }
         }
     });
