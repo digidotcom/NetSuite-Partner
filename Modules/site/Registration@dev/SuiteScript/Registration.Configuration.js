@@ -134,6 +134,7 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                 'buyer',
                 'fieldSalesRep',
                 'registrationProgram',
+                'estimatedValue',
                 'externalReferenceNumber',
                 'companyName',
                 'companyMainPhone',
@@ -170,6 +171,7 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                 'buyer',
                 'fieldSalesRep',
                 'registrationProgram',
+                'estimatedValue',
                 'externalReferenceNumber',
                 'companyName',
                 'companyMainPhone',
@@ -335,6 +337,17 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                 record: {
                     fieldName: 'custrecord_reg_program',
                     type: 'object'
+                }
+            },
+            estimatedValue: {
+                form: {
+                    group: 'details',
+                    type: 'currency',
+                    label: 'Estimated Value',
+                    required: false
+                },
+                record: {
+                    fieldName: 'custrecord_reg_estimated_value'
                 }
             },
             externalReferenceNumber: {
