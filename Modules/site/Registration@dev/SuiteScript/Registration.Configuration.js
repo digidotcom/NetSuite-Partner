@@ -154,7 +154,8 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                 'salesRep',
                 'prototypeEvalDate',
                 'projectType',
-                'projectStatus'
+                'projectStatus',
+                'productInterest'
             ],
             save: [
                 'partnerName',
@@ -186,7 +187,8 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                 'summaryOfApplication',
                 'prototypeEvalDate',
                 'projectType',
-                'projectStatus'
+                'projectStatus',
+                'productInterest'
             ]
         },
         fields: {
@@ -684,6 +686,17 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                 record: {
                     fieldName: 'custrecord_reg_project_status',
                     type: 'object'
+                }
+            },
+            productInterest: {
+                form: {
+                    group: 'project',
+                    type: 'text',
+                    label: 'Product Interest',
+                    required: false
+                },
+                record: {
+                    fieldName: 'custrecord_reg_product_interest'
                 }
             }
         }
