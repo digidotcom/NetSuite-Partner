@@ -598,17 +598,6 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
 
             /* ******* project details ******* */
 
-            additionalInformation: {
-                form: {
-                    group: 'project',
-                    type: 'longtext',
-                    label: 'Additional Information',
-                    required: false
-                },
-                record: {
-                    fieldName: 'custrecord_additional_information'
-                }
-            },
             learnAboutDeal: {
                 form: {
                     group: 'project',
@@ -699,6 +688,17 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                 },
                 record: {
                     fieldName: 'custrecord_reg_product_interest'
+                }
+            },
+            additionalInformation: {
+                form: {
+                    group: 'project',
+                    type: 'longtext',
+                    label: 'Additional Information',
+                    required: false
+                },
+                record: {
+                    fieldName: 'custrecord_additional_information'
                 }
             }
         }
