@@ -35,7 +35,7 @@ define('CRUD.Helper.Record', [
         },
         isInlineEdit: function isInlineEdit(crudId) {
             var config = CrudConfiguration.get(crudId);
-            return config.frontend && !!config.frontend.inlineEdit;
+            return false && config.frontend && !!config.frontend.inlineEdit;
         },
         allowNavigateToView: function allowNavigateToView(crudId, parentModel) {
             var permissions = this.getPermissions(crudId, parentModel);

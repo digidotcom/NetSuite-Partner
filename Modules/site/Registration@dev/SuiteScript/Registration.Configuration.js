@@ -373,6 +373,17 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                     fieldName: 'custrecord_external_reference_numb'
                 }
             },
+            rejectReason: {
+                form: {
+                    group: 'details',
+                    type: 'longtext',
+                    label: 'Reject Reason',
+                    inline: true
+                },
+                record: {
+                    fieldName: 'custrecord_rp_reject_reason'
+                }
+            },
 
             /* ******* partner details ******* */
 
