@@ -327,6 +327,7 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                     type: 'list',
                     list: 'registration_program',
                     label: 'Registration Program',
+                    defaultValue: 1,
                     required: true
                 },
                 record: {
