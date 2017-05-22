@@ -69,7 +69,9 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
             { id: 'quote', name: 'Quote Information' }
         ],
         record: 'customrecord_partnerquoterequest',
-        loggedInFilterField: 'customer',
+        loggedIn: {
+            customer: 'customer'
+        },
         filters: {
             inactive: { operator: 'is', value1: 'F' }
         },

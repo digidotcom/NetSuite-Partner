@@ -53,9 +53,9 @@ define('CRUD.Configuration.Main', [
                         result.filters.push(filterData);
                     }
                 });
-                if (config.loggedInFilterField) {
+                if (config.loggedIn && config.loggedIn.customer) {
                     result.filters.push({
-                        fieldName: self.getFieldNameForField(self.getFieldRecord(config, config.loggedInFilterField)),
+                        fieldName: self.getFieldNameForField(self.getFieldRecord(config, config.loggedIn.customer)),
                         operator: 'is',
                         value1: nlapiGetUser()
                     });

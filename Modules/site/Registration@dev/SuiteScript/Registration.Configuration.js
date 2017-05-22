@@ -83,6 +83,8 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
         },
         listColumns: [
             'number',
+            'projectName',
+            'productInterest',
             'status',
             'approvalDate',
             'expiryDate',
@@ -97,7 +99,10 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
             { id: 'project', name: 'Project Details' }
         ],
         record: 'customrecord_registrationprocess',
-        loggedInFilterField: 'customer',
+        loggedIn: {
+            customer: 'customer',
+            contact: 'contact'
+        },
         filters: {
             inactive: { operator: 'is', value1: 'F' }
         },
@@ -154,7 +159,8 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                 'salesRep',
                 'prototypeEvalDate',
                 'projectType',
-                'projectStatus'
+                'projectStatus',
+                'productInterest'
             ],
             save: [
                 'partnerName',
@@ -186,7 +192,8 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                 'summaryOfApplication',
                 'prototypeEvalDate',
                 'projectType',
-                'projectStatus'
+                'projectStatus',
+                'productInterest'
             ]
         },
         fields: {
@@ -210,6 +217,12 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
             customer: {
                 record: {
                     fieldName: 'custrecord_partner_customer',
+                    type: 'object'
+                }
+            },
+            contact: {
+                record: {
+                    fieldName: 'custrecord_partner_contact',
                     type: 'object'
                 }
             },
@@ -594,17 +607,6 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
 
             /* ******* project details ******* */
 
-            additionalInformation: {
-                form: {
-                    group: 'project',
-                    type: 'longtext',
-                    label: 'Additional Information',
-                    required: false
-                },
-                record: {
-                    fieldName: 'custrecord_additional_information'
-                }
-            },
             learnAboutDeal: {
                 form: {
                     group: 'project',
@@ -684,6 +686,28 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                 record: {
                     fieldName: 'custrecord_reg_project_status',
                     type: 'object'
+                }
+            },
+            productInterest: {
+                form: {
+                    group: 'project',
+                    type: 'text',
+                    label: 'Product Interest',
+                    required: false
+                },
+                record: {
+                    fieldName: 'custrecord_reg_product_interest'
+                }
+            },
+            additionalInformation: {
+                form: {
+                    group: 'project',
+                    type: 'longtext',
+                    label: 'Additional Information',
+                    required: false
+                },
+                record: {
+                    fieldName: 'custrecord_additional_information'
                 }
             }
         }

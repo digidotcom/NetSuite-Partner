@@ -1,8 +1,10 @@
 define('CRUD.Utils', [
     'underscore',
+    'Models.Init',
     'CRUD.Configuration'
 ], function CrudUtils(
     _,
+    ModelsInit,
     CrudConfiguration
 ) {
     'use strict';
@@ -195,6 +197,50 @@ define('CRUD.Utils', [
             return result;
         },
 
+        getLoggedInCustomer: function getLoggedInCustomer() {
+            return nlapiGetUser();
+        },
+        getLoggedInEmail: function getLoggedInCustomer() {
+            var fields = ModelsInit.customer.getFieldValues(['email']);
+            return fields && fields.email;
+        },
+        getLoggedInContact: function getLoggedInContact() {
+            var customerId = this.getLoggedInCustomer();
+            var customerEmail = this.getLoggedInEmail();
+            var contact = null;
+            var customer;
+            var found;
+            var count;
+            var index;
+            var email;
+            var hasAccess;
+            if (customerId && customerEmail) {
+                customer = nlapiLoadRecord('customer', customerId);
+                if (customer) {
+                    found = false;
+                    count = customer.getLineItemCount('contactroles');
+                    for (index = 1; !found && (index <= count); index++) {
+                        email = customer.getLineItemValue('contactroles', 'email', index);
+                        hasAccess = customer.getLineItemValue('contactroles', 'giveaccess', index);
+                        if (hasAccess && email === customerEmail) {
+                            found = true;
+                            contact = customer.getLineItemValue('contactroles', 'contact', index);
+                        }
+                    }
+                }
+            }
+            return contact;
+        },
+        parseCrudLoggedInData: function parseCrudLoggedInData(config, data, key, value) {
+            var field = config.loggedIn[key];
+            if (field && value) {
+                data[field] = value;
+                _(config.fieldsets).each(function eachFieldset(fieldset) {
+                    fieldset.push(field);
+                });
+            }
+        },
+
         parseCrudData: function parseCrudData(config, dataArg) {
             var data = {};
             _(dataArg).each(function eachDataArg(value, key) {
@@ -209,13 +255,18 @@ define('CRUD.Utils', [
                     }
                 }
             });
-            if (config.loggedInFilterField) {
-                data[config.loggedInFilterField] = nlapiGetUser(); // eslint-disable-line
-                _(config.fieldsets).each(function eachFieldset(fieldset) {
-                    fieldset.push(config.loggedInFilterField);
-                });
+            return data;
+        },
+        parseCrudCreateData: function parseCrudCreateData(config, dataArg) {
+            var data = this.parseCrudData(config, dataArg);
+            if (config.loggedIn) {
+                this.parseCrudLoggedInData(config, data, 'customer', this.getLoggedInCustomer());
+                this.parseCrudLoggedInData(config, data, 'contact', this.getLoggedInContact(config));
             }
             return data;
+        },
+        parseCrudUpdateData: function parseCrudUpdateData(config, dataArg) {
+            return this.parseCrudData(config, dataArg);
         }
     };
 });
