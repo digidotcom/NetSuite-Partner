@@ -24,6 +24,20 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
         record.setFieldText(fieldInfo.fieldName, value);
     }
 
+    function partnerNameDefaultValue() {
+        var customerRecord = nlapiLoadRecord('customer', nlapiGetUser());
+        var texts = customerRecord.getFieldTexts('otherrelationships');
+        var values = customerRecord.getFieldValues('otherrelationships');
+        var indexOfPartner;
+        if (texts && texts.length && values && values.length) {
+            indexOfPartner = texts.indexOf('Partner');
+            if (indexOfPartner >= 0) {
+                return values[indexOfPartner];
+            }
+        }
+        return null;
+    }
+
     return {
         id: 'registration',
         type: 'crud',
@@ -134,6 +148,8 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                 'buyer',
                 'fieldSalesRep',
                 'registrationProgram',
+                'estimatedValue',
+                'externalReferenceNumber',
                 'companyName',
                 'companyMainPhone',
                 'companyAddress',
@@ -148,7 +164,6 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                 'engineerTechnicalContactName',
                 'engineerTechnicalContactPhone',
                 'channelManager',
-                'customerLocation',
                 'webAddress',
                 'learnAboutDeal',
                 'preferredDistributor',
@@ -169,6 +184,8 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                 'buyer',
                 'fieldSalesRep',
                 'registrationProgram',
+                'estimatedValue',
+                'externalReferenceNumber',
                 'companyName',
                 'companyMainPhone',
                 'companyAddress',
@@ -182,7 +199,6 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                 'engineerTechnicalContactEmail',
                 'engineerTechnicalContactName',
                 'engineerTechnicalContactPhone',
-                'customerLocation',
                 'webAddress',
                 'learnAboutDeal',
                 'preferredDistributor',
@@ -327,11 +343,45 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                     type: 'list',
                     list: 'registration_program',
                     label: 'Registration Program',
+                    defaultValue: 1,
                     required: true
                 },
                 record: {
                     fieldName: 'custrecord_reg_program',
                     type: 'object'
+                }
+            },
+            estimatedValue: {
+                form: {
+                    group: 'details',
+                    type: 'currency',
+                    label: 'Estimated Value',
+                    required: false
+                },
+                record: {
+                    fieldName: 'custrecord_reg_estimated_value'
+                }
+            },
+            externalReferenceNumber: {
+                form: {
+                    group: 'details',
+                    type: 'text',
+                    label: 'External Reference #',
+                    required: false
+                },
+                record: {
+                    fieldName: 'custrecord_external_reference_numb'
+                }
+            },
+            rejectReason: {
+                form: {
+                    group: 'details',
+                    type: 'longtext',
+                    label: 'Reject Reason',
+                    inline: true
+                },
+                record: {
+                    fieldName: 'custrecord_rp_reject_reason'
                 }
             },
 
@@ -342,6 +392,7 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                     group: 'partner',
                     type: 'lookup',
                     label: 'Partner Name',
+                    defaultValue: partnerNameDefaultValue,
                     required: true
                 },
                 record: {
@@ -513,17 +564,6 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                     fieldName: 'custrecord_country_zipcode'
                 }
             },
-            engineerTechnicalContactEmail: {
-                form: {
-                    group: 'customer',
-                    type: 'email',
-                    label: 'Engineer/Technical Contact Email',
-                    required: true
-                },
-                record: {
-                    fieldName: 'custrecord_engr_contact_email'
-                }
-            },
             engineerTechnicalContactName: {
                 form: {
                     group: 'customer',
@@ -533,6 +573,17 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                 },
                 record: {
                     fieldName: 'custrecord_engr_contact_name'
+                }
+            },
+            engineerTechnicalContactEmail: {
+                form: {
+                    group: 'customer',
+                    type: 'email',
+                    label: 'Engineer/Technical Contact Email',
+                    required: true
+                },
+                record: {
+                    fieldName: 'custrecord_engr_contact_email'
                 }
             },
             engineerTechnicalContactPhone: {
@@ -691,7 +742,8 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
             productInterest: {
                 form: {
                     group: 'project',
-                    type: 'text',
+                    type: 'list',
+                    list: 'product_interest',
                     label: 'Product Interest',
                     required: false
                 },

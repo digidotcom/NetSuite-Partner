@@ -19,6 +19,7 @@ define('Form.Mixin.Model', [
                 this.parseMixinOptions();
                 this.mapListRecordFields();
                 this.defineValidation();
+                this.setDefaultValues();
             },
             parseMixinOptions: function parseMixinOptions() {
                 _(this).extend(this.mixinOptions);
@@ -84,6 +85,17 @@ define('Form.Mixin.Model', [
                         if (type === 'lookup') {
                             self.validation[attribute + suffix] = _(self.validation[attribute + suffix] || {}).extend(validations);
                         }
+                    }
+                });
+            },
+            setDefaultValues: function setDefaultValues() {
+                var self = this;
+                var data = self.formConfig.getDataJSON();
+                _(data.fields).each(function eachField(field) {
+                    var attribute = field.attribute;
+                    var defaultValue = field.defaultValue;
+                    if (attribute && defaultValue) {
+                        self.set(attribute, defaultValue + '');
                     }
                 });
             },
