@@ -18,6 +18,7 @@ define('Form.Actions.View', [
         template: formActionsTpl,
 
         events: {
+            'click [data-add-and-new]': 'clickAddAndNew',
             'click [data-action]': 'clickCustomAction'
         },
 
@@ -25,6 +26,9 @@ define('Form.Actions.View', [
             this.config = options.config;
         },
 
+        clickAddAndNew: function clickAddAndNew() {
+            this.config.model.setAddAndNew(true);
+        },
         clickCustomAction: function clickCustomAction(e) {
             var action = jQuery(e.currentTarget).data('action');
             if (action) {
@@ -51,6 +55,7 @@ define('Form.Actions.View', [
             var canCreate = config.canCreate();
             var canView = config.canView();
             var canEdit = config.canEdit();
+            var showAddButton = (isNew && canCreate);
             return {
                 showContent: config.canAccess(),
                 inHeader: this.options.inHeader,
@@ -61,7 +66,8 @@ define('Form.Actions.View', [
                 customActions: info.customActions,
                 showEditLink: (isView && canEdit),
                 showViewAllLink: (isView && canList),
-                showAddButton: (isNew && canCreate),
+                showAddButton: showAddButton,
+                showAddAndNewButton: showAddButton,
                 showSaveButton: (isEdit && canEdit),
                 showCancelLink: (isNew && canList) || (isEdit && canView),
                 cancelUrl: isNew || isView ? info.goBackUrl : info.viewUrl,

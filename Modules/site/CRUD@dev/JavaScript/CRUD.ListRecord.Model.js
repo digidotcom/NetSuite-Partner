@@ -7,7 +7,7 @@ define('CRUD.ListRecord.Model', [
 ) {
     'use strict';
 
-    return Backbone.Model.extend({
+    return Backbone.CachedModel.extend({
 
         initialize: function initialize(attributes) {
             this.crudId = attributes.crudId;

@@ -17,6 +17,7 @@ define('Form.Action', [
             var getActionPromise = this.config.getData().actionPromiseCallback;
             getActionPromise({
                 action: this.action,
+                page: this.config.getAction(),
                 model: this.config.model
             });
         }

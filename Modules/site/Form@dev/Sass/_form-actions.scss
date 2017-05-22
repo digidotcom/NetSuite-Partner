@@ -22,6 +22,11 @@
   @extend %form-actions-button;
 }
 
+.form-actions-submit-secondary {
+  @extend .button-secondary;
+  @extend %form-actions-button;
+}
+
 .form-actions-submit {
   @extend .button-primary;
   @extend %form-actions-button;

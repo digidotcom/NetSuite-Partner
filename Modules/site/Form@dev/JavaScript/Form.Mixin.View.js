@@ -150,22 +150,37 @@ define('Form.Mixin.View', [
 
             saveFormUnlessView: function saveFormUnlessView(e) {
                 if (!this.isView()) {
+                    this.isSavingFormView = true;
                     this.saveForm(e);
                 }
             },
             bindSubmitCallbacks: function bindSubmitCallbacks() {
                 var config = this.formConfig;
-                this.model.on('saveCompleted', function onModelSaveCompleted() {
+                var view = this;
+                var model = this.model;
+                model.on('validate', function onModelValidate(isValid) {
+                    if (view.isSavingFormView) {
+                        if (!isValid) {
+                            model.setAddAndNew(false);
+                        }
+                    }
+                });
+                model.on('saveCompleted', function onModelSaveCompleted() {
                     var info = config.getInfo();
                     if (config.isEdit()) {
                         if (config.canView()) {
                             Backbone.history.navigate(info.viewUrl, { trigger: true });
                         }
                     } else if (config.isNew()) {
-                        if (config.canList()) {
+                        if (model.isAddAndNew()) {
+                            model.setAddAndNew(false);
+                            Backbone.history.navigate('/', { trigger: false }); // hack to refresh page
+                            Backbone.history.navigate(info.newUrl, { trigger: true, replace: true });
+                        } else if (config.canList()) {
                             Backbone.history.navigate(info.goBackUrl, { trigger: true });
                         }
                     }
+                    this.isSavingFormView = false;
                 });
             },
 

@@ -9,7 +9,7 @@ define('CRUD.ListRecord.Collection', [
 ) {
     'use strict';
 
-    return Backbone.Collection.extend({
+    return Backbone.CachedCollection.extend({
 
         model: CrudListRecordModel,
 

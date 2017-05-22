@@ -61,6 +61,17 @@ define('CRUD.Helper.Action', [
                 return self.areActionConditionsMet(action, data);
             });
         },
+        getActionInfo: function getActionInfo(crudId, data, actionName) {
+            var actions = this.getFilteredActions(crudId, data);
+            return _(actions).findWhere({ name: actionName });
+        },
+        isActionStatic: function isActionSubmit(actionInfo) {
+            return actionInfo.execute === 'static';
+        },
+        isActionNameStatic: function isActionNameSubmit(crudId, data, actionName) {
+            var action = this.getActionInfo(crudId, data, actionName);
+            return action && this.isActionSubmit(action);
+        },
         getActionsForForm: function getActionsForForm(crudId, data) {
             var actions = this.getFilteredActions(crudId, data);
             return _(actions).map(function mapActions(action) {
