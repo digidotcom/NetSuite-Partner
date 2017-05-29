@@ -1,0 +1,13 @@
+{
+    "gulp": {
+        "images": [
+            "Images/**/*"
+        ],
+        "sass": [
+            "Sass/**/*.scss"
+        ]
+    },
+    "overrides": {
+        "suitecommerce/Footer@1.2.0/Sass/_footer.scss": "Sass/_footer.scss"
+    }
+}

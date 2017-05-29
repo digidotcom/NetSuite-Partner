@@ -11,6 +11,7 @@
         "site/CRUD.Settings": "dev",
         "site/CRUD": "dev",
         "site/EFCore.CRUD": "dev",
+        "site/Footer.Site": "dev",
         "site/Form": "dev",
         "site/GlobalImages.Site": "dev",
         "site/Header.CRUD": "dev",
@@ -72,6 +73,7 @@
                     "name": "Shopping",
                     "dependencies": [
                         {"prepend": "BaseSassStyles.Site"},
+                        "Footer.Site",
                         "Header.CRUD",
                         "Header.Site",
                         "ShoppingApplication.Site"
@@ -82,6 +84,7 @@
                     "dependencies": [
                         {"prepend": "BaseSassStyles.Site"},
                         "CRUD",
+                        "Footer.Site",
                         "Header.CRUD",
                         "Header.Site",
                         "Form",
@@ -95,6 +98,7 @@
                     "dependencies": [
                         {"prepend": "BaseSassStyles.Site"},
                         "CheckoutApplication.Site",
+                        "Footer.Site",
                         "Header.CRUD",
                         "Header.Site"
                     ]
