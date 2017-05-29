@@ -6,6 +6,7 @@
     "modules": {
         "site/Backbone.View.Multiple": "dev",
         "site/BaseSassStyles.Site": "dev",
+        "site/CheckoutApplication.Site": "dev",
         "site/Configuration.Site": "dev",
         "site/CRUD.Settings": "dev",
         "site/CRUD": "dev",
@@ -19,10 +20,12 @@
         "site/Lists": "dev",
         "site/MenuTree.Site": "dev",
         "site/Mixin": "dev",
+        "site/MyAccountApplication.Site": "dev",
         "site/PartnerQuote": "dev",
         "site/Registration": "dev",
         "site/SafariHtmlClass": "dev",
-        "site/ServiceController.Validations.RequireSecureFix": "dev"
+        "site/ServiceController.Validations.RequireSecureFix": "dev",
+        "site/ShoppingApplication.Site": "dev"
     },
     "tasksConfig": {
         "javascript": [
@@ -70,13 +73,8 @@
                     "dependencies": [
                         {"prepend": "BaseSassStyles.Site"},
                         "Header.CRUD",
-                        {
-                            "module": "Header.Site",
-                            "exclude": [
-                                "header-site-myaccount",
-                                "header-site-checkout"
-                            ]
-                        }
+                        "Header.Site",
+                        "ShoppingApplication.Site"
                     ]
                 },
                 {
@@ -85,30 +83,20 @@
                         {"prepend": "BaseSassStyles.Site"},
                         "CRUD",
                         "Header.CRUD",
-                        {
-                            "module": "Header.Site",
-                            "exclude": [
-                                "header-site-shopping",
-                                "header-site-checkout"
-                            ]
-                        },
+                        "Header.Site",
                         "Form",
                         "ListHeader.Site",
-                        "MenuTree.Site"
+                        "MenuTree.Site",
+                        "MyAccountApplication.Site"
                     ]
                 },
                 {
                     "name": "Checkout",
                     "dependencies": [
                         {"prepend": "BaseSassStyles.Site"},
+                        "CheckoutApplication.Site",
                         "Header.CRUD",
-                        {
-                            "module": "Header.Site",
-                            "exclude": [
-                                "header-site-shopping",
-                                "header-site-myaccount"
-                            ]
-                        }
+                        "Header.Site"
                     ]
                 }
             ]
