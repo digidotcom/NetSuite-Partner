@@ -9,8 +9,8 @@ $sc-color-theme:#5b7f8c;
 $sc-color-theme-light:#cfd5d3;
 $sc-color-theme-background:#e4eff5;
 $sc-color-theme-background-light: #f5f5fb;
-$sc-color-theme-background-lightest: lighten($sc-color-theme-background, 6);
-$sc-color-theme-border: #cfd5d3;
+$sc-color-theme-background-lightest: #fbfbfb;
+$sc-color-theme-border: $sc-color-theme-light;
 $sc-color-background-list:#f1f8fa;
 
 $sc-color-primary: #00b7ff;
@@ -40,7 +40,7 @@ $sc-color-link: #2f9ac3;
 $sc-color-link-hover: lighten($sc-color-link, 10);
 
 $sc-color-dark-copy: #1f2223;
-$sc-color-copy: #404040;
+$sc-color-copy: #646466;
 $sc-color-light-copy: lighten($sc-color-copy, 22);
 
 //TODO: FIND OUT

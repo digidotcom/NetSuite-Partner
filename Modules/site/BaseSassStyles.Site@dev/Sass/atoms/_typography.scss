@@ -64,7 +64,7 @@ body{
 %h5 {
     font-size:$sc-h5-font-size;
     font-weight:$sc-font-weight-bold;
-    color:$sc-color-theme;
+    color:$sc-color-copy;
     text-transform: capitalize;
 }
 
@@ -144,7 +144,7 @@ b {
 
 .medium-title-navigable{
     font-weight:$sc-font-weight-semibold;
-    color:$sc-color-theme;
+    color:$sc-color-headings;
     font-size:16px;
 }
 
