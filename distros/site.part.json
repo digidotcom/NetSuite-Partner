@@ -5,12 +5,15 @@
     "endpoint": true,
     "modules": {
         "site/Backbone.View.Multiple": "dev",
+        "site/BaseSassStyles.Site": "dev",
         "site/Configuration.Site": "dev",
         "site/CRUD.Settings": "dev",
         "site/CRUD": "dev",
         "site/EFCore.CRUD": "dev",
         "site/Form": "dev",
+        "site/GlobalImages.Site": "dev",
         "site/Header.CRUD": "dev",
+        "site/Header.Site": "dev",
         "site/Heartbeat": "dev",
         "site/Lists": "dev",
         "site/Mixin": "dev",
@@ -63,21 +66,45 @@
                 {
                     "name": "Shopping",
                     "dependencies": [
-                        "Header.CRUD"
+                        {"prepend": "BaseSassStyles.Site"},
+                        "Header.CRUD",
+                        {
+                            "module": "Header.Site",
+                            "exclude": [
+                                "header-site-myaccount",
+                                "header-site-checkout"
+                            ]
+                        }
                     ]
                 },
                 {
                     "name": "MyAccount",
                     "dependencies": [
+                        {"prepend": "BaseSassStyles.Site"},
                         "CRUD",
                         "Header.CRUD",
+                        {
+                            "module": "Header.Site",
+                            "exclude": [
+                                "header-site-shopping",
+                                "header-site-checkout"
+                            ]
+                        },
                         "Form"
                     ]
                 },
                 {
                     "name": "Checkout",
                     "dependencies": [
-                        "Header.CRUD"
+                        {"prepend": "BaseSassStyles.Site"},
+                        "Header.CRUD",
+                        {
+                            "module": "Header.Site",
+                            "exclude": [
+                                "header-site-shopping",
+                                "header-site-myaccount"
+                            ]
+                        }
                     ]
                 }
             ]

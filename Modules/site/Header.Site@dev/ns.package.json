@@ -1,0 +1,13 @@
+{
+    "gulp": {
+        "images": [
+            "Images/**/*"
+        ],
+        "sass": [
+            "Sass/**/*.scss"
+        ]
+    },
+    "overrides": {
+        "suitecommerce/Header@1.2.0/Images/SCA_Logo.png": "Images/logo.png"
+    }
+}
