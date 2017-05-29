@@ -14,7 +14,7 @@ $sc-color-theme-border: $sc-color-theme-light;
 $sc-color-background-list:#f1f8fa;
 
 $sc-color-primary: #00b7ff;
-$sc-color-secondary: #15607B;
+$sc-color-secondary: #0074a2;
 $sc-color-tertiary: #ffffff;
 
 $sc-color-success: #4a7f35;
@@ -36,8 +36,8 @@ $sc-color-secondary-active: darken($sc-color-secondary, 6);
 $sc-color-tertiary-hover: $sc-color-secondary;
 $sc-color-tertiary-active: darken($sc-color-secondary, 6);
 
-$sc-color-link: #2f9ac3;
-$sc-color-link-hover: lighten($sc-color-link, 10);
+$sc-color-link: #0074a2;
+$sc-color-link-hover: #00b7ff;
 
 $sc-color-dark-copy: #1f2223;
 $sc-color-copy: #646466;
