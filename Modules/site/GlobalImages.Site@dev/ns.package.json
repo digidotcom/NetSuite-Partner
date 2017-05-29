@@ -1,0 +1,10 @@
+{
+    "gulp": {
+        "images": [
+            "Images/**/*"
+        ]
+    },
+    "overrides": {
+        "suitecommerce/GlobalImages@1.0.1/Images/favicon.ico": "Images/favicon.ico"
+    }
+}

@@ -112,7 +112,10 @@
   height: 100%;
 }
 .crud-list-new-button {
-  @extend .list-header-button;
+  @extend .button-medium;
+  @extend .button-primary;
+  width: auto;
+  float: right;
   height: 100%;
 }
 

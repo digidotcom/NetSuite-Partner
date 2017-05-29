@@ -1,0 +1,13 @@
+{
+    "gulp": {
+        "images": [
+            "Images/**/*"
+        ],
+        "sass": [
+            "Sass/**/*.scss"
+        ]
+    },
+    "overrides": {
+        "suitecommerce/MyAccountApplication@3.0.0/Sass/_myaccount-layout.scss": "Sass/_myaccount-layout.scss"
+    }
+}
