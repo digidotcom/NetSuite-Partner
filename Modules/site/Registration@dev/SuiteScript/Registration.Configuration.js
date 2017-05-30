@@ -396,7 +396,8 @@ define('Registration.Configuration', [
                     required: true
                 },
                 record: {
-                    fieldName: 'custrecord_partner_name'
+                    fieldName: 'custrecord_partner_name',
+                    type: 'object'
                 }
             },
             fieldSalesEngineer: {
@@ -517,7 +518,6 @@ define('Registration.Configuration', [
                     group: 'customer',
                     type: 'list',
                     list: 'countries',
-                    nodefault: true,
                     label: 'Country',
                     required: true
                 },
