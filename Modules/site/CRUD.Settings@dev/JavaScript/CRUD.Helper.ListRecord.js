@@ -1,12 +1,12 @@
 define('CRUD.Helper.ListRecord', [
     'underscore',
     'Utils',
-    'SC.Configuration',
+    'Configuration.Countries',
     'CRUD.Configuration'
 ], function CrudHelperListRecord(
     _,
     Utils,
-    Configuration,
+    ConfigurationCountries,
     CrudConfiguration
 ) {
     'use strict';
@@ -73,7 +73,7 @@ define('CRUD.Helper.ListRecord', [
         getCountriesList: function getListCountries() {
             var countries;
             if (!this.countries) {
-                countries = Configuration.get('siteSettings.countries');
+                countries = ConfigurationCountries.get();
                 this.countries = _(countries).map(function mapCountries(country) {
                     return {
                         internalid: country.name,

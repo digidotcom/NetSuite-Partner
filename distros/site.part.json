@@ -7,6 +7,7 @@
         "site/Backbone.View.Multiple": "dev",
         "site/BaseSassStyles.Site": "dev",
         "site/CheckoutApplication.Site": "dev",
+        "site/Configuration.Countries": "dev",
         "site/Configuration.Site": "dev",
         "site/CRUD.Settings": "dev",
         "site/CRUD": "dev",
@@ -34,12 +35,14 @@
                 "entryPoint": "SC.Shopping.Starter",
                 "dependencies": [
                     {"prepend": "SC.Shopping.Configuration.Site"},
+                    {"prepend": "Configuration.Countries"},
                     "Header.CRUD"
                 ]
             },
             {
                 "entryPoint": "SC.MyAccount.Starter",
                 "dependencies": [
+                    {"prepend": "Configuration.Countries"},
                     {"prepend": "SC.MyAccount.Configuration.Site"},
                     "CRUD",
                     "Header.CRUD",
@@ -52,6 +55,7 @@
                 "entryPoint": "SC.Checkout.Starter",
                 "dependencies": [
                     {"prepend": "SC.Checkout.Configuration.Site"},
+                    {"prepend": "Configuration.Countries"},
                     "Header.CRUD",
                     "Heartbeat"
                 ]
