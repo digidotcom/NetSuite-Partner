@@ -737,7 +737,7 @@ define('Registration.Configuration', [
                     type: 'list',
                     list: 'product_interest',
                     label: 'Product Interest',
-                    required: false
+                    required: true
                 },
                 record: {
                     fieldName: 'custrecord_reg_product_interest'
