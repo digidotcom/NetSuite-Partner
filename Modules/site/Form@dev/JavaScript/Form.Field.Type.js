@@ -91,7 +91,7 @@ define('Form.Field.Type', [
             var listsAvailable = this.config.getLists();
             var list = modelField.get('list');
             var validatedList = this.getValidatedList(list, relatedAttributeValue, listsAvailable);
-            this.showAsTextField = (validatedList.length === 0);
+            this.isDisabled = (validatedList.length === 0);
             return validatedList;
         },
 
@@ -113,7 +113,7 @@ define('Form.Field.Type', [
                 context.selectedName = fieldValueDisplay;
                 if (this.type === 'list') {
                     context.options = this.getListOptions();
-                    context.showAsTextField = this.showAsTextField; // important to be after this.getListOptions()
+                    context.isDisabled = !!this.isDisabled; // important to be after this.getListOptions()
                     context.list = modelField.get('list');
                     context.relatedAttribute = modelField.get('relatedAttribute');
                     context.hideDefaultOption = !!modelField.get('nodefault');

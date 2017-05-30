@@ -181,8 +181,7 @@ input[type="date"]::-webkit-calendar-picker-indicator /* Removes arrow calendar 
 // Styleguide 3.4
 
 .input-state-disabled{
-	border:1px solid $sc-color-theme-border;
-	background:$sc-color-theme-background;
+	background:$sc-color-theme-background-light-secondary;
 }
 
 // Input Type Password
