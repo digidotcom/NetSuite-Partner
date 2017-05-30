@@ -391,17 +391,11 @@ define('Registration.Configuration', [
                     type: 'lookup',
                     label: 'Partner Name',
                     defaultValue: partnerNameDefaultValue,
+                    inline: true,
                     required: true
                 },
                 record: {
-                    joint: true,
-                    internalid: {
-                        fieldName: 'custrecord_partner_name'
-                    },
-                    name: {
-                        fieldName: 'description',
-                        joinKey: 'custrecord_partner_name'
-                    }
+                    fieldName: 'custrecord_partner_name'
                 }
             },
             fieldSalesEngineer: {
