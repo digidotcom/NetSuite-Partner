@@ -21,7 +21,7 @@ define('Configuration.Countries', [
             'DE', // Germany
             'GB', // United Kingdom
             'CN', // China
-            'AU' // Australia
+            'AU'  // Australia
         ],
         getRaw: function getRaw() {
             return Configuration.get('siteSettings.countries');
@@ -41,7 +41,6 @@ define('Configuration.Countries', [
             var countriesSortedArray;
             var countriesObject = this.getFiltered();
             countriesSortedArray = this.sort(countriesObject);
-            console.log(countriesSortedArray);
             return countriesSortedArray;
         }
     };

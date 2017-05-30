@@ -94,7 +94,7 @@ define('CRUD.Helper.ListRecord', [
                     if (country.states) {
                         statesPerCountry[country.name] = _(country.states).map(function mapStates(state) {
                             return {
-                                internalid: state.name,
+                                value: state.name,
                                 name: state.name,
                                 code: state.code
                             };

@@ -91,6 +91,7 @@ define('Form.Field.Type', [
             var listsAvailable = this.config.getLists();
             var list = modelField.get('list');
             var validatedList = this.getValidatedList(list, relatedAttributeValue, listsAvailable);
+            console.log(validatedList);
             this.isDisabled = (validatedList.length === 0);
             return validatedList;
         },
