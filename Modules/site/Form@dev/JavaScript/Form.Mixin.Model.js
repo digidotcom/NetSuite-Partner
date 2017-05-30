@@ -90,12 +90,19 @@ define('Form.Mixin.Model', [
             },
             setDefaultValues: function setDefaultValues() {
                 var self = this;
-                var data = self.formConfig.getDataJSON();
+                var formConfig = self.formConfig;
+                var data = formConfig.getDataJSON();
                 _(data.fields).each(function eachField(field) {
                     var attribute = field.attribute;
+                    var attributeDisplay = formConfig.getFieldDisplay(attribute);
                     var defaultValue = field.defaultValue;
                     if (attribute && defaultValue) {
-                        self.set(attribute, defaultValue + '');
+                        if (_.isObject(defaultValue)) {
+                            self.set(attribute, defaultValue.internalid);
+                            self.set(attributeDisplay, defaultValue.name);
+                        } else {
+                            self.set(attribute, defaultValue + '');
+                        }
                     }
                 });
             },

@@ -1,4 +1,8 @@
-define('Registration.Configuration', [], function RegistrationConfiguration() {
+define('Registration.Configuration', [
+    'Models.Init'
+], function RegistrationConfiguration(
+    ModelsInit
+) {
     'use strict';
 
     function sameIdName(line, v) {
@@ -25,17 +29,11 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
     }
 
     function partnerNameDefaultValue() {
-        var customerRecord = nlapiLoadRecord('customer', nlapiGetUser());
-        var texts = customerRecord.getFieldTexts('otherrelationships');
-        var values = customerRecord.getFieldValues('otherrelationships');
-        var indexOfPartner;
-        if (texts && texts.length && values && values.length) {
-            indexOfPartner = texts.indexOf('Partner');
-            if (indexOfPartner >= 0) {
-                return values[indexOfPartner];
-            }
-        }
-        return null;
+        var customer = ModelsInit.customer.getFieldValues(['name']);
+        return {
+            internalid: nlapiGetUser(),
+            name: customer.name
+        };
     }
 
     return {

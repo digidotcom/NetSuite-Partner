@@ -65,6 +65,9 @@ define('Form.Config', [
         getFieldDisplaySuffix: function getFieldDisplaySuffix() {
             return '_display';
         },
+        getFieldDisplay: function getFieldDisplaySuffix(field) {
+            return field + this.getFieldDisplaySuffix();
+        },
         isNew: function isNew() {
             return this.getAction() === 'new';
         },
