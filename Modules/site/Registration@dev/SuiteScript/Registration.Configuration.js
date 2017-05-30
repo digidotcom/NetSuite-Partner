@@ -354,6 +354,7 @@ define('Registration.Configuration', [
                     group: 'details',
                     type: 'currency',
                     label: 'Estimated Value',
+                    inline: true,
                     required: false
                 },
                 record: {
