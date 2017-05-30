@@ -64,12 +64,13 @@
 	font-weight:$sc-font-weight-normal;
 	background:$sc-color-button-secondary;
 	display:inline-block;
-	border: 1px solid $sc-color-secondary;
+	border: 1px solid $sc-color-button-secondary;
 }
 
 .button-secondary:hover{
 	background:$sc-color-secondary-hover;
 	color:$sc-color-tertiary;
+	border-color: $sc-color-secondary-hover;
 	text-decoration:none;
 }
 
