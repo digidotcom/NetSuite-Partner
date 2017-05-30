@@ -25,7 +25,7 @@
                 {{/if}}
             </p>
         {{else}}
-            <select class="form-fields-input" id="{{attribute}}" name="{{attribute}}" data-value="{{selectedValue}}" {{#if list}}data-list="{{list}}"{{/if}} {{#if relatedAttribute}}data-related-attribute="{{relatedAttribute}}"{{/if}} {{#if isDisabled}}readonly=""{{/if}}>
+            <select class="form-fields-input" id="{{attribute}}" name="{{attribute}}" data-value="{{selectedValue}}" {{#if list}}data-list="{{list}}"{{/if}} {{#if relatedAttribute}}data-related-attribute="{{relatedAttribute}}"{{/if}} {{#if isDisabled}}disabled{{/if}}>
                 {{#unless hideDefaultOption}}
                 <option value=""></option>
                 {{/unless}}
