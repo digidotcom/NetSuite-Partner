@@ -8,4 +8,10 @@
       margin-right: 0px;
     }
   }
+  .header-menu-myaccount-crud-menus {
+    margin-bottom: $sc-base-margin * 4;
+    &:last-child {
+      margin-bottom: 0px;
+    }
+  }
 }
