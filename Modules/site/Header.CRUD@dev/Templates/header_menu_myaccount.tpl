@@ -28,31 +28,35 @@
 		</a>
 	</li>
 
-    {{#each crudMenus}}
+    {{#if hasCrudMenus}}
     <li class="header-menu-myaccount-item-level2">
-        <a class="header-menu-myaccount-anchor-level2" href="#" data-touchpoint="customercenter" data-hashtag="#{{url}}"{{#if hasChildren}} data-action="push-menu"{{/if}} name="{{id}}">
-            {{name}}
-            <i class="header-menu-myaccount-menu-push-icon"></i>
-        </a>
-        {{#if hasChildren}}
-        <ul class="header-menu-myaccount-level3">
-            <li>
-                <a href="#" class="header-menu-myaccount-back" data-action="pop-menu" name="back-level3">
-                    <i class="header-menu-myaccount-pop-icon "></i>
-                    {{translate 'Back'}}
-                </a>
-            </li>
-            {{#each children}}
-            <li data-permissions="{{purchasesPermissions}}">
-                <a class="header-menu-myaccount-anchor-level3" href="#" data-touchpoint="customercenter" data-hashtag="#{{url}}" name="{{id}}">
-                    {{name}}
-                </a>
-            </li>
-            {{/each}}
-        </ul>
-        {{/if}}
+        {{#each crudMenus}}
+        <div class="header-menu-myaccount-crud-menus">
+            <a class="header-menu-myaccount-anchor-level2" href="#" data-touchpoint="customercenter" data-hashtag="#{{url}}"{{#if hasChildren}} data-action="push-menu"{{/if}} name="{{id}}">
+                {{name}}
+                <i class="header-menu-myaccount-menu-push-icon"></i>
+            </a>
+            {{#if hasChildren}}
+            <ul class="header-menu-myaccount-level3">
+                <li>
+                    <a href="#" class="header-menu-myaccount-back" data-action="pop-menu" name="back-level3">
+                        <i class="header-menu-myaccount-pop-icon "></i>
+                        {{translate 'Back'}}
+                    </a>
+                </li>
+                {{#each children}}
+                <li data-permissions="{{purchasesPermissions}}">
+                    <a class="header-menu-myaccount-anchor-level3" href="#" data-touchpoint="customercenter" data-hashtag="#{{url}}" name="{{id}}">
+                        {{name}}
+                    </a>
+                </li>
+                {{/each}}
+            </ul>
+            {{/if}}
+        </div>
+        {{/each}}
     </li>
-    {{/each}}
+    {{/if}}
 
 	<li class="header-menu-myaccount-item-level2 header-menu-myaccount-level2-orders" data-permissions="{{purchasesPermissions}}" data-permissions-operator="OR">
 		<a class="header-menu-myaccount-anchor-level2" href="#" data-action="push-menu" name="orders">

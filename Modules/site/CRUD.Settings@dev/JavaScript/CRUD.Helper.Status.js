@@ -33,7 +33,6 @@ define('CRUD.Helper.Status', [
         },
         isEditEnabledForModel: function isEditEnabledForModel(crudId, model) {
             var allowEditControlField = this.getAllowEditControlField(crudId);
-            console.log(model.get(allowEditControlField));
             return !allowEditControlField || !!model.get(allowEditControlField);
         },
         isEditEnabledForSubrecord: function isEditEnabledForSubrecord(crudId/* , parentModel */) {

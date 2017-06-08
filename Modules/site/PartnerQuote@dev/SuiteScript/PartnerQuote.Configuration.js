@@ -359,7 +359,7 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
                     group: 'customer',
                     type: 'list',
                     list: 'countries',
-                    nodefault: true,
+                    nodefault: false,
                     label: 'End Customer Country'
                 },
                 record: {
@@ -433,7 +433,7 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
                     group: 'supply',
                     type: 'list',
                     list: 'countries',
-                    nodefault: true,
+                    nodefault: false,
                     label: 'Reseller Bill To Country'
                 },
                 record: {
@@ -474,7 +474,7 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
                     group: 'supply',
                     type: 'list',
                     list: 'countries',
-                    nodefault: true,
+                    nodefault: false,
                     label: 'Contract Manufacturer Bill to Country'
                 },
                 record: {

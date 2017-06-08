@@ -1,4 +1,8 @@
-define('Registration.Configuration', [], function RegistrationConfiguration() {
+define('Registration.Configuration', [
+    'Models.Init'
+], function RegistrationConfiguration(
+    ModelsInit
+) {
     'use strict';
 
     function sameIdName(line, v) {
@@ -25,17 +29,11 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
     }
 
     function partnerNameDefaultValue() {
-        var customerRecord = nlapiLoadRecord('customer', nlapiGetUser());
-        var texts = customerRecord.getFieldTexts('otherrelationships');
-        var values = customerRecord.getFieldValues('otherrelationships');
-        var indexOfPartner;
-        if (texts && texts.length && values && values.length) {
-            indexOfPartner = texts.indexOf('Partner');
-            if (indexOfPartner >= 0) {
-                return values[indexOfPartner];
-            }
-        }
-        return null;
+        var customer = ModelsInit.customer.getFieldValues(['name']);
+        return {
+            internalid: nlapiGetUser(),
+            name: customer.name
+        };
     }
 
     return {
@@ -356,6 +354,7 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                     group: 'details',
                     type: 'currency',
                     label: 'Estimated Value',
+                    inline: true,
                     required: false
                 },
                 record: {
@@ -393,17 +392,12 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                     type: 'lookup',
                     label: 'Partner Name',
                     defaultValue: partnerNameDefaultValue,
+                    inline: true,
                     required: true
                 },
                 record: {
-                    joint: true,
-                    internalid: {
-                        fieldName: 'custrecord_partner_name'
-                    },
-                    name: {
-                        fieldName: 'description',
-                        joinKey: 'custrecord_partner_name'
-                    }
+                    fieldName: 'custrecord_partner_name',
+                    type: 'object'
                 }
             },
             fieldSalesEngineer: {
@@ -524,7 +518,6 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                     group: 'customer',
                     type: 'list',
                     list: 'countries',
-                    nodefault: true,
                     label: 'Country',
                     required: true
                 },
@@ -745,7 +738,7 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                     type: 'list',
                     list: 'product_interest',
                     label: 'Product Interest',
-                    required: false
+                    required: true
                 },
                 record: {
                     fieldName: 'custrecord_reg_product_interest'

@@ -16,6 +16,7 @@
         {{/unless}}
     </label>
     <div class="form-fields-form-controls" data-validation="control">
+        <input type="hidden" class="form-fields-input-hidden" id="{{attribute}}" name="{{attribute}}" data-value="{{id}}" value="" />
         {{#if showInline}}
             <p data-type="search" class="form-fields-input-inline" id="{{attribute}}{{nameFieldSuffix}}" data-name="{{attribute}}" data-value="{{selectedValue}}">
                 {{#if isInlineEmpty}}
@@ -25,7 +26,6 @@
                 {{/if}}
             </p>
         {{else}}
-            <input type="hidden" class="form-fields-input-hidden" id="{{attribute}}" name="{{attribute}}" data-value="{{id}}" value="" />
             <input type="search" class="form-fields-input" id="{{attribute}}{{nameFieldSuffix}}" name="{{attribute}}{{nameFieldSuffix}}" data-value="{{selectedValue}}" data-selected-name="{{selectedName}}" value="" />
             <i class="form-fields-input-search-icon" data-lookup-trigger></i>
             {{#if help}}
