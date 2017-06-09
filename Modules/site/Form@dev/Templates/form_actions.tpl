@@ -1,5 +1,16 @@
 <section class="form-actions {{#if inHeader}}in-header{{/if}}">
 {{#if showContent}}
+    {{#each customActions}}
+        {{#if isSubmit}}
+        <button type="submit" class="form-actions-custom" data-action="{{name}}">
+            {{translate label}}
+        </button>
+        {{else}}
+        <a class="form-actions-custom" data-action="{{name}}">
+            {{translate label}}
+        </a>
+        {{/if}}
+    {{/each}}
     {{#if showEditLink}}
         <a href="{{editUrl}}" class="form-actions-edit">
             {{translate 'Edit'}}
@@ -9,6 +20,11 @@
         <a href="{{viewAllUrl}}" class="form-actions-cancel">
             {{translate 'View All'}}
         </a>
+    {{/if}}
+    {{#if showAddAndNewButton}}
+        <button type="submit" class="form-actions-submit-secondary" data-add-and-new>
+            {{translate 'Add & New'}}
+        </button>
     {{/if}}
     {{#if showAddButton}}
         <button type="submit" class="form-actions-submit">

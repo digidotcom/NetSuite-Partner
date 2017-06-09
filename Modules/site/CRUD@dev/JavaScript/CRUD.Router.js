@@ -1,24 +1,28 @@
 define('CRUD.Router', [
     'underscore',
     'Backbone',
+    'jQuery',
     'Utils',
     'AjaxRequestsKiller',
     'ErrorManagement.ForbiddenError.View',
     'CRUD.Helper',
-    'CRUD.Collection',
-    'CRUD.Model',
+    'CRUD.Record.Collection',
+    'CRUD.Record.Model',
+    'CRUD.ListRecord.Collection',
     'CRUD.Status.Collection',
     'CRUD.List.View',
     'CRUD.Details.View'
 ], function CrudRouter(
     _,
     Backbone,
+    jQuery,
     Utils,
     AjaxRequestsKiller,
     ErrorManagementForbiddenErrorView,
     CrudHelper,
-    CrudCollection,
-    CrudModel,
+    CrudRecordCollection,
+    CrudRecordModel,
+    CrudRecordListCollection,
     CrudStatusCollection,
     CrudListView,
     CrudDetailsView
@@ -41,12 +45,14 @@ define('CRUD.Router', [
                 view: CrudHelper.getViewUrlRegex('read'),
                 edit: CrudHelper.getEditUrlRegex('update')
             };
-            _(regexes).each(function eachUrl(regex, method) {
-                self.route(regex, method);
+            _(regexes).each(function eachRegexes(regexGroup, method) {
+                _(regexGroup).each(function eachRegexGroup(regex) {
+                    self.route(regex, method);
+                });
             });
         },
 
-        list: function list(crudUrl, optionsArg) {
+        list: function list(parentUrl, parentId, crudUrl, optionsArg) {
             var crudId = CrudHelper.getIdFromBaseUrl(crudUrl);
             var hasStatus = CrudHelper.hasStatus(crudId);
             var statusFilterName = CrudHelper.getStatusFilterName(crudId);
@@ -57,9 +63,10 @@ define('CRUD.Router', [
             var status = hasStatus ? options[statusFilterName] : null;
 
             if (this.allowPage(crudId, 'list')) {
-                collection = new CrudCollection(null, {
+                collection = new CrudRecordCollection(null, {
                     crudId: crudId,
                     recordsPerPage: options.show,
+                    parent: parentId,
                     status: status
                 });
 
@@ -73,6 +80,7 @@ define('CRUD.Router', [
                     application: this.application,
                     crudId: crudId,
                     collection: collection,
+                    parent: parentId,
                     status: status,
                     statusCollection: hasStatus ? statusCollection : null
                 }));
@@ -91,59 +99,86 @@ define('CRUD.Router', [
             }
         },
 
-        'new': function newFn(crudUrl, optionsArg) {
+        'new': function newFn(parentUrl, parentId, crudUrl, optionsArg) {
             var crudId = CrudHelper.getIdFromBaseUrl(crudUrl);
             var options = this.parseDetailsOptions(optionsArg);
             options.edit = false;
 
             if (this.allowPage(crudId, 'create')) {
-                this.details(crudId, null, options);
+                this.details(crudId, parentId, null, options);
             }
         },
 
-        view: function view(crudUrl, id, optionsArg) {
+        view: function view(parentUrl, parentId, crudUrl, id, optionsArg) {
             var crudId = CrudHelper.getIdFromBaseUrl(crudUrl);
             var options = this.parseDetailsOptions(optionsArg);
             options.edit = false;
 
             if (this.allowPage(crudId, 'read')) {
-                this.details(crudId, id, options);
+                this.details(crudId, parentId, id, options);
             }
         },
 
-        edit: function edit(crudUrl, id, optionsArg) {
+        edit: function edit(parentUrl, parentId, crudUrl, id, optionsArg) {
             var crudId = CrudHelper.getIdFromBaseUrl(crudUrl);
             var options = this.parseDetailsOptions(optionsArg);
             options.edit = true;
 
             if (this.allowPage(crudId, 'update')) {
-                this.details(crudId, id, options);
+                this.details(crudId, parentId, id, options);
             }
         },
 
-        details: function details(crudId, id, options) {
-            var model = new CrudModel({
+        getListsPromise: function getListsPromise(crudId) {
+            var fieldLists = CrudHelper.getFieldListNamesForService(crudId);
+            var deferred = jQuery.Deferred();
+            var collection;
+            var fetchPromise;
+            if (fieldLists.length > 0) {
+                collection = new CrudRecordListCollection(null, {
+                    crudId: crudId,
+                    listIds: fieldLists
+                });
+                fetchPromise = collection.fetch();
+                fetchPromise.done(function doneFn() {
+                    CrudHelper.addListsFromCollection(collection);
+                    deferred.resolveWith(fetchPromise, arguments);
+                }).fail(function failFn() {
+                    deferred.rejectWith(fetchPromise, arguments);
+                });
+            } else {
+                deferred.resolve();
+            }
+            return deferred.promise();
+        },
+
+        details: function details(crudId, parentId, id, options) {
+            var promises = [
+                this.getListsPromise(crudId)
+            ];
+            var model = new CrudRecordModel({
                 internalid: id,
+                parent: parentId,
                 crudId: crudId
             });
             var view = new CrudDetailsView(_.extend(options, {
                 application: this.application,
                 crudId: crudId,
+                parent: parentId,
                 model: model
             }));
-            if (!id) {
-                view.showContent();
-            } else {
-                model.fetch().done(function done() {
-                    view.showContent();
-                });
+            view.showContentBefore();
+            if (id) {
+                promises.push(model.fetch());
             }
+            jQuery.when.apply(jQuery, promises).done(function done() {
+                view.showContentAfter();
+            });
         },
 
         allowPage: function allowPage(crudId, permission) {
-            var permissions = CrudHelper.getPermissions(crudId);
             var view;
-            if (!permissions[permission]) {
+            if (!CrudHelper.isPermissionAllowed(crudId, permission)) {
                 view = new ErrorManagementForbiddenErrorView();
                 view.options = view.options || {};
                 view.options.application = this.application;

@@ -1,4 +1,8 @@
-define('Registration.Configuration', [], function RegistrationConfiguration() {
+define('Registration.Configuration', [
+    'Models.Init'
+], function RegistrationConfiguration(
+    ModelsInit
+) {
     'use strict';
 
     function sameIdName(line, v) {
@@ -24,6 +28,14 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
         record.setFieldText(fieldInfo.fieldName, value);
     }
 
+    function partnerNameDefaultValue() {
+        var customer = ModelsInit.customer.getFieldValues(['name']);
+        return {
+            internalid: nlapiGetUser(),
+            name: customer.name
+        };
+    }
+
     return {
         id: 'registration',
         type: 'crud',
@@ -36,8 +48,44 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
         },
         status: {
             crudId: 'registration_status',
-            filterName: 'status'
+            filterName: 'status',
+            allowEditControlField: 'statusAllowsEdit'
         },
+        actions: [
+            {
+                name: 'submit',
+                label: 'Submit',
+                conditions: [
+                    {
+                        type: 'page',
+                        values: ['view']
+                    },
+                    {
+                        type: 'field',
+                        fieldName: 'statusAllowsEdit',
+                        values: [true]
+                    }
+                ],
+                execute: [
+                    {
+                        type: 'field',
+                        fieldName: 'partnerApprovalSubmission',
+                        value: 'T'
+                    }
+                ],
+                result: {
+                    type: 'redirect',
+                    page: 'view'
+                }
+            }
+        ],
+        subrecords: [
+            {
+                crudId: 'registration_product',
+                name: 'products',
+                pages: ['view']
+            }
+        ],
         frontend: {
             baseKey: 'registrations',
             names: {
@@ -46,7 +94,9 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
             }
         },
         listColumns: [
-            'name',
+            'number',
+            'projectName',
+            'productInterest',
             'status',
             'approvalDate',
             'expiryDate',
@@ -61,19 +111,20 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
             { id: 'project', name: 'Project Details' }
         ],
         record: 'customrecord_registrationprocess',
-        loggedInFilterField: 'customer',
+        loggedIn: {
+            customer: 'customer',
+            contact: 'contact'
+        },
         filters: {
             inactive: { operator: 'is', value1: 'F' }
         },
-        filtersDynamic: {
-            // status: { operator: 'is', numberOfValues: 1 }
-        },
+        filtersDynamic: {},
         sort: {},
         fieldsets: {
             list: [
                 'internalid',
                 'date',
-                'name',
+                'number',
                 'status',
                 'statusAllowsEdit',
                 'approvalDate',
@@ -84,7 +135,7 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
             details: [
                 'internalid',
                 'date',
-                'name',
+                'number',
                 'status',
                 'statusAllowsEdit',
                 'approvalDate',
@@ -94,6 +145,9 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                 'fieldSalesEngineer',
                 'buyer',
                 'fieldSalesRep',
+                'registrationProgram',
+                'estimatedValue',
+                'externalReferenceNumber',
                 'companyName',
                 'companyMainPhone',
                 'companyAddress',
@@ -108,27 +162,28 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                 'engineerTechnicalContactName',
                 'engineerTechnicalContactPhone',
                 'channelManager',
-                'customerLocation',
-                'endCustomerAccount',
+                'webAddress',
                 'learnAboutDeal',
-                'internalNotes',
-                'lead',
-                'opportunity',
                 'preferredDistributor',
                 'productionDate',
                 'projectName',
                 'reseller',
                 'summaryOfApplication',
                 'salesRep',
-                'prototypeEvalDate'
+                'prototypeEvalDate',
+                'projectType',
+                'projectStatus',
+                'productInterest'
             ],
             save: [
-                'name',
                 'partnerName',
                 'additionalInformation',
                 'fieldSalesEngineer',
                 'buyer',
                 'fieldSalesRep',
+                'registrationProgram',
+                'estimatedValue',
+                'externalReferenceNumber',
                 'companyName',
                 'companyMainPhone',
                 'companyAddress',
@@ -142,20 +197,17 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                 'engineerTechnicalContactEmail',
                 'engineerTechnicalContactName',
                 'engineerTechnicalContactPhone',
-                'channelManager',
-                'customerLocation',
-                'endCustomerAccount',
+                'webAddress',
                 'learnAboutDeal',
-                'internalNotes',
-                'lead',
-                'opportunity',
                 'preferredDistributor',
                 'productionDate',
                 'projectName',
                 'reseller',
                 'summaryOfApplication',
-                'salesRep',
-                'prototypeEvalDate'
+                'prototypeEvalDate',
+                'projectType',
+                'projectStatus',
+                'productInterest'
             ]
         },
         fields: {
@@ -176,18 +228,35 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                     fieldName: 'created'
                 }
             },
+            customer: {
+                record: {
+                    fieldName: 'custrecord_partner_customer',
+                    type: 'object'
+                }
+            },
+            contact: {
+                record: {
+                    fieldName: 'custrecord_partner_contact',
+                    type: 'object'
+                }
+            },
+            partnerApprovalSubmission: {
+                record: {
+                    fieldName: 'custrecord_partner_approval_submission'
+                }
+            },
 
             /* ******* registration details ******* */
 
-            name: {
+            number: {
                 form: {
                     group: 'details',
                     type: 'text',
-                    label: 'Name',
-                    required: true
+                    label: 'Number',
+                    inline: true
                 },
                 record: { // Free-form Text
-                    fieldName: 'name'
+                    fieldName: 'custrecord_reg_number'
                 }
             },
             status: {
@@ -245,34 +314,11 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                     group: 'details',
                     type: 'lookup',
                     label: 'Channel Manager',
-                    help: 'Example: Doe, John',
+                    inline: true,
                     required: false
                 },
                 record: {
                     fieldName: 'custrecord_channel_manager',
-                    type: 'object'
-                }
-            },
-            lead: {
-                form: {
-                    group: 'details',
-                    type: 'text',
-                    label: 'Lead',
-                    required: false
-                },
-                record: {
-                    fieldName: 'custrecord_lead'
-                }
-            },
-            opportunity: {
-                form: {
-                    group: 'details',
-                    type: 'lookup',
-                    label: 'Opportunity',
-                    required: false
-                },
-                record: {
-                    fieldName: 'custrecord_opportunity',
                     type: 'object'
                 }
             },
@@ -281,6 +327,7 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                     group: 'details',
                     type: 'lookup',
                     label: 'Sales Rep',
+                    inline: true,
                     required: false
                 },
                 record: {
@@ -288,10 +335,52 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                     type: 'object'
                 }
             },
-            customer: {
+            registrationProgram: {
+                form: {
+                    group: 'details',
+                    type: 'list',
+                    list: 'registration_program',
+                    label: 'Registration Program',
+                    defaultValue: 1,
+                    required: true
+                },
                 record: {
-                    fieldName: 'custrecord_partner_customer',
+                    fieldName: 'custrecord_reg_program',
                     type: 'object'
+                }
+            },
+            estimatedValue: {
+                form: {
+                    group: 'details',
+                    type: 'currency',
+                    label: 'Estimated Value',
+                    inline: true,
+                    required: false
+                },
+                record: {
+                    fieldName: 'custrecord_reg_estimated_value'
+                }
+            },
+            externalReferenceNumber: {
+                form: {
+                    group: 'details',
+                    type: 'text',
+                    label: 'External Reference #',
+                    required: false
+                },
+                record: {
+                    fieldName: 'custrecord_external_reference_numb'
+                }
+            },
+            rejectReason: {
+                form: {
+                    group: 'details',
+                    type: 'longtext',
+                    label: 'Reject Reason',
+                    inline: true
+                },
+                record: {
+                    fieldName: 'custrecord_rp_reject_reason'
                 }
             },
 
@@ -302,17 +391,13 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                     group: 'partner',
                     type: 'lookup',
                     label: 'Partner Name',
+                    defaultValue: partnerNameDefaultValue,
+                    inline: true,
                     required: true
                 },
                 record: {
-                    joint: true,
-                    internalid: {
-                        fieldName: 'custrecord_partner_name'
-                    },
-                    name: {
-                        fieldName: 'description',
-                        joinKey: 'custrecord_partner_name'
-                    }
+                    fieldName: 'custrecord_partner_name',
+                    type: 'object'
                 }
             },
             fieldSalesEngineer: {
@@ -433,7 +518,6 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                     group: 'customer',
                     type: 'list',
                     list: 'countries',
-                    nodefault: true,
                     label: 'Country',
                     required: true
                 },
@@ -473,17 +557,6 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                     fieldName: 'custrecord_country_zipcode'
                 }
             },
-            engineerTechnicalContactEmail: {
-                form: {
-                    group: 'customer',
-                    type: 'email',
-                    label: 'Engineer/Technical Contact Email',
-                    required: true
-                },
-                record: {
-                    fieldName: 'custrecord_engr_contact_email'
-                }
-            },
             engineerTechnicalContactName: {
                 form: {
                     group: 'customer',
@@ -493,6 +566,17 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                 },
                 record: {
                     fieldName: 'custrecord_engr_contact_name'
+                }
+            },
+            engineerTechnicalContactEmail: {
+                form: {
+                    group: 'customer',
+                    type: 'email',
+                    label: 'Engineer/Technical Contact Email',
+                    required: true
+                },
+                record: {
+                    fieldName: 'custrecord_engr_contact_email'
                 }
             },
             engineerTechnicalContactPhone: {
@@ -506,27 +590,15 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                     fieldName: 'custrecord_engr_contact_phone'
                 }
             },
-            customerLocation: {
+            webAddress: {
                 form: {
                     group: 'customer',
                     type: 'text',
-                    label: 'Customer Location',
-                    required: false
+                    label: 'Web Address',
+                    required: true
                 },
                 record: {
-                    fieldName: 'custrecord_customer_location'
-                }
-            },
-            endCustomerAccount: {
-                form: {
-                    group: 'customer',
-                    type: 'lookup',
-                    label: 'End Customer Account',
-                    required: false
-                },
-                record: {
-                    fieldName: 'custrecord_end_customer_account',
-                    type: 'object'
+                    fieldName: 'custrecord_reg_web_address'
                 }
             },
 
@@ -579,17 +651,6 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
 
             /* ******* project details ******* */
 
-            additionalInformation: {
-                form: {
-                    group: 'project',
-                    type: 'longtext',
-                    label: 'Additional Information',
-                    required: false
-                },
-                record: {
-                    fieldName: 'custrecord_additional_information'
-                }
-            },
             learnAboutDeal: {
                 form: {
                     group: 'project',
@@ -643,6 +704,55 @@ define('Registration.Configuration', [], function RegistrationConfiguration() {
                 },
                 record: {
                     fieldName: 'custrecord_prototype_eval_date'
+                }
+            },
+            projectType: {
+                form: {
+                    group: 'project',
+                    type: 'list',
+                    list: 'registration_project_type',
+                    label: 'Project Type',
+                    required: true
+                },
+                record: {
+                    fieldName: 'custrecord_reg_project_type',
+                    type: 'object'
+                }
+            },
+            projectStatus: {
+                form: {
+                    group: 'project',
+                    type: 'list',
+                    list: 'registration_project_status',
+                    label: 'Project Status',
+                    required: true
+                },
+                record: {
+                    fieldName: 'custrecord_reg_project_status',
+                    type: 'object'
+                }
+            },
+            productInterest: {
+                form: {
+                    group: 'project',
+                    type: 'list',
+                    list: 'product_interest',
+                    label: 'Product Interest',
+                    required: true
+                },
+                record: {
+                    fieldName: 'custrecord_reg_product_interest'
+                }
+            },
+            additionalInformation: {
+                form: {
+                    group: 'project',
+                    type: 'longtext',
+                    label: 'Additional Information',
+                    required: false
+                },
+                record: {
+                    fieldName: 'custrecord_additional_information'
                 }
             }
         }

@@ -14,7 +14,18 @@ define('CRUD.AbstractView', [
     return Backbone.View.extend({
 
         getSelectedMenu: function getSelectedMenu() {
-            return CrudHelper.getBaseKey(this.crudId) + '_all';
+            var crudId = this.crudId;
+            var parentCrudId = CrudHelper.getParentCrudId(crudId);
+            var baseKey;
+            var selected;
+            if (parentCrudId) {
+                baseKey = CrudHelper.getBaseKey(parentCrudId);
+                selected = baseKey + '_all';
+            } else {
+                baseKey = CrudHelper.getBaseKey(crudId);
+                selected = (this.isNew && this.isNew()) ? baseKey + '_new' : baseKey + '_all';
+            }
+            return selected;
         },
         getTitle: function getTitle() {
             var names = CrudHelper.getNames(this.crudId);
@@ -22,13 +33,9 @@ define('CRUD.AbstractView', [
         },
         getBreadcrumbPages: function getBreadcrumbPages() {
             var crudId = this.crudId;
-            var names = CrudHelper.getNames(crudId);
-            return _.union([
-                {
-                    text: Utils.translate(names.plural),
-                    href: CrudHelper.getListUrl(crudId)
-                }
-            ], this.getBreadcrumbPart());
+            var parentId = this.parent;
+            var id = this.model && this.model.get('internalid');
+            return _.union(CrudHelper.getBreadcrumbBase(crudId, id, parentId), this.getBreadcrumbPart());
         },
 
         /* Abstract methods or attributes to be implemented by children */

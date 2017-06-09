@@ -1,14 +1,31 @@
 define('Registration', [
+    'underscore',
     'CRUD',
     'Registration.Configuration',
-    'Registration.Status.Configuration'
+    'Registration.Status.Configuration',
+    'Registration.Product.Configuration',
+    'Registration.Lists.Configuration'
 ], function Registration(
+    _,
     Crud,
     RegistrationConfiguration,
-    RegistrationStatusConfiguration
+    RegistrationStatusConfiguration,
+    RegistrationProductConfiguration,
+    RegistrationListsConfiguration
 ) {
     'use strict';
 
-    Crud.add(RegistrationConfiguration.id, RegistrationConfiguration);
-    Crud.add(RegistrationStatusConfiguration.id, RegistrationStatusConfiguration);
+    var cruds = [
+        RegistrationConfiguration,
+        RegistrationStatusConfiguration,
+        RegistrationProductConfiguration
+    ];
+
+    _(cruds).each(function eachCrud(crud) {
+        Crud.add(crud.id, crud);
+    });
+
+    _(RegistrationListsConfiguration).each(function eachList(listConfig, listId) {
+        Crud.addList(listId, listConfig);
+    });
 });

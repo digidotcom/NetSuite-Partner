@@ -1,9 +1,9 @@
 define('CRUD', [
-    'CRUD.Configuration',
+    'CRUD.Settings',
     'CRUD.Helper',
     'CRUD.Router'
 ], function Crud(
-    CrudConfiguration,
+    CrudSettings,
     CrudHelper,
     CrudRouter
 ) {
@@ -13,7 +13,7 @@ define('CRUD', [
         MenuItems: CrudHelper.getMenuItemsAll(),
 
         add: function add(crudId, settings) {
-            CrudConfiguration.addSettings(crudId, settings || {});
+            CrudSettings.add(crudId, settings || {});
         },
 
         mountToApp: function mountToApp(application) {

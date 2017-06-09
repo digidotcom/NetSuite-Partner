@@ -5,5 +5,11 @@ define('Form.Field.Model', [
 ) {
     'use strict';
 
-    return Backbone.Model.extend({});
+    return Backbone.Model.extend({
+
+        isHiddenType: function isHiddenType() {
+            return this.get('type') === 'hidden';
+        }
+
+    });
 });

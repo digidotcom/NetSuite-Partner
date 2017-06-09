@@ -39,6 +39,7 @@ define('Form.Mixin.View', [
                 }
 
                 this.bindSubmitCallbacks();
+                this.initializeFormView();
 
                 return result;
             }
@@ -51,13 +52,16 @@ define('Form.Mixin.View', [
             childViews: {
                 'Form': function FormChildView() {
                     this.refreshFormConfig();
-                    return new FormView({
-                        config: this.formConfig
-                    });
+                    return this.formChildView;
                 }
             }
         },
         extend: {
+            initializeFormView: function initializeFormView() {
+                this.formChildView = new FormView({
+                    config: this.formConfig
+                });
+            },
             getFormAction: function getFormAction() {
                 if (this.isNew()) {
                     return 'new';
@@ -83,6 +87,31 @@ define('Form.Mixin.View', [
             refreshFormConfig: function refreshFormConfig() {
                 this.formConfig.setPermissions(this.getFormPermissions());
                 this.formConfig.setInfo(this.getFormInfo());
+            },
+            refreshFormView: function refreshFormView() {
+                this.refreshFormConfig();
+                if (this.formChildView) {
+                    this.formChildView.render();
+                }
+            },
+            setLoading: function setLoading(isLoading) {
+                this.formConfig.setLoading(isLoading);
+            },
+            showContentBefore: function showContentBefore() {
+                var isAsync = this.isFormAsync();
+                if (isAsync) {
+                    this.setLoading(true);
+                    this.showContent();
+                }
+            },
+            showContentAfter: function showContentAfter() {
+                var isAsync = this.isFormAsync();
+                if (isAsync) {
+                    this.setLoading(false);
+                    this.refreshFormView();
+                } else {
+                    this.showContent();
+                }
             },
 
             parseMixinOptions: function parseMixinOptions() {
@@ -121,27 +150,47 @@ define('Form.Mixin.View', [
 
             saveFormUnlessView: function saveFormUnlessView(e) {
                 if (!this.isView()) {
+                    this.isSavingFormView = true;
                     this.saveForm(e);
                 }
             },
             bindSubmitCallbacks: function bindSubmitCallbacks() {
                 var config = this.formConfig;
-                this.model.on('saveCompleted', function onModelSaveCompleted() {
+                var view = this;
+                var model = this.model;
+                model.on('validate', function onModelValidate(isValid) {
+                    if (view.isSavingFormView) {
+                        if (!isValid) {
+                            model.setAddAndNew(false);
+                        }
+                    }
+                });
+                model.on('saveCompleted', function onModelSaveCompleted() {
                     var info = config.getInfo();
                     if (config.isEdit()) {
                         if (config.canView()) {
                             Backbone.history.navigate(info.viewUrl, { trigger: true });
                         }
                     } else if (config.isNew()) {
-                        if (config.canList()) {
+                        if (model.isAddAndNew()) {
+                            model.setAddAndNew(false);
+                            Backbone.history.navigate('/', { trigger: false }); // hack to refresh page
+                            Backbone.history.navigate(info.newUrl, { trigger: true, replace: true });
+                        } else if (config.canList()) {
                             Backbone.history.navigate(info.goBackUrl, { trigger: true });
                         }
                     }
+                    this.isSavingFormView = false;
                 });
             },
 
             isView: function isView() {
                 return !this.isNew() && !this.isEdit();
+            },
+
+            /* VIRTUAL */
+            isFormAsync: function isFormAsync() {
+                return false;
             },
 
             /* ABSTRACT */

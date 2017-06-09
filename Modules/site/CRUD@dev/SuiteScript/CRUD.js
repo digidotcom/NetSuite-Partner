@@ -1,33 +1,20 @@
 define('CRUD', [
-    'Models.Init',
-    'Configuration',
-    'CRUD.Configuration',
+    'CRUD.Settings',
     'CRUD.Record.ServiceController',
-    'CRUD.Lookup.ServiceController'
+    'CRUD.Lookup.ServiceController',
+    'CRUD.Action.ServiceController',
+    'CRUD.List.ServiceController'
 ], function Crud(
-    ModelsInit,
-    Configuration,
-    CrudConfiguration
+    CrudSettings
 ) {
     'use strict';
 
-    Configuration.publish.push({
-        key: 'CrudConfigurationPublic',
-        model: 'CRUD.Configuration',
-        call: 'getForBootstrappingPublic'
-    });
-
-    if ((request.getURL().indexOf('https') >= 0) && ModelsInit.session.isLoggedIn2()) {
-        Configuration.publish.push({
-            key: 'CrudConfiguration',
-            model: 'CRUD.Configuration',
-            call: 'getForBootstrappingPrivate'
-        });
-    }
-
     return {
         add: function add(id, config) {
-            CrudConfiguration.add(id, config);
+            CrudSettings.add(id, config);
+        },
+        addList: function addList(id, config) {
+            CrudSettings.addList(id, config);
         }
     };
 });

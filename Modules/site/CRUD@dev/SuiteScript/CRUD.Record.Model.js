@@ -88,7 +88,7 @@ define('CRUD.Record.Model', [
             var config = CrudConfiguration.getForRecord(crudId);
             var record;
 
-            var data = CrudUtils.parseCrudData(config, dataRaw);
+            var data = CrudUtils.parseCrudCreateData(config, dataRaw);
 
             record = new RecordHelper()
                 .setRecord(config.record)
@@ -106,7 +106,7 @@ define('CRUD.Record.Model', [
             var config = CrudConfiguration.getForRecord(crudId);
             var record;
 
-            var data = CrudUtils.parseCrudData(config, dataRaw);
+            var data = CrudUtils.parseCrudUpdateData(config, dataRaw);
 
             record = new RecordHelper()
                 .setRecord(config.record)

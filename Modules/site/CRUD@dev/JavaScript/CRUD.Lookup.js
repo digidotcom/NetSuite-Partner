@@ -8,7 +8,7 @@ define('CRUD.Lookup', [
     'use strict';
 
     return {
-        getFetchCallback: function getFetchCallback(crudId) {
+        getPromiseCallback: function getPromiseCallback(crudId) {
             return function lookupCallback(data) {
                 var deferred = jQuery.Deferred();
                 var collection = new CrudLookupCollection(null, {

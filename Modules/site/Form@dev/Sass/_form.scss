@@ -3,3 +3,6 @@
 .form {
   @extend .box-column-bordered;
 }
+.form-loading {
+  margin: ($sc-base-margin * 4) 0;
+}

@@ -1,8 +1,8 @@
 define('Form.Field.Type', [
     'underscore',
     'SC.Configuration',
-    'Form.Field.Lists',
     'form_field.tpl',
+    'form_field_hidden.tpl',
     'form_field_text.tpl',
     'form_field_longtext.tpl',
     'form_field_list.tpl',
@@ -10,8 +10,8 @@ define('Form.Field.Type', [
 ], function FormFieldTypeModule(
     _,
     Configuration,
-    FormFieldLists,
     formFieldTpl,
+    formFieldHiddenTpl,
     formFieldTextTpl,
     formFieldLongTextTpl,
     formFieldListTpl,
@@ -32,12 +32,16 @@ define('Form.Field.Type', [
             this.template = this.getTemplate();
         },
 
+        /* eslint-disable complexity */
         getTemplate: function parseType() {
             switch (this.type) {
+            case 'hidden':
+                return formFieldHiddenTpl;
             case 'text':
             case 'email':
             case 'phone':
             case 'number':
+            case 'currency':
             case 'url':
             case 'date':
             case 'datetime':
@@ -52,39 +56,43 @@ define('Form.Field.Type', [
                 return formFieldTpl;
             }
         },
+        /* eslint-enable complexity */
 
         getInputType: function getInputType() {
             switch (this.type) {
             case 'phone':
             case 'email':
                 return 'text';
+            case 'currency':
+                return 'number';
             default:
                 return this.type;
             }
         },
 
+        getValidatedList: function getValidatedList(list, relatedAttributeValue, listsAvailable) {
+            if (_.isFunction(list)) {
+                return this.getValidatedList(list(relatedAttributeValue, this));
+            } else if (_.isObject(list)) {
+                return _.values(list);
+            } else if (_.isArray(list)) {
+                return list;
+            } else if (_.isString(list) && (list in listsAvailable)) {
+                return this.getValidatedList(listsAvailable[list], relatedAttributeValue, listsAvailable);
+            }
+            return [];
+        },
+
         getListOptions: function getListOptions() {
-            var states;
             var modelField = this.model;
             var modelForm = this.config.model;
             var relatedAttribute = modelField.get('relatedAttribute');
             var relatedAttributeValue = relatedAttribute ? modelForm.get(relatedAttribute) : null;
+            var listsAvailable = this.config.getLists();
             var list = modelField.get('list');
-            this.showAsTextField = false;
-            if (_.isFunction(list)) {
-                return list(relatedAttributeValue, this);
-            } else if (_.isObject(list)) {
-                return _.values(list);
-            } else if (_.isString(list)) {
-                if (list === 'countries') {
-                    return FormFieldLists.getCountries();
-                } else if (list === 'states') {
-                    states = FormFieldLists.getStates(relatedAttributeValue);
-                    this.showAsTextField = (states.length === 0);
-                    return states;
-                }
-            }
-            return [];
+            var validatedList = this.getValidatedList(list, relatedAttributeValue, listsAvailable);
+            this.isDisabled = (validatedList.length === 0);
+            return validatedList;
         },
 
         getContextAdditions: function getContextAdditions() {
@@ -92,8 +100,9 @@ define('Form.Field.Type', [
             var modelField = this.model;
             var displaySuffix = this.config.getFieldDisplaySuffix();
             var attribute = modelField.get('attribute');
+            var attributeDisplay = attribute + displaySuffix;
             var fieldValue = modelForm.get(attribute);
-            var fieldValueDisplay = modelForm.get(attribute + displaySuffix);
+            var fieldValueDisplay = modelForm.get(attributeDisplay);
             var isInline = !!modelField.get('inline');
             var context = {
                 inputType: this.getInputType(),
@@ -105,13 +114,20 @@ define('Form.Field.Type', [
                 context.selectedName = fieldValueDisplay;
                 if (this.type === 'list') {
                     context.options = this.getListOptions();
-                    context.showAsTextField = this.showAsTextField; // important to be after this.getListOptions()
+                    context.isDisabled = !!this.isDisabled; // important to be after this.getListOptions()
+                    if (this.isDisabled) {
+                        modelForm.set(attribute, null);
+                        modelForm.set(attributeDisplay, null);
+                    }
                     context.list = modelField.get('list');
                     context.relatedAttribute = modelField.get('relatedAttribute');
                     context.hideDefaultOption = !!modelField.get('nodefault');
                 }
             } else {
                 context.value = fieldValue;
+                if (this.type === 'currency') {
+                    context.isCurrency = true;
+                }
             }
             return context;
         }

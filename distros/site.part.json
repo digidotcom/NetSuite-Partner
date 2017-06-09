@@ -4,15 +4,30 @@
     "dependencies": ["boilerplate"],
     "endpoint": true,
     "modules": {
+        "site/Backbone.View.Multiple": "dev",
+        "site/BaseSassStyles.Site": "dev",
+        "site/CheckoutApplication.Site": "dev",
+        "site/Configuration.Countries": "dev",
         "site/Configuration.Site": "dev",
+        "site/CRUD.Settings": "dev",
         "site/CRUD": "dev",
         "site/EFCore.CRUD": "dev",
+        "site/Footer.Site": "dev",
         "site/Form": "dev",
+        "site/GlobalImages.Site": "dev",
         "site/Header.CRUD": "dev",
+        "site/Header.Site": "dev",
         "site/Heartbeat": "dev",
+        "site/ListHeader.Site": "dev",
+        "site/Lists": "dev",
+        "site/MenuTree.Site": "dev",
         "site/Mixin": "dev",
+        "site/MyAccountApplication.Site": "dev",
+        "site/PartnerQuote": "dev",
         "site/Registration": "dev",
-        "site/ServiceController.Validations.RequireSecureFix": "dev"
+        "site/SafariHtmlClass": "dev",
+        "site/ServiceController.Validations.RequireSecureFix": "dev",
+        "site/ShoppingApplication.Site": "dev"
     },
     "tasksConfig": {
         "javascript": [
@@ -20,16 +35,19 @@
                 "entryPoint": "SC.Shopping.Starter",
                 "dependencies": [
                     {"prepend": "SC.Shopping.Configuration.Site"},
+                    {"prepend": "Configuration.Countries"},
                     "Header.CRUD"
                 ]
             },
             {
                 "entryPoint": "SC.MyAccount.Starter",
                 "dependencies": [
+                    {"prepend": "Configuration.Countries"},
                     {"prepend": "SC.MyAccount.Configuration.Site"},
                     "CRUD",
                     "Header.CRUD",
                     "Heartbeat",
+                    "PartnerQuote",
                     "Registration"
                 ]
             },
@@ -37,6 +55,7 @@
                 "entryPoint": "SC.Checkout.Starter",
                 "dependencies": [
                     {"prepend": "SC.Checkout.Configuration.Site"},
+                    {"prepend": "Configuration.Countries"},
                     "Header.CRUD",
                     "Heartbeat"
                 ]
@@ -46,6 +65,8 @@
             "dependencies": [
                 "Configuration.Site",
                 "Heartbeat.ServiceController",
+                "Lists",
+                "PartnerQuote",
                 "Registration",
                 "ServiceController.Validations.RequireSecureFix"
             ]
@@ -55,21 +76,35 @@
                 {
                     "name": "Shopping",
                     "dependencies": [
-                        "Header.CRUD"
+                        {"prepend": "BaseSassStyles.Site"},
+                        "Footer.Site",
+                        "Header.CRUD",
+                        "Header.Site",
+                        "ShoppingApplication.Site"
                     ]
                 },
                 {
                     "name": "MyAccount",
                     "dependencies": [
+                        {"prepend": "BaseSassStyles.Site"},
                         "CRUD",
+                        "Footer.Site",
                         "Header.CRUD",
-                        "Form"
+                        "Header.Site",
+                        "Form",
+                        "ListHeader.Site",
+                        "MenuTree.Site",
+                        "MyAccountApplication.Site"
                     ]
                 },
                 {
                     "name": "Checkout",
                     "dependencies": [
-                        "Header.CRUD"
+                        {"prepend": "BaseSassStyles.Site"},
+                        "CheckoutApplication.Site",
+                        "Footer.Site",
+                        "Header.CRUD",
+                        "Header.Site"
                     ]
                 }
             ]

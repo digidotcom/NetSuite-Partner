@@ -25,7 +25,7 @@
                 {{/if}}
             </p>
         {{else}}
-            <input type="{{inputType}}" class="form-fields-input" id="{{attribute}}" name="{{attribute}}" data-value="{{value}}" value="" />
+            <input type="{{inputType}}" class="form-fields-input" id="{{attribute}}" name="{{attribute}}" data-value="{{value}}" value="" {{#if isCurrency}}min="0.00" step="0.01"{{/if}} />
             {{#if help}}
             <p class="form-fields-input-help">{{{translate help}}}</p>
             {{/if}}

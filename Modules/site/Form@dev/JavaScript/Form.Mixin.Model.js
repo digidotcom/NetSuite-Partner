@@ -19,6 +19,7 @@ define('Form.Mixin.Model', [
                 this.parseMixinOptions();
                 this.mapListRecordFields();
                 this.defineValidation();
+                this.setDefaultValues();
             },
             parseMixinOptions: function parseMixinOptions() {
                 _(this).extend(this.mixinOptions);
@@ -86,6 +87,32 @@ define('Form.Mixin.Model', [
                         }
                     }
                 });
+            },
+            setDefaultValues: function setDefaultValues() {
+                var self = this;
+                var formConfig = self.formConfig;
+                var data = formConfig.getDataJSON();
+                if (formConfig.isNew()) {
+                    _(data.fields).each(function eachField(field) {
+                        var attribute = field.attribute;
+                        var attributeDisplay = formConfig.getFieldDisplay(attribute);
+                        var defaultValue = field.defaultValue;
+                        if (attribute && defaultValue) {
+                            if (_.isObject(defaultValue)) {
+                                self.set(attribute, defaultValue.internalid);
+                                self.set(attributeDisplay, defaultValue.name);
+                            } else {
+                                self.set(attribute, defaultValue + '');
+                            }
+                        }
+                    });
+                }
+            },
+            setAddAndNew: function setAddAndNew(value) {
+                this.addAndNew = value;
+            },
+            isAddAndNew: function isAddAndNew() {
+                return !!this.addAndNew;
             }
         }
     });

@@ -12,10 +12,18 @@
   &:last-child {
     margin-bottom: 0;
   }
+  @media (min-width: $screen-sm-min) {
+    margin-bottom: 0;
+  }
 }
 
 .form-actions-edit {
   @extend .button-primary;
+  @extend %form-actions-button;
+}
+
+.form-actions-submit-secondary {
+  @extend .button-secondary;
   @extend %form-actions-button;
 }
 
@@ -25,6 +33,11 @@
 }
 
 .form-actions-cancel {
+  @extend .button-secondary;
+  @extend %form-actions-button;
+}
+
+.form-actions-custom {
   @extend .button-secondary;
   @extend %form-actions-button;
 }

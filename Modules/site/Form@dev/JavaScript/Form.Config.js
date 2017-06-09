@@ -55,9 +55,18 @@ define('Form.Config', [
             this.config.info = info;
         },
 
+        isLoading: function isLoading() {
+            return !!this.isLoadingFlag;
+        },
+        setLoading: function setLoading(isLoading) {
+            this.isLoadingFlag = isLoading;
+        },
 
         getFieldDisplaySuffix: function getFieldDisplaySuffix() {
             return '_display';
+        },
+        getFieldDisplay: function getFieldDisplaySuffix(field) {
+            return field + this.getFieldDisplaySuffix();
         },
         isNew: function isNew() {
             return this.getAction() === 'new';
@@ -88,6 +97,10 @@ define('Form.Config', [
                    (this.isEdit() && this.canEdit());
         },
 
+        getLists: function getLists() {
+            return this.getInfo().lists;
+        },
+
         getDependentFields: function getDependentFields(attribute) {
             var data = this.getDataJSON();
             var dependentFields = this.dependentFields;
@@ -116,9 +129,11 @@ define('Form.Config', [
         parseConfig: function parseData() {
             var config = this.getConfig();
             var data = config.data;
-            var dataJSON = jQuery.extend(true, {}, data);
+            var dataJSON;
             var ungroupedGroup = { fields: [] };
             var hashTemp = {};
+            data.groups = data.groups || [];
+            dataJSON = jQuery.extend(true, {}, data);
             _(dataJSON.groups).each(function eachGroup(groupJSON, i) {
                 var groupData = data.groups[i];
                 groupData.fields = new FormFieldCollection();

@@ -15,7 +15,9 @@ define('CRUD.Configuration', [
         getStatic: function configuration(crudId) {
             return {
                 recordServiceUrl: 'services/CRUD.Record.Service.ss?id=' + crudId,
-                lookupServiceUrl: 'services/CRUD.Lookup.Service.ss?id=' + crudId
+                listServiceUrl: 'services/CRUD.List.Service.ss',
+                lookupServiceUrl: 'services/CRUD.Lookup.Service.ss?id=' + crudId,
+                actionServiceUrl: 'services/CRUD.Action.Service.ss?id=' + crudId
             };
         },
         getPublishedAll: function getPublished() {
@@ -38,13 +40,6 @@ define('CRUD.Configuration', [
             }
             return this.crudIds;
         },
-        getAll: function getAll() {
-            var self = this;
-            _(this.getCrudIds()).each(function eachConfig(crudId) {
-                self.get(crudId);
-            });
-            return this.config;
-        },
         get: function get(crudId) {
             var published;
             var configuration;
@@ -55,8 +50,12 @@ define('CRUD.Configuration', [
             }
             return this.config[crudId];
         },
-        getForForm: function getForForm(crudId) {
-            return this.get(crudId);
+        getAll: function getAll() {
+            var self = this;
+            _(this.getCrudIds()).each(function eachConfig(crudId) {
+                self.get(crudId);
+            });
+            return this.config;
         }
     };
 });

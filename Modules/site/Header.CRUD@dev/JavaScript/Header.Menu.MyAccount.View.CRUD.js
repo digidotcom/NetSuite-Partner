@@ -21,6 +21,7 @@ define('Header.Menu.MyAccount.View.CRUD', [
                 crudMenus.push(crudMenu);
             });
             _(context).extend({
+                hasCrudMenus: crudMenus.length,
                 crudMenus: crudMenus
             });
         }
