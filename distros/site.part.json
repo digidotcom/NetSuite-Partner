@@ -37,6 +37,7 @@
                     {"prepend": "SC.Shopping.Configuration.Site"},
                     {"prepend": "Configuration.Countries"},
                     "Header.CRUD",
+                    {"remove": "Newsletter"},
                     {"remove": "RequestQuoteAccessPoints"},
                     {"remove": "StoreLocatorAccessPoints"}
                 ]
