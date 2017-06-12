@@ -59,11 +59,6 @@
 					</button>
 				</div>
 
-				<div class="header-menu-cart">
-					<div class="header-menu-cart-dropdown" >
-						<div data-view="Header.MiniCart"></div>
-					</div>
-				</div>
 			</div>
 		</div>
 		
@@ -72,7 +67,4 @@
 </div>
 
 <div class="header-sidebar-overlay" data-action="header-sidebar-hide"></div>
-<div class="header-secondary-wrapper">
-</div>
-
-<div class="header-site-search"></div>
+<div class="header-secondary-wrapper"></div>
