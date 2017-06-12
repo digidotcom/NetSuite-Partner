@@ -18,6 +18,7 @@
         "site/Header.CRUD": "dev",
         "site/Header.Site": "dev",
         "site/Heartbeat": "dev",
+        "site/Home.Site": "dev",
         "site/ListHeader.Site": "dev",
         "site/Lists": "dev",
         "site/MenuTree.Site": "dev",
