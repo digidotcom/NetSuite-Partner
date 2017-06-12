@@ -36,7 +36,9 @@
                 "dependencies": [
                     {"prepend": "SC.Shopping.Configuration.Site"},
                     {"prepend": "Configuration.Countries"},
-                    "Header.CRUD"
+                    "Header.CRUD",
+                    {"remove": "RequestQuoteAccessPoints"},
+                    {"remove": "StoreLocatorAccessPoints"}
                 ]
             },
             {
@@ -48,7 +50,9 @@
                     "Header.CRUD",
                     "Heartbeat",
                     "PartnerQuote",
-                    "Registration"
+                    "Registration",
+                    {"remove": "RequestQuoteAccessPoints"},
+                    {"remove": "StoreLocatorAccessPoints"}
                 ]
             },
             {
@@ -57,7 +61,9 @@
                     {"prepend": "SC.Checkout.Configuration.Site"},
                     {"prepend": "Configuration.Countries"},
                     "Header.CRUD",
-                    "Heartbeat"
+                    "Heartbeat",
+                    {"remove": "RequestQuoteAccessPoints"},
+                    {"remove": "StoreLocatorAccessPoints"}
                 ]
             }
         ],
