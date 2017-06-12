@@ -21,6 +21,7 @@
         "site/Home.Site": "dev",
         "site/ListHeader.Site": "dev",
         "site/Lists": "dev",
+        "site/LoginRegister.Site": "dev",
         "site/MenuTree.Site": "dev",
         "site/Mixin": "dev",
         "site/MyAccountApplication.Site": "dev",
