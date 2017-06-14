@@ -1,0 +1,13 @@
+{
+    "type": "object",
+    "properties": {
+        "overview.content": {
+            "group": "myAccountApp",
+            "subtab": "overview",
+            "type": "string",
+            "title": "HTML Content",
+            "description": "Content of the Overview page in HTML format",
+            "default": "<p></p>"
+        }
+    }
+}
