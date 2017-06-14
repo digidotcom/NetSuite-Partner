@@ -1,0 +1,19 @@
+{
+    "type": "object",
+    "subtab": {
+        "id": "documents",
+        "title": "Documents",
+        "description": "Documents section in My Account portal for box documents.",
+        "group": "myAccountApp"
+    },
+    "properties": {
+        "documents.iframeUrl": {
+            "group": "myAccountApp",
+            "subtab": "documents",
+            "type": "string",
+            "title": "iFrame URL",
+            "description": "URL to use in the iframe to show Box files",
+            "default": ""
+        }
+    }
+}

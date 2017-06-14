@@ -2,11 +2,13 @@ define('Documents.View', [
     'underscore',
     'Backbone',
     'Utils',
+    'SC.Configuration',
     'documents.tpl'
 ], function DocumentsView(
     _,
     Backbone,
     Utils,
+    Configuration,
     documentsTpl
 ) {
     'use strict';
@@ -35,7 +37,9 @@ define('Documents.View', [
         },
 
         getContext: function getContext() {
-            return {};
+            return {
+                iframeUrl: Configuration.get('documents.iframeUrl')
+            };
         }
     });
 });
