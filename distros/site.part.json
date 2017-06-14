@@ -11,6 +11,7 @@
         "site/Configuration.Site": "dev",
         "site/CRUD.Settings": "dev",
         "site/CRUD": "dev",
+        "site/Documents": "dev",
         "site/EFCore.CRUD": "dev",
         "site/Footer.Site": "dev",
         "site/Form": "dev",
@@ -51,6 +52,7 @@
                     {"prepend": "Configuration.Countries"},
                     {"prepend": "SC.MyAccount.Configuration.Site"},
                     "CRUD",
+                    "Documents",
                     "Header.CRUD",
                     "Heartbeat",
                     "Overview.Site",
@@ -99,6 +101,7 @@
                     "dependencies": [
                         {"prepend": "BaseSassStyles.Site"},
                         "CRUD",
+                        "Documents",
                         "Footer.Site",
                         "Header.CRUD",
                         "Header.Site",
