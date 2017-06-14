@@ -361,17 +361,6 @@ define('Registration.Configuration', [
                     fieldName: 'custrecord_reg_estimated_value'
                 }
             },
-            externalReferenceNumber: {
-                form: {
-                    group: 'details',
-                    type: 'text',
-                    label: 'External Reference #',
-                    required: false
-                },
-                record: {
-                    fieldName: 'custrecord_external_reference_numb'
-                }
-            },
             rejectReason: {
                 form: {
                     group: 'details',
@@ -452,6 +441,17 @@ define('Registration.Configuration', [
                         fieldName: 'entityid',
                         joinKey: 'custrecord_partner_field_sales_rep'
                     }
+                }
+            },
+            externalReferenceNumber: {
+                form: {
+                    group: 'partner',
+                    type: 'text',
+                    label: 'External Reference #',
+                    required: false
+                },
+                record: {
+                    fieldName: 'custrecord_external_reference_numb'
                 }
             },
 
