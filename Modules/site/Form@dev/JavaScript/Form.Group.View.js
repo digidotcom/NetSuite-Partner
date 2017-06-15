@@ -23,11 +23,12 @@ define('Form.Group.View', [
         },
 
         separateHiddenFields: function separateHiddenFields() {
+            var isNew = this.config.isNew();
             this.fieldsHidden = this.fields.filter(function filterFields(field) {
                 return field.isHiddenType();
             });
-            this.fieldsVisible = this.fields.filter(function filterFields(field) {
-                return !field.isHiddenType();
+            this.fieldsVisible = this.fields.reject(function filterFields(field) {
+                return field.isHiddenType() || (isNew && field.isInline());
             });
         },
 
@@ -51,13 +52,15 @@ define('Form.Group.View', [
 
         getContext: function getContext() {
             var model = this.model;
+            var isMainGroup = !model.get('name');
+            var hasVisibleFields = this.fieldsVisible.length > 0;
             return {
                 showContent: this.config.canAccess(),
                 id: model.get('id'),
                 name: model.get('name'),
-                isMainGroup: !model.get('name'),
+                hideTitle: isMainGroup || !hasVisibleFields,
                 hasHiddenFields: this.fieldsHidden.length > 0,
-                hasVisibleFields: this.fieldsVisible.length > 0
+                hasVisibleFields: hasVisibleFields
             };
         }
 
