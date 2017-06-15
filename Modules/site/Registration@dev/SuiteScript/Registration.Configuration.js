@@ -140,6 +140,7 @@ define('Registration.Configuration', [
                 'statusAllowsEdit',
                 'approvalDate',
                 'expiryDate',
+                'rejectReason',
                 'partnerName',
                 'additionalInformation',
                 'fieldSalesEngineer',
@@ -741,7 +742,8 @@ define('Registration.Configuration', [
                     required: true
                 },
                 record: {
-                    fieldName: 'custrecord_reg_product_interest'
+                    fieldName: 'custrecord_reg_product_interest',
+                    type: 'object'
                 }
             },
             additionalInformation: {
