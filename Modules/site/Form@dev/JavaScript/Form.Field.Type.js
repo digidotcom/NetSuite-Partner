@@ -116,8 +116,8 @@ define('Form.Field.Type', [
                     context.options = this.getListOptions();
                     context.isDisabled = !!this.isDisabled; // important to be after this.getListOptions()
                     if (this.isDisabled) {
-                        modelForm.set(attribute, null);
-                        modelForm.set(attributeDisplay, null);
+                        modelForm.set(attribute, '-1');
+                        modelForm.set(attributeDisplay, '---');
                     }
                     context.list = modelField.get('list');
                     context.relatedAttribute = modelField.get('relatedAttribute');

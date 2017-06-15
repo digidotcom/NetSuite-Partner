@@ -538,7 +538,7 @@ define('Registration.Configuration', [
                     nodefault: false,
                     label: 'State',
                     tooltip: 'Depends on the selected country',
-                    required: false
+                    required: true
                 },
                 record: {
                     fieldName: 'custrecord_company_state',
