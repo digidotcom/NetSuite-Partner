@@ -43,10 +43,19 @@ define('Form.Fields.View', [
                 config: this.config
             });
         },
+
+        filterFields: function filterFields(collection) {
+            var isNew = this.config.isNew();
+            return _(collection).reject(function rejectCollection(model) {
+                return isNew && model.isInline();
+            });
+        },
         parseCollection: function parseFields(options) {
-            this.collection = options.fields;
+            var collection = this.filterFields(options.fields);
+            this.collection = collection;
             options.collection = this.collection;
         },
+
         setTemplates: function setTemplates(options) {
             if (!options.isHidden) {
                 this.template = formFieldsTpl;

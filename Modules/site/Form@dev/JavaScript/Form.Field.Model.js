@@ -7,6 +7,9 @@ define('Form.Field.Model', [
 
     return Backbone.Model.extend({
 
+        isInline: function isInline() {
+            return !!this.get('inline');
+        },
         isHiddenType: function isHiddenType() {
             return this.get('type') === 'hidden';
         }
