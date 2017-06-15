@@ -6,7 +6,9 @@
 
 .form-fields-required,
 .form-fields-label-required {
-  @extend .input-required
+  @extend .input-required;
+  font-size: 20px;
+  vertical-align: middle;
 }
 
 .form-fields-label-optional {
