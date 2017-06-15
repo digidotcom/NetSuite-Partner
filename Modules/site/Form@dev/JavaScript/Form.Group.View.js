@@ -23,12 +23,11 @@ define('Form.Group.View', [
         },
 
         separateHiddenFields: function separateHiddenFields() {
-            var isNew = this.config.isNew();
             this.fieldsHidden = this.fields.filter(function filterFields(field) {
                 return field.isHiddenType();
             });
             this.fieldsVisible = this.fields.reject(function filterFields(field) {
-                return field.isHiddenType() || (isNew && field.isInline());
+                return field.isHiddenType() || field.isHideField();
             });
         },
 

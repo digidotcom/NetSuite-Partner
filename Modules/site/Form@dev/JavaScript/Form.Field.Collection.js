@@ -9,7 +9,11 @@ define('Form.Field.Collection', [
 
     return Backbone.Collection.extend({
 
-        model: FormFieldModel
+        model: FormFieldModel,
+
+        initialize: function initialize(elements, options) {
+            this.config = options.config;
+        }
 
     });
 });
