@@ -11,6 +11,7 @@
         "site/Configuration.Site": "dev",
         "site/CRUD.Settings": "dev",
         "site/CRUD": "dev",
+        "site/Documents": "dev",
         "site/EFCore.CRUD": "dev",
         "site/Footer.Site": "dev",
         "site/Form": "dev",
@@ -18,16 +19,20 @@
         "site/Header.CRUD": "dev",
         "site/Header.Site": "dev",
         "site/Heartbeat": "dev",
+        "site/Home.Site": "dev",
         "site/ListHeader.Site": "dev",
         "site/Lists": "dev",
+        "site/LoginRegister.Site": "dev",
         "site/MenuTree.Site": "dev",
         "site/Mixin": "dev",
         "site/MyAccountApplication.Site": "dev",
+        "site/Overview.Site": "dev",
         "site/PartnerQuote": "dev",
         "site/Registration": "dev",
         "site/SafariHtmlClass": "dev",
         "site/ServiceController.Validations.RequireSecureFix": "dev",
-        "site/ShoppingApplication.Site": "dev"
+        "site/ShoppingApplication.Site": "dev",
+        "site/Utils.CRUD": "dev"
     },
     "tasksConfig": {
         "javascript": [
@@ -36,7 +41,10 @@
                 "dependencies": [
                     {"prepend": "SC.Shopping.Configuration.Site"},
                     {"prepend": "Configuration.Countries"},
-                    "Header.CRUD"
+                    "Header.CRUD",
+                    {"remove": "Newsletter"},
+                    {"remove": "RequestQuoteAccessPoints"},
+                    {"remove": "StoreLocatorAccessPoints"}
                 ]
             },
             {
@@ -45,10 +53,14 @@
                     {"prepend": "Configuration.Countries"},
                     {"prepend": "SC.MyAccount.Configuration.Site"},
                     "CRUD",
+                    "Documents",
                     "Header.CRUD",
                     "Heartbeat",
+                    "Overview.Site",
                     "PartnerQuote",
-                    "Registration"
+                    "Registration",
+                    {"remove": "RequestQuoteAccessPoints"},
+                    {"remove": "StoreLocatorAccessPoints"}
                 ]
             },
             {
@@ -57,7 +69,9 @@
                     {"prepend": "SC.Checkout.Configuration.Site"},
                     {"prepend": "Configuration.Countries"},
                     "Header.CRUD",
-                    "Heartbeat"
+                    "Heartbeat",
+                    {"remove": "RequestQuoteAccessPoints"},
+                    {"remove": "StoreLocatorAccessPoints"}
                 ]
             }
         ],
@@ -88,6 +102,7 @@
                     "dependencies": [
                         {"prepend": "BaseSassStyles.Site"},
                         "CRUD",
+                        "Documents",
                         "Footer.Site",
                         "Header.CRUD",
                         "Header.Site",

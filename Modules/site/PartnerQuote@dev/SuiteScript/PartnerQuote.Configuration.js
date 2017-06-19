@@ -1,28 +1,9 @@
-define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
+define('PartnerQuote.Configuration', [
+    'Utils.CRUD'
+], function RegistrationConfiguration(
+    UtilsCrud
+) {
     'use strict';
-
-    function sameIdName(line, v) {
-        var value = line.getText(
-            v.fieldName,
-            v.joinKey ? v.joinKey : null,
-            v.summary ? v.summary : null
-        );
-        return {
-            internalid: value,
-            name: value
-        };
-    }
-    function booleanMap(line, v) {
-        var value = line.getValue(
-            v.fieldName,
-            v.joinKey ? v.joinKey : null,
-            v.summary ? v.summary : null
-        );
-        return value === 'T';
-    }
-    function setText(record, fieldInfo, value) {
-        record.setFieldText(fieldInfo.fieldName, value);
-    }
 
     return {
         id: 'partner_quote',
@@ -223,7 +204,7 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
                 record: {
                     fieldName: 'custrecord_partnerquotestatusedit',
                     joinKey: 'custrecord_partnerquotestatus',
-                    applyFunction: booleanMap
+                    applyFunction: UtilsCrud.booleanMap
                 }
             },
             approveRejectDate: {
@@ -244,7 +225,10 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
                 form: {
                     group: 'distributor',
                     type: 'lookup',
-                    label: 'Distributor Name'
+                    label: 'Distributor Name',
+                    defaultValue: UtilsCrud.partnerNameDefaultValue,
+                    inline: true,
+                    required: true
                 },
                 record: {
                     fieldName: 'custrecord_distributor',
@@ -365,8 +349,8 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
                 record: {
                     fieldName: 'custrecord_endcustomercountry',
                     type: 'object',
-                    applyFunction: sameIdName,
-                    applySetFunction: setText
+                    applyFunction: UtilsCrud.sameIdName,
+                    applySetFunction: UtilsCrud.setText
                 }
             },
             endCustomerState: {
@@ -381,8 +365,8 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
                 record: {
                     fieldName: 'custrecord_endcustomerstate',
                     type: 'object',
-                    applyFunction: sameIdName,
-                    applySetFunction: setText
+                    applyFunction: UtilsCrud.sameIdName,
+                    applySetFunction: UtilsCrud.setText
                 }
             },
             endCustomerPostalCode: {
@@ -439,8 +423,8 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
                 record: {
                     fieldName: 'custrecord_resellerbilltocountry',
                     type: 'object',
-                    applyFunction: sameIdName,
-                    applySetFunction: setText
+                    applyFunction: UtilsCrud.sameIdName,
+                    applySetFunction: UtilsCrud.setText
                 }
             },
             resellerBillToState: {
@@ -455,8 +439,8 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
                 record: {
                     fieldName: 'custrecord_resellerbilltostate',
                     type: 'object',
-                    applyFunction: sameIdName,
-                    applySetFunction: setText
+                    applyFunction: UtilsCrud.sameIdName,
+                    applySetFunction: UtilsCrud.setText
                 }
             },
             contractManufacturer: {
@@ -480,8 +464,8 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
                 record: {
                     fieldName: 'custrecord_contmfrbilltocountry',
                     type: 'object',
-                    applyFunction: sameIdName,
-                    applySetFunction: setText
+                    applyFunction: UtilsCrud.sameIdName,
+                    applySetFunction: UtilsCrud.setText
                 }
             },
             contractManufacturerBillToState: {
@@ -496,8 +480,8 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
                 record: {
                     fieldName: 'custrecord_contmfrbilltostate',
                     type: 'object',
-                    applyFunction: sameIdName,
-                    applySetFunction: setText
+                    applyFunction: UtilsCrud.sameIdName,
+                    applySetFunction: UtilsCrud.setText
                 }
             },
 

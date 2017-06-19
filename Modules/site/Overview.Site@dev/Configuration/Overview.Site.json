@@ -1,0 +1,14 @@
+{
+    "type": "object",
+    "properties": {
+        "overview.content": {
+            "group": "myAccountApp",
+            "subtab": "overview",
+            "type": "string",
+            "nsType": "textarea",
+            "title": "HTML Content",
+            "description": "Content of the Overview page in HTML format",
+            "default": "<p></p>"
+        }
+    }
+}

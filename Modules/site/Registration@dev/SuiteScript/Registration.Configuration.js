@@ -1,40 +1,9 @@
 define('Registration.Configuration', [
-    'Models.Init'
+    'Utils.CRUD'
 ], function RegistrationConfiguration(
-    ModelsInit
+    UtilsCrud
 ) {
     'use strict';
-
-    function sameIdName(line, v) {
-        var value = line.getText(
-            v.fieldName,
-            v.joinKey ? v.joinKey : null,
-            v.summary ? v.summary : null
-        );
-        return {
-            internalid: value,
-            name: value
-        };
-    }
-    function booleanMap(line, v) {
-        var value = line.getValue(
-            v.fieldName,
-            v.joinKey ? v.joinKey : null,
-            v.summary ? v.summary : null
-        );
-        return value === 'T';
-    }
-    function setText(record, fieldInfo, value) {
-        record.setFieldText(fieldInfo.fieldName, value);
-    }
-
-    function partnerNameDefaultValue() {
-        var customer = ModelsInit.customer.getFieldValues(['name']);
-        return {
-            internalid: nlapiGetUser(),
-            name: customer.name
-        };
-    }
 
     return {
         id: 'registration',
@@ -140,6 +109,7 @@ define('Registration.Configuration', [
                 'statusAllowsEdit',
                 'approvalDate',
                 'expiryDate',
+                'rejectReason',
                 'partnerName',
                 'additionalInformation',
                 'fieldSalesEngineer',
@@ -282,7 +252,7 @@ define('Registration.Configuration', [
                 record: { // Checkbox
                     fieldName: 'custrecord_registration_status_edit',
                     joinKey: 'custrecord_registration_status',
-                    applyFunction: booleanMap
+                    applyFunction: UtilsCrud.booleanMap
                 }
             },
             approvalDate: {
@@ -361,17 +331,6 @@ define('Registration.Configuration', [
                     fieldName: 'custrecord_reg_estimated_value'
                 }
             },
-            externalReferenceNumber: {
-                form: {
-                    group: 'details',
-                    type: 'text',
-                    label: 'External Reference #',
-                    required: false
-                },
-                record: {
-                    fieldName: 'custrecord_external_reference_numb'
-                }
-            },
             rejectReason: {
                 form: {
                     group: 'details',
@@ -391,7 +350,7 @@ define('Registration.Configuration', [
                     group: 'partner',
                     type: 'lookup',
                     label: 'Partner Name',
-                    defaultValue: partnerNameDefaultValue,
+                    defaultValue: UtilsCrud.partnerNameDefaultValue,
                     inline: true,
                     required: true
                 },
@@ -452,6 +411,17 @@ define('Registration.Configuration', [
                         fieldName: 'entityid',
                         joinKey: 'custrecord_partner_field_sales_rep'
                     }
+                }
+            },
+            externalReferenceNumber: {
+                form: {
+                    group: 'partner',
+                    type: 'text',
+                    label: 'External Reference #',
+                    required: false
+                },
+                record: {
+                    fieldName: 'custrecord_external_reference_numb'
                 }
             },
 
@@ -524,8 +494,8 @@ define('Registration.Configuration', [
                 record: {
                     fieldName: 'custrecord_company_country',
                     type: 'object',
-                    applyFunction: sameIdName,
-                    applySetFunction: setText
+                    applyFunction: UtilsCrud.sameIdName,
+                    applySetFunction: UtilsCrud.setText
                 }
             },
             companyState: {
@@ -537,13 +507,13 @@ define('Registration.Configuration', [
                     nodefault: false,
                     label: 'State',
                     tooltip: 'Depends on the selected country',
-                    required: false
+                    required: true
                 },
                 record: {
                     fieldName: 'custrecord_company_state',
                     type: 'object',
-                    applyFunction: sameIdName,
-                    applySetFunction: setText
+                    applyFunction: UtilsCrud.sameIdName,
+                    applySetFunction: UtilsCrud.setText
                 }
             },
             companyZipCode: {
@@ -741,7 +711,8 @@ define('Registration.Configuration', [
                     required: true
                 },
                 record: {
-                    fieldName: 'custrecord_reg_product_interest'
+                    fieldName: 'custrecord_reg_product_interest',
+                    type: 'object'
                 }
             },
             additionalInformation: {

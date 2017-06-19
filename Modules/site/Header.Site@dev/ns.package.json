@@ -5,13 +5,18 @@
         ],
         "sass": [
             "Sass/**/*.scss"
+        ],
+        "templates": [
+            "Templates/**/*.tpl"
         ]
     },
     "overrides": {
         "suitecommerce/Header@1.2.0/Images/SCA_Logo.png": "Images/logo.png",
+        "suitecommerce/Header@1.2.0/Sass/_header.scss": "Sass/_header.scss",
         "suitecommerce/Header@1.2.0/Sass/_header-logo.scss": "Sass/_header-logo.scss",
         "suitecommerce/Header@1.2.0/Sass/_header-menu.scss": "Sass/_header-menu.scss",
         "suitecommerce/Header@1.2.0/Sass/_header-mini-cart.scss": "Sass/_header-mini-cart.scss",
-        "suitecommerce/Header@1.2.0/Sass/_header-profile.scss": "Sass/_header-profile.scss"
+        "suitecommerce/Header@1.2.0/Sass/_header-profile.scss": "Sass/_header-profile.scss",
+        "suitecommerce/Header@1.2.0/Templates/header.tpl": "Templates/header.tpl"
     }
 }

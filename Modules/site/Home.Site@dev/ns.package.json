@@ -1,0 +1,10 @@
+{
+    "gulp": {
+        "templates": [
+            "Templates/**/*.tpl"
+        ]
+    },
+    "overrides": {
+        "suitecommerce/Home@2.1.0/Templates/home.tpl": "Templates/home_cms.tpl"
+    }
+}
