@@ -31,7 +31,8 @@
         "site/Registration": "dev",
         "site/SafariHtmlClass": "dev",
         "site/ServiceController.Validations.RequireSecureFix": "dev",
-        "site/ShoppingApplication.Site": "dev"
+        "site/ShoppingApplication.Site": "dev",
+        "site/Utils.CRUD": "dev"
     },
     "tasksConfig": {
         "javascript": [

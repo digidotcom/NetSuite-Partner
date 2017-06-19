@@ -1,40 +1,9 @@
 define('Registration.Configuration', [
-    'Models.Init'
+    'Utils.CRUD'
 ], function RegistrationConfiguration(
-    ModelsInit
+    UtilsCrud
 ) {
     'use strict';
-
-    function sameIdName(line, v) {
-        var value = line.getText(
-            v.fieldName,
-            v.joinKey ? v.joinKey : null,
-            v.summary ? v.summary : null
-        );
-        return {
-            internalid: value,
-            name: value
-        };
-    }
-    function booleanMap(line, v) {
-        var value = line.getValue(
-            v.fieldName,
-            v.joinKey ? v.joinKey : null,
-            v.summary ? v.summary : null
-        );
-        return value === 'T';
-    }
-    function setText(record, fieldInfo, value) {
-        record.setFieldText(fieldInfo.fieldName, value);
-    }
-
-    function partnerNameDefaultValue() {
-        var customer = ModelsInit.customer.getFieldValues(['name']);
-        return {
-            internalid: nlapiGetUser(),
-            name: customer.name
-        };
-    }
 
     return {
         id: 'registration',
@@ -283,7 +252,7 @@ define('Registration.Configuration', [
                 record: { // Checkbox
                     fieldName: 'custrecord_registration_status_edit',
                     joinKey: 'custrecord_registration_status',
-                    applyFunction: booleanMap
+                    applyFunction: UtilsCrud.booleanMap
                 }
             },
             approvalDate: {
@@ -381,7 +350,7 @@ define('Registration.Configuration', [
                     group: 'partner',
                     type: 'lookup',
                     label: 'Partner Name',
-                    defaultValue: partnerNameDefaultValue,
+                    defaultValue: UtilsCrud.partnerNameDefaultValue,
                     inline: true,
                     required: true
                 },
@@ -525,8 +494,8 @@ define('Registration.Configuration', [
                 record: {
                     fieldName: 'custrecord_company_country',
                     type: 'object',
-                    applyFunction: sameIdName,
-                    applySetFunction: setText
+                    applyFunction: UtilsCrud.sameIdName,
+                    applySetFunction: UtilsCrud.setText
                 }
             },
             companyState: {
@@ -543,8 +512,8 @@ define('Registration.Configuration', [
                 record: {
                     fieldName: 'custrecord_company_state',
                     type: 'object',
-                    applyFunction: sameIdName,
-                    applySetFunction: setText
+                    applyFunction: UtilsCrud.sameIdName,
+                    applySetFunction: UtilsCrud.setText
                 }
             },
             companyZipCode: {
