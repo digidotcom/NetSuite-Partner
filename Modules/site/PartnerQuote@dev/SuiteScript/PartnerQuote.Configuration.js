@@ -20,6 +20,39 @@ define('PartnerQuote.Configuration', [
             filterName: 'status',
             allowEditControlField: 'statusAllowsEdit'
         },
+        actions: [
+            {
+                name: 'submit',
+                label: 'Submit',
+                conditions: [
+                    {
+                        type: 'page',
+                        values: ['view']
+                    },
+                    {
+                        type: 'field',
+                        fieldName: 'statusAllowsEdit',
+                        values: [true]
+                    }
+                ],
+                execute: [
+                    {
+                        type: 'field',
+                        fieldName: 'status',
+                        value: '3'
+                    },
+                    {
+                        type: 'field',
+                        fieldName: 'partnerPqrSubmission',
+                        value: 'T'
+                    }
+                ],
+                result: {
+                    type: 'redirect',
+                    page: 'view'
+                }
+            }
+        ],
         subrecords: [
             {
                 crudId: 'partner_quote_product',
@@ -172,6 +205,11 @@ define('PartnerQuote.Configuration', [
                 record: {
                     fieldName: 'custrecord_pqr_partner_contact',
                     type: 'object'
+                }
+            },
+            partnerPqrSubmission: {
+                record: {
+                    fieldName: 'custrecord_pqr_partner_submission'
                 }
             },
 
