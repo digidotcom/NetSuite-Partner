@@ -58,69 +58,18 @@
     </li>
     {{/if}}
 
-	<li class="header-menu-myaccount-item-level2 header-menu-myaccount-level2-orders" data-permissions="{{purchasesPermissions}}" data-permissions-operator="OR">
-		<a class="header-menu-myaccount-anchor-level2" href="#" data-action="push-menu" name="orders">
-			{{translate 'Purchases'}}
-			<i class="header-menu-myaccount-menu-push-icon"></i>
-		</a>
-		<ul class="header-menu-myaccount-level3 header-menu-myaccount-level3-orders">
-			<li>
-				<a href="#" class="header-menu-myaccount-back" data-action="pop-menu" name="back-level3">
-					<i class="header-menu-myaccount-pop-icon "></i>
-					{{translate 'Back'}}
-				</a>
-			</li>
-			<li data-permissions="{{purchasesPermissions}}">
-				<a class="header-menu-myaccount-anchor-level3" href="#" data-touchpoint="customercenter" data-hashtag="#purchases" name="orderhistory">
-					{{translate 'Purchases History'}}
-				</a>
-			</li>
-			<li>
-				<a class="header-menu-myaccount-anchor-level3" href="#" data-touchpoint="customercenter" data-hashtag="#returns" data-permissions="{{returnsPermissions}}" name="returns">
-					{{translate 'Returns'}}
-				</a>
-			</li>
-			<li data-permissions="{{purchasesPermissions}}">
-				<a class="header-menu-myaccount-anchor-level3" href="#" data-touchpoint="customercenter" data-hashtag="#reorderItems" name="reorderitems">
-					{{translate 'Reorder Items'}}
-				</a>
-			</li>
-			<li class="header-menu-myaccount-item-level3" data-permissions="transactions.tranFind.1,transactions.tranEstimate.1">
-				<a class="header-menu-myaccount-anchor-level3" data-action="push-menu" href="#" data-touchpoint="customercenter" data-hashtag="#quotes" name="quotes">
-					{{translate 'Quotes'}}
-					<i class="header-menu-myaccount-menu-push-icon"></i>
-				</a>
-				<ul class="header-menu-myaccount-level4">
-					<li>
-						<a href="#" class="header-menu-myaccount-back" data-action="pop-menu" name="back-level4">
-							<i class="header-menu-myaccount-pop-icon "></i>
-							{{translate 'Back'}}
-						</a>
-			</li>
-					<li>
-						<a class="header-menu-myaccount-anchor-level4" href="#" data-touchpoint="customercenter" data-hashtag="#quotes" name="allmyquotes">
-							{{translate 'All my Quotes'}}
-						</a>
-					</li>
-					{{#if hasProductList}}
-						<li>
-							{{#if hasNoItem}}
-								<a class="header-menu-myaccount-anchor-level4" href="#" data-touchpoint="customercenter" data-hashtag="#quotes/new" name="requestaquotes">
-									{{translate 'Request a Quote'}}
-								</a>
-							{{else}}
+	<li class="header-menu-myaccount-item-level2 header-menu-myaccount-level2-orders">
+        <a class="header-menu-myaccount-anchor-level2" href="#" data-touchpoint="customercenter" data-hashtag="#quotes" name="quotes">
+            {{translate 'Completed Quotes'}}
+            <i class="header-menu-myaccount-menu-push-icon"></i>
+        </a>
+	</li>
 
-								{{#if hasItemInBasket}}
-									<a class="header-menu-myaccount-anchor-level4" href="#" data-touchpoint="customercenter" data-hashtag="#quotebasket" name="quotebasket">
-										{{translate 'Quote basket <span>(300)</span>'}}
-				</a>
-								{{/if}}
-							{{/if}}
-						</li>
-					{{/if}}
-				</ul>
-			</li>
-		</ul>
+	<li class="header-menu-myaccount-item-level2">
+        <a class="header-menu-myaccount-anchor-level2" href="#" data-touchpoint="customercenter" data-hashtag="#documents" name="documents">
+            {{translate 'Documents'}}
+            <i class="header-menu-myaccount-menu-push-icon"></i>
+        </a>
 	</li>
 
 	<!-- Product Lists - For single list mode data-hashtag will be added dynamically -->
