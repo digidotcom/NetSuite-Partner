@@ -3,5 +3,8 @@
         "javascript": [
             "JavaScript/**/*.js"
         ]
+    },
+    "overrides": {
+        "suitecommerce/OrderHistory@4.0.0/JavaScript/OrderHistory.js": "JavaScript/OrderHistory.js"
     }
 }

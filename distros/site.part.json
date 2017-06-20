@@ -57,7 +57,6 @@
                     "Documents",
                     "Header.CRUD",
                     "Heartbeat",
-                    "OrderHistory.Site",
                     "Overview.Site",
                     "PartnerQuote",
                     "Registration",
