@@ -167,6 +167,7 @@ define('Form.Mixin.View', [
                 });
                 model.on('saveCompleted', function onModelSaveCompleted() {
                     var info = config.getInfo();
+                    var redirectUrl;
                     if (config.isEdit()) {
                         if (config.canView()) {
                             Backbone.history.navigate(info.viewUrl, { trigger: true });
@@ -176,8 +177,16 @@ define('Form.Mixin.View', [
                             model.setAddAndNew(false);
                             Backbone.history.navigate('/', { trigger: false }); // hack to refresh page
                             Backbone.history.navigate(info.newUrl, { trigger: true, replace: true });
-                        } else if (config.canList()) {
-                            Backbone.history.navigate(info.goBackUrl, { trigger: true });
+                        } else {
+                            if (_.isFunction(info.getNewSaveRedirectUrl)) {
+                                redirectUrl = info.getNewSaveRedirectUrl(model.id);
+                                if (redirectUrl) {
+                                    Backbone.history.navigate(redirectUrl, { trigger: true });
+                                }
+                            }
+                            if (!redirectUrl && config.canList()) {
+                                Backbone.history.navigate(info.goBackUrl, { trigger: true });
+                            }
                         }
                     }
                     this.isSavingFormView = false;
