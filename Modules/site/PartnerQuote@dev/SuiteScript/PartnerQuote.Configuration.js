@@ -1,6 +1,6 @@
 define('PartnerQuote.Configuration', [
     'Utils.CRUD'
-], function RegistrationConfiguration(
+], function PartnerQuoteConfiguration(
     UtilsCrud
 ) {
     'use strict';
@@ -295,9 +295,12 @@ define('PartnerQuote.Configuration', [
                     fieldName: 'custrecord_distsalesrepemail'
                 }
             },
+
+            /* ******* customer information ******* */
+
             endCustomerName: {
                 form: {
-                    group: 'distributor',
+                    group: 'customer',
                     type: 'text',
                     label: 'End Customer Name'
                 },
@@ -305,9 +308,6 @@ define('PartnerQuote.Configuration', [
                     fieldName: 'custrecord_endcustomername'
                 }
             },
-
-            /* ******* customer information ******* */
-
             endCustomerMainAddress: {
                 form: {
                     group: 'customer',
@@ -524,7 +524,8 @@ define('PartnerQuote.Configuration', [
             vertical: {
                 form: {
                     group: 'quote',
-                    type: 'lookup',
+                    type: 'list',
+                    list: 'vertical',
                     label: 'Vertical'
                 },
                 record: {
@@ -535,7 +536,8 @@ define('PartnerQuote.Configuration', [
             application: {
                 form: {
                     group: 'quote',
-                    type: 'lookup',
+                    type: 'list',
+                    list: 'quote_request_application',
                     label: 'Application'
                 },
                 record: {
@@ -546,8 +548,9 @@ define('PartnerQuote.Configuration', [
             registrationExists: {
                 form: {
                     group: 'quote',
-                    type: 'lookup',
-                    label: 'Registration for this project?'
+                    type: 'list',
+                    list: 'yes_no',
+                    label: 'Do you have a Registration for this project?'
                 },
                 record: {
                     fieldName: 'custrecord_registrationexists',
@@ -558,7 +561,7 @@ define('PartnerQuote.Configuration', [
                 form: {
                     group: 'quote',
                     type: 'lookup',
-                    label: 'Registration'
+                    label: 'Registration Number'
                 },
                 record: {
                     fieldName: 'custrecord_quotereqregistration',
@@ -568,7 +571,9 @@ define('PartnerQuote.Configuration', [
             currencyForQuote: {
                 form: {
                     group: 'quote',
-                    type: 'lookup',
+                    type: 'list',
+                    list: 'currency',
+                    defaultValue: '1',
                     label: 'Currency for Quote'
                 },
                 record: {
@@ -579,7 +584,7 @@ define('PartnerQuote.Configuration', [
             justificationForDiscount: {
                 form: {
                     group: 'quote',
-                    type: 'text',
+                    type: 'longtext',
                     label: 'Justification for Price Discount'
                 },
                 record: {
@@ -589,7 +594,7 @@ define('PartnerQuote.Configuration', [
             competitor: {
                 form: {
                     group: 'quote',
-                    type: 'lookup',
+                    type: 'text',
                     label: 'Competitor'
                 },
                 record: {
@@ -630,7 +635,9 @@ define('PartnerQuote.Configuration', [
             requireDebit: {
                 form: {
                     group: 'quote',
-                    type: 'lookup',
+                    type: 'list',
+                    list: 'yes_no',
+                    defaultValue: '2',
                     label: 'Require a Debit?'
                 },
                 record: {
