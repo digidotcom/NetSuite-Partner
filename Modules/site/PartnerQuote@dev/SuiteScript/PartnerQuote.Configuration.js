@@ -44,7 +44,7 @@ define('PartnerQuote.Configuration', [
                 ],
                 result: {
                     type: 'redirect',
-                    page: 'view'
+                    page: 'list'
                 }
             }
         ],
