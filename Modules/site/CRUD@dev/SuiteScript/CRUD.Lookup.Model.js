@@ -17,12 +17,15 @@ define('CRUD.Lookup.Model', [
             var fieldKey = data.field;
             var query = data.query;
             var fieldConfig = CrudConfiguration.getFieldConfigForRecord(config, fieldKey);
+            var fieldConfigRecord = CrudConfiguration.getFieldRecord(config, fieldKey);
             var record;
             var field;
             var options;
             var optionsValues = [];
 
-            if (fieldConfig) {
+            if (fieldConfigRecord && fieldConfigRecord.lookup) {
+                optionsValues = fieldConfigRecord.lookup(data) || [];
+            } else if (fieldConfig) {
                 record = nlapiCreateRecord(config.record);
                 field = record.getField(fieldConfig.joinKey ? fieldConfig.joinKey : fieldConfig.fieldName);
 
@@ -44,10 +47,7 @@ define('CRUD.Lookup.Model', [
                     });
                 }
             }
-            if (optionsValues.length) {
-                return optionsValues;
-            }
-            return [];
+            return optionsValues;
         }
     });
 });

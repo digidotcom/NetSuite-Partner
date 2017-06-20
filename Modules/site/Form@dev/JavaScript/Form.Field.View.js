@@ -101,9 +101,7 @@ define('Form.Field.View', [
                 query = this.getDisplayInput().val();
                 this.query = query;
                 this.setLookupValue();
-                if (query) {
-                    this.lookup.search(attribute, query);
-                }
+                this.lookup.search(attribute, query);
             }
         },
         handleLookupResponse: function handleLookupResponse(selectedModel, noSelection) {
