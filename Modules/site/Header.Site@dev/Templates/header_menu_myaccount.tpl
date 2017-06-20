@@ -28,111 +28,42 @@
 		</a>
 	</li>
 
-    {{#if hasCrudMenus}}
+    {{#each crudMenus}}
     <li class="header-menu-myaccount-item-level2">
-        {{#each crudMenus}}
-        <div class="header-menu-myaccount-crud-menus">
-            <a class="header-menu-myaccount-anchor-level2" href="#" data-touchpoint="customercenter" data-hashtag="#{{url}}"{{#if hasChildren}} data-action="push-menu"{{/if}} name="{{id}}">
-                {{name}}
-                <i class="header-menu-myaccount-menu-push-icon"></i>
-            </a>
-            {{#if hasChildren}}
-            <ul class="header-menu-myaccount-level3">
-                <li>
-                    <a href="#" class="header-menu-myaccount-back" data-action="pop-menu" name="back-level3">
-                        <i class="header-menu-myaccount-pop-icon "></i>
-                        {{translate 'Back'}}
-                    </a>
-                </li>
-                {{#each children}}
-                <li data-permissions="{{purchasesPermissions}}">
-                    <a class="header-menu-myaccount-anchor-level3" href="#" data-touchpoint="customercenter" data-hashtag="#{{url}}" name="{{id}}">
-                        {{name}}
-                    </a>
-                </li>
-                {{/each}}
-            </ul>
-            {{/if}}
-        </div>
-        {{/each}}
+        <a class="header-menu-myaccount-anchor-level2" href="#" data-touchpoint="customercenter" data-hashtag="#{{url}}"{{#if hasChildren}} data-action="push-menu"{{/if}} name="{{id}}">
+            {{name}}
+            <i class="header-menu-myaccount-menu-push-icon"></i>
+        </a>
+        {{#if hasChildren}}
+        <ul class="header-menu-myaccount-level3">
+            <li>
+                <a href="#" class="header-menu-myaccount-back" data-action="pop-menu" name="back-level3">
+                    <i class="header-menu-myaccount-pop-icon "></i>
+                    {{translate 'Back'}}
+                </a>
+            </li>
+            {{#each children}}
+            <li data-permissions="{{purchasesPermissions}}">
+                <a class="header-menu-myaccount-anchor-level3" href="#" data-touchpoint="customercenter" data-hashtag="#{{url}}" name="{{id}}">
+                    {{name}}
+                </a>
+            </li>
+            {{/each}}
+        </ul>
+        {{/if}}
     </li>
-    {{/if}}
+    {{/each}}
 
-	<li class="header-menu-myaccount-item-level2 header-menu-myaccount-level2-orders">
+	<li class="header-menu-myaccount-item-level2">
         <a class="header-menu-myaccount-anchor-level2" href="#" data-touchpoint="customercenter" data-hashtag="#quotes" name="quotes">
             {{translate 'Completed Quotes'}}
             <i class="header-menu-myaccount-menu-push-icon"></i>
         </a>
-	</li>
-
-	<li class="header-menu-myaccount-item-level2">
+        <br />
         <a class="header-menu-myaccount-anchor-level2" href="#" data-touchpoint="customercenter" data-hashtag="#documents" name="documents">
             {{translate 'Documents'}}
             <i class="header-menu-myaccount-menu-push-icon"></i>
         </a>
-	</li>
-
-	<!-- Product Lists - For single list mode data-hashtag will be added dynamically -->
-	{{#if isProductListsEnabled}}
-		<li class="header-menu-myaccount-item-level2">
-			<a class="header-menu-myaccount-anchor-level2" href="#" data-touchpoint="customercenter" data-hashtag="#wishlist" name="wishlist">
-				{{translate 'Wishlist'}}
-			</a>
-
-			<ul class="header-menu-myaccount-level3">
-				{{#if productListsReady}}
-					{{#unless isSingleList}}
-						<li>
-							<a href="#" class="header-menu-myaccount-anchor-level3" data-touchpoint="customercenter" data-hashtag="#wishlist" name="allmylists">
-								{{translate 'All my lists'}}
-							</a>
-						</li>
-					{{/unless}}
-					{{#each productLists}}
-					<li>
-						<a href="#" class="header-menu-myaccount-anchor-level3" data-touchpoint="customercenter" data-hashtag="{{url}}" name="{{name}}">
-							{{name}} ({{ items.length }})
-						</a>
-					</li>
-					{{/each}}
-				{{else}}
-					<li>
-						<a href="#" class="header-menu-myaccount-anchor-level3">
-							{{translate 'Loading...'}}
-						</a>
-					</li>
-				{{/if}}
-			</ul>
-		</li>
-	{{/if}}
-
-
-	<!-- Billing -->
-	<li class="header-menu-myaccount-item-level2">
-		<a class="header-menu-myaccount-anchor-level2" href="#" data-action="push-menu" name="billing">
-			{{translate 'Billing'}}
-			<i class="header-menu-myaccount-menu-push-icon"></i>
-		</a>
-		<ul class="header-menu-myaccount-level3">
-			<li>
-				<a href="#" class="header-menu-myaccount-back" data-action="pop-menu" name="back-level3">
-					<i class="header-menu-myaccount-pop-icon "></i>
-					{{translate 'Back'}}
-				</a>
-			</li>
-			<li>
-				<a class="header-menu-myaccount-anchor-level3" tabindex="-1" href="#" data-touchpoint="customercenter" data-hashtag="#balance" name="accountbalance">{{translate 'Account Balance'}}</a>
-			</li>
-			<li>
-				<a class="header-menu-myaccount-anchor-level3" tabindex="-1" href="#" data-touchpoint="customercenter" data-hashtag="#invoices" data-permissions="transactions.tranCustInvc.1" name="invoices">{{translate 'Invoices'}}</a>
-			</li>
-			<li>
-				<a class="header-menu-myaccount-anchor-level3" tabindex="-1" href="#" data-touchpoint="customercenter" data-hashtag="#transactionhistory" data-permissions="transactions.tranCustInvc.1, transactions.tranCustCred.1, transactions.tranCustPymt.1, transactions.tranCustDep.1, transactions.tranDepAppl.1" data-permissions-operator="OR" name="transactionhistory">{{translate 'Transaction History'}}</a>
-			</li>
-			<li>
-				<a class="header-menu-myaccount-anchor-level3" tabindex="-1" href="#" data-touchpoint="customercenter" data-hashtag="#printstatement" data-permissions="transactions.tranStatement.2" name="printastatement">{{translate 'Print a Statement'}}</a>
-			</li>
-		</ul>
 	</li>
 
 	<!-- Settings -->

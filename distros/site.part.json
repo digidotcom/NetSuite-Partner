@@ -16,7 +16,6 @@
         "site/Footer.Site": "dev",
         "site/Form": "dev",
         "site/GlobalImages.Site": "dev",
-        "site/Header.CRUD": "dev",
         "site/Header.Site": "dev",
         "site/Heartbeat": "dev",
         "site/Home.Site": "dev",
@@ -26,7 +25,7 @@
         "site/MenuTree.Site": "dev",
         "site/Mixin": "dev",
         "site/MyAccountApplication.Site": "dev",
-        "site/OrderHistory.Site": "dev",
+        "site/Quote.Site": "dev",
         "site/Overview.Site": "dev",
         "site/PartnerQuote": "dev",
         "site/Registration": "dev",
@@ -42,7 +41,7 @@
                 "dependencies": [
                     {"prepend": "SC.Shopping.Configuration.Site"},
                     {"prepend": "Configuration.Countries"},
-                    "Header.CRUD",
+                    "Header.Site",
                     {"remove": "Newsletter"},
                     {"remove": "RequestQuoteAccessPoints"},
                     {"remove": "StoreLocatorAccessPoints"}
@@ -55,11 +54,19 @@
                     {"prepend": "SC.MyAccount.Configuration.Site"},
                     "CRUD",
                     "Documents",
-                    "Header.CRUD",
+                    "Header.Site",
                     "Heartbeat",
                     "Overview.Site",
                     "PartnerQuote",
+                    "Quote.Site",
                     "Registration",
+                    {"remove": "OrderHistory"},
+                    {"remove": "ReorderItems"},
+                    {"remove": "ReturnAuthorization"},
+                    {"remove": "Balance"},
+                    {"remove": "Invoice"},
+                    {"remove": "PrintStatement"},
+                    {"remove": "TransactionHistory"},
                     {"remove": "RequestQuoteAccessPoints"},
                     {"remove": "StoreLocatorAccessPoints"}
                 ]
@@ -69,7 +76,7 @@
                 "dependencies": [
                     {"prepend": "SC.Checkout.Configuration.Site"},
                     {"prepend": "Configuration.Countries"},
-                    "Header.CRUD",
+                    "Header.Site",
                     "Heartbeat",
                     {"remove": "RequestQuoteAccessPoints"},
                     {"remove": "StoreLocatorAccessPoints"}
@@ -93,7 +100,6 @@
                     "dependencies": [
                         {"prepend": "BaseSassStyles.Site"},
                         "Footer.Site",
-                        "Header.CRUD",
                         "Header.Site",
                         "ShoppingApplication.Site"
                     ]
@@ -105,7 +111,6 @@
                         "CRUD",
                         "Documents",
                         "Footer.Site",
-                        "Header.CRUD",
                         "Header.Site",
                         "Form",
                         "ListHeader.Site",
@@ -119,7 +124,6 @@
                         {"prepend": "BaseSassStyles.Site"},
                         "CheckoutApplication.Site",
                         "Footer.Site",
-                        "Header.CRUD",
                         "Header.Site"
                     ]
                 }

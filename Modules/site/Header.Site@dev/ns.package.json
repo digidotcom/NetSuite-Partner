@@ -3,6 +3,9 @@
         "images": [
             "Images/**/*"
         ],
+        "javascript": [
+            "JavaScript/**/*.js"
+        ],
         "sass": [
             "Sass/**/*.scss"
         ],
@@ -17,6 +20,7 @@
         "suitecommerce/Header@1.2.0/Sass/_header-menu.scss": "Sass/_header-menu.scss",
         "suitecommerce/Header@1.2.0/Sass/_header-mini-cart.scss": "Sass/_header-mini-cart.scss",
         "suitecommerce/Header@1.2.0/Sass/_header-profile.scss": "Sass/_header-profile.scss",
-        "suitecommerce/Header@1.2.0/Templates/header.tpl": "Templates/header.tpl"
+        "suitecommerce/Header@1.2.0/Templates/header.tpl": "Templates/header.tpl",
+        "suitecommerce/Header@1.2.0/Templates/header_menu_myaccount.tpl": "Templates/header_menu_myaccount.tpl"
     }
 }

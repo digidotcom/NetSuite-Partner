@@ -11,6 +11,5 @@
         ]
     },
     "overrides": {
-        "suitecommerce/Header@1.2.0/Templates/header_menu_myaccount.tpl": "Templates/header_menu_myaccount.tpl"
     }
 }

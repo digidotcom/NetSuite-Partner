@@ -1,8 +1,8 @@
-define('Header.Menu.MyAccount.View.CRUD', [
+define('Header.Menu.MyAccount.View.Site', [
     'underscore',
     'Header.Menu.MyAccount.View',
     'CRUD.Helper'
-], function HeaderMenuMyAccountViewCrud(
+], function HeaderMenuMyAccountViewSite(
     _,
     HeaderMenuMyAccountView,
     CrudHelper
