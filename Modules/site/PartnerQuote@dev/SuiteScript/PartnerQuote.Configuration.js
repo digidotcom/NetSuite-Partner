@@ -51,7 +51,8 @@ define('PartnerQuote.Configuration', [
         ],
         record: 'customrecord_partnerquoterequest',
         loggedIn: {
-            customer: 'customer'
+            customer: 'customer',
+            contact: 'contact'
         },
         filters: {
             inactive: { operator: 'is', value1: 'F' }
@@ -167,6 +168,12 @@ define('PartnerQuote.Configuration', [
                     type: 'object'
                 }
             },
+            contact: {
+                record: {
+                    fieldName: 'custrecord_pqr_partner_contact',
+                    type: 'object'
+                }
+            },
 
             /* ******* partner quote details ******* */
 
@@ -211,7 +218,7 @@ define('PartnerQuote.Configuration', [
                 form: {
                     group: 'details',
                     type: 'date',
-                    label: 'Approve Reject Date',
+                    label: 'Approve/Reject Date',
                     inline: true
                 },
                 record: {
@@ -249,7 +256,7 @@ define('PartnerQuote.Configuration', [
             distributorBuyerPhone: {
                 form: {
                     group: 'distributor',
-                    type: 'text',
+                    type: 'phone',
                     label: 'Distributor Buyer Phone',
                     required: true
                 },
@@ -260,7 +267,7 @@ define('PartnerQuote.Configuration', [
             distributorBuyerEmail: {
                 form: {
                     group: 'distributor',
-                    type: 'text',
+                    type: 'email',
                     label: 'Distributor Buyer Email',
                     required: true
                 },
@@ -282,7 +289,7 @@ define('PartnerQuote.Configuration', [
             distributorSalesRepPhone: {
                 form: {
                     group: 'distributor',
-                    type: 'text',
+                    type: 'phone',
                     label: 'Distributor Sales Rep Phone',
                     required: true
                 },
@@ -293,7 +300,7 @@ define('PartnerQuote.Configuration', [
             distributorSalesRepEmail: {
                 form: {
                     group: 'distributor',
-                    type: 'text',
+                    type: 'email',
                     label: 'Distributor Sales Rep Email',
                     required: true
                 },
