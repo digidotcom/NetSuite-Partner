@@ -239,7 +239,8 @@ define('PartnerQuote.Configuration', [
                 form: {
                     group: 'distributor',
                     type: 'text',
-                    label: 'Distributor Buyer Name'
+                    label: 'Distributor Buyer Name',
+                    required: true
                 },
                 record: {
                     fieldName: 'custrecord_distbuyername'
@@ -249,7 +250,8 @@ define('PartnerQuote.Configuration', [
                 form: {
                     group: 'distributor',
                     type: 'text',
-                    label: 'Distributor Buyer Phone'
+                    label: 'Distributor Buyer Phone',
+                    required: true
                 },
                 record: {
                     fieldName: 'custrecord_distbuyerphone'
@@ -259,7 +261,8 @@ define('PartnerQuote.Configuration', [
                 form: {
                     group: 'distributor',
                     type: 'text',
-                    label: 'Distributor Buyer Email'
+                    label: 'Distributor Buyer Email',
+                    required: true
                 },
                 record: {
                     fieldName: 'custrecord_distbuyeremail'
@@ -269,7 +272,8 @@ define('PartnerQuote.Configuration', [
                 form: {
                     group: 'distributor',
                     type: 'text',
-                    label: 'Distributor Sales Rep Name'
+                    label: 'Distributor Sales Rep Name',
+                    required: true
                 },
                 record: {
                     fieldName: 'custrecord_distsalesrepname'
@@ -279,7 +283,8 @@ define('PartnerQuote.Configuration', [
                 form: {
                     group: 'distributor',
                     type: 'text',
-                    label: 'Distributor Sales Rep Phone'
+                    label: 'Distributor Sales Rep Phone',
+                    required: true
                 },
                 record: {
                     fieldName: 'custrecord_distsalesrepphone'
@@ -289,7 +294,8 @@ define('PartnerQuote.Configuration', [
                 form: {
                     group: 'distributor',
                     type: 'text',
-                    label: 'Distributor Sales Rep Email'
+                    label: 'Distributor Sales Rep Email',
+                    required: true
                 },
                 record: {
                     fieldName: 'custrecord_distsalesrepemail'
@@ -302,7 +308,8 @@ define('PartnerQuote.Configuration', [
                 form: {
                     group: 'customer',
                     type: 'text',
-                    label: 'End Customer Name'
+                    label: 'End Customer Name',
+                    required: true
                 },
                 record: {
                     fieldName: 'custrecord_endcustomername'
@@ -344,7 +351,8 @@ define('PartnerQuote.Configuration', [
                     type: 'list',
                     list: 'countries',
                     nodefault: false,
-                    label: 'End Customer Country'
+                    label: 'End Customer Country',
+                    required: true
                 },
                 record: {
                     fieldName: 'custrecord_endcustomercountry',
@@ -360,7 +368,8 @@ define('PartnerQuote.Configuration', [
                     list: 'states',
                     relatedAttribute: 'endCustomerCountry',
                     nodefault: false,
-                    label: 'End Customer State'
+                    label: 'End Customer State',
+                    required: true
                 },
                 record: {
                     fieldName: 'custrecord_endcustomerstate',
@@ -383,7 +392,8 @@ define('PartnerQuote.Configuration', [
                 form: {
                     group: 'customer',
                     type: 'text',
-                    label: 'End Customer Website'
+                    label: 'End Customer Website',
+                    required: true
                 },
                 record: {
                     fieldName: 'custrecord_endcustomerwebsite'
@@ -504,7 +514,8 @@ define('PartnerQuote.Configuration', [
                     group: 'quote',
                     type: 'list',
                     list: 'product_interest',
-                    label: 'Product Interest'
+                    label: 'Product Interest',
+                    required: true
                 },
                 record: {
                     fieldName: 'custrecord_quotereqproductinterest',
@@ -515,7 +526,8 @@ define('PartnerQuote.Configuration', [
                 form: {
                     group: 'quote',
                     type: 'date',
-                    label: 'Target Purchase Date'
+                    label: 'Target Purchase Date',
+                    required: true
                 },
                 record: {
                     fieldName: 'custrecord_targetpurchasedate'
@@ -550,7 +562,8 @@ define('PartnerQuote.Configuration', [
                     group: 'quote',
                     type: 'list',
                     list: 'yes_no',
-                    label: 'Do you have a Registration for this project?'
+                    label: 'Do you have a Registration for this project?',
+                    required: true
                 },
                 record: {
                     fieldName: 'custrecord_registrationexists',
@@ -574,7 +587,8 @@ define('PartnerQuote.Configuration', [
                     type: 'list',
                     list: 'currency',
                     defaultValue: '1',
-                    label: 'Currency for Quote'
+                    label: 'Currency for Quote',
+                    required: true
                 },
                 record: {
                     fieldName: 'custrecord_currencyforquote',
@@ -585,7 +599,8 @@ define('PartnerQuote.Configuration', [
                 form: {
                     group: 'quote',
                     type: 'longtext',
-                    label: 'Justification for Price Discount'
+                    label: 'Justification for Price Discount',
+                    required: true
                 },
                 record: {
                     fieldName: 'custrecord_justificationfordiscount'
