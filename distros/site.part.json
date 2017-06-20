@@ -124,7 +124,8 @@
                         {"prepend": "BaseSassStyles.Site"},
                         "CheckoutApplication.Site",
                         "Footer.Site",
-                        "Header.Site"
+                        "Header.Site",
+                        "LoginRegister.Site"
                     ]
                 }
             ]
