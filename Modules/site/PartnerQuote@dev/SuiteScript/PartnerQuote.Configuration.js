@@ -58,8 +58,8 @@ define('PartnerQuote.Configuration', [
         frontend: {
             baseKey: 'partner-quotes',
             names: {
-                singular: 'Partner Quote',
-                plural: 'Partner Quotes'
+                singular: 'Quote Request',
+                plural: 'Quote Requests'
             }
         },
         listColumns: [
