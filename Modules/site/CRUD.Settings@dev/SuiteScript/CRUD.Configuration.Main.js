@@ -27,7 +27,8 @@ define('CRUD.Configuration.Main', [
                     filtersDynamic: {},
                     sort: [],
                     joinFields: {},
-                    columns: {}
+                    columns: {},
+                    lookup: {}
                 };
                 _(config.fieldsets).each(function eachFieldset(fieldset, name) {
                     var fieldsetFields = [];
@@ -164,6 +165,13 @@ define('CRUD.Configuration.Main', [
             var fieldConfig = config.fields[fieldId];
             if (fieldConfig && fieldConfig.record) {
                 return fieldConfig.record;
+            }
+            return null;
+        },
+        getFieldLookup: function getFieldLookup(config, fieldId) {
+            var fieldConfig = config.fields[fieldId];
+            if (fieldConfig && fieldConfig.lookup) {
+                return fieldConfig.lookup;
             }
             return null;
         },
