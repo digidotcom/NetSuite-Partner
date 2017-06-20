@@ -38,11 +38,6 @@ define('PartnerQuote.Configuration', [
                 execute: [
                     {
                         type: 'field',
-                        fieldName: 'status',
-                        value: '3'
-                    },
-                    {
-                        type: 'field',
                         fieldName: 'partnerPqrSubmission',
                         value: 'T'
                     }
