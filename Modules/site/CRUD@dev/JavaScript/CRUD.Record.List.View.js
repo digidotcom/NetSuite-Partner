@@ -9,10 +9,10 @@ define('CRUD.Record.List.View', [
     'Backbone.CollectionView',
     'GlobalViews.Pagination.View',
     'GlobalViews.ShowingCurrent.View',
-    'ListHeader.View',
     'RecordViews.Actionable.View',
     'CRUD.Helper',
     'CRUD.AbstractView',
+    'CRUD.ListHeader.View',
     'CRUD.Record.List.Actions.View',
     'CRUD.Status.View',
     'crud_list.tpl'
@@ -27,10 +27,10 @@ define('CRUD.Record.List.View', [
     BackboneCollectionView,
     GlobalViewsPaginationView,
     GlobalViewsShowingCurrentView,
-    ListHeaderView,
     RecordViewsActionableView,
     CrudHelper,
     CrudAbstractView,
+    CrudListHeaderView,
     CrudRecordListActionsView,
     CrudStatusView,
     crudListTpl
@@ -77,7 +77,7 @@ define('CRUD.Record.List.View', [
 
         initializeChildViews: function initializeChildViews(options) {
             // in initialize to avoid render loop
-            this.listHeader = new ListHeaderView({
+            this.listHeader = new CrudListHeaderView({
                 view: this,
                 application: this.application,
                 collection: this.collection,
