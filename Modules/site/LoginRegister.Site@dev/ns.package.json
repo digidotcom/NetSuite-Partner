@@ -1,10 +1,14 @@
 {
     "gulp": {
+        "sass": [
+            "Sass/**/*.scss"
+        ],
         "templates": [
             "Templates/**/*.tpl"
         ]
     },
     "overrides": {
+        "suitecommerce/LoginRegister@2.2.0/Sass/_login-register.scss": "Sass/_login-register.scss",
         "suitecommerce/LoginRegister@2.2.0/Templates/login_register.tpl": "Templates/login_register.tpl"
     }
 }

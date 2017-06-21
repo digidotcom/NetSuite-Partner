@@ -375,6 +375,9 @@ define('Registration.Configuration', [
                         fieldName: 'entityid',
                         joinKey: 'custrecord_partner_field_sales_engr'
                     }
+                },
+                lookup: {
+                    applyFunction: UtilsCrud.partnerContactsLookup
                 }
             },
             buyer: {
@@ -393,6 +396,9 @@ define('Registration.Configuration', [
                         fieldName: 'entityid',
                         joinKey: 'custrecord_partner_buyer'
                     }
+                },
+                lookup: {
+                    applyFunction: UtilsCrud.partnerContactsLookup
                 }
             },
             fieldSalesRep: {
@@ -411,6 +417,9 @@ define('Registration.Configuration', [
                         fieldName: 'entityid',
                         joinKey: 'custrecord_partner_field_sales_rep'
                     }
+                },
+                lookup: {
+                    applyFunction: UtilsCrud.partnerContactsLookup
                 }
             },
             externalReferenceNumber: {

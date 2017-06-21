@@ -14,6 +14,9 @@ define('Lists', [
         'vertical': {
             id: 'customlist_vertical'
         },
+        'currency': {
+            id: 'currency'
+        },
         'yes_no': {
             id: 'customlist_nsts_rm_yesno'
         }

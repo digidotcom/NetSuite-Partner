@@ -17,8 +17,8 @@ define('PartnerQuote.Product.Configuration', [
             baseKey: 'quote-products',
             inlineEdit: true,
             names: {
-                singular: 'Partner Quote Product',
-                plural: 'Partner Quote Products'
+                singular: 'Quote Request Product',
+                plural: 'Quote Request Products'
             }
         },
         parent: {

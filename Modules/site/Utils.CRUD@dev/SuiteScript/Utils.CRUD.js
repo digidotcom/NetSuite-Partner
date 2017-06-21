@@ -1,9 +1,13 @@
 define('Utils.CRUD', [
+    'underscore',
     'Models.Init'
-], function UtilsCrud(
+], function UtilsCrudModule(
+    _,
     ModelsInit
 ) {
     'use strict';
+
+    var UtilsCrud = {};
 
     function sameIdName(line, v) {
         var value = line.getText(
@@ -36,10 +40,43 @@ define('Utils.CRUD', [
         };
     }
 
-    return {
+    function partnerContactsLookup(data) {
+        var query = data.query;
+        var customerId = nlapiGetUser();
+        var contacts = [];
+        var filters = [
+            new nlobjSearchFilter('isinactive', null, 'is', 'F'),
+            new nlobjSearchFilter('company', null, 'is', customerId + '')
+        ];
+        var columns = [
+            new nlobjSearchColumn('internalid'),
+            new nlobjSearchColumn('entityid')
+        ];
+        var results;
+        if (customerId) {
+            results = nlapiSearchRecord('contact', null, filters, columns);
+            _(results).each(function eachResults(result) {
+                var internalId = result.getValue('internalid');
+                var name = result.getValue('entityid');
+                if (!query || (name.toLowerCase().indexOf(query.toLowerCase()) >= 0)) {
+                    contacts.push({
+                        internalid: internalId,
+                        name: name,
+                        text: name
+                    });
+                }
+            });
+        }
+        return contacts;
+    }
+
+    _(UtilsCrud).extend({
         sameIdName: sameIdName,
         booleanMap: booleanMap,
         setText: setText,
-        partnerNameDefaultValue: partnerNameDefaultValue
-    };
+        partnerNameDefaultValue: partnerNameDefaultValue,
+        partnerContactsLookup: partnerContactsLookup
+    });
+
+    return UtilsCrud;
 });
