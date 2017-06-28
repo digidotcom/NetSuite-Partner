@@ -25,12 +25,12 @@ define('Documents.View', [
             return 'documents';
         },
         getTitle: function getTitle() {
-            return Utils.translate('Documents');
+            return Utils.translate('Marketing Materials');
         },
         getBreadcrumbPages: function getBreadcrumbPages() {
             return [
                 {
-                    text: Utils.translate('Documents'),
+                    text: Utils.translate('Marketing Materials'),
                     href: 'documents'
                 }
             ];

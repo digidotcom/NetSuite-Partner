@@ -12,7 +12,7 @@ define('Documents', [
     return {
         MenuItems: {
             id: 'documents',
-            name: Utils.translate('Documents'),
+            name: Utils.translate('Marketing Materials'),
             url: 'documents',
             index: 1,
             children: []
