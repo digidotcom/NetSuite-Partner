@@ -64,6 +64,7 @@ define('Registration.Configuration', [
         },
         listColumns: [
             'number',
+            'externalReferenceNumber',
             'projectName',
             'productInterest',
             'status',
@@ -94,6 +95,7 @@ define('Registration.Configuration', [
                 'internalid',
                 'date',
                 'number',
+                'externalReferenceNumber',
                 'status',
                 'statusAllowsEdit',
                 'approvalDate',
@@ -223,6 +225,7 @@ define('Registration.Configuration', [
                     group: 'details',
                     type: 'text',
                     label: 'Number',
+                    labelShort: 'Registration Number',
                     inline: true
                 },
                 record: { // Free-form Text
@@ -426,7 +429,7 @@ define('Registration.Configuration', [
                 form: {
                     group: 'partner',
                     type: 'text',
-                    label: 'External Reference #',
+                    label: 'Distributor External Id',
                     required: false
                 },
                 record: {
@@ -441,7 +444,7 @@ define('Registration.Configuration', [
                     group: 'customer',
                     type: 'text',
                     label: 'Company Name (End Customer/OEM, ODM)',
-                    labelShort: 'Company Name',
+                    labelShort: 'End Customer Name',
                     required: true
                 },
                 record: {
