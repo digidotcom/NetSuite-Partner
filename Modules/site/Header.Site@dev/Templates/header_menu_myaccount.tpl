@@ -61,7 +61,7 @@
         </a>
         <br />
         <a class="header-menu-myaccount-anchor-level2" href="#" data-touchpoint="customercenter" data-hashtag="#documents" name="documents">
-            {{translate 'Documents'}}
+            {{translate 'Marketing Materials'}}
             <i class="header-menu-myaccount-menu-push-icon"></i>
         </a>
 	</li>

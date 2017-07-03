@@ -20,6 +20,14 @@ define('Header.Menu.MyAccount.View.Site', [
                 });
                 crudMenus.push(crudMenu);
             });
+            crudMenus.sort(function sortCrudMenus(a, b) {
+                if (a.index < b.index) {
+                    return -1;
+                } else if (a.index === b.index) {
+                    return 0;
+                }
+                return 1;
+            });
             _(context).extend({
                 hasCrudMenus: crudMenus.length,
                 crudMenus: crudMenus
