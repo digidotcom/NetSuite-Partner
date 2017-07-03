@@ -105,6 +105,22 @@ define('CRUD.Details.View', [
             }
             return CrudHelper.getListUrl(crudId, parentId);
         },
+        getNewSubrecordName: function getNewSubrecordUrl() {
+            var crudId = this.crudId;
+            var subrecord = CrudHelper.getFirstSubrecord(crudId);
+            var names;
+            if (subrecord && subrecord.crudId) {
+                names = CrudHelper.getNames(subrecord.crudId);
+                if (names) {
+                    if (names.inContextSingular) {
+                        return names.inContextSingular;
+                    } else if (names.singular) {
+                        return names.singular;
+                    }
+                }
+            }
+            return null;
+        },
         getNewSubrecordUrl: function getNewSubrecordUrl(id) {
             var crudId = this.crudId;
             var subrecord = CrudHelper.getFirstSubrecord(crudId);
@@ -191,6 +207,11 @@ define('CRUD.Details.View', [
                 var crudId = this.crudId;
                 var parentId = this.parent;
                 var id = this.model.get('internalid');
+                var labels = {};
+                var subrecordName = this.getNewSubrecordName();
+                if (subrecordName) {
+                    labels.add = Utils.translate('Add $(0)', subrecordName);
+                }
                 return {
                     title: this.getPageHeader(),
                     description: null,
@@ -200,6 +221,7 @@ define('CRUD.Details.View', [
                     lists: CrudHelper.getListsForForm(crudId),
                     goBackUrl: this.getGoBackUrl(),
                     getNewSaveRedirectUrl: this.getNewSaveRedirectUrlCallback(),
+                    actionLabels: labels,
                     customActions: CrudHelper.getActionsForForm(crudId, {
                         page: this.getFormAction(),
                         model: this.model
