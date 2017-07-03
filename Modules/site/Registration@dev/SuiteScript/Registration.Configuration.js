@@ -57,6 +57,7 @@ define('Registration.Configuration', [
         ],
         frontend: {
             baseKey: 'registrations',
+            idField: 'name',
             names: {
                 singular: 'Registration',
                 plural: 'Registrations'
@@ -112,6 +113,7 @@ define('Registration.Configuration', [
             ],
             details: [
                 'internalid',
+                'name',
                 'date',
                 'number',
                 'status',

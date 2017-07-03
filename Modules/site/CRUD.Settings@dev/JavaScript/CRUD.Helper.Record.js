@@ -29,6 +29,10 @@ define('CRUD.Helper.Record', [
             var config = CrudConfiguration.get(crudId);
             return config.frontend && config.frontend.names;
         },
+        getIdField: function getIdField(crudId) {
+            var config = CrudConfiguration.get(crudId);
+            return config.frontend && config.frontend.idField;
+        },
         getBaseKey: function getBaseKey(crudId) {
             var config = CrudConfiguration.get(crudId);
             return config.frontend && config.frontend.baseKey;

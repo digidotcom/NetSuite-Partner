@@ -57,6 +57,7 @@ define('PartnerQuote.Configuration', [
         ],
         frontend: {
             baseKey: 'partner-quotes',
+            idField: 'name',
             names: {
                 singular: 'Quote Request',
                 plural: 'Quote Requests'
@@ -104,6 +105,7 @@ define('PartnerQuote.Configuration', [
             details: [
                 'internalid',
                 'inactive',
+                'name',
                 'date',
                 'status',
                 'statusAllowsEdit',

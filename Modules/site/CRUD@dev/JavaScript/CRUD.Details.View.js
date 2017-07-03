@@ -37,15 +37,25 @@ define('CRUD.Details.View', [
         template: crudDetailsTpl,
 
         getPageHeader: function getPageHeader() {
-            var names = CrudHelper.getNames(this.crudId);
-            var internalid = this.model.get('internalid');
+            var crudId = this.crudId;
+            var names = CrudHelper.getNames(crudId);
+            var idField = CrudHelper.getIdField(crudId);
+            var id = this.model.get(idField || 'internalid');
             var pageHeader;
             if (this.isNew()) {
                 pageHeader = Utils.translate('New $(0)', names.singular);
             } else if (this.isEdit()) {
-                pageHeader = Utils.translate('Edit $(0) #$(1)', names.singular, internalid);
-            } else {
-                pageHeader = Utils.translate('$(0) #$(1)', names.singular, internalid);
+                if (idField) {
+                    pageHeader = Utils.translate('$(0) - Edit', id);
+                } else {
+                    pageHeader = Utils.translate('Edit $(0) #$(1)', names.singular, id);
+                }
+            } else if (this.isView()) {
+                if (idField) {
+                    pageHeader = Utils.translate('$(0)', id);
+                } else {
+                    pageHeader = Utils.translate('$(0) #$(1)', names.singular, id);
+                }
             }
             return pageHeader;
         },
