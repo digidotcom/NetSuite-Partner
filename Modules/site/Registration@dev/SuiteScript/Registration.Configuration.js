@@ -142,6 +142,7 @@ define('Registration.Configuration', [
                 'engineerTechnicalContactPhone',
                 'channelManager',
                 'webAddress',
+                'leadSource',
                 'learnAboutDeal',
                 'preferredDistributor',
                 'productionDate',
@@ -177,6 +178,7 @@ define('Registration.Configuration', [
                 'engineerTechnicalContactName',
                 'engineerTechnicalContactPhone',
                 'webAddress',
+                'leadSource',
                 'learnAboutDeal',
                 'preferredDistributor',
                 'productionDate',
@@ -593,6 +595,19 @@ define('Registration.Configuration', [
                 },
                 record: {
                     fieldName: 'custrecord_reg_web_address'
+                }
+            },
+            leadSource: {
+                form: {
+                    group: 'customer',
+                    type: 'list',
+                    list: 'registration_lead_source',
+                    label: 'Lead Source',
+                    required: false
+                },
+                record: {
+                    fieldName: 'custrecord_reg_lead_source',
+                    type: 'object'
                 }
             },
 

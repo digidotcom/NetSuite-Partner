@@ -12,6 +12,9 @@ define('Registration.Lists.Configuration', [
         },
         'registration_program': {
             id: 'customlist_reg_program'
+        },
+        'registration_lead_source': {
+            id: 'customlist_reg_lead_source'
         }
     };
 });
