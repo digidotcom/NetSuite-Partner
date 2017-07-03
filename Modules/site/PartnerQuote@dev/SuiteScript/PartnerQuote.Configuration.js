@@ -71,11 +71,10 @@ define('PartnerQuote.Configuration', [
             },
             columns: [
                 'number',
-                'status',
-                'approvalDate',
-                'expiryDate',
-                'companyName',
-                'partnerName'
+                'registration',
+                'endCustomerName',
+                'approveRejectDate',
+                'status'
             ]
         },
         groups: [
@@ -99,6 +98,9 @@ define('PartnerQuote.Configuration', [
             list: [
                 'internalid',
                 'name',
+                'registration',
+                'endCustomerName',
+                'approveRejectDate',
                 'status',
                 'date',
                 'statusAllowsEdit'
