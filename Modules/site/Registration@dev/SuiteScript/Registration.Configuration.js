@@ -62,17 +62,23 @@ define('Registration.Configuration', [
                 plural: 'Registrations'
             }
         },
-        listColumns: [
-            'number',
-            'externalReferenceNumber',
-            'projectName',
-            'productInterest',
-            'status',
-            'approvalDate',
-            'expiryDate',
-            'companyName',
-            'partnerName'
-        ],
+        list: {
+            id: {
+                fieldName: 'name',
+                label: 'Digi Id'
+            },
+            columns: [
+                'number',
+                'externalReferenceNumber',
+                'projectName',
+                'productInterest',
+                'status',
+                'approvalDate',
+                'expiryDate',
+                'companyName',
+                'partnerName'
+            ]
+        },
         groups: [
             { id: 'details', name: 'Registration Details' },
             { id: 'partner', name: 'Partner Details' },
@@ -93,6 +99,7 @@ define('Registration.Configuration', [
         fieldsets: {
             list: [
                 'internalid',
+                'name',
                 'date',
                 'number',
                 'externalReferenceNumber',
@@ -193,6 +200,11 @@ define('Registration.Configuration', [
             inactive: {
                 record: { // Checkbox
                     fieldName: 'isinactive'
+                }
+            },
+            name: {
+                record: {
+                    fieldName: 'name'
                 }
             },
             date: {

@@ -187,7 +187,9 @@ define('CRUD.Record.List.View', [
                 var parentModel = this.parentModel;
                 var listColumns = this.listColumns;
                 var recordsCollection = new Backbone.Collection(this.collection.map(function map(model) {
+                    var idField = CrudHelper.getListIdField(crudId);
                     var internalid = model.get('internalid');
+                    var idFieldValue = model.get(idField);
                     var columns = [];
                     _(listColumns).each(function eachListColumn(column) {
                         var attribute = column.attribute;
@@ -202,7 +204,7 @@ define('CRUD.Record.List.View', [
                     });
 
                     return new Backbone.Model({
-                        title: new Handlebars.SafeString(Utils.translate('<span class="tranid">$(0)</span>', internalid)),
+                        title: new Handlebars.SafeString(Utils.translate('<span class="tranid">$(0)</span>', idFieldValue)),
                         record: model,
                         touchpoint: 'customercenter',
                         detailsURL: CrudHelper.allowNavigateToView(crudId, parentModel) ? CrudHelper.getViewUrl(crudId, internalid, parentId) : '',
@@ -240,6 +242,7 @@ define('CRUD.Record.List.View', [
                 isLoading: this.isLoading,
                 showListHeader: this.hasListHeader(),
                 showStatuses: this.hasStatus,
+                idColumnLabel: CrudHelper.getListIdLabel(crudId),
                 listColumns: this.listColumns,
                 showPagination: !!(this.collection.totalRecordsFound && this.collection.recordsPerPage),
                 showCurrentPage: this.options.showCurrentPage,

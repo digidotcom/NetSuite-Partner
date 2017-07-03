@@ -26,12 +26,14 @@ define('Registration.Product.Configuration', [
             filterName: 'registration',
             allowEditSync: true
         },
-        listColumns: [
-            'item',
-            'partNumber',
-            'quantity',
-            'targetResalePrice'
-        ],
+        list: {
+            columns: [
+                'item',
+                'partNumber',
+                'quantity',
+                'targetResalePrice'
+            ]
+        },
         groups: [
             { id: 'default', name: '' }
         ],

@@ -62,14 +62,20 @@ define('PartnerQuote.Configuration', [
                 plural: 'Quote Requests'
             }
         },
-        listColumns: [
-            'number',
-            'status',
-            'approvalDate',
-            'expiryDate',
-            'companyName',
-            'partnerName'
-        ],
+        list: {
+            id: {
+                fieldName: 'name',
+                label: 'Digi Id'
+            },
+            columns: [
+                'number',
+                'status',
+                'approvalDate',
+                'expiryDate',
+                'companyName',
+                'partnerName'
+            ]
+        },
         groups: [
             { id: 'details', name: 'Partner Quote Details' },
             { id: 'distributor', name: 'Distributor Information' },
@@ -90,6 +96,7 @@ define('PartnerQuote.Configuration', [
         fieldsets: {
             list: [
                 'internalid',
+                'name',
                 'status',
                 'date',
                 'statusAllowsEdit'
@@ -188,6 +195,11 @@ define('PartnerQuote.Configuration', [
             inactive: {
                 record: { // Checkbox
                     fieldName: 'isinactive'
+                }
+            },
+            name: {
+                record: {
+                    fieldName: 'name'
                 }
             },
             customer: {

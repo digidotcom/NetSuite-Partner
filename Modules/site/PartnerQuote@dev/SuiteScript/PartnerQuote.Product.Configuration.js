@@ -26,12 +26,14 @@ define('PartnerQuote.Product.Configuration', [
             filterName: 'partnerQuote',
             allowEditSync: true
         },
-        listColumns: [
-            'item',
-            'partNumber',
-            'estimatedAnnualQuantity',
-            'targetResalePrice'
-        ],
+        list: {
+            columns: [
+                'item',
+                'partNumber',
+                'estimatedAnnualQuantity',
+                'targetResalePrice'
+            ]
+        },
         groups: [
             { id: 'default', name: '' }
         ],

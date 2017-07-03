@@ -36,7 +36,7 @@ define('CRUD.Configuration', [
             bootstrapping: [
                 'subrecords',
                 'frontend',
-                'listColumns',
+                'list',
                 'groups'
             ]
         },
