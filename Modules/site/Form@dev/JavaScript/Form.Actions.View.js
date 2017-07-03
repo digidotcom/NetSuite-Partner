@@ -87,7 +87,7 @@ define('Form.Actions.View', [
                 showEditLink: (isView && canEdit),
                 showViewAllLink: (isView && canList),
                 showAddButton: showAddButton,
-                showAddAndNewButton: showAddButton,
+                showAddAndNewButton: showAddButton && info.showAddAndNew,
                 showSaveButton: (isEdit && canEdit),
                 showCancelLink: (isNew && canList) || (isEdit && canView),
                 cancelUrl: isNew || isView ? info.goBackUrl : info.viewUrl,

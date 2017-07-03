@@ -220,6 +220,7 @@ define('CRUD.Details.View', [
                     viewUrl: CrudHelper.getViewUrl(crudId, id, parentId),
                     lists: CrudHelper.getListsForForm(crudId),
                     goBackUrl: this.getGoBackUrl(),
+                    showAddAndNew: !!parentId,
                     getNewSaveRedirectUrl: this.getNewSaveRedirectUrlCallback(),
                     actionLabels: labels,
                     customActions: CrudHelper.getActionsForForm(crudId, {
