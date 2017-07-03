@@ -14,7 +14,7 @@ define('Documents', [
             id: 'documents',
             name: Utils.translate('Marketing Materials'),
             url: 'documents',
-            index: 1,
+            index: 3,
             children: []
         },
 

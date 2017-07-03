@@ -33,13 +33,14 @@ define('CRUD.Helper.Menus', [
         },
         getMenuItems: function getMenuItems(crudId) {
             var names = this.getNames(crudId);
+            var index = this.getLeftNavIndex(crudId) || 0;
             var permissions = this.getPermissions(crudId);
             var baseKey = this.getBaseKey(crudId);
             var menuItems = {
                 id: baseKey,
                 name: Utils.translate(names.plural),
                 url: '',
-                index: 0,
+                index: index,
                 children: []
             };
             if (permissions.list) {

@@ -57,6 +57,7 @@ define('PartnerQuote.Configuration', [
         ],
         frontend: {
             baseKey: 'partner-quotes',
+            leftNavIndex: 1,
             idField: 'name',
             names: {
                 singular: 'Quote Request',

@@ -57,6 +57,7 @@ define('Registration.Configuration', [
         ],
         frontend: {
             baseKey: 'registrations',
+            leftNavIndex: 0,
             idField: 'name',
             names: {
                 singular: 'Registration',

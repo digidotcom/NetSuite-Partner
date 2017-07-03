@@ -14,7 +14,7 @@ define('Quote.Site', [
             id: 'quotes',
             name: _('Completed Quotes').translate(),
             url: 'quotes',
-            index: 1,
+            index: 2,
             permission: 'transactions.tranFind.1,transactions.tranEstimate.1'
         }
     });

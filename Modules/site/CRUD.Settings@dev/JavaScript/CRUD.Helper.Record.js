@@ -29,6 +29,10 @@ define('CRUD.Helper.Record', [
             var config = CrudConfiguration.get(crudId);
             return config.frontend && config.frontend.names;
         },
+        getLeftNavIndex: function getLeftNavIndex(crudId) {
+            var config = CrudConfiguration.get(crudId);
+            return config.frontend && config.frontend.leftNavIndex;
+        },
         getIdField: function getIdField(crudId) {
             var config = CrudConfiguration.get(crudId);
             return config.frontend && config.frontend.idField;
