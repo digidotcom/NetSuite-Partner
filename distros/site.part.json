@@ -25,6 +25,7 @@
         "site/MenuTree.Site": "dev",
         "site/Mixin": "dev",
         "site/MyAccountApplication.Site": "dev",
+        "site/NavigationTabsDisplay": "dev",
         "site/Quote.Site": "dev",
         "site/Overview.Site": "dev",
         "site/PartnerQuote": "dev",
@@ -88,6 +89,7 @@
                 "Configuration.Site",
                 "Heartbeat.ServiceController",
                 "Lists",
+                "NavigationTabsDisplay",
                 "PartnerQuote",
                 "Registration",
                 "ServiceController.Validations.RequireSecureFix"

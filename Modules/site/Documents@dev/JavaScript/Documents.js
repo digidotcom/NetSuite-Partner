@@ -1,21 +1,27 @@
 define('Documents', [
     'underscore',
     'Utils',
-    'Documents.Router'
+    'Documents.Router',
+    'NavigationTabsDisplay'
 ], function Documents(
     _,
     Utils,
-    DocumentsRouter
+    DocumentsRouter,
+    NavigationTabsDisplay
 ) {
     'use strict';
 
     return {
-        MenuItems: {
-            id: 'documents',
-            name: Utils.translate('Marketing Materials'),
-            url: 'documents',
-            index: 3,
-            children: []
+        MenuItems: function MenuItems() {
+            if (NavigationTabsDisplay.isVisible(NavigationTabsDisplay.tabs.DOCUMENTS)) {
+                return {
+                    id: 'documents',
+                    name: Utils.translate('Marketing Materials'),
+                    url: 'documents',
+                    index: 3,
+                    children: []
+                };
+            }
         },
 
         mountToApp: function mountToApp(application) {

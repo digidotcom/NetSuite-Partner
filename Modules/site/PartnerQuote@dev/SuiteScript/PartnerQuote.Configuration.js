@@ -1,18 +1,22 @@
 define('PartnerQuote.Configuration', [
-    'Utils.CRUD'
+    'Utils.CRUD',
+    'NavigationTabsDisplay'
 ], function PartnerQuoteConfiguration(
-    UtilsCrud
+    UtilsCrud,
+    NavigationTabsDisplay
 ) {
     'use strict';
+
+    var hasAccess = NavigationTabsDisplay.isVisible(NavigationTabsDisplay.tabs.PQR);
 
     return {
         id: 'partner_quote',
         type: 'crud',
         permissions: {
-            list: true,
-            create: true,
-            read: true,
-            update: true,
+            list: hasAccess,
+            create: hasAccess,
+            read: hasAccess,
+            update: hasAccess,
             'delete': false
         },
         status: {
