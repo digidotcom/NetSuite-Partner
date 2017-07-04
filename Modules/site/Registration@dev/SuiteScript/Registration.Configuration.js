@@ -348,6 +348,7 @@ define('Registration.Configuration', [
                     group: 'details',
                     type: 'currency',
                     label: 'Estimated Value',
+                    tooltip: 'This displays the total value of all line items.',
                     inline: true,
                     required: false
                 },
@@ -388,6 +389,8 @@ define('Registration.Configuration', [
                     group: 'partner',
                     type: 'lookup',
                     label: 'Partner Field Sales Engineer',
+                    tooltip: 'Please identify the appropriate contact from your company for this role. ' +
+                             'Contacts must be listed in the \'My Company Profile\' in order to be visible for lookup.',
                     required: true
                 },
                 record: {
@@ -409,6 +412,8 @@ define('Registration.Configuration', [
                     group: 'partner',
                     type: 'lookup',
                     label: 'Partner Buyer',
+                    tooltip: 'Please identify the appropriate contact from your company for this role. ' +
+                             'Contacts must be listed in the \'My Company Profile\' in order to be visible for lookup.',
                     required: false
                 },
                 record: {
@@ -430,6 +435,8 @@ define('Registration.Configuration', [
                     group: 'partner',
                     type: 'lookup',
                     label: 'Partner Field Sales Rep',
+                    tooltip: 'Please identify the appropriate contact from your company for this role. ' +
+                             'Contacts must be listed in the \'My Company Profile\' in order to be visible for lookup.',
                     required: true
                 },
                 record: {
@@ -451,6 +458,8 @@ define('Registration.Configuration', [
                     group: 'partner',
                     type: 'text',
                     label: 'Distributor External Id',
+                    tooltip: 'Optional: Use this field to include your own internal reference number for the registration so that ' +
+                             'you can cross-reference it easily between Digi\'s record and the corresponding record in your CRM or ERP system.',
                     required: false
                 },
                 record: {
@@ -610,6 +619,8 @@ define('Registration.Configuration', [
                     type: 'list',
                     list: 'registration_lead_source',
                     label: 'Lead Source',
+                    tooltip: 'This field will automatically populate for registrations that are created from a lead. ' +
+                             'If it is blank, you do not need to populate this field.',
                     required: false
                 },
                 record: {
@@ -625,6 +636,7 @@ define('Registration.Configuration', [
                     group: 'supply',
                     type: 'text',
                     label: 'Contract Manufacturer',
+                    tooltip: 'Please identify the Contract Manufacturer or Design House involved in this project, if applicable.',
                     required: false
                 },
                 record: {
@@ -647,6 +659,7 @@ define('Registration.Configuration', [
                     group: 'supply',
                     type: 'text',
                     label: 'Preferred Distributor',
+                    tooltip: 'If you are a reseller purchasing through a distributor, please identify the distributor for this project.',
                     required: false
                 },
                 record: {
@@ -683,6 +696,8 @@ define('Registration.Configuration', [
                     group: 'project',
                     type: 'date',
                     label: 'Production Date',
+                    tooltip: 'Enter the date on which the customer expects to take deliery of their first production quantity of products. ' +
+                             '(Do not use dates for samples, development systems, prototype orders, pilot orders, etc.)',
                     required: true
                 },
                 record: {
@@ -705,6 +720,11 @@ define('Registration.Configuration', [
                     group: 'project',
                     type: 'longtext',
                     label: 'Summary Of Application',
+                    tooltip: 'Add text regarding the end-product being developed, the customer\'s source of urgency, ' +
+                             'the function(s) the Digi product will perform, the reasons that the customer is considering Digi - ' +
+                             'i.e. the unique value the Digi product offers;  list competitors to the Digi that are being ' +
+                             'considered and their strengths/ weaknesses, include INBATS qualification data ' +
+                             '(Interest, Need, Budget, Authority, Timeline, Size).',
                     required: true
                 },
                 record: {
@@ -716,6 +736,7 @@ define('Registration.Configuration', [
                     group: 'project',
                     type: 'date',
                     label: 'Prototype/Eval Date',
+                    tooltip: 'Have you provided, or when will you provide, a Dev Kit or Evaluation Unit.',
                     required: true
                 },
                 record: {
@@ -741,6 +762,8 @@ define('Registration.Configuration', [
                     type: 'list',
                     list: 'registration_project_status',
                     label: 'Project Status',
+                    tooltip: 'Choose the option that best describes the current phase of the project. ' +
+                             'The customer should be actively engaged in activity related to the project status that you select.',
                     required: true
                 },
                 record: {
@@ -766,6 +789,7 @@ define('Registration.Configuration', [
                     group: 'project',
                     type: 'longtext',
                     label: 'Additional Information',
+                    tooltip: 'Add any additional details that you feel are relevant to the approval of this registration.',
                     required: false
                 },
                 record: {

@@ -301,6 +301,7 @@ define('PartnerQuote.Configuration', [
                     group: 'distributor',
                     type: 'text',
                     label: 'Distributor Buyer Name',
+                    tooltip: 'List the name of the buyer or purchasing agent that will be issuing the PO from your company to Digi.',
                     required: true
                 },
                 record: {
@@ -334,6 +335,7 @@ define('PartnerQuote.Configuration', [
                     group: 'distributor',
                     type: 'text',
                     label: 'Distributor Sales Rep Name',
+                    tooltip: 'List the name of the sales representative at you company that is responsible for this opportunity.',
                     required: true
                 },
                 record: {
@@ -370,6 +372,9 @@ define('PartnerQuote.Configuration', [
                     group: 'customer',
                     type: 'text',
                     label: 'End Customer Name',
+                    tooltip: 'List the name of the OEM or end-customer that is developing this product and will be selling and ' +
+                             'marketing the finished goods under their own brand. Do not list the name of the contract manufacturer, ' +
+                             'reseller, distributor, design consultant, etc.',
                     required: true
                 },
                 record: {
@@ -464,7 +469,9 @@ define('PartnerQuote.Configuration', [
                 form: {
                     group: 'customer',
                     type: 'longtext',
-                    label: 'Comments/Customer Additional Info'
+                    label: 'Comments/Customer Additional Info',
+                    tooltip: 'Should be used to give additional information about the customer, reseller, CM, or the relationship ' +
+                             'between the entities.'
                 },
                 record: {
                     fieldName: 'custrecord_commentscustaddlinfo'
@@ -518,7 +525,8 @@ define('PartnerQuote.Configuration', [
                 form: {
                     group: 'supply',
                     type: 'text',
-                    label: 'Contract Manufacturer'
+                    label: 'Contract Manufacturer',
+                    tooltip: 'Please identify the Contract Manufacturer or Design House involved in this project, if applicable.'
                 },
                 record: {
                     fieldName: 'custrecord_contractmanufacturer'
@@ -563,7 +571,8 @@ define('PartnerQuote.Configuration', [
                     group: 'quote',
                     type: 'list',
                     list: 'quote_request_type',
-                    label: 'Quote Type'
+                    label: 'Quote Type',
+                    tooltip: 'Select the type of items or services that are being listed on this quote.'
                 },
                 record: {
                     fieldName: 'custrecord_quotetype',
@@ -576,6 +585,8 @@ define('PartnerQuote.Configuration', [
                     type: 'list',
                     list: 'product_interest',
                     label: 'Product Interest',
+                    tooltip: 'Choose the Product category that best fits the requested product. The partner price list provides ' +
+                             'the Product Type for every SKU for reference.',
                     required: true
                 },
                 record: {
@@ -588,6 +599,7 @@ define('PartnerQuote.Configuration', [
                     group: 'quote',
                     type: 'date',
                     label: 'Target Purchase Date',
+                    tooltip: 'The date the end customer expects to purchase.',
                     required: true
                 },
                 record: {
@@ -599,7 +611,8 @@ define('PartnerQuote.Configuration', [
                     group: 'quote',
                     type: 'list',
                     list: 'vertical',
-                    label: 'Vertical'
+                    label: 'Vertical Market',
+                    tooltip: 'Select the option that most closely matches the market segment that this product will service.'
                 },
                 record: {
                     fieldName: 'custrecord_quotereqvertical',
@@ -611,7 +624,8 @@ define('PartnerQuote.Configuration', [
                     group: 'quote',
                     type: 'list',
                     list: 'quote_request_application',
-                    label: 'Application'
+                    label: 'Application',
+                    tooltip: 'Select the option that most closely matches the function that this product will provide in the vertical market.'
                 },
                 record: {
                     fieldName: 'custrecord_application',
@@ -649,6 +663,7 @@ define('PartnerQuote.Configuration', [
                     list: 'currency',
                     defaultValue: '1',
                     label: 'Currency for Quote',
+                    tooltip: 'Currency limitations will apply based on contract terms.',
                     required: true
                 },
                 record: {
@@ -661,6 +676,7 @@ define('PartnerQuote.Configuration', [
                     group: 'quote',
                     type: 'longtext',
                     label: 'Justification for Price Discount',
+                    tooltip: 'If no discount is being requested, list \'Standard Pricing\'',
                     required: true
                 },
                 record: {
@@ -671,7 +687,8 @@ define('PartnerQuote.Configuration', [
                 form: {
                     group: 'quote',
                     type: 'text',
-                    label: 'Competitor'
+                    label: 'Competitor',
+                    tooltip: 'List the name of the primary competitor to Digi in the opportunity.'
                 },
                 record: {
                     fieldName: 'custrecord_competitor',
@@ -702,7 +719,8 @@ define('PartnerQuote.Configuration', [
                 form: {
                     group: 'quote',
                     type: 'longtext',
-                    label: 'Comments/Additional Info'
+                    label: 'Comments/Additional Info',
+                    tooltip: 'Use this to add additional information, notes, or additional part nbumbers for the quote.'
                 },
                 record: {
                     fieldName: 'custrecord_commentsaddlinfo'
@@ -714,7 +732,8 @@ define('PartnerQuote.Configuration', [
                     type: 'list',
                     list: 'yes_no',
                     defaultValue: '2',
-                    label: 'Require a Debit?'
+                    label: 'Require a Debit?',
+                    tooltip: 'Does this quote also require a Ship and Debit to be created automatically upon quote approval?'
                 },
                 record: {
                     fieldName: 'custrecord_requireadebit',
