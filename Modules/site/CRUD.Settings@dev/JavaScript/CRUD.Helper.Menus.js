@@ -62,7 +62,10 @@ define('CRUD.Helper.Menus', [
                     qindex: 2
                 });
             }
-            return menuItems;
+            if (menuItems.children.length || menuItems.url) {
+                return menuItems;
+            }
+            return null;
         },
         getMenuItemsAll: function getMenuItemsAll() {
             var self = this;
