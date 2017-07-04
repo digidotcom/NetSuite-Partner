@@ -6,6 +6,7 @@
     "modules": {
         "site/Backbone.View.Multiple": "dev",
         "site/BaseSassStyles.Site": "dev",
+        "site/Case.Site": "dev",
         "site/CheckoutApplication.Site": "dev",
         "site/Configuration.Countries": "dev",
         "site/Configuration.Site": "dev",
@@ -25,9 +26,11 @@
         "site/MenuTree.Site": "dev",
         "site/Mixin": "dev",
         "site/MyAccountApplication.Site": "dev",
+        "site/NavigationTabsDisplay": "dev",
         "site/Quote.Site": "dev",
         "site/Overview.Site": "dev",
         "site/PartnerQuote": "dev",
+        "site/Settings.MenuItemsDisplay": "dev",
         "site/Registration": "dev",
         "site/SafariHtmlClass": "dev",
         "site/ServiceController.Validations.RequireSecureFix": "dev",
@@ -52,6 +55,7 @@
                 "dependencies": [
                     {"prepend": "Configuration.Countries"},
                     {"prepend": "SC.MyAccount.Configuration.Site"},
+                    "Case.Site",
                     "CRUD",
                     "Documents",
                     "Header.Site",
@@ -59,6 +63,7 @@
                     "Overview.Site",
                     "Registration",
                     "PartnerQuote",
+                    "Settings.MenuItemsDisplay",
                     "Quote.Site",
                     {"remove": "OrderHistory"},
                     {"remove": "ReorderItems"},
@@ -88,6 +93,7 @@
                 "Configuration.Site",
                 "Heartbeat.ServiceController",
                 "Lists",
+                "NavigationTabsDisplay",
                 "PartnerQuote",
                 "Registration",
                 "ServiceController.Validations.RequireSecureFix"

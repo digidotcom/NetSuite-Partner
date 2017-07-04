@@ -1,18 +1,22 @@
 define('Registration.Configuration', [
-    'Utils.CRUD'
+    'Utils.CRUD',
+    'NavigationTabsDisplay'
 ], function RegistrationConfiguration(
-    UtilsCrud
+    UtilsCrud,
+    NavigationTabsDisplay
 ) {
     'use strict';
+
+    var hasAccess = NavigationTabsDisplay.isVisible(NavigationTabsDisplay.tabs.REGISTRATIONS);
 
     return {
         id: 'registration',
         type: 'crud',
         permissions: {
-            list: true,
-            create: true,
-            read: true,
-            update: true,
+            list: hasAccess,
+            create: hasAccess,
+            read: hasAccess,
+            update: hasAccess,
             'delete': false
         },
         status: {
