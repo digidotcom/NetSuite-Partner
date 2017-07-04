@@ -654,6 +654,9 @@ define('PartnerQuote.Configuration', [
                 record: {
                     fieldName: 'custrecord_quotereqregistration',
                     type: 'object'
+                },
+                lookup: {
+                    applyFunction: UtilsCrud.partnerRegistrationsLookup
                 }
             },
             currencyForQuote: {

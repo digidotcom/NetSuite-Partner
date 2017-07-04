@@ -70,12 +70,43 @@ define('Utils.CRUD', [
         return contacts;
     }
 
+    function partnerRegistrationsLookup(data) {
+        var query = data.query;
+        var customerId = nlapiGetUser();
+        var registrations = [];
+        var filters = [
+            new nlobjSearchFilter('isinactive', null, 'is', 'F'),
+            new nlobjSearchFilter('custrecord_partner_customer', null, 'is', customerId + '')
+        ];
+        var columns = [
+            new nlobjSearchColumn('internalid'),
+            new nlobjSearchColumn('name')
+        ];
+        var results;
+        if (customerId) {
+            results = nlapiSearchRecord('customrecord_registrationprocess', null, filters, columns);
+            _(results).each(function eachResults(result) {
+                var internalId = result.getValue('internalid');
+                var name = result.getValue('name');
+                if (!query || (name.toLowerCase().indexOf(query.toLowerCase()) >= 0)) {
+                    registrations.push({
+                        internalid: internalId,
+                        name: name,
+                        text: name
+                    });
+                }
+            });
+        }
+        return registrations;
+    }
+
     _(UtilsCrud).extend({
         sameIdName: sameIdName,
         booleanMap: booleanMap,
         setText: setText,
         partnerNameDefaultValue: partnerNameDefaultValue,
-        partnerContactsLookup: partnerContactsLookup
+        partnerContactsLookup: partnerContactsLookup,
+        partnerRegistrationsLookup: partnerRegistrationsLookup
     });
 
     return UtilsCrud;
