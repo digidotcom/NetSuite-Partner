@@ -80,14 +80,15 @@ define('Utils.CRUD', [
         ];
         var columns = [
             new nlobjSearchColumn('internalid'),
-            new nlobjSearchColumn('name')
+            new nlobjSearchColumn('name'),
+            new nlobjSearchColumn('custrecord_reg_dispay_id')
         ];
         var results;
         if (customerId) {
             results = nlapiSearchRecord('customrecord_registrationprocess', null, filters, columns);
             _(results).each(function eachResults(result) {
                 var internalId = result.getValue('internalid');
-                var name = result.getValue('name');
+                var name = result.getValue('custrecord_reg_dispay_id');
                 if (!query || (name.toLowerCase().indexOf(query.toLowerCase()) >= 0)) {
                     registrations.push({
                         internalid: internalId,

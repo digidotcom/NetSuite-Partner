@@ -652,8 +652,14 @@ define('PartnerQuote.Configuration', [
                     label: 'Registration Number'
                 },
                 record: {
-                    fieldName: 'custrecord_quotereqregistration',
-                    type: 'object'
+                    joint: true,
+                    internalid: {
+                        fieldName: 'custrecord_quotereqregistration'
+                    },
+                    name: {
+                        fieldName: 'custrecord_reg_dispay_id',
+                        joinKey: 'custrecord_quotereqregistration'
+                    }
                 },
                 lookup: {
                     applyFunction: UtilsCrud.partnerRegistrationsLookup
