@@ -16,7 +16,7 @@ define('Quote.Site', [
             if (NavigationTabsDisplay.isVisible(NavigationTabsDisplay.tabs.QUOTES)) {
                 return {
                     id: 'quotes',
-                    name: _('Completed Quotes').translate(),
+                    name: Utils.translate('Completed Quotes'),
                     url: 'quotes',
                     index: 2,
                     permission: 'transactions.tranFind.1,transactions.tranEstimate.1'
