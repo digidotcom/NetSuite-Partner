@@ -1,11 +1,11 @@
 define('Documents.Router', [
     'underscore',
     'Backbone',
-    'Documents.View'
+    'Documents.Marketing.View'
 ], function DocumentsRouter(
     _,
     Backbone,
-    DocumentsView
+    DocumentsMarketingView
 ) {
     'use strict';
 
@@ -20,7 +20,7 @@ define('Documents.Router', [
         },
 
         showDocumentsPage: function showDocumentsPage() {
-            var view = new DocumentsView({
+            var view = new DocumentsMarketingView({
                 application: this.application
             });
             view.showContent();

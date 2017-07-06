@@ -1,21 +1,21 @@
-define('Documents.View', [
+define('Documents.Marketing.View', [
     'underscore',
     'Backbone',
     'Utils',
     'SC.Configuration',
-    'documents.tpl'
-], function DocumentsView(
+    'documents_marketing.tpl'
+], function DocumentsMarketingView(
     _,
     Backbone,
     Utils,
     Configuration,
-    documentsTpl
+    documentsMarketingTpl
 ) {
     'use strict';
 
     return Backbone.View.extend({
 
-        template: documentsTpl,
+        template: documentsMarketingTpl,
 
         initialize: function initialize(options) {
             this.application = options.application;
@@ -25,12 +25,12 @@ define('Documents.View', [
             return 'documents';
         },
         getTitle: function getTitle() {
-            return Utils.translate('Marketing Materials');
+            return Utils.translate('Marketing Documents');
         },
         getBreadcrumbPages: function getBreadcrumbPages() {
             return [
                 {
-                    text: Utils.translate('Marketing Materials'),
+                    text: Utils.translate('Marketing Documents'),
                     href: 'documents'
                 }
             ];
