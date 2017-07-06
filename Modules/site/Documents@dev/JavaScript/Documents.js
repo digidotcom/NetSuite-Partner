@@ -15,11 +15,24 @@ define('Documents', [
         MenuItems: function MenuItems() {
             if (NavigationTabsDisplay.isVisible(NavigationTabsDisplay.tabs.DOCUMENTS)) {
                 return {
-                    id: 'documents',
+                    id: 'marketing',
                     name: Utils.translate('Marketing Materials'),
-                    url: 'documents',
+                    url: '',
                     index: 3,
-                    children: []
+                    children: [
+                        {
+                            id: 'documents',
+                            name: Utils.translate('Marketing Documents'),
+                            url: 'documents',
+                            index: 1
+                        },
+                        {
+                            id: 'pricelists',
+                            name: Utils.translate('Price Lists'),
+                            url: '',
+                            index: 2
+                        }
+                    ]
                 };
             }
         },
