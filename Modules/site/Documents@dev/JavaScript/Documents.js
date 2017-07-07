@@ -29,7 +29,7 @@ define('Documents', [
                         {
                             id: 'pricelists',
                             name: Utils.translate('Price Lists'),
-                            url: '',
+                            url: 'pricelists',
                             index: 2
                         }
                     ]

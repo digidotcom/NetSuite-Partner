@@ -91,6 +91,7 @@
         "ssp-libraries": {
             "dependencies": [
                 "Configuration.Site",
+                "Documents.PriceList.ServiceController",
                 "Heartbeat.ServiceController",
                 "Lists",
                 "NavigationTabsDisplay",
