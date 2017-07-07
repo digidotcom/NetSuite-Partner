@@ -152,6 +152,12 @@ define('CRUD.Details.View', [
                 return self.getNewSaveRedirectUrl(id);
             };
         },
+        getDataForConditions: function getDataForConditions() {
+            return {
+                page: this.getFormAction(),
+                model: this.model
+            };
+        },
 
         childViews: {
             'Subrecords': function Subrecord() {
@@ -190,7 +196,7 @@ define('CRUD.Details.View', [
             formData: function formDataFn() {
                 var crudId = this.crudId;
                 var parentId = this.parent;
-                return _.extend({}, CrudHelper.getConfigForForm(crudId), {
+                return _.extend({}, CrudHelper.getConfigForForm(crudId, this.getDataForConditions()), {
                     lookupPromiseCallback: CrudLookup.getPromiseCallback(crudId, parentId),
                     actionPromiseCallback: CrudAction.getPromiseCallback(crudId, parentId)
                 });
@@ -233,10 +239,7 @@ define('CRUD.Details.View', [
                     showAddAndNew: !!parentId,
                     getNewSaveRedirectUrl: this.getNewSaveRedirectUrlCallback(),
                     actionLabels: labels,
-                    customActions: CrudHelper.getActionsForForm(crudId, {
-                        page: this.getFormAction(),
-                        model: this.model
-                    })
+                    customActions: CrudHelper.getActionsForForm(crudId, this.getDataForConditions())
                 };
             },
             isNew: function isNew() {

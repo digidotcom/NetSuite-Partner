@@ -54,6 +54,10 @@ define('Form.Config', [
         setInfo: function getInfo(info) {
             this.config.info = info;
         },
+        setData: function setData(data) {
+            this.config.data = data;
+            this.parseConfig();
+        },
 
         isLoading: function isLoading() {
             return !!this.isLoadingFlag;

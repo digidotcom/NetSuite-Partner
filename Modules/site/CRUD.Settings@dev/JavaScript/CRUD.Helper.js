@@ -1,6 +1,7 @@
 define('CRUD.Helper', [
     'underscore',
     'CRUD.Helper.Action',
+    'CRUD.Helper.Condition',
     'CRUD.Helper.Form',
     'CRUD.Helper.ListRecord',
     'CRUD.Helper.Menus',
@@ -11,6 +12,7 @@ define('CRUD.Helper', [
 ], function CrudHelper(
     _,
     CrudHelperAction,
+    CrudHelperCondition,
     CrudHelperForm,
     CrudHelperListRecord,
     CrudHelperMenus,
@@ -26,6 +28,7 @@ define('CRUD.Helper', [
     return _({}).extend(
         CrudHelperBase,
         CrudHelperAction,
+        CrudHelperCondition,
         CrudHelperForm,
         CrudHelperListRecord,
         CrudHelperMenus,

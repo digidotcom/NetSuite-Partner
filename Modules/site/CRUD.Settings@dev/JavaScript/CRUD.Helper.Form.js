@@ -10,8 +10,31 @@ define('CRUD.Helper.Form', [
     'use strict';
 
     return {
-        getConfigForForm: function getForForm(crudId) {
-            return CrudConfiguration.get(crudId);
+        filterFieldByVisibility: function filterFieldByVisibility(field, data) {
+            if (field.visibility) {
+                if (_.isArray(field.visibility)) {
+                    return this.areConditionsMet(field.visibility, data);
+                }
+                return true;
+            }
+            return false;
+        },
+        filterFieldForForm: function filterFieldForForm(field, data) {
+            if ('visibility' in field) {
+                return this.filterFieldByVisibility(field, data);
+            }
+            return true;
+        },
+        filterFieldsForForm: function filterFieldsForForm(fields, data) {
+            var self = this;
+            return _(fields || []).filter(function fieldsEach(field) {
+                return self.filterFieldForForm(field, data);
+            });
+        },
+        getConfigForForm: function getForForm(crudId, data) {
+            var config = _.clone(CrudConfiguration.get(crudId));
+            config.fields = this.filterFieldsForForm(config.fields, data);
+            return config;
         },
         isFormAsync: function isFormAsync(crudId, page) {
             return this.hasSubrecordsInPage(crudId, page);

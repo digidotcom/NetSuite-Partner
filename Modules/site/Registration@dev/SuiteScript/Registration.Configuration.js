@@ -361,6 +361,17 @@ define('Registration.Configuration', [
                     group: 'details',
                     type: 'longtext',
                     label: 'Reject Reason',
+                    visibility: [
+                        {
+                            type: 'page',
+                            values: ['view', 'edit']
+                        },
+                        {
+                            type: 'field',
+                            fieldName: 'status',
+                            values: ['4']
+                        }
+                    ],
                     inline: true
                 },
                 record: {

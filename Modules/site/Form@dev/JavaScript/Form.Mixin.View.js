@@ -70,7 +70,7 @@ define('Form.Mixin.View', [
                 }
                 return 'view';
             },
-            getFormData: function getConfig() {
+            getFormData: function getFormData() {
                 // run this.form if function, or get it if object
                 return jQuery.extend(true, {}, _.result(this, 'formData'));
             },
@@ -87,6 +87,7 @@ define('Form.Mixin.View', [
             refreshFormConfig: function refreshFormConfig() {
                 this.formConfig.setPermissions(this.getFormPermissions());
                 this.formConfig.setInfo(this.getFormInfo());
+                this.formConfig.setData(this.getFormData());
             },
             refreshFormView: function refreshFormView() {
                 this.refreshFormConfig();
