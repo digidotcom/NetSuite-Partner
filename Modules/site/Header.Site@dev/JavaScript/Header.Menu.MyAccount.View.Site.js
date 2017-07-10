@@ -1,11 +1,13 @@
 define('Header.Menu.MyAccount.View.Site', [
     'underscore',
     'Header.Menu.MyAccount.View',
-    'CRUD.Helper'
+    'CRUD.Helper',
+    'NavigationTabsDisplay'
 ], function HeaderMenuMyAccountViewSite(
     _,
     HeaderMenuMyAccountView,
-    CrudHelper
+    CrudHelper,
+    NavigationTabsDisplay
 ) {
     'use strict';
 
@@ -30,7 +32,12 @@ define('Header.Menu.MyAccount.View.Site', [
             });
             _(context).extend({
                 hasCrudMenus: crudMenus.length,
-                crudMenus: crudMenus
+                crudMenus: crudMenus,
+                showQuotes: NavigationTabsDisplay.isVisible(NavigationTabsDisplay.tabs.QUOTES),
+                showDocuments: NavigationTabsDisplay.isVisible(NavigationTabsDisplay.tabs.DOCUMENTS),
+                showKnowledge: NavigationTabsDisplay.isVisible(NavigationTabsDisplay.tabs.KNOWLEDGE),
+                showSettings: NavigationTabsDisplay.isVisible(NavigationTabsDisplay.tabs.SETTINGS),
+                isCaseModuleEnabled: context.isCaseModuleEnabled && NavigationTabsDisplay.isVisible(NavigationTabsDisplay.tabs.CASES)
             });
         }
     });
