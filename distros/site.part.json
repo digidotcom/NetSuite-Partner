@@ -7,6 +7,7 @@
         "site/Backbone.View.Multiple": "dev",
         "site/BaseSassStyles.Site": "dev",
         "site/Case.Site": "dev",
+        "site/Case": "dev",
         "site/CheckoutApplication.Site": "dev",
         "site/Configuration.Countries": "dev",
         "site/Configuration.Site": "dev",
@@ -20,6 +21,7 @@
         "site/Header.Site": "dev",
         "site/Heartbeat": "dev",
         "site/Home.Site": "dev",
+        "site/Knowledge": "dev",
         "site/ListHeader.Site": "dev",
         "site/Lists": "dev",
         "site/LoginRegister.Site": "dev",
@@ -56,6 +58,7 @@
                     {"prepend": "Configuration.Countries"},
                     {"prepend": "SC.MyAccount.Configuration.Site"},
                     "Case.Site",
+                    "Case",
                     "CRUD",
                     "Documents",
                     "Header.Site",
@@ -65,6 +68,7 @@
                     "PartnerQuote",
                     "Settings.MenuItemsDisplay",
                     "Quote.Site",
+                    "Knowledge",
                     {"remove": "OrderHistory"},
                     {"remove": "ReorderItems"},
                     {"remove": "ReturnAuthorization"},
@@ -97,7 +101,9 @@
                 "NavigationTabsDisplay",
                 "PartnerQuote",
                 "Registration",
-                "ServiceController.Validations.RequireSecureFix"
+                "ServiceController.Validations.RequireSecureFix",
+                "Case.Fields.ServiceController",
+                "Case.ServiceController"
             ]
         },
         "sass": {
@@ -122,7 +128,9 @@
                         "Form",
                         "ListHeader.Site",
                         "MenuTree.Site",
-                        "MyAccountApplication.Site"
+                        "MyAccountApplication.Site",
+                        "Knowledge",
+                        "Case"
                     ]
                 },
                 {

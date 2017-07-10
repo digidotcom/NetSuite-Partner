@@ -1,0 +1,19 @@
+{
+    "type": "object",
+    "subtab": {
+        "id": "knowledge",
+        "title": "Knowledge",
+        "description": "Knowledge section in My Account portal for articles.",
+        "group": "myAccountApp"
+    },
+    "properties": {
+        "knowledge.iframeUrl": {
+            "group": "myAccountApp",
+            "subtab": "knowledge",
+            "type": "string",
+            "title": "iFrame URL",
+            "description": "URL to use in the iframe to show knowledge",
+            "default": "https://forms.sandbox.netsuite.com/app/site/hosting/scriptlet.nl?script=462&deploy=1&compid=818164&h=1dcb448ec8584f1fbaab"
+        }
+    }
+}
