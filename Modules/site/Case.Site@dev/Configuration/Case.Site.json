@@ -5,7 +5,7 @@
             "group":"myAccountApp",
             "subtab": "case",
             "type":"string",
-            "Title":"Default Category",
+            "title":"Default Category",
             "descrition": "Sets the default Case Category",
             "default": "39"
         }
