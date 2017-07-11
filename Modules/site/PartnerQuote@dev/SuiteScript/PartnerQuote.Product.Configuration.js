@@ -17,8 +17,10 @@ define('PartnerQuote.Product.Configuration', [
             baseKey: 'quote-products',
             inlineEdit: true,
             names: {
-                singular: 'Partner Quote Product',
-                plural: 'Partner Quote Products'
+                singular: 'Quote Request Product',
+                plural: 'Quote Request Products',
+                inContextSingular: 'Product',
+                inContextPlural: 'Products'
             }
         },
         parent: {
@@ -26,12 +28,14 @@ define('PartnerQuote.Product.Configuration', [
             filterName: 'partnerQuote',
             allowEditSync: true
         },
-        listColumns: [
-            'item',
-            'partNumber',
-            'estimatedAnnualQuantity',
-            'targetResalePrice'
-        ],
+        list: {
+            columns: [
+                'item',
+                'partNumber',
+                'estimatedAnnualQuantity',
+                'targetResalePrice'
+            ]
+        },
         groups: [
             { id: 'default', name: '' }
         ],

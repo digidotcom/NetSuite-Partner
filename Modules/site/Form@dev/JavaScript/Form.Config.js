@@ -54,6 +54,10 @@ define('Form.Config', [
         setInfo: function getInfo(info) {
             this.config.info = info;
         },
+        setData: function setData(data) {
+            this.config.data = data;
+            this.parseConfig();
+        },
 
         isLoading: function isLoading() {
             return !!this.isLoadingFlag;
@@ -127,6 +131,7 @@ define('Form.Config', [
         },
 
         parseConfig: function parseData() {
+            var self = this;
             var config = this.getConfig();
             var data = config.data;
             var dataJSON;
@@ -136,7 +141,7 @@ define('Form.Config', [
             dataJSON = jQuery.extend(true, {}, data);
             _(dataJSON.groups).each(function eachGroup(groupJSON, i) {
                 var groupData = data.groups[i];
-                groupData.fields = new FormFieldCollection();
+                groupData.fields = new FormFieldCollection(null, { config: self });
                 groupJSON.fields = [];
                 hashTemp[groupJSON.id || ''] = { data: groupData, json: groupJSON };
             });
@@ -151,7 +156,7 @@ define('Form.Config', [
             });
             if (ungroupedGroup.fields.length > 0) {
                 dataJSON.groups.unshift(ungroupedGroup);
-                data.groups.unshift({ fields: new FormFieldCollection(ungroupedGroup.fields) });
+                data.groups.unshift({ fields: new FormFieldCollection(ungroupedGroup.fields, { config: self }) });
             }
             config.dataJSON = dataJSON;
             data.groups = new FormGroupCollection(data.groups);

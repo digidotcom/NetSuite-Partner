@@ -1,37 +1,22 @@
-define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
+define('PartnerQuote.Configuration', [
+    'Utils.CRUD',
+    'NavigationTabsDisplay'
+], function PartnerQuoteConfiguration(
+    UtilsCrud,
+    NavigationTabsDisplay
+) {
     'use strict';
 
-    function sameIdName(line, v) {
-        var value = line.getText(
-            v.fieldName,
-            v.joinKey ? v.joinKey : null,
-            v.summary ? v.summary : null
-        );
-        return {
-            internalid: value,
-            name: value
-        };
-    }
-    function booleanMap(line, v) {
-        var value = line.getValue(
-            v.fieldName,
-            v.joinKey ? v.joinKey : null,
-            v.summary ? v.summary : null
-        );
-        return value === 'T';
-    }
-    function setText(record, fieldInfo, value) {
-        record.setFieldText(fieldInfo.fieldName, value);
-    }
+    var hasAccess = NavigationTabsDisplay.isVisible(NavigationTabsDisplay.tabs.PQR);
 
     return {
         id: 'partner_quote',
         type: 'crud',
         permissions: {
-            list: true,
-            create: true,
-            read: true,
-            update: true,
+            list: hasAccess,
+            create: hasAccess,
+            read: hasAccess,
+            update: hasAccess,
             'delete': false
         },
         status: {
@@ -39,6 +24,34 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
             filterName: 'status',
             allowEditControlField: 'statusAllowsEdit'
         },
+        actions: [
+            {
+                name: 'submit',
+                label: 'Submit',
+                conditions: [
+                    {
+                        type: 'page',
+                        values: ['view']
+                    },
+                    {
+                        type: 'field',
+                        fieldName: 'statusAllowsEdit',
+                        values: [true]
+                    }
+                ],
+                execute: [
+                    {
+                        type: 'field',
+                        fieldName: 'partnerPqrSubmission',
+                        value: 'T'
+                    }
+                ],
+                result: {
+                    type: 'redirect',
+                    page: 'list'
+                }
+            }
+        ],
         subrecords: [
             {
                 crudId: 'partner_quote_product',
@@ -48,19 +61,26 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
         ],
         frontend: {
             baseKey: 'partner-quotes',
+            leftNavIndex: 1,
+            idField: 'name',
             names: {
-                singular: 'Partner Quote',
-                plural: 'Partner Quotes'
+                singular: 'Quote Request',
+                plural: 'Quote Requests'
             }
         },
-        listColumns: [
-            'number',
-            'status',
-            'approvalDate',
-            'expiryDate',
-            'companyName',
-            'partnerName'
-        ],
+        list: {
+            id: {
+                fieldName: 'name',
+                label: 'Digi Id'
+            },
+            columns: [
+                'number',
+                'registration',
+                'endCustomerName',
+                'approveRejectDate',
+                'status'
+            ]
+        },
         groups: [
             { id: 'details', name: 'Partner Quote Details' },
             { id: 'distributor', name: 'Distributor Information' },
@@ -70,7 +90,8 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
         ],
         record: 'customrecord_partnerquoterequest',
         loggedIn: {
-            customer: 'customer'
+            customer: 'customer',
+            contact: 'contact'
         },
         filters: {
             inactive: { operator: 'is', value1: 'F' }
@@ -80,6 +101,10 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
         fieldsets: {
             list: [
                 'internalid',
+                'name',
+                'registration',
+                'endCustomerName',
+                'approveRejectDate',
                 'status',
                 'date',
                 'statusAllowsEdit'
@@ -87,6 +112,7 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
             details: [
                 'internalid',
                 'inactive',
+                'name',
                 'date',
                 'status',
                 'statusAllowsEdit',
@@ -180,10 +206,26 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
                     fieldName: 'isinactive'
                 }
             },
+            name: {
+                record: {
+                    fieldName: 'name'
+                }
+            },
             customer: {
                 record: {
                     fieldName: 'custrecord_partnercustomer',
                     type: 'object'
+                }
+            },
+            contact: {
+                record: {
+                    fieldName: 'custrecord_pqr_partner_contact',
+                    type: 'object'
+                }
+            },
+            partnerPqrSubmission: {
+                record: {
+                    fieldName: 'custrecord_pqr_partner_submission'
                 }
             },
 
@@ -223,14 +265,14 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
                 record: {
                     fieldName: 'custrecord_partnerquotestatusedit',
                     joinKey: 'custrecord_partnerquotestatus',
-                    applyFunction: booleanMap
+                    applyFunction: UtilsCrud.booleanMap
                 }
             },
             approveRejectDate: {
                 form: {
                     group: 'details',
                     type: 'date',
-                    label: 'Approve Reject Date',
+                    label: 'Approve/Reject Date',
                     inline: true
                 },
                 record: {
@@ -244,7 +286,10 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
                 form: {
                     group: 'distributor',
                     type: 'lookup',
-                    label: 'Distributor Name'
+                    label: 'Distributor Name',
+                    defaultValue: UtilsCrud.partnerNameDefaultValue,
+                    inline: true,
+                    required: true
                 },
                 record: {
                     fieldName: 'custrecord_distributor',
@@ -255,7 +300,9 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
                 form: {
                     group: 'distributor',
                     type: 'text',
-                    label: 'Distributor Buyer Name'
+                    label: 'Distributor Buyer Name',
+                    tooltip: 'List the name of the buyer or purchasing agent that will be issuing the PO from your company to Digi.',
+                    required: true
                 },
                 record: {
                     fieldName: 'custrecord_distbuyername'
@@ -264,8 +311,9 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
             distributorBuyerPhone: {
                 form: {
                     group: 'distributor',
-                    type: 'text',
-                    label: 'Distributor Buyer Phone'
+                    type: 'phone',
+                    label: 'Distributor Buyer Phone',
+                    required: true
                 },
                 record: {
                     fieldName: 'custrecord_distbuyerphone'
@@ -274,8 +322,9 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
             distributorBuyerEmail: {
                 form: {
                     group: 'distributor',
-                    type: 'text',
-                    label: 'Distributor Buyer Email'
+                    type: 'email',
+                    label: 'Distributor Buyer Email',
+                    required: true
                 },
                 record: {
                     fieldName: 'custrecord_distbuyeremail'
@@ -285,7 +334,9 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
                 form: {
                     group: 'distributor',
                     type: 'text',
-                    label: 'Distributor Sales Rep Name'
+                    label: 'Distributor Sales Rep Name',
+                    tooltip: 'List the name of the sales representative at you company that is responsible for this opportunity.',
+                    required: true
                 },
                 record: {
                     fieldName: 'custrecord_distsalesrepname'
@@ -294,8 +345,9 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
             distributorSalesRepPhone: {
                 form: {
                     group: 'distributor',
-                    type: 'text',
-                    label: 'Distributor Sales Rep Phone'
+                    type: 'phone',
+                    label: 'Distributor Sales Rep Phone',
+                    required: true
                 },
                 record: {
                     fieldName: 'custrecord_distsalesrepphone'
@@ -304,26 +356,31 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
             distributorSalesRepEmail: {
                 form: {
                     group: 'distributor',
-                    type: 'text',
-                    label: 'Distributor Sales Rep Email'
+                    type: 'email',
+                    label: 'Distributor Sales Rep Email',
+                    required: true
                 },
                 record: {
                     fieldName: 'custrecord_distsalesrepemail'
                 }
             },
+
+            /* ******* customer information ******* */
+
             endCustomerName: {
                 form: {
-                    group: 'distributor',
+                    group: 'customer',
                     type: 'text',
-                    label: 'End Customer Name'
+                    label: 'End Customer Name',
+                    tooltip: 'List the name of the OEM or end-customer that is developing this product and will be selling and ' +
+                             'marketing the finished goods under their own brand. Do not list the name of the contract manufacturer, ' +
+                             'reseller, distributor, design consultant, etc.',
+                    required: true
                 },
                 record: {
                     fieldName: 'custrecord_endcustomername'
                 }
             },
-
-            /* ******* customer information ******* */
-
             endCustomerMainAddress: {
                 form: {
                     group: 'customer',
@@ -360,13 +417,14 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
                     type: 'list',
                     list: 'countries',
                     nodefault: false,
-                    label: 'End Customer Country'
+                    label: 'End Customer Country',
+                    required: true
                 },
                 record: {
                     fieldName: 'custrecord_endcustomercountry',
                     type: 'object',
-                    applyFunction: sameIdName,
-                    applySetFunction: setText
+                    applyFunction: UtilsCrud.sameIdName,
+                    applySetFunction: UtilsCrud.setText
                 }
             },
             endCustomerState: {
@@ -376,13 +434,14 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
                     list: 'states',
                     relatedAttribute: 'endCustomerCountry',
                     nodefault: false,
-                    label: 'End Customer State'
+                    label: 'End Customer State',
+                    required: true
                 },
                 record: {
                     fieldName: 'custrecord_endcustomerstate',
                     type: 'object',
-                    applyFunction: sameIdName,
-                    applySetFunction: setText
+                    applyFunction: UtilsCrud.sameIdName,
+                    applySetFunction: UtilsCrud.setText
                 }
             },
             endCustomerPostalCode: {
@@ -399,7 +458,8 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
                 form: {
                     group: 'customer',
                     type: 'text',
-                    label: 'End Customer Website'
+                    label: 'End Customer Website',
+                    required: true
                 },
                 record: {
                     fieldName: 'custrecord_endcustomerwebsite'
@@ -409,7 +469,9 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
                 form: {
                     group: 'customer',
                     type: 'longtext',
-                    label: 'Comments/Customer Additional Info'
+                    label: 'Comments/Customer Additional Info',
+                    tooltip: 'Should be used to give additional information about the customer, reseller, CM, or the relationship ' +
+                             'between the entities.'
                 },
                 record: {
                     fieldName: 'custrecord_commentscustaddlinfo'
@@ -439,8 +501,8 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
                 record: {
                     fieldName: 'custrecord_resellerbilltocountry',
                     type: 'object',
-                    applyFunction: sameIdName,
-                    applySetFunction: setText
+                    applyFunction: UtilsCrud.sameIdName,
+                    applySetFunction: UtilsCrud.setText
                 }
             },
             resellerBillToState: {
@@ -455,15 +517,16 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
                 record: {
                     fieldName: 'custrecord_resellerbilltostate',
                     type: 'object',
-                    applyFunction: sameIdName,
-                    applySetFunction: setText
+                    applyFunction: UtilsCrud.sameIdName,
+                    applySetFunction: UtilsCrud.setText
                 }
             },
             contractManufacturer: {
                 form: {
                     group: 'supply',
                     type: 'text',
-                    label: 'Contract Manufacturer'
+                    label: 'Contract Manufacturer',
+                    tooltip: 'Please identify the Contract Manufacturer or Design House involved in this project, if applicable.'
                 },
                 record: {
                     fieldName: 'custrecord_contractmanufacturer'
@@ -480,8 +543,8 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
                 record: {
                     fieldName: 'custrecord_contmfrbilltocountry',
                     type: 'object',
-                    applyFunction: sameIdName,
-                    applySetFunction: setText
+                    applyFunction: UtilsCrud.sameIdName,
+                    applySetFunction: UtilsCrud.setText
                 }
             },
             contractManufacturerBillToState: {
@@ -496,8 +559,8 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
                 record: {
                     fieldName: 'custrecord_contmfrbilltostate',
                     type: 'object',
-                    applyFunction: sameIdName,
-                    applySetFunction: setText
+                    applyFunction: UtilsCrud.sameIdName,
+                    applySetFunction: UtilsCrud.setText
                 }
             },
 
@@ -508,7 +571,8 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
                     group: 'quote',
                     type: 'list',
                     list: 'quote_request_type',
-                    label: 'Quote Type'
+                    label: 'Quote Type',
+                    tooltip: 'Select the type of items or services that are being listed on this quote.'
                 },
                 record: {
                     fieldName: 'custrecord_quotetype',
@@ -520,7 +584,10 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
                     group: 'quote',
                     type: 'list',
                     list: 'product_interest',
-                    label: 'Product Interest'
+                    label: 'Product Interest',
+                    tooltip: 'Choose the Product category that best fits the requested product. The partner price list provides ' +
+                             'the Product Type for every SKU for reference.',
+                    required: true
                 },
                 record: {
                     fieldName: 'custrecord_quotereqproductinterest',
@@ -531,7 +598,9 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
                 form: {
                     group: 'quote',
                     type: 'date',
-                    label: 'Target Purchase Date'
+                    label: 'Target Purchase Date',
+                    tooltip: 'The date the end customer expects to purchase.',
+                    required: true
                 },
                 record: {
                     fieldName: 'custrecord_targetpurchasedate'
@@ -540,8 +609,10 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
             vertical: {
                 form: {
                     group: 'quote',
-                    type: 'lookup',
-                    label: 'Vertical'
+                    type: 'list',
+                    list: 'vertical',
+                    label: 'Vertical Market',
+                    tooltip: 'Select the option that most closely matches the market segment that this product will service.'
                 },
                 record: {
                     fieldName: 'custrecord_quotereqvertical',
@@ -551,8 +622,10 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
             application: {
                 form: {
                     group: 'quote',
-                    type: 'lookup',
-                    label: 'Application'
+                    type: 'list',
+                    list: 'quote_request_application',
+                    label: 'Application',
+                    tooltip: 'Select the option that most closely matches the function that this product will provide in the vertical market.'
                 },
                 record: {
                     fieldName: 'custrecord_application',
@@ -562,8 +635,10 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
             registrationExists: {
                 form: {
                     group: 'quote',
-                    type: 'lookup',
-                    label: 'Registration for this project?'
+                    type: 'list',
+                    list: 'yes_no',
+                    label: 'Do you have a Registration for this project?',
+                    required: true
                 },
                 record: {
                     fieldName: 'custrecord_registrationexists',
@@ -574,18 +649,31 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
                 form: {
                     group: 'quote',
                     type: 'lookup',
-                    label: 'Registration'
+                    label: 'Registration Number'
                 },
                 record: {
-                    fieldName: 'custrecord_quotereqregistration',
-                    type: 'object'
+                    joint: true,
+                    internalid: {
+                        fieldName: 'custrecord_quotereqregistration'
+                    },
+                    name: {
+                        fieldName: 'custrecord_reg_dispay_id',
+                        joinKey: 'custrecord_quotereqregistration'
+                    }
+                },
+                lookup: {
+                    applyFunction: UtilsCrud.partnerRegistrationsLookup
                 }
             },
             currencyForQuote: {
                 form: {
                     group: 'quote',
-                    type: 'lookup',
-                    label: 'Currency for Quote'
+                    type: 'list',
+                    list: 'currency',
+                    defaultValue: '1',
+                    label: 'Currency for Quote',
+                    tooltip: 'Currency limitations will apply based on contract terms.',
+                    required: true
                 },
                 record: {
                     fieldName: 'custrecord_currencyforquote',
@@ -595,8 +683,10 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
             justificationForDiscount: {
                 form: {
                     group: 'quote',
-                    type: 'text',
-                    label: 'Justification for Price Discount'
+                    type: 'longtext',
+                    label: 'Justification for Price Discount',
+                    tooltip: 'If no discount is being requested, list \'Standard Pricing\'',
+                    required: true
                 },
                 record: {
                     fieldName: 'custrecord_justificationfordiscount'
@@ -605,8 +695,9 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
             competitor: {
                 form: {
                     group: 'quote',
-                    type: 'lookup',
-                    label: 'Competitor'
+                    type: 'text',
+                    label: 'Competitor',
+                    tooltip: 'List the name of the primary competitor to Digi in the opportunity.'
                 },
                 record: {
                     fieldName: 'custrecord_competitor',
@@ -637,7 +728,8 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
                 form: {
                     group: 'quote',
                     type: 'longtext',
-                    label: 'Comments/Additional Info'
+                    label: 'Comments/Additional Info',
+                    tooltip: 'Use this to add additional information, notes, or additional part nbumbers for the quote.'
                 },
                 record: {
                     fieldName: 'custrecord_commentsaddlinfo'
@@ -646,8 +738,11 @@ define('PartnerQuote.Configuration', [], function RegistrationConfiguration() {
             requireDebit: {
                 form: {
                     group: 'quote',
-                    type: 'lookup',
-                    label: 'Require a Debit?'
+                    type: 'list',
+                    list: 'yes_no',
+                    defaultValue: '2',
+                    label: 'Require a Debit?',
+                    tooltip: 'Does this quote also require a Ship and Debit to be created automatically upon quote approval?'
                 },
                 record: {
                     fieldName: 'custrecord_requireadebit',

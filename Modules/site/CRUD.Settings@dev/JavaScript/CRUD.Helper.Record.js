@@ -29,6 +29,14 @@ define('CRUD.Helper.Record', [
             var config = CrudConfiguration.get(crudId);
             return config.frontend && config.frontend.names;
         },
+        getLeftNavIndex: function getLeftNavIndex(crudId) {
+            var config = CrudConfiguration.get(crudId);
+            return config.frontend && config.frontend.leftNavIndex;
+        },
+        getIdField: function getIdField(crudId) {
+            var config = CrudConfiguration.get(crudId);
+            return config.frontend && config.frontend.idField;
+        },
         getBaseKey: function getBaseKey(crudId) {
             var config = CrudConfiguration.get(crudId);
             return config.frontend && config.frontend.baseKey;
@@ -59,11 +67,24 @@ define('CRUD.Helper.Record', [
             var url = CrudConfiguration.get(crudId).recordServiceUrl;
             return absolute ? Utils.getAbsoluteUrl(url) : url;
         },
+        getListIdConfig: function getListIdConfig(crudId) {
+            var config = CrudConfiguration.get(crudId);
+            var idConfig = config && config.list && config.list.id;
+            return idConfig || {};
+        },
+        getListIdField: function getListIdField(crudId) {
+            var idConfig = this.getListIdConfig(crudId);
+            return idConfig.fieldName || 'internalid';
+        },
+        getListIdLabel: function getListIdLabel(crudId) {
+            var idConfig = this.getListIdConfig(crudId);
+            return idConfig.label || 'Id';
+        },
         getListColumns: function getListColumns(crudId) {
             var config = CrudConfiguration.get(crudId);
-            return config && config.listColumns;
+            return config && config.list && config.list.columns;
         },
-        getListColumnFields: function getListColumnsParsed(crudId) {
+        getListColumnFields: function getListColumnFields(crudId) {
             var listColumnFields = this.getListColumns(crudId);
             var fields = this.getFields(crudId);
             var listColumns = [];

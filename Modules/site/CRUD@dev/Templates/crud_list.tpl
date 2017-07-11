@@ -37,7 +37,7 @@
                 <thead class="crud-list-recordviews-header">
                     <tr>
                         <th class="crud-list-recordviews-title-header">
-                            <span>{{translate 'Id'}}</span>
+                            <span>{{translate idColumnLabel}}</span>
                         </th>
                         {{#each listColumns}}
                         <th class="crud-list-recordviews-{{type}}-header">

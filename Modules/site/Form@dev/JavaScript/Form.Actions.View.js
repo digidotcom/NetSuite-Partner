@@ -2,12 +2,14 @@ define('Form.Actions.View', [
     'underscore',
     'Backbone',
     'jQuery',
+    'Utils',
     'Form.Action',
     'form_actions.tpl'
 ], function FormActionsView(
     _,
     Backbone,
     jQuery,
+    Utils,
     FormAction,
     formActionsTpl
 ) {
@@ -44,6 +46,23 @@ define('Form.Actions.View', [
             });
             action.run();
         },
+        getDefaultActionsLabels: function getDefaultActionsLabels() {
+            return {
+                edit: Utils.translate('Edit'),
+                viewAll: Utils.translate('View All'),
+                addAndNew: Utils.translate('Add & New'),
+                add: Utils.translate('Add'),
+                save: Utils.translate('Save'),
+                cancel: Utils.translate('Cancel')
+            };
+        },
+        getActionsLabels: function getActionsLabels() {
+            var defaultLabels = this.getDefaultActionsLabels();
+            var info = this.config.getInfo();
+            var labels = _({}).extend(info.actionLabels || {});
+            _.defaults(labels, defaultLabels);
+            return labels;
+        },
 
         getContext: function getContext() {
             var config = this.config;
@@ -63,11 +82,12 @@ define('Form.Actions.View', [
                 editUrl: info.editUrl,
                 viewUrl: info.viewUrl,
                 viewAllUrl: info.goBackUrl,
+                actionsLabels: this.getActionsLabels(),
                 customActions: info.customActions,
                 showEditLink: (isView && canEdit),
                 showViewAllLink: (isView && canList),
                 showAddButton: showAddButton,
-                showAddAndNewButton: showAddButton,
+                showAddAndNewButton: showAddButton && info.showAddAndNew,
                 showSaveButton: (isEdit && canEdit),
                 showCancelLink: (isNew && canList) || (isEdit && canView),
                 cancelUrl: isNew || isView ? info.goBackUrl : info.viewUrl,

@@ -18,7 +18,9 @@ define('Registration.Product.Configuration', [
             inlineEdit: true,
             names: {
                 singular: 'Registration Product',
-                plural: 'Registration Products'
+                plural: 'Registration Products',
+                inContextSingular: 'Product',
+                inContextPlural: 'Products'
             }
         },
         parent: {
@@ -26,12 +28,14 @@ define('Registration.Product.Configuration', [
             filterName: 'registration',
             allowEditSync: true
         },
-        listColumns: [
-            'item',
-            'partNumber',
-            'quantity',
-            'targetResalePrice'
-        ],
+        list: {
+            columns: [
+                'item',
+                'partNumber',
+                'quantity',
+                'targetResalePrice'
+            ]
+        },
         groups: [
             { id: 'default', name: '' }
         ],

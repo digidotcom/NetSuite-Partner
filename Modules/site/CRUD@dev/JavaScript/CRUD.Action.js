@@ -67,7 +67,7 @@ define('CRUD.Action', [
                 self.executeActionResponse({
                     crudId: crudId,
                     parent: parentId,
-                    result: actionModel.get('type'),
+                    result: actionModel.attributes,
                     id: internalid
                 });
             }).fail(function failFn() {

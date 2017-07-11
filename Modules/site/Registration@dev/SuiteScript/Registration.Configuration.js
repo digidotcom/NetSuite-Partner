@@ -1,49 +1,22 @@
 define('Registration.Configuration', [
-    'Models.Init'
+    'Utils.CRUD',
+    'NavigationTabsDisplay'
 ], function RegistrationConfiguration(
-    ModelsInit
+    UtilsCrud,
+    NavigationTabsDisplay
 ) {
     'use strict';
 
-    function sameIdName(line, v) {
-        var value = line.getText(
-            v.fieldName,
-            v.joinKey ? v.joinKey : null,
-            v.summary ? v.summary : null
-        );
-        return {
-            internalid: value,
-            name: value
-        };
-    }
-    function booleanMap(line, v) {
-        var value = line.getValue(
-            v.fieldName,
-            v.joinKey ? v.joinKey : null,
-            v.summary ? v.summary : null
-        );
-        return value === 'T';
-    }
-    function setText(record, fieldInfo, value) {
-        record.setFieldText(fieldInfo.fieldName, value);
-    }
-
-    function partnerNameDefaultValue() {
-        var customer = ModelsInit.customer.getFieldValues(['name']);
-        return {
-            internalid: nlapiGetUser(),
-            name: customer.name
-        };
-    }
+    var hasAccess = NavigationTabsDisplay.isVisible(NavigationTabsDisplay.tabs.REGISTRATIONS);
 
     return {
         id: 'registration',
         type: 'crud',
         permissions: {
-            list: true,
-            create: true,
-            read: true,
-            update: true,
+            list: hasAccess,
+            create: hasAccess,
+            read: hasAccess,
+            update: hasAccess,
             'delete': false
         },
         status: {
@@ -88,21 +61,30 @@ define('Registration.Configuration', [
         ],
         frontend: {
             baseKey: 'registrations',
+            leftNavIndex: 0,
+            idField: 'name',
             names: {
                 singular: 'Registration',
                 plural: 'Registrations'
             }
         },
-        listColumns: [
-            'number',
-            'projectName',
-            'productInterest',
-            'status',
-            'approvalDate',
-            'expiryDate',
-            'companyName',
-            'partnerName'
-        ],
+        list: {
+            id: {
+                fieldName: 'name',
+                label: 'Digi Id'
+            },
+            columns: [
+                'number',
+                'externalReferenceNumber',
+                'projectName',
+                'productInterest',
+                'status',
+                'approvalDate',
+                'expiryDate',
+                'companyName',
+                'partnerName'
+            ]
+        },
         groups: [
             { id: 'details', name: 'Registration Details' },
             { id: 'partner', name: 'Partner Details' },
@@ -123,8 +105,10 @@ define('Registration.Configuration', [
         fieldsets: {
             list: [
                 'internalid',
+                'name',
                 'date',
                 'number',
+                'externalReferenceNumber',
                 'status',
                 'statusAllowsEdit',
                 'approvalDate',
@@ -134,12 +118,14 @@ define('Registration.Configuration', [
             ],
             details: [
                 'internalid',
+                'name',
                 'date',
                 'number',
                 'status',
                 'statusAllowsEdit',
                 'approvalDate',
                 'expiryDate',
+                'rejectReason',
                 'partnerName',
                 'additionalInformation',
                 'fieldSalesEngineer',
@@ -163,6 +149,7 @@ define('Registration.Configuration', [
                 'engineerTechnicalContactPhone',
                 'channelManager',
                 'webAddress',
+                'leadSource',
                 'learnAboutDeal',
                 'preferredDistributor',
                 'productionDate',
@@ -198,6 +185,7 @@ define('Registration.Configuration', [
                 'engineerTechnicalContactName',
                 'engineerTechnicalContactPhone',
                 'webAddress',
+                'leadSource',
                 'learnAboutDeal',
                 'preferredDistributor',
                 'productionDate',
@@ -221,6 +209,11 @@ define('Registration.Configuration', [
             inactive: {
                 record: { // Checkbox
                     fieldName: 'isinactive'
+                }
+            },
+            name: {
+                record: {
+                    fieldName: 'name'
                 }
             },
             date: {
@@ -253,6 +246,7 @@ define('Registration.Configuration', [
                     group: 'details',
                     type: 'text',
                     label: 'Number',
+                    labelShort: 'Registration Number',
                     inline: true
                 },
                 record: { // Free-form Text
@@ -282,7 +276,7 @@ define('Registration.Configuration', [
                 record: { // Checkbox
                     fieldName: 'custrecord_registration_status_edit',
                     joinKey: 'custrecord_registration_status',
-                    applyFunction: booleanMap
+                    applyFunction: UtilsCrud.booleanMap
                 }
             },
             approvalDate: {
@@ -354,6 +348,7 @@ define('Registration.Configuration', [
                     group: 'details',
                     type: 'currency',
                     label: 'Estimated Value',
+                    tooltip: 'This displays the total value of all line items.',
                     inline: true,
                     required: false
                 },
@@ -361,22 +356,22 @@ define('Registration.Configuration', [
                     fieldName: 'custrecord_reg_estimated_value'
                 }
             },
-            externalReferenceNumber: {
-                form: {
-                    group: 'details',
-                    type: 'text',
-                    label: 'External Reference #',
-                    required: false
-                },
-                record: {
-                    fieldName: 'custrecord_external_reference_numb'
-                }
-            },
             rejectReason: {
                 form: {
                     group: 'details',
                     type: 'longtext',
                     label: 'Reject Reason',
+                    visibility: [
+                        {
+                            type: 'page',
+                            values: ['view', 'edit']
+                        },
+                        {
+                            type: 'field',
+                            fieldName: 'status',
+                            values: ['4']
+                        }
+                    ],
                     inline: true
                 },
                 record: {
@@ -391,7 +386,7 @@ define('Registration.Configuration', [
                     group: 'partner',
                     type: 'lookup',
                     label: 'Partner Name',
-                    defaultValue: partnerNameDefaultValue,
+                    defaultValue: UtilsCrud.partnerNameDefaultValue,
                     inline: true,
                     required: true
                 },
@@ -405,6 +400,8 @@ define('Registration.Configuration', [
                     group: 'partner',
                     type: 'lookup',
                     label: 'Partner Field Sales Engineer',
+                    tooltip: 'Please identify the appropriate contact from your company for this role. ' +
+                             'Contacts must be listed in the \'My Company Profile\' in order to be visible for lookup.',
                     required: true
                 },
                 record: {
@@ -416,6 +413,9 @@ define('Registration.Configuration', [
                         fieldName: 'entityid',
                         joinKey: 'custrecord_partner_field_sales_engr'
                     }
+                },
+                lookup: {
+                    applyFunction: UtilsCrud.partnerContactsLookup
                 }
             },
             buyer: {
@@ -423,6 +423,8 @@ define('Registration.Configuration', [
                     group: 'partner',
                     type: 'lookup',
                     label: 'Partner Buyer',
+                    tooltip: 'Please identify the appropriate contact from your company for this role. ' +
+                             'Contacts must be listed in the \'My Company Profile\' in order to be visible for lookup.',
                     required: false
                 },
                 record: {
@@ -434,6 +436,9 @@ define('Registration.Configuration', [
                         fieldName: 'entityid',
                         joinKey: 'custrecord_partner_buyer'
                     }
+                },
+                lookup: {
+                    applyFunction: UtilsCrud.partnerContactsLookup
                 }
             },
             fieldSalesRep: {
@@ -441,6 +446,8 @@ define('Registration.Configuration', [
                     group: 'partner',
                     type: 'lookup',
                     label: 'Partner Field Sales Rep',
+                    tooltip: 'Please identify the appropriate contact from your company for this role. ' +
+                             'Contacts must be listed in the \'My Company Profile\' in order to be visible for lookup.',
                     required: true
                 },
                 record: {
@@ -452,6 +459,22 @@ define('Registration.Configuration', [
                         fieldName: 'entityid',
                         joinKey: 'custrecord_partner_field_sales_rep'
                     }
+                },
+                lookup: {
+                    applyFunction: UtilsCrud.partnerContactsLookup
+                }
+            },
+            externalReferenceNumber: {
+                form: {
+                    group: 'partner',
+                    type: 'text',
+                    label: 'Distributor External Id',
+                    tooltip: 'Optional: Use this field to include your own internal reference number for the registration so that ' +
+                             'you can cross-reference it easily between Digi\'s record and the corresponding record in your CRM or ERP system.',
+                    required: false
+                },
+                record: {
+                    fieldName: 'custrecord_external_reference_numb'
                 }
             },
 
@@ -462,7 +485,7 @@ define('Registration.Configuration', [
                     group: 'customer',
                     type: 'text',
                     label: 'Company Name (End Customer/OEM, ODM)',
-                    labelShort: 'Company Name',
+                    labelShort: 'End Customer Name',
                     required: true
                 },
                 record: {
@@ -524,8 +547,8 @@ define('Registration.Configuration', [
                 record: {
                     fieldName: 'custrecord_company_country',
                     type: 'object',
-                    applyFunction: sameIdName,
-                    applySetFunction: setText
+                    applyFunction: UtilsCrud.sameIdName,
+                    applySetFunction: UtilsCrud.setText
                 }
             },
             companyState: {
@@ -537,13 +560,13 @@ define('Registration.Configuration', [
                     nodefault: false,
                     label: 'State',
                     tooltip: 'Depends on the selected country',
-                    required: false
+                    required: true
                 },
                 record: {
                     fieldName: 'custrecord_company_state',
                     type: 'object',
-                    applyFunction: sameIdName,
-                    applySetFunction: setText
+                    applyFunction: UtilsCrud.sameIdName,
+                    applySetFunction: UtilsCrud.setText
                 }
             },
             companyZipCode: {
@@ -601,6 +624,21 @@ define('Registration.Configuration', [
                     fieldName: 'custrecord_reg_web_address'
                 }
             },
+            leadSource: {
+                form: {
+                    group: 'customer',
+                    type: 'list',
+                    list: 'registration_lead_source',
+                    label: 'Lead Source',
+                    tooltip: 'This field will automatically populate for registrations that are created from a lead. ' +
+                             'If it is blank, you do not need to populate this field.',
+                    required: false
+                },
+                record: {
+                    fieldName: 'custrecord_reg_lead_source',
+                    type: 'object'
+                }
+            },
 
             /* ******* supply chain ******* */
 
@@ -609,6 +647,7 @@ define('Registration.Configuration', [
                     group: 'supply',
                     type: 'text',
                     label: 'Contract Manufacturer',
+                    tooltip: 'Please identify the Contract Manufacturer or Design House involved in this project, if applicable.',
                     required: false
                 },
                 record: {
@@ -631,6 +670,7 @@ define('Registration.Configuration', [
                     group: 'supply',
                     type: 'text',
                     label: 'Preferred Distributor',
+                    tooltip: 'If you are a reseller purchasing through a distributor, please identify the distributor for this project.',
                     required: false
                 },
                 record: {
@@ -667,6 +707,8 @@ define('Registration.Configuration', [
                     group: 'project',
                     type: 'date',
                     label: 'Production Date',
+                    tooltip: 'Enter the date on which the customer expects to take deliery of their first production quantity of products. ' +
+                             '(Do not use dates for samples, development systems, prototype orders, pilot orders, etc.)',
                     required: true
                 },
                 record: {
@@ -689,6 +731,11 @@ define('Registration.Configuration', [
                     group: 'project',
                     type: 'longtext',
                     label: 'Summary Of Application',
+                    tooltip: 'Add text regarding the end-product being developed, the customer\'s source of urgency, ' +
+                             'the function(s) the Digi product will perform, the reasons that the customer is considering Digi - ' +
+                             'i.e. the unique value the Digi product offers;  list competitors to the Digi that are being ' +
+                             'considered and their strengths/ weaknesses, include INBATS qualification data ' +
+                             '(Interest, Need, Budget, Authority, Timeline, Size).',
                     required: true
                 },
                 record: {
@@ -700,6 +747,7 @@ define('Registration.Configuration', [
                     group: 'project',
                     type: 'date',
                     label: 'Prototype/Eval Date',
+                    tooltip: 'Have you provided, or when will you provide, a Dev Kit or Evaluation Unit.',
                     required: true
                 },
                 record: {
@@ -725,6 +773,8 @@ define('Registration.Configuration', [
                     type: 'list',
                     list: 'registration_project_status',
                     label: 'Project Status',
+                    tooltip: 'Choose the option that best describes the current phase of the project. ' +
+                             'The customer should be actively engaged in activity related to the project status that you select.',
                     required: true
                 },
                 record: {
@@ -741,7 +791,8 @@ define('Registration.Configuration', [
                     required: true
                 },
                 record: {
-                    fieldName: 'custrecord_reg_product_interest'
+                    fieldName: 'custrecord_reg_product_interest',
+                    type: 'object'
                 }
             },
             additionalInformation: {
@@ -749,6 +800,7 @@ define('Registration.Configuration', [
                     group: 'project',
                     type: 'longtext',
                     label: 'Additional Information',
+                    tooltip: 'Add any additional details that you feel are relevant to the approval of this registration.',
                     required: false
                 },
                 record: {

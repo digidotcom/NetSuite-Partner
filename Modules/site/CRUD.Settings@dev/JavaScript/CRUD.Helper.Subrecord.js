@@ -32,6 +32,9 @@ define('CRUD.Helper.Subrecord', [
                 return !!subrecord.crudId;
             });
         },
+        getFirstSubrecord: function getFirstSubrecordInPage(crudId) {
+            return _(this.getSubrecords(crudId)).first();
+        },
         /* page can be 'view', 'edit' or 'new' */
         hasSubrecordsInPage: function hasSubrecordsInPage(crudId, page) {
             return this.getSubrecordsInPage(crudId, page).length > 0;

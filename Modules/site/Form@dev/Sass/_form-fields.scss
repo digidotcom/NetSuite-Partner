@@ -6,7 +6,10 @@
 
 .form-fields-required,
 .form-fields-label-required {
-  @extend .input-required
+  @extend .input-required;
+  font-size: 20px;
+  vertical-align: middle;
+  line-height: 11px;
 }
 
 .form-fields-label-optional {
@@ -53,8 +56,8 @@ $search-icon-size: 37px;
   @extend .fa;
   @extend %fa-search;
   position: absolute;
-  right: 1px;
-  top: 1px;
+  right: 2px;
+  top: 2px;
   height: $search-icon-size;
   line-height: $search-icon-size;
   width: $search-icon-size;
@@ -63,7 +66,7 @@ $search-icon-size: 37px;
   color: $sc-color-theme;
   cursor: pointer;
   background: #ffffff;
-  border-left: 1px solid $sc-color-theme-light;
+  border-left: 2px solid $sc-color-theme-light;
 }
 
 .form-fields-input-help {

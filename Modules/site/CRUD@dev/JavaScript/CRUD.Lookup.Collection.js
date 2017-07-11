@@ -9,7 +9,7 @@ define('CRUD.Lookup.Collection', [
 ) {
     'use strict';
 
-    return Backbone.CachedCollection.extend({
+    return Backbone.Collection.extend({
 
         model: CrudLookupModel,
 

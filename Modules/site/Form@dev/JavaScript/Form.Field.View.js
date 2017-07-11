@@ -86,6 +86,13 @@ define('Form.Field.View', [
             }
         },
 
+        setIsLooking: function setIsLooking(isLooking) {
+            this.isLookingUp = isLooking;
+        },
+        isLooking: function isLooking() {
+            return !!this.isLookingUp;
+        },
+
         initializeLookup: function initializeLookup() {
             this.lookup = new FormLookup({
                 fieldView: this,
@@ -97,17 +104,17 @@ define('Form.Field.View', [
             var type = this.model.get('type');
             var attribute = this.model.get('attribute');
             var query;
-            if (type === 'lookup') {
+            if (type === 'lookup' && !this.isLooking()) {
                 query = this.getDisplayInput().val();
                 this.query = query;
+                this.setIsLooking(true);
                 this.setLookupValue();
-                if (query) {
-                    this.lookup.search(attribute, query);
-                }
+                this.lookup.search(attribute, query);
             }
         },
         handleLookupResponse: function handleLookupResponse(selectedModel, noSelection) {
             var $displayInput = this.getDisplayInput();
+            this.setIsLooking(false);
             if (!noSelection) {
                 this.setLookupValue(selectedModel);
             } else {

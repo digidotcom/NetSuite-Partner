@@ -37,15 +37,25 @@ define('CRUD.Details.View', [
         template: crudDetailsTpl,
 
         getPageHeader: function getPageHeader() {
-            var names = CrudHelper.getNames(this.crudId);
-            var internalid = this.model.get('internalid');
+            var crudId = this.crudId;
+            var names = CrudHelper.getNames(crudId);
+            var idField = CrudHelper.getIdField(crudId);
+            var id = this.model.get(idField || 'internalid');
             var pageHeader;
             if (this.isNew()) {
                 pageHeader = Utils.translate('New $(0)', names.singular);
             } else if (this.isEdit()) {
-                pageHeader = Utils.translate('Edit $(0) #$(1)', names.singular, internalid);
-            } else {
-                pageHeader = Utils.translate('$(0) #$(1)', names.singular, internalid);
+                if (idField) {
+                    pageHeader = Utils.translate('$(0) - Edit', id);
+                } else {
+                    pageHeader = Utils.translate('Edit $(0) #$(1)', names.singular, id);
+                }
+            } else if (this.isView()) {
+                if (idField) {
+                    pageHeader = Utils.translate('$(0)', id);
+                } else {
+                    pageHeader = Utils.translate('$(0) #$(1)', names.singular, id);
+                }
             }
             return pageHeader;
         },
@@ -105,6 +115,49 @@ define('CRUD.Details.View', [
             }
             return CrudHelper.getListUrl(crudId, parentId);
         },
+        getNewSubrecordName: function getNewSubrecordUrl() {
+            var crudId = this.crudId;
+            var subrecord = CrudHelper.getFirstSubrecord(crudId);
+            var names;
+            if (subrecord && subrecord.crudId) {
+                names = CrudHelper.getNames(subrecord.crudId);
+                if (names) {
+                    if (names.inContextSingular) {
+                        return names.inContextSingular;
+                    } else if (names.singular) {
+                        return names.singular;
+                    }
+                }
+            }
+            return null;
+        },
+        getNewSubrecordUrl: function getNewSubrecordUrl(id) {
+            var crudId = this.crudId;
+            var subrecord = CrudHelper.getFirstSubrecord(crudId);
+            if (subrecord) {
+                return CrudHelper.getUrlForPage('new', subrecord.crudId, null, id);
+            }
+            return null;
+        },
+        getNewSaveRedirectUrl: function getNewSaveRedirectUrl(id) {
+            var parentId = this.parent;
+            if (parentId) {
+                return this.getGoBackUrl();
+            }
+            return this.getNewSubrecordUrl(id);
+        },
+        getNewSaveRedirectUrlCallback: function getNewSaveRedirectUrlCallback() {
+            var self = this;
+            return function callback(id) {
+                return self.getNewSaveRedirectUrl(id);
+            };
+        },
+        getDataForConditions: function getDataForConditions() {
+            return {
+                page: this.getFormAction(),
+                model: this.model
+            };
+        },
 
         childViews: {
             'Subrecords': function Subrecord() {
@@ -143,7 +196,7 @@ define('CRUD.Details.View', [
             formData: function formDataFn() {
                 var crudId = this.crudId;
                 var parentId = this.parent;
-                return _.extend({}, CrudHelper.getConfigForForm(crudId), {
+                return _.extend({}, CrudHelper.getConfigForForm(crudId, this.getDataForConditions()), {
                     lookupPromiseCallback: CrudLookup.getPromiseCallback(crudId, parentId),
                     actionPromiseCallback: CrudAction.getPromiseCallback(crudId, parentId)
                 });
@@ -170,6 +223,11 @@ define('CRUD.Details.View', [
                 var crudId = this.crudId;
                 var parentId = this.parent;
                 var id = this.model.get('internalid');
+                var labels = {};
+                var subrecordName = this.getNewSubrecordName();
+                if (subrecordName) {
+                    labels.add = Utils.translate('Add $(0)', subrecordName);
+                }
                 return {
                     title: this.getPageHeader(),
                     description: null,
@@ -178,10 +236,10 @@ define('CRUD.Details.View', [
                     viewUrl: CrudHelper.getViewUrl(crudId, id, parentId),
                     lists: CrudHelper.getListsForForm(crudId),
                     goBackUrl: this.getGoBackUrl(),
-                    customActions: CrudHelper.getActionsForForm(crudId, {
-                        page: this.getFormAction(),
-                        model: this.model
-                    })
+                    showAddAndNew: !!parentId,
+                    getNewSaveRedirectUrl: this.getNewSaveRedirectUrlCallback(),
+                    actionLabels: labels,
+                    customActions: CrudHelper.getActionsForForm(crudId, this.getDataForConditions())
                 };
             },
             isNew: function isNew() {

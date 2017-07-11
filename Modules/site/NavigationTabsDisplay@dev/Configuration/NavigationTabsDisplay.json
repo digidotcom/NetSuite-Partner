@@ -1,0 +1,122 @@
+{
+    "type": "object",
+    "subtab": {
+        "id": "navigationTabs",
+        "title": "Navigation Tabs",
+        "description": "",
+        "group": "myAccountApp"
+    },
+    "properties": {
+        "myAccount.navigationTabs": {
+            "group": "myAccountApp",
+            "subtab": "navigationTabs",
+            "type": "array",
+            "title": "Navigation Tabs Display per Role",
+            "description": "Display configuration of Navigation Tabs per role in the Partner Portal.",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "role": {
+                        "type": "string",
+                        "title": "Role ID",
+                        "description": "Script ID string of the Role to give control of visibility of the Navigation Tab (e.g. 'customrole_test')"
+                    },
+                    "navigationTab": {
+                        "type": "string",
+                        "title": "Navigation Tab",
+                        "enum": [
+                            "",
+                            "PQR",
+                            "Registrations",
+                            "Quotes",
+                            "Documents",
+                            "Knowledge",
+                            "Settings",
+                            "Cases"
+                        ],
+                        "default": "",
+                        "description": "Navigation Tab to control visibility for the defined Role"
+                    },
+                    "display": {
+                        "type": "boolean",
+                        "title": "Display Tab",
+                        "description": "Boolean indicating if the selected Navigation Tab should be visible for the selected Role ID",
+                        "default": false
+                    }
+                }
+            },
+            "default": [
+                {
+                    "role": "customrole_digi_partner_portal",
+                    "navigationTab": "PQR",
+                    "display": true
+                },
+                {
+                    "role": "customrole_digi_partner_portal",
+                    "navigationTab": "Registrations",
+                    "display": true
+                },
+                {
+                    "role": "customrole_digi_partner_portal",
+                    "navigationTab": "Quotes",
+                    "display": true
+                },
+                {
+                    "role": "customrole_digi_partner_portal",
+                    "navigationTab": "Documents",
+                    "display": true
+                },
+                {
+                    "role": "customrole_digi_partner_portal",
+                    "navigationTab": "Knowledge",
+                    "display": true
+                },
+                {
+                    "role": "customrole_digi_partner_portal",
+                    "navigationTab": "Settings",
+                    "display": true
+                },
+                {
+                    "role": "customrole_digi_partner_portal",
+                    "navigationTab": "Cases",
+                    "display": true
+                },
+                {
+                    "role": "customrole1013",
+                    "navigationTab": "PQR",
+                    "display": false
+                },
+                {
+                    "role": "customrole1013",
+                    "navigationTab": "Registrations",
+                    "display": false
+                },
+                {
+                    "role": "customrole1013",
+                    "navigationTab": "Quotes",
+                    "display": false
+                },
+                {
+                    "role": "customrole1013",
+                    "navigationTab": "Documents",
+                    "display": false
+                },
+                {
+                    "role": "customrole1013",
+                    "navigationTab": "Knowledge",
+                    "display": true
+                },
+                {
+                    "role": "customrole1013",
+                    "navigationTab": "Settings",
+                    "display": true
+                },
+                {
+                    "role": "customrole1013",
+                    "navigationTab": "Cases",
+                    "display": true
+                }
+            ]
+        }
+    }
+}

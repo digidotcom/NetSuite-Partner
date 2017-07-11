@@ -6,28 +6,37 @@
     "modules": {
         "site/Backbone.View.Multiple": "dev",
         "site/BaseSassStyles.Site": "dev",
+        "site/Case.Site": "dev",
         "site/CheckoutApplication.Site": "dev",
         "site/Configuration.Countries": "dev",
         "site/Configuration.Site": "dev",
         "site/CRUD.Settings": "dev",
         "site/CRUD": "dev",
+        "site/Documents": "dev",
         "site/EFCore.CRUD": "dev",
         "site/Footer.Site": "dev",
         "site/Form": "dev",
         "site/GlobalImages.Site": "dev",
-        "site/Header.CRUD": "dev",
         "site/Header.Site": "dev",
         "site/Heartbeat": "dev",
+        "site/Home.Site": "dev",
         "site/ListHeader.Site": "dev",
         "site/Lists": "dev",
+        "site/LoginRegister.Site": "dev",
         "site/MenuTree.Site": "dev",
         "site/Mixin": "dev",
         "site/MyAccountApplication.Site": "dev",
+        "site/NavigationTabsDisplay": "dev",
+        "site/Quote.Site": "dev",
+        "site/Overview.Site": "dev",
         "site/PartnerQuote": "dev",
+        "site/Publish": "dev",
+        "site/Settings.MenuItemsDisplay": "dev",
         "site/Registration": "dev",
         "site/SafariHtmlClass": "dev",
         "site/ServiceController.Validations.RequireSecureFix": "dev",
-        "site/ShoppingApplication.Site": "dev"
+        "site/ShoppingApplication.Site": "dev",
+        "site/Utils.CRUD": "dev"
     },
     "tasksConfig": {
         "javascript": [
@@ -36,7 +45,10 @@
                 "dependencies": [
                     {"prepend": "SC.Shopping.Configuration.Site"},
                     {"prepend": "Configuration.Countries"},
-                    "Header.CRUD"
+                    "Header.Site",
+                    {"remove": "Newsletter"},
+                    {"remove": "RequestQuoteAccessPoints"},
+                    {"remove": "StoreLocatorAccessPoints"}
                 ]
             },
             {
@@ -44,11 +56,25 @@
                 "dependencies": [
                     {"prepend": "Configuration.Countries"},
                     {"prepend": "SC.MyAccount.Configuration.Site"},
+                    "Case.Site",
                     "CRUD",
-                    "Header.CRUD",
+                    "Documents",
+                    "Header.Site",
                     "Heartbeat",
+                    "Overview.Site",
+                    "Registration",
                     "PartnerQuote",
-                    "Registration"
+                    "Settings.MenuItemsDisplay",
+                    "Quote.Site",
+                    {"remove": "OrderHistory"},
+                    {"remove": "ReorderItems"},
+                    {"remove": "ReturnAuthorization"},
+                    {"remove": "Balance"},
+                    {"remove": "Invoice"},
+                    {"remove": "PrintStatement"},
+                    {"remove": "TransactionHistory"},
+                    {"remove": "RequestQuoteAccessPoints"},
+                    {"remove": "StoreLocatorAccessPoints"}
                 ]
             },
             {
@@ -56,16 +82,20 @@
                 "dependencies": [
                     {"prepend": "SC.Checkout.Configuration.Site"},
                     {"prepend": "Configuration.Countries"},
-                    "Header.CRUD",
-                    "Heartbeat"
+                    "Header.Site",
+                    "Heartbeat",
+                    {"remove": "RequestQuoteAccessPoints"},
+                    {"remove": "StoreLocatorAccessPoints"}
                 ]
             }
         ],
         "ssp-libraries": {
             "dependencies": [
                 "Configuration.Site",
+                "Documents.PriceList.ServiceController",
                 "Heartbeat.ServiceController",
                 "Lists",
+                "NavigationTabsDisplay",
                 "PartnerQuote",
                 "Registration",
                 "ServiceController.Validations.RequireSecureFix"
@@ -78,7 +108,6 @@
                     "dependencies": [
                         {"prepend": "BaseSassStyles.Site"},
                         "Footer.Site",
-                        "Header.CRUD",
                         "Header.Site",
                         "ShoppingApplication.Site"
                     ]
@@ -88,8 +117,8 @@
                     "dependencies": [
                         {"prepend": "BaseSassStyles.Site"},
                         "CRUD",
+                        "Documents",
                         "Footer.Site",
-                        "Header.CRUD",
                         "Header.Site",
                         "Form",
                         "ListHeader.Site",
@@ -103,8 +132,8 @@
                         {"prepend": "BaseSassStyles.Site"},
                         "CheckoutApplication.Site",
                         "Footer.Site",
-                        "Header.CRUD",
-                        "Header.Site"
+                        "Header.Site",
+                        "LoginRegister.Site"
                     ]
                 }
             ]

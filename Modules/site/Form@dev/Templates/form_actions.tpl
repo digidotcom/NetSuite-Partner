@@ -13,32 +13,32 @@
     {{/each}}
     {{#if showEditLink}}
         <a href="{{editUrl}}" class="form-actions-edit">
-            {{translate 'Edit'}}
+            {{actionsLabels.edit}}
         </a>
     {{/if}}
     {{#if showViewAllLink}}
         <a href="{{viewAllUrl}}" class="form-actions-cancel">
-            {{translate 'View All'}}
+            {{actionsLabels.viewAll}}
         </a>
     {{/if}}
     {{#if showAddAndNewButton}}
         <button type="submit" class="form-actions-submit-secondary" data-add-and-new>
-            {{translate 'Add & New'}}
+            {{actionsLabels.addAndNew}}
         </button>
     {{/if}}
     {{#if showAddButton}}
         <button type="submit" class="form-actions-submit">
-            {{translate 'Add'}}
+            {{actionsLabels.add}}
         </button>
     {{/if}}
     {{#if showSaveButton}}
         <button type="submit" class="form-actions-submit">
-            {{translate 'Save'}}
+            {{actionsLabels.save}}
         </button>
     {{/if}}
     {{#if showCancelLink}}
         <a href="{{cancelUrl}}" class="form-actions-cancel">
-            {{translate 'Cancel'}}
+            {{actionsLabels.cancel}}
         </a>
     {{/if}}
 {{/if}}

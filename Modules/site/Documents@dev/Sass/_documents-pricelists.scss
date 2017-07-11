@@ -1,0 +1,92 @@
+.documents-pricelist {
+  
+}
+.documents-pricelist-button-back {
+  @extend .button-back;
+}
+.documents-pricelist-header {
+  border-top: 1px solid $sc-color-theme-border;
+  padding: $sc-base-padding * 3 0;
+}
+.documents-pricelist-button-back-icon {
+  @extend .button-back-icon;
+}
+.documents-pricelist-empty {
+  @extend .list-empty;
+}
+
+.documents-pricelist-recordviews-container{
+  @extend .recordviews-container;
+
+  @media (min-width: $screen-md-min) {
+    .recordviews-actionable-title-header,
+    .recordviews-actionable-title {
+      width: auto;
+      text-align: left;
+    }
+    .recordviews-actionable-text-header,
+    .recordviews-actionable-text {
+      width: auto;
+      text-align: left;
+    }
+    .recordviews-actionable-actions-header,
+    .recordviews-actionable-actions {
+      width: auto;
+      text-align: right;
+    }
+  }
+}
+
+.documents-pricelist-recordviews-table {
+  @extend .recordviews-table;
+
+  &:not(.clickable-rows) {
+    .recordviews-actionable-title {
+      a {
+        cursor: default;
+        font-weight: normal;
+        pointer-events: none;
+        color: $sc-color-dark-copy;
+        &:hover {
+          color: $sc-color-dark-copy;
+        }
+      }
+    }
+  }
+  &.clickable-rows {
+    .recordviews-actionable {
+      cursor: pointer;
+    }
+  }
+}
+
+.documents-pricelist-recordviews-header{
+  @extend .recordviews-header;
+}
+
+.documents-pricelist-recordviews-title-header{
+  @extend .recordviews-actionable-title-header;
+}
+
+.documents-pricelist-recordviews-text-header {
+  @extend .recordviews-actionable-text-header;
+}
+
+.documents-pricelist-recordviews-actions-header {
+  @extend .recordviews-actionable-actions-header;
+}
+
+.documents-pricelist-case-list-paginator{
+  @extend .case-list-paginator;
+}
+
+.documents-pricelist{
+  .list-header-view-filters {
+    padding-right: 0px;
+  }
+}
+
+.documents-pricelist-empty-section {
+  padding:$sc-base-padding * 8 $sc-base-padding * 3 $sc-base-padding * 3 $sc-base-padding * 3;
+  text-align:center;
+}

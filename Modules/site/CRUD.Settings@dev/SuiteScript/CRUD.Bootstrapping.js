@@ -1,22 +1,24 @@
 define('CRUD.Bootstrapping', [
     'Models.Init',
-    'Configuration'
+    'Configuration',
+    'Publish'
 ], function CrudBootstrapping(
     ModelsInit,
-    Configuration
+    Configuration,
+    Publish
 ) {
     'use strict';
 
     return {
         run: function runBootstrapping() {
-            Configuration.publish.push({
+            Publish.sessionPublish({
                 key: 'CrudConfigurationPublic',
                 model: 'CRUD.Configuration',
                 call: 'getForBootstrappingPublic'
             });
 
             if ((request.getURL().indexOf('https') >= 0) && ModelsInit.session.isLoggedIn2()) {
-                Configuration.publish.push({
+                Publish.sessionPublish({
                     key: 'CrudConfiguration',
                     model: 'CRUD.Configuration',
                     call: 'getForBootstrappingPrivate'
