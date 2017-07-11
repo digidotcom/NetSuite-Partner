@@ -7,6 +7,7 @@
         "site/Backbone.View.Multiple": "dev",
         "site/BaseSassStyles.Site": "dev",
         "site/Case.Site": "dev",
+        "suitecommerce/Case": {"remove": "2.2.0"},
         "site/Case": "dev",
         "site/CheckoutApplication.Site": "dev",
         "site/Configuration.Countries": "dev",
@@ -59,7 +60,6 @@
                     {"prepend": "Configuration.Countries"},
                     {"prepend": "SC.MyAccount.Configuration.Site"},
                     "Case.Site",
-                    "Case",
                     "CRUD",
                     "Documents",
                     "Header.Site",
@@ -102,9 +102,7 @@
                 "NavigationTabsDisplay",
                 "PartnerQuote",
                 "Registration",
-                "ServiceController.Validations.RequireSecureFix",
-                "Case.Fields.ServiceController",
-                "Case.ServiceController"
+                "ServiceController.Validations.RequireSecureFix"
             ]
         },
         "sass": {
