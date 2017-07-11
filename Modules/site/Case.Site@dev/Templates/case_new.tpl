@@ -49,27 +49,6 @@
 			</div>
 		</div>
 
-
-
-		<script>
-
-		$(document).on('change','.select-toggle',function(){
-			var target = $(this).data('target');
-			var show = $('option:selected',this).val();
-			$(target).children("#depdefault").prop('selected',true);
-			$(target).children().addClass('hide')
-			$(target).children().filter(function(i,e){
-				return $(e).data('show').toString().split(',').indexOf(show) >= 0;
-			}).each(function(e){$(this).removeClass('hide')})
-		});
-
-		$(document).ready({
-			function(){
-				$('.select-toggle').trigger('change');
-			}
-		})
-		</script>
-
 		<div class="case-new-form-controls-group" data-validation="control-group">
 			<label class="case-new-form-label" for="category">
 				{{translate 'Type of Product'}}
