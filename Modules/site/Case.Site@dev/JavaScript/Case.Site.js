@@ -11,7 +11,7 @@ define('Case.Site', [
 
     _(Case).extend({
         MenuItems: _(Case.MenuItems).wrap(function MenuItemsWrapper(fn) {
-            if (NavigationTabsDisplay.isVisible(NavigationTabsDisplay.tabs.CASES)) {
+            if (NavigationTabsDisplay.isVisible(NavigationTabsDisplay.getTabs().CASES)) {
                 return fn.apply(this, Array.prototype.slice.call(arguments, 1));
             }
         })

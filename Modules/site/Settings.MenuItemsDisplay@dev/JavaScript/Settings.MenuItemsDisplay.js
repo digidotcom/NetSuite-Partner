@@ -15,13 +15,12 @@ define('Settings.MenuItemsDisplay', [
 ) {
     'use strict';
 
-    var displaySettingsMenu = NavigationTabsDisplay.isVisible(NavigationTabsDisplay.tabs.SETTINGS);
 
     function setMenuItemsWrapper(Module) {
         var originalMenuItems = Module.MenuItems;
         _(Module).extend({
             MenuItems: function MenuItems() {
-                if (displaySettingsMenu) {
+                if (NavigationTabsDisplay.isVisible(NavigationTabsDisplay.getTabs().SETTINGS)) {
                     if (originalMenuItems && originalMenuItems.length && originalMenuItems.length === 1) {
                         return originalMenuItems[0];
                     }

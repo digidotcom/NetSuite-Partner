@@ -1,21 +1,30 @@
 define('NavigationTabsDisplay', [
     'SC.Configuration',
+    'Publish',
     'NavigationTabsDisplay.Collection'
 ], function NavigationTabsDisplay(
     Configuration,
+    Publish,
     NavigationTabsDisplayCollection
 ) {
     'use strict';
 
-    var published = SC.getPublishedObject('NavigationTabsDisplay');
-
     return {
-        tabs: (published && published.tabs) || {},
+        tabs: {},
+        getPublished: function getPublished() {
+            return Publish.getAllPublishedObject('NavigationTabsDisplay');
+        },
+        getTabs: function getTabs() {
+            var published = this.getPublished();
+            this.tabs = (published && published.tabs) || this.tabs;
+            return this.tabs;
+        },
         getCollection: function get() {
             var values = Configuration.get('myAccount.navigationTabs', []);
             return new NavigationTabsDisplayCollection(values);
         },
         getCurrentRole: function getCurrentRole() {
+            var published = this.getPublished();
             if (published && published.role && published.role.scriptId) {
                 return published.role.scriptId;
             }

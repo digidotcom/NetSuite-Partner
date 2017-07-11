@@ -13,7 +13,7 @@ define('Documents', [
 
     return {
         MenuItems: function MenuItems() {
-            if (NavigationTabsDisplay.isVisible(NavigationTabsDisplay.tabs.DOCUMENTS)) {
+            if (NavigationTabsDisplay.isVisible(NavigationTabsDisplay.getTabs().DOCUMENTS)) {
                 return {
                     id: 'marketing',
                     name: Utils.translate('Marketing Materials'),
