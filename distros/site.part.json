@@ -30,6 +30,7 @@
         "site/Quote.Site": "dev",
         "site/Overview.Site": "dev",
         "site/PartnerQuote": "dev",
+        "site/Publish": "dev",
         "site/Settings.MenuItemsDisplay": "dev",
         "site/Registration": "dev",
         "site/SafariHtmlClass": "dev",

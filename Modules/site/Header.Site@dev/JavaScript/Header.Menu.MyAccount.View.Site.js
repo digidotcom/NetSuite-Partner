@@ -14,6 +14,7 @@ define('Header.Menu.MyAccount.View.Site', [
     HeaderMenuMyAccountView.prototype.installPlugin('postContext', {
         name: 'CrudMenuItems',
         execute: function execute(context) {
+            var tabs = NavigationTabsDisplay.getTabs();
             var menuItems = CrudHelper.getMenuItemsAll();
             var crudMenus = [];
             _(menuItems).each(function eachCrudMenu(menuItem) {
@@ -33,11 +34,11 @@ define('Header.Menu.MyAccount.View.Site', [
             _(context).extend({
                 hasCrudMenus: crudMenus.length,
                 crudMenus: crudMenus,
-                showQuotes: NavigationTabsDisplay.isVisible(NavigationTabsDisplay.tabs.QUOTES),
-                showDocuments: NavigationTabsDisplay.isVisible(NavigationTabsDisplay.tabs.DOCUMENTS),
-                showKnowledge: NavigationTabsDisplay.isVisible(NavigationTabsDisplay.tabs.KNOWLEDGE),
-                showSettings: NavigationTabsDisplay.isVisible(NavigationTabsDisplay.tabs.SETTINGS),
-                isCaseModuleEnabled: context.isCaseModuleEnabled && NavigationTabsDisplay.isVisible(NavigationTabsDisplay.tabs.CASES)
+                showQuotes: NavigationTabsDisplay.isVisible(tabs.QUOTES),
+                showDocuments: NavigationTabsDisplay.isVisible(tabs.DOCUMENTS),
+                showKnowledge: NavigationTabsDisplay.isVisible(tabs.KNOWLEDGE),
+                showSettings: NavigationTabsDisplay.isVisible(tabs.SETTINGS),
+                isCaseModuleEnabled: context.isCaseModuleEnabled && NavigationTabsDisplay.isVisible(tabs.CASES)
             });
         }
     });

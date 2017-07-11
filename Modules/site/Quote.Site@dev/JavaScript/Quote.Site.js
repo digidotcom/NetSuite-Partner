@@ -13,7 +13,7 @@ define('Quote.Site', [
 
     _(Quote).extend({
         MenuItems: function MenuItems() {
-            if (NavigationTabsDisplay.isVisible(NavigationTabsDisplay.tabs.QUOTES)) {
+            if (NavigationTabsDisplay.isVisible(NavigationTabsDisplay.getTabs().QUOTES)) {
                 return {
                     id: 'quotes',
                     name: Utils.translate('Completed Quotes'),

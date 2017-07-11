@@ -1,15 +1,17 @@
 define('NavigationTabsDisplay', [
     'underscore',
     'Configuration',
+    'Publish',
     'NavigationTabsDisplay.Configuration'
 ], function NavigationTabsDisplay(
     _,
     Configuration,
+    Publish,
     NavigationTabsDisplayConfiguration
 ) {
     'use strict';
 
-    Configuration.publish.push({
+    Publish.sessionPublish({
         key: 'NavigationTabsDisplay',
         model: 'NavigationTabsDisplay.Configuration',
         call: 'getForBootstrapping'
