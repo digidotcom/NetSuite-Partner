@@ -7,8 +7,6 @@
         "site/Backbone.View.Multiple": "dev",
         "site/BaseSassStyles.Site": "dev",
         "site/Case.Site": "dev",
-        "suitecommerce/Case": {"remove": "2.2.0"},
-        "site/Case": "dev",
         "site/CheckoutApplication.Site": "dev",
         "site/Configuration.Countries": "dev",
         "site/Configuration.Site": "dev",
@@ -95,6 +93,7 @@
         ],
         "ssp-libraries": {
             "dependencies": [
+                "Case.Site",
                 "Configuration.Site",
                 "Documents.PriceList.ServiceController",
                 "Heartbeat.ServiceController",
