@@ -119,6 +119,7 @@
                     "name": "MyAccount",
                     "dependencies": [
                         {"prepend": "BaseSassStyles.Site"},
+                        "Case.Site",
                         "CRUD",
                         "Documents",
                         "Footer.Site",

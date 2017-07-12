@@ -1,0 +1,11 @@
+.case-new-form-case-category.categorydependency {
+  option {
+    display: none;
+    &:first-child {
+      display: block;
+    }
+    &.show {
+      display: block;
+    }
+  }
+}

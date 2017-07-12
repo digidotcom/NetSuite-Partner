@@ -6,6 +6,9 @@
         "templates": [
             "Templates/**/*.tpl"
         ],
+        "sass": [
+            "Sass/**/*.scss"
+        ],
         "ssp-libraries": [
             "SuiteScript/**/*.js"
         ],
