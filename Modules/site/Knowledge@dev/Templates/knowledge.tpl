@@ -1,5 +1,5 @@
 <section class="knowledge">
     {{#if iframeUrl}}
-        <h1 class="knowledge-header" target="_blank"><a class="knowledge-link" href="{{iframeUrl}}">Open Knowledge Base</a></h1>
+            <iframe class="knowledge-iframe" src="{{iframeUrl}}" frameBorder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
     {{/if}}
 </section>
