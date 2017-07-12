@@ -1,9 +1,11 @@
 define('CRUD.Configuration', [
     'underscore',
-    'jQuery'
+    'jQuery',
+    'Publish'
 ], function CrudConfiguration(
     _,
-    jQuery
+    jQuery,
+    Publish
 ) {
     'use strict';
 
@@ -24,8 +26,8 @@ define('CRUD.Configuration', [
             var publishedPublic;
             var published;
             if (!this.published) {
-                publishedPublic = SC.getPublishedObject('CrudConfigurationPublic') || {};
-                published = SC.getPublishedObject('CrudConfiguration') || {};
+                publishedPublic = Publish.getAllPublishedObject('CrudConfigurationPublic') || {};
+                published = Publish.getAllPublishedObject('CrudConfiguration') || {};
                 this.published = jQuery.extend(true, {}, publishedPublic, published);
             }
             return this.published;

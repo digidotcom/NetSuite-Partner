@@ -30,11 +30,11 @@
 
     {{#each crudMenus}}
     <li class="header-menu-myaccount-item-level2">
+        {{#if hasChildren}}
         <a class="header-menu-myaccount-anchor-level2" href="#" data-touchpoint="customercenter" data-hashtag="#{{url}}"{{#if hasChildren}} data-action="push-menu"{{/if}} name="{{id}}">
             {{name}}
             <i class="header-menu-myaccount-menu-push-icon"></i>
         </a>
-        {{#if hasChildren}}
         <ul class="header-menu-myaccount-level3">
             <li>
                 <a href="#" class="header-menu-myaccount-back" data-action="pop-menu" name="back-level3">
@@ -55,18 +55,41 @@
     {{/each}}
 
 	<li class="header-menu-myaccount-item-level2">
+        {{#if showQuotes}}
         <a class="header-menu-myaccount-anchor-level2" href="#" data-touchpoint="customercenter" data-hashtag="#quotes" name="quotes">
             {{translate 'Completed Quotes'}}
             <i class="header-menu-myaccount-menu-push-icon"></i>
         </a>
         <br />
+        {{/if}}
+        {{#if showDocuments}}
         <a class="header-menu-myaccount-anchor-level2" href="#" data-touchpoint="customercenter" data-hashtag="#documents" name="documents">
             {{translate 'Marketing Materials'}}
             <i class="header-menu-myaccount-menu-push-icon"></i>
         </a>
+        <ul class="header-menu-myaccount-level3">
+            <li>
+                <a href="#" class="header-menu-myaccount-back" data-action="pop-menu" name="back-level3">
+                    <i class="header-menu-myaccount-pop-icon "></i>
+                    {{translate 'Back'}}
+                </a>
+            </li>
+            <li>
+                <a class="header-menu-myaccount-anchor-level3" href="/documents" data-touchpoint="customercenter" data-hashtag="#documents" name="documents">
+                    {{translate 'Marketing Documents'}}
+                </a>
+            </li>
+            <li>
+                <a class="header-menu-myaccount-anchor-level3" href="/pricelists" data-touchpoint="customercenter" data-hashtag="#pricelists" name="pricelists">
+                    {{translate 'Price Lists'}}
+                </a>
+            </li>
+        </ul>
+        {{/if}}
 	</li>
 
 	<!-- Settings -->
+    {{#if showSettings}}
 	<li class="header-menu-myaccount-item-level2">
 		<a class="header-menu-myaccount-anchor-level2" tabindex="-1" href="#" data-action="push-menu" name="settings">
 			{{translate 'Settings'}}
@@ -106,6 +129,7 @@
 			</li>
 		</ul>
 	</li>
+    {{/if}}
 
 	{{#if isCaseModuleEnabled}}
 	<li class="header-menu-myaccount-item-level2" data-permissions="lists.listCase.2">
