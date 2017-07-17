@@ -2,6 +2,21 @@
     "gulp": {
         "javascript": [
             "JavaScript/**/*.js"
+        ],
+        "templates": [
+            "Templates/**/*.tpl"
+        ],
+        "sass": [
+            "Sass/**/*.scss"
+        ],
+        "ssp-libraries": [
+            "SuiteScript/**/*.js"
+        ],
+        "configuration": [
+            "Configuration/**/*.json"
         ]
+    },
+    "overrides": {
+        "suitecommerce/Case@2.2.0/Templates/case_new.tpl": "Templates/case_new.tpl"
     }
 }

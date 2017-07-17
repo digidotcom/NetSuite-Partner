@@ -4,7 +4,7 @@ define('Knowledge.View', [
     'Utils',
     'SC.Configuration',
     'knowledge.tpl'
-], function KnowledgeView (
+], function KnowledgeView(
     _,
     Backbone,
     Utils,

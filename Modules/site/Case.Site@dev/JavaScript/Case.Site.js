@@ -1,8 +1,9 @@
 define('Case.Site', [
     'underscore',
     'Case',
-    'NavigationTabsDisplay'
-], function QuoteSite(
+    'NavigationTabsDisplay',
+    'Case.Create.View.Site'
+], function CaseSite(
     _,
     Case,
     NavigationTabsDisplay

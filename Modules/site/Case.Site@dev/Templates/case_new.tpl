@@ -36,52 +36,25 @@
 			<label class="case-new-form-label" for="casetype">
 				{{translate 'Type of Request'}}
 			</label>
-
 			<div class="case-new-form-controls" data-validation="control" >
-				<select name="casetype" id="casetype" class="case-new-form-case-category select-toggle" data-target=".casetype">
-					<option disabled selected value id='casetypedefault'> -- Select Category --</option>
+				<select name="casetype" id="casetype" class="case-new-form-case-category">
+					<option value="" id="casetypedefault">{{translate ' -- Select Category -- '}}</option>
 					{{#each casetype}}
-						<option value="{{id}}">
-							{{text}}
-						</option>
+                    <option value="{{id}}">{{text}}</option>
 					{{/each}}
 				</select>
 			</div>
 		</div>
 
-
-
-		<script>
-
-		$(document).on('change','.select-toggle',function(){
-			var target = $(this).data('target');
-			var show = $('option:selected',this).val();
-			$(target).children("#depdefault").prop('selected',true);
-			$(target).children().addClass('hide')
-			$(target).children().filter(function(i,e){
-				return $(e).data('show').toString().split(',').indexOf(show) >= 0;
-			}).each(function(e){$(this).removeClass('hide')})
-		});
-
-		$(document).ready({
-			function(){
-				$('.select-toggle').trigger('change');
-			}
-		})
-		</script>
-
 		<div class="case-new-form-controls-group" data-validation="control-group">
 			<label class="case-new-form-label" for="category">
 				{{translate 'Type of Product'}}
 			</label>
-
 			<div class="case-new-form-controls" data-validation="control" >
 				<select name="category" id="category" class="case-new-form-case-category select-toggle" data-target=".categorydependency">
-					<option disabled selected value id='categorydefault'> -- Select Category --</option>
+					<option value="" id="categorydefault">{{translate ' -- Select Category -- '}}</option>
 					{{#each casecategory}}
-						<option value="{{id}}">
-							{{text}}
-						</option>
+                    <option value="{{id}}">{{text}}</option>
 					{{/each}}
 				</select>
 			</div>
@@ -93,14 +66,11 @@
 			<label class="case-new-form-label" for="categorydependency">
 				{{translate 'Select Product'}}
 			</label>
-
 			<div class="case-new-form-controls" data-validation="control">
 				<select name="categorydependency" id="categorydependency" class="case-new-form-case-category categorydependency">
-					<option disabled selected value data-show="" id='depdefault'> -- Select Product --</option>
+					<option value="">{{translate '-- Select Product -- '}}</option>
 					{{#each categorydependency}}
-						<option class="hide" data-show="{{pparent}}" value="{{pid}}">
-							{{pname}}
-						</option>
+                    <option value="{{pid}}">{{pname}}</option>
 					{{/each}}
 				</select>
 			</div>
