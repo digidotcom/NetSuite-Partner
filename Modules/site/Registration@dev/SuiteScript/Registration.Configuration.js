@@ -572,7 +572,7 @@ define('Registration.Configuration', [
             companyZipCode: {
                 form: {
                     group: 'customer',
-                    type: 'number',
+                    type: 'text',
                     label: 'Zip/Postal Code',
                     required: true
                 },

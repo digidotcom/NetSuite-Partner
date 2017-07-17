@@ -20,6 +20,7 @@
         "site/Header.Site": "dev",
         "site/Heartbeat": "dev",
         "site/Home.Site": "dev",
+        "site/Knowledge": "dev",
         "site/ListHeader.Site": "dev",
         "site/Lists": "dev",
         "site/LoginRegister.Site": "dev",
@@ -66,6 +67,7 @@
                     "PartnerQuote",
                     "Settings.MenuItemsDisplay",
                     "Quote.Site",
+                    "Knowledge",
                     {"remove": "OrderHistory"},
                     {"remove": "ReorderItems"},
                     {"remove": "ReturnAuthorization"},
@@ -91,6 +93,7 @@
         ],
         "ssp-libraries": {
             "dependencies": [
+                "Case.Site",
                 "Configuration.Site",
                 "Documents.PriceList.ServiceController",
                 "Heartbeat.ServiceController",
@@ -116,6 +119,7 @@
                     "name": "MyAccount",
                     "dependencies": [
                         {"prepend": "BaseSassStyles.Site"},
+                        "Case.Site",
                         "CRUD",
                         "Documents",
                         "Footer.Site",
@@ -123,7 +127,8 @@
                         "Form",
                         "ListHeader.Site",
                         "MenuTree.Site",
-                        "MyAccountApplication.Site"
+                        "MyAccountApplication.Site",
+                        "Knowledge"
                     ]
                 },
                 {

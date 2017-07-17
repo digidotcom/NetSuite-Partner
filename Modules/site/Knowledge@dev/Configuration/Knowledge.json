@@ -1,0 +1,19 @@
+{
+    "type": "object",
+    "subtab": {
+        "id": "knowledge",
+        "title": "Knowledge",
+        "description": "Knowledge section in My Account portal for articles.",
+        "group": "myAccountApp"
+    },
+    "properties": {
+        "knowledge.iframeUrl": {
+            "group": "myAccountApp",
+            "subtab": "knowledge",
+            "type": "string",
+            "title": "iFrame URL",
+            "description": "URL to use in the iframe to show knowledge",
+            "default": "http://knowledge.digi.com/"
+        }
+    }
+}
