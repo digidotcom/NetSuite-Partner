@@ -83,16 +83,19 @@ define('Case.Model.Site', [
         create: function (customerId, data)
         {
             customerId = customerId || nlapiGetUser() + '';
+            contact = nlapiGetContext().getContact();
 
             var newCaseRecord = nlapiCreateRecord('supportcase');
 
+            customerId && newCaseRecord.setFieldValue('company', customerId);
             data.title && newCaseRecord.setFieldValue('title', Utils.sanitizeString(data.title));
             data.message && newCaseRecord.setFieldValue('incomingmessage', Utils.sanitizeString(data.message));
             data.category && newCaseRecord.setFieldValue('custevent_productcategory', data.category);
             data.categorydependency && newCaseRecord.setFieldValue('custevent_product',data.categorydependency);
             data.casetype && newCaseRecord.setFieldValue('custevent_casecategory', data.casetype);
+            contact && newCaseRecord.setFieldValue('contact',contact);
             data.email && newCaseRecord.setFieldValue('email', data.email);
-            customerId && newCaseRecord.setFieldValue('company', customerId);
+            
 
             var default_values = this.configuration.defaultValues;
 
