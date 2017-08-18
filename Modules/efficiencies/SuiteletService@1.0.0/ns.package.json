@@ -1,0 +1,13 @@
+{
+    "gulp": {
+        "module_name": "SuiteletService",
+
+        "ssp-libraries": [
+          "SuiteScript/*.js"
+        ],
+        "javascript": [
+          "JavaScript/*.js"
+        ]
+
+    }
+}
