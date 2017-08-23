@@ -11,6 +11,8 @@ define('Case.FileUpload.Configuration', [
     var CaseFileUploadConfig;
     var context = nlapiGetContext();
 
+    nlapiLogExecution('ERROR', 'fileformats', JSON.stringify(Configuration.allowedformats));
+
     CaseFileUploadConfig = {
         suitelet: {
             scriptID: 'customscript_ef_sl_case_upload',
@@ -31,7 +33,8 @@ define('Case.FileUpload.Configuration', [
             'GIFIMAGE',
             'PNGIMAGE',
             'TIFFIMAGE',
-            'BMPIMAGE'
+            'BMPIMAGE',
+            'PDF'
         ],
 
         allowedExtensions: [
@@ -42,10 +45,11 @@ define('Case.FileUpload.Configuration', [
             'gif',
             'bmp',
             'pjpeg',
-            'png'
+            'png',
+            'pdf'
         ],
 
-        uploadType: 'image_only' // image_only, files,
+        uploadType: 'files' // image_only, files,
     };
 
     _.extend(CaseFileUploadConfig, {
@@ -54,7 +58,9 @@ define('Case.FileUpload.Configuration', [
         }
     });
 
-    Configuration.publish = [];
+    if (!Configuration.publish) {
+        Configuration.publish = [];
+    }
     Configuration.publish.push({
         key: 'CaseFileUpload_config',
         model: 'Case.FileUpload.Configuration',

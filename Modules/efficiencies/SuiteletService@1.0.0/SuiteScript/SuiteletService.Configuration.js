@@ -2,15 +2,15 @@ define('SuiteletService.Configuration', [
     'Configuration',
     'underscore'
 ], function SuiteletServiceConfiguration(
-    Configuration
+
 ) {
     'use strict';
 
     var ConfigurationPublished = {
         services: [
             {
-                script: 'customscript_ef_sl_case_upload',
-                deploy: 'customdeploy_ef_sl_case_upload'
+                script: 'customscript_script_ef_cfu_upload_file',
+                deploy: 'customdeploy_script_ef_cfu_upload_file'
             }
         ],
         resolvedServices: {}

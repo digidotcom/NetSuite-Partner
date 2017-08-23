@@ -12,6 +12,7 @@
     },
     "overrides": {
         "efficiencies/Case.Upload@1.0.3/Templates/case_fileupload.tpl": "Templates/case_fileupload.tpl",
-        "efficiencies/Case.Upload@1.0.3/Templates/case_fileupload_image_thumbnail.tpl": "Templates/case_fileupload_image_thumbnail.tpl"
+        "efficiencies/Case.Upload@1.0.3/Templates/case_fileupload_image_thumbnail.tpl": "Templates/case_fileupload_image_thumbnail.tpl",
+        "efficiencies/Case.Upload@1.0.3/SuiteScript/Case.FileUpload.Configuration.js": "SuiteScript/Case.FileUpload.Configuration.js"
     }
 }

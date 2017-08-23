@@ -12,16 +12,21 @@ define('SuiteletService', [
 ) {
     'use strict';
 
+    Configuration.publish.push({
+        key: 'SuiteletService',
+        model: 'SuiteletService',
+        call: 'resolve'
+    });
+
     return SCModel.extend({
         name: 'SuiteletService',
 
         resolve: function resolve() {
-            nlapiLogExecution('ERROR', 'resolve');
             var r = {};
             if ((request.getURL().indexOf('https:') !== 0)) {
                 return r;
             }
-            nlapiLogExecution('ERROR', 'test', JSON.stringify(SuiteletServiceConfiguration.services));
+
             _.each(SuiteletServiceConfiguration.services, function SuiteletServiceConfigurationService(service) {
                 try {
                     r[service.script + ',' + service.deploy] =
