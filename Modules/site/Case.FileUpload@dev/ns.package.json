@@ -8,6 +8,9 @@
         ],
         "images": [
             "Images/*"
+        ],
+        "configuration": [
+            "Configuration/**/*.json"
         ]
     },
     "overrides": {

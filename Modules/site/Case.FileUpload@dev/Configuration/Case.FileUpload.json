@@ -1,7 +1,7 @@
 {
   "type": "object",
   "properties": {
-    "cases.defaultValues.allowedformats" : {
+    "cases.allowedformats" : {
       "group":"myAccountApp",
       "subtab": "case",
       "type":"array",
@@ -17,6 +17,11 @@
             "type": "string",
             "title": "File Extension",
             "description": "Allowed file extension (i.e. \".txt\" for plain text files)"
+          },
+          "nsfiletype": {
+            "type": "string",
+            "title": "NetSuite File Type",
+            "description": "Allowed file type (i.e. \"PJPGIMAGE\" for jpg images)"
           }
         }
       },

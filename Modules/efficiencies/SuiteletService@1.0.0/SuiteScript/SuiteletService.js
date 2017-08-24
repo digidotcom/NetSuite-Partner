@@ -12,6 +12,10 @@ define('SuiteletService', [
 ) {
     'use strict';
 
+    if (!Configuration.publish) {
+        Configuration.publish = [];
+    }
+
     Configuration.publish.push({
         key: 'SuiteletService',
         model: 'SuiteletService',
