@@ -10,9 +10,6 @@ define('Case.FileUpload.Configuration', [
 
     var CaseFileUploadConfig;
     var context = nlapiGetContext();
-
-    // [{"filename":"Zip Archive Files","extension":".zip"}]
-    var customFiles = Configuration.cases.allowedformats;
     CaseFileUploadConfig = {
         suitelet: {
             scriptID: 'customscript_ef_sl_case_upload',
@@ -27,9 +24,25 @@ define('Case.FileUpload.Configuration', [
 
         thumbnailImageResizeID: 'thumbnail',
 
-        allowedTypes: [_.pluck(customFiles, 'nsfiletype')],
+        allowedTypes: [
+            'EXCEL',
+            'WORD',
+            'PLAINTEXT',
+            'MISCBINARY',
+            'ZIP'
+        ],
 
-        allowedExtensions: _.pluck(customFiles, 'extension'),
+        allowedExtensions: [
+            'txt',
+            'zip',
+            'rar',
+            'doc',
+            'docx',
+            'xls',
+            'xlsx',
+            'da0',
+            'fac'
+        ],
 
         uploadType: 'files' // image_only, files,
     };

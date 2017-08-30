@@ -6,11 +6,11 @@
         "templates": [
             "Templates/**/*.tpl"
         ],
+        "ssp-libraries": [
+            "SuiteScript/*.js"
+        ],
         "images": [
             "Images/*"
-        ],
-        "configuration": [
-            "Configuration/**/*.json"
         ]
     },
     "overrides": {
