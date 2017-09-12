@@ -1,0 +1,14 @@
+{
+    "gulp": {
+        "module_name": "SuiteletService",
+        "dependencies": ["EFCore@1.0.0"],
+
+        "ssp-libraries": [
+          "SuiteScript/*.js"
+        ],
+        "javascript": [
+          "JavaScript/*.js"
+        ]
+
+    }
+}

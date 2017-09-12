@@ -6,6 +6,7 @@
 /ns_npm_repository/**
 /SupportScripts/**
 /Modules/efficiencies/**
+/Modules/site/**/EF - CU - SL - Case Upload - Compiled.js
 /Modules/suitecommerce/**
 /Modules/third_parties*/**
 gulpfile.js

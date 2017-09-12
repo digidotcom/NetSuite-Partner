@@ -1,0 +1,48 @@
+.case-fileupload-uploader-placeholder {
+    position: relative;
+    overflow: hidden;
+    width: 117px;
+    margin-bottom: $sc-small-margin;
+
+    .case-fileupload-uploader-btn{
+        @extend .button-secondary;
+        @extend .button-small;
+    }
+
+    .case-fileupload-uploader{
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 0;
+        padding: 0;
+        font-size: 20px;
+        cursor: pointer;
+        opacity: 0;
+        filter: alpha(opacity=0);
+    }
+}
+
+.case-fileupload-img-thumbnail-row {
+    @extend .row;
+}
+
+.case-fileupload-img-thumbnail-cell {
+    @extend .col-sm-3;
+    @extend .col-xs-6;
+    width: 150px;
+    max-width: 150px;
+}
+
+.case-fileupload-remove{
+    position: absolute;
+    top: 1px;
+    right: -5px;
+    cursor: pointer;
+
+    .case-fileupload-remove-icon {
+        @extend .fa;
+        @extend %fa-times-circle;
+        @extend .icon-base;
+        color: red;
+    }
+}
