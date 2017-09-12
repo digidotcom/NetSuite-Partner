@@ -30,6 +30,8 @@
         "efficiencies/ShoppingStarterFixes": "1.1.0",
         "efficiencies/StagingNoIndex": "1.0.0",
         "efficiencies/StyleFixes": "2.0.0",
+        "efficiencies/Case.Upload": "1.0.3",
+        "efficiencies/SuiteletService": "1.0.0",
         "third_parties_efficiencies/jquery.form": "1.5.0",
         "third_parties_efficiencies/jQuery-fitvids": "1.1"
     },
@@ -70,7 +72,9 @@
                     "HashScroll",
                     "ResolveAssetUrlHandlebarsAddOn",
                     "AdvancedItemImages",
-                    "Case.UrlParams"
+                    "Case.UrlParams",
+                    "Case.FileUpload",
+                    "SuiteletService"
                 ]
             },
             {
@@ -88,7 +92,13 @@
         "ssp-libraries": {
             "dependencies": [
                 "ContactUs.Model",
-                "ContactUs.ServiceController"
+                "ContactUs.ServiceController",
+                "SuiteletService",
+                "Case.File.Model",
+                "Case.FileUpload.Configuration",
+                "Case.Model.AppendMessagesToCase",
+                "Case.Model.AttachMessageFile",
+                "Case.FileUpload.Hooks"
             ]
         },
         "sass": {
@@ -108,7 +118,8 @@
                             "exclude": [
                                 "facets_item_cell_fixes"
                             ]
-                        }
+                        },
+                        "Case.Upload"
                     ]
                 },
                 {

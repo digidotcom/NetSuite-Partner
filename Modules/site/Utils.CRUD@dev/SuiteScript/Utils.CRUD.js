@@ -1,9 +1,11 @@
 define('Utils.CRUD', [
     'underscore',
-    'Models.Init'
+    'Models.Init',
+    'Application'
 ], function UtilsCrudModule(
     _,
-    ModelsInit
+    ModelsInit,
+    Application
 ) {
     'use strict';
 
@@ -54,7 +56,7 @@ define('Utils.CRUD', [
         ];
         var results;
         if (customerId) {
-            results = nlapiSearchRecord('contact', null, filters, columns);
+            results = Application.getAllSearchResults('contact', filters, columns);
             _(results).each(function eachResults(result) {
                 var internalId = result.getValue('internalid');
                 var name = result.getValue('entityid');
@@ -85,7 +87,7 @@ define('Utils.CRUD', [
         ];
         var results;
         if (customerId) {
-            results = nlapiSearchRecord('customrecord_registrationprocess', null, filters, columns);
+            results = Application.getAllSearchResults('customrecord_registrationprocess', filters, columns);
             _(results).each(function eachResults(result) {
                 var internalId = result.getValue('internalid');
                 var name = result.getValue('custrecord_reg_dispay_id');

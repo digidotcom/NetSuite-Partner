@@ -37,7 +37,8 @@
         "site/SafariHtmlClass": "dev",
         "site/ServiceController.Validations.RequireSecureFix": "dev",
         "site/ShoppingApplication.Site": "dev",
-        "site/Utils.CRUD": "dev"
+        "site/Utils.CRUD": "dev",
+        "site/Case.FileUpload": "dev"
     },
     "tasksConfig": {
         "javascript": [
@@ -68,6 +69,7 @@
                     "Settings.MenuItemsDisplay",
                     "Quote.Site",
                     "Knowledge",
+                    "Case.FileUpload.Model",
                     {"remove": "OrderHistory"},
                     {"remove": "ReorderItems"},
                     {"remove": "ReturnAuthorization"},
@@ -94,7 +96,6 @@
         "ssp-libraries": {
             "dependencies": [
                 "Case.Site",
-                "Configuration.Site",
                 "Documents.PriceList.ServiceController",
                 "Heartbeat.ServiceController",
                 "Lists",
