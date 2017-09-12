@@ -6,6 +6,7 @@
     "modules": {
         "site/Backbone.View.Multiple": "dev",
         "site/BaseSassStyles.Site": "dev",
+        "site/Case.FileUpload": "dev",
         "site/Case.Site": "dev",
         "site/CheckoutApplication.Site": "dev",
         "site/Configuration.Countries": "dev",
@@ -28,17 +29,17 @@
         "site/Mixin": "dev",
         "site/MyAccountApplication.Site": "dev",
         "site/NavigationTabsDisplay": "dev",
-        "site/Quote.Site": "dev",
         "site/Overview.Site": "dev",
         "site/PartnerQuote": "dev",
         "site/Publish": "dev",
-        "site/Settings.MenuItemsDisplay": "dev",
+        "site/QuickSearch": "dev",
+        "site/Quote.Site": "dev",
         "site/Registration": "dev",
         "site/SafariHtmlClass": "dev",
         "site/ServiceController.Validations.RequireSecureFix": "dev",
+        "site/Settings.MenuItemsDisplay": "dev",
         "site/ShoppingApplication.Site": "dev",
-        "site/Utils.CRUD": "dev",
-        "site/Case.FileUpload": "dev"
+        "site/Utils.CRUD": "dev"
     },
     "tasksConfig": {
         "javascript": [
@@ -101,6 +102,7 @@
                 "Lists",
                 "NavigationTabsDisplay",
                 "PartnerQuote",
+                "QuickSearch.ServiceController",
                 "Registration",
                 "ServiceController.Validations.RequireSecureFix"
             ]
