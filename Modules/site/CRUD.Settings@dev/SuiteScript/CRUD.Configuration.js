@@ -25,6 +25,7 @@ define('CRUD.Configuration', [
                 'permissions'
             ],
             record: [
+                'search',
                 'listHeaderDisabled',
                 'record',
                 'loggedIn',
@@ -42,6 +43,10 @@ define('CRUD.Configuration', [
         },
 
         configuration: {},
+
+        getIds: function getIds() {
+            return _.keys(this.configuration);
+        },
 
         add: function add(id, configuration) {
             this.configuration[id] = configuration;

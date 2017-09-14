@@ -1,7 +1,7 @@
 define('CRUD.Record.Model', [
     'underscore',
     'SC.Model',
-    'SearchHelper',
+    'SearchHelper.CRUD',
     'RecordHelper.CRUD',
     'CRUD.Utils',
     'CRUD.Configuration'

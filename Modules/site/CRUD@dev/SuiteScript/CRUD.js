@@ -1,9 +1,10 @@
 define('CRUD', [
     'CRUD.Settings',
-    'CRUD.Record.ServiceController',
-    'CRUD.Lookup.ServiceController',
     'CRUD.Action.ServiceController',
-    'CRUD.List.ServiceController'
+    'CRUD.List.ServiceController',
+    'CRUD.Lookup.ServiceController',
+    'CRUD.Record.ServiceController',
+    'CRUD.Search.ServiceController'
 ], function Crud(
     CrudSettings
 ) {

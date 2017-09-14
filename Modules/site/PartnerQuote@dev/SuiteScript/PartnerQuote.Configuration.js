@@ -98,7 +98,19 @@ define('PartnerQuote.Configuration', [
         },
         filtersDynamic: {},
         sort: {},
+        search: {
+            textFieldName: 'name',
+            fields: {
+                name: { operator: 'contains' }/* ,
+                registration: { operator: 'contains' }*/
+            }
+        },
         fieldsets: {
+            search: [
+                'internalid',
+                'name',
+                'registration'
+            ],
             list: [
                 'internalid',
                 'name',

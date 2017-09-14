@@ -1,16 +1,18 @@
-define('QuickSearch.ServiceController', [
+define('CRUD.Search.ServiceController', [
     'underscore',
     'ServiceController',
-    'QuickSearch.Model'
-], function QuickSearchServiceController(
+    'CRUD.Utils',
+    'CRUD.Search.Model'
+], function CrudSearchServiceController(
     _,
     ServiceController,
-    QuickSearchModel
+    CrudUtils,
+    CrudSearchModel
 ) {
     'use strict';
 
     return ServiceController.extend({
-        name: 'QuickSearch.ServiceController',
+        name: 'CRUD.Search.ServiceController',
 
         options: {
             common: {
@@ -21,7 +23,7 @@ define('QuickSearch.ServiceController', [
 
         get: function get() {
             var query = this.request.getParameter('q');
-            return QuickSearchModel.get(query);
+            return CrudSearchModel.search(query);
         }
     });
 });

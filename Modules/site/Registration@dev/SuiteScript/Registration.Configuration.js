@@ -101,8 +101,20 @@ define('Registration.Configuration', [
             inactive: { operator: 'is', value1: 'F' }
         },
         filtersDynamic: {},
+        search: {
+            textFieldName: 'name',
+            fields: {
+                name: { operator: 'contains' },
+                number: { operator: 'contains' }
+            }
+        },
         sort: {},
         fieldsets: {
+            search: [
+                'internalid',
+                'name',
+                'number'
+            ],
             list: [
                 'internalid',
                 'name',
