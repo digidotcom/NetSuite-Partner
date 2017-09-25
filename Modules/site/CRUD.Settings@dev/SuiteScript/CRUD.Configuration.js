@@ -38,6 +38,7 @@ define('CRUD.Configuration', [
                 'subrecords',
                 'frontend',
                 'list',
+                'search',
                 'groups'
             ]
         },
@@ -71,7 +72,7 @@ define('CRUD.Configuration', [
         getWithKeySetAll: function getWithKeySetAll(keySet, excludeShared) {
             var self = this;
             var configs = {};
-            _(this.configuration).each(function eachConfigurartion(config, id) {
+            _(this.configuration).each(function eachConfiguration(config, id) {
                 configs[id] = self.getWithKeySet(id, keySet, excludeShared);
             });
             return configs;
