@@ -23,7 +23,15 @@ define('CRUD.Search.ServiceController', [
 
         get: function get() {
             var query = this.request.getParameter('q');
-            return CrudSearchModel.search(query);
+            var crudIdsStr = this.request.getParameter('ids');
+            var crudIds = (crudIdsStr && crudIdsStr.split(',')) || [];
+
+            CrudUtils.validateCrudIds(crudIds);
+            if (!query) {
+                throw badRequestError;
+            }
+
+            return CrudSearchModel.search(crudIds, query);
         }
     });
 });

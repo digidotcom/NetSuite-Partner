@@ -161,6 +161,13 @@ define('CRUD.Configuration.Main', [
             }
             return null;
         },
+        getFieldConfigForFilter: function getFieldConfigForRecord(config, fieldId) {
+            var fieldConfig = config.fields[fieldId];
+            if (fieldConfig && fieldConfig.record) {
+                return fieldConfig.record.joint ? fieldConfig.record.name : fieldConfig.record;
+            }
+            return null;
+        },
         getFieldRecord: function getFieldRecord(config, fieldId) {
             var fieldConfig = config.fields[fieldId];
             if (fieldConfig && fieldConfig.record) {
@@ -180,6 +187,18 @@ define('CRUD.Configuration.Main', [
                 return field.internalid.fieldName;
             }
             return field.fieldName;
+        },
+        getFieldNameForFilter: function getFieldNameForField(field) {
+            if (field.joint) {
+                return field.name.fieldName;
+            }
+            return field.fieldName;
+        },
+        getJoinKeyForFilter: function getFieldNameForField(field) {
+            if (field.joint) {
+                return field.name.joinKey || null;
+            }
+            return field.joinKey || null;
         },
         getJointFieldId: function getJointFieldId(fieldId, jointKey) {
             return fieldId + capitalizeFirstLetter(jointKey);

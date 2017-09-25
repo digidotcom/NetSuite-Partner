@@ -16,15 +16,74 @@ define('CRUD.Search.Model', [
     return SCModel.extend({
         name: 'CRUD.Record',
 
+        search: function search(crudIdsArg, query) {
+            var crudIds = this.parseCrudIds(crudIdsArg);
+            var results = this.searchMultiple(crudIds, query);
+            return this.mergeResults(results);
+        },
+
+        parseCrudIds: function parseCrudIds(crudIdsArg) {
+            var crudIds = this.getCrudIds(crudIdsArg);
+            return this.filterForSearch(crudIds);
+        },
+
+        getCrudIds: function getCrudIds(crudIds) {
+            if (crudIds && crudIds.length > 0) {
+                return crudIds;
+            }
+            return CrudConfiguration.getIds();
+        },
+
+        filterForSearch: function filterForSearch(crudIds) {
+            var self = this;
+            return _(crudIds).filter(function filterCrudIds(crudId) {
+                return self.isValidForSearch(crudId);
+            });
+        },
+
+        isValidForSearch: function isValidForSearch(crudId) {
+            return !!CrudConfiguration.get(crudId).search;
+        },
+
+        searchMultiple: function searchMultiple(crudIds, query) {
+            var self = this;
+            var results = {};
+            _(crudIds).each(function eachCrudId(crudId) {
+                results[crudId] = self.searchSingle(crudId, query);
+            });
+            return results;
+        },
+
+        searchSingle: function searchSingle(crudId, query) {
+            var config = CrudConfiguration.getForRecord(crudId);
+            var fieldset = config.fieldsets.search;
+            var results;
+
+            var search = new SearchHelper()
+                .setRecord(config.record)
+                .setColumns(config.columns)
+                .setFilters(config.filters)
+                .setFieldset(fieldset);
+
+            if (query) {
+                this.addQueryToSearch(crudId, config, search, query);
+            }
+
+            results = search.search().getResults();
+            CrudUtils.mapResults(config, results, fieldset);
+            return this.formatResults(crudId, results);
+        },
+
         addQueryToSearch: function addQueryToSearch(crudId, config, search, query) {
             var filters;
             if (config.search && config.search.fields) {
                 filters = [];
                 _(config.search.fields).each(function eachSearchField(filter, fieldId) {
-                    var fieldInfo = CrudConfiguration.getFieldRecord(config, fieldId);
+                    var fieldInfo = CrudConfiguration.getFieldConfigForRecord(config, fieldId);
                     var filterData = filter;
                     if (fieldInfo) {
-                        filterData.fieldName = CrudConfiguration.getFieldNameForField(fieldInfo);
+                        filterData.fieldName = CrudConfiguration.getFieldNameForFilter(fieldInfo);
+                        filterData.joinKey = CrudConfiguration.getJoinKeyForFilter(fieldInfo);
                         filterData.value1 = query;
                         filterData.or = true;
                         filters.push(filterData);
@@ -56,57 +115,12 @@ define('CRUD.Search.Model', [
             });
         },
 
-        searchSingle: function searchSingle(crudId, query) {
-            var config = CrudConfiguration.getForRecord(crudId);
-            var fieldset = config.fieldsets.search;
-            var search;
-            var results;
-
-            if (config.search) {
-                search = new SearchHelper()
-                    .setRecord(config.record)
-                    .setColumns(config.columns)
-                    .setFilters(config.filters)
-                    .setFieldset(fieldset);
-
-                if (query) {
-                    this.addQueryToSearch(crudId, config, search, query);
-                }
-
-                results = search.search().getResults();
-                CrudUtils.mapResults(config, results, fieldset);
-                results = this.formatResults(crudId, results);
-                return results;
-            }
-            return [];
-        },
-
-        searchMultiple: function searchMultiple(crudIds, query) {
-            var self = this;
-            var results = {};
-            _(crudIds).each(function eachCrudId(crudId) {
-                results[crudId] = self.searchSingle(crudId, query);
-            });
-            return results;
-        },
-
         mergeResults: function mergeResults(results) {
             var mergedResults = [];
             _(results).each(function eachResult(result) {
                 mergedResults = _.union(mergedResults, result);
             });
             return mergedResults;
-        },
-
-        getCrudIds: function getCrudIds(crudIdsArg) {
-            var crudIds = CrudConfiguration.getIds();
-            if (crudIdsArg)
-        },
-
-        search: function search(crudIdsArg, query) {
-            var crudIds = this.getCrudIds(crudIdsArg);
-            var results = this.searchMultiple(crudIds, query);
-            return this.mergeResults(results);
         }
     });
 });

@@ -101,19 +101,20 @@ define('Registration.Configuration', [
             inactive: { operator: 'is', value1: 'F' }
         },
         filtersDynamic: {},
+        sort: {},
         search: {
-            textFieldName: 'name',
+            labelFieldName: 'displayId',
             fields: {
-                name: { operator: 'contains' },
+                displayId: { operator: 'contains' },
                 number: { operator: 'contains' }
             }
         },
-        sort: {},
         fieldsets: {
             search: [
                 'internalid',
                 'name',
-                'number'
+                'number',
+                'displayId'
             ],
             list: [
                 'internalid',
@@ -248,6 +249,11 @@ define('Registration.Configuration', [
             partnerApprovalSubmission: {
                 record: {
                     fieldName: 'custrecord_partner_approval_submission'
+                }
+            },
+            displayId: {
+                record: {
+                    fieldName: 'custrecord_reg_dispay_id'
                 }
             },
 
