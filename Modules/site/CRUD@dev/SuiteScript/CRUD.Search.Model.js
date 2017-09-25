@@ -71,7 +71,7 @@ define('CRUD.Search.Model', [
 
             results = search.search().getResults();
             CrudUtils.mapResults(config, results, fieldset);
-            return this.formatResults(crudId, results);
+            return this.formatResults(crudId, config, results);
         },
 
         addQueryToSearch: function addQueryToSearch(crudId, config, search, query) {
@@ -101,18 +101,24 @@ define('CRUD.Search.Model', [
             }
         },
 
-        formatResult: function formatResult(crudId, result) {
-            return {
-                crudId: crudId,
-                data: result
-            };
-        },
-
-        formatResults: function formatResults(crudId, results) {
+        formatResults: function formatResults(crudId, config, results) {
             var self = this;
             return _(results).map(function mapResult(result) {
-                return self.formatResult(crudId, result);
+                return self.formatResult(crudId, config, result);
             });
+        },
+
+        formatResult: function formatResult(crudId, config, result) {
+            var labelFieldName = (config.search && config.search.labelFieldName) || 'name';
+            var data = result || {};
+            return {
+                crudId: crudId,
+                display: {
+                    internalid: data.internalid || null,
+                    label: data[labelFieldName] || null
+                },
+                data: data
+            };
         },
 
         mergeResults: function mergeResults(results) {
