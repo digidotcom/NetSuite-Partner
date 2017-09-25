@@ -67,4 +67,7 @@
 </div>
 
 <div class="header-sidebar-overlay" data-action="header-sidebar-hide"></div>
-<div class="header-secondary-wrapper"></div>
+<div class="header-secondary-wrapper" data-view="Header.Menu" data-phone-template="header_sidebar" data-tablet-template="header_sidebar">
+</div>
+
+<div class="header-site-search" data-view="SiteSearch" data-type="SiteSearch"></div>

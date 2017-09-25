@@ -37,7 +37,8 @@ define('CRUD.Search.Model', [
         filterForSearch: function filterForSearch(crudIds) {
             var self = this;
             return _(crudIds).filter(function filterCrudIds(crudId) {
-                return self.isValidForSearch(crudId);
+                return CrudUtils.isAllowed(crudId, 'list') &&
+                       self.isValidForSearch(crudId);
             });
         },
 
@@ -113,11 +114,11 @@ define('CRUD.Search.Model', [
             var data = result || {};
             return {
                 crudId: crudId,
-                display: {
+                result: {
                     internalid: data.internalid || null,
-                    label: data[labelFieldName] || null
-                },
-                data: data
+                    name: data[labelFieldName] || null,
+                    fields: data
+                }
             };
         },
 

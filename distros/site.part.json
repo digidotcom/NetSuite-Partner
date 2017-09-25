@@ -32,13 +32,13 @@
         "site/Overview.Site": "dev",
         "site/PartnerQuote": "dev",
         "site/Publish": "dev",
-        "site/QuickSearch": "dev",
         "site/Quote.Site": "dev",
         "site/Registration": "dev",
         "site/SafariHtmlClass": "dev",
         "site/ServiceController.Validations.RequireSecureFix": "dev",
         "site/Settings.MenuItemsDisplay": "dev",
         "site/ShoppingApplication.Site": "dev",
+        "site/SiteSearch.CRUD": "dev",
         "site/Utils.CRUD": "dev"
     },
     "tasksConfig": {
@@ -71,6 +71,7 @@
                     "Quote.Site",
                     "Knowledge",
                     "Case.FileUpload.Model",
+                    "SiteSearch.CRUD",
                     {"remove": "OrderHistory"},
                     {"remove": "ReorderItems"},
                     {"remove": "ReturnAuthorization"},
@@ -102,7 +103,6 @@
                 "Lists",
                 "NavigationTabsDisplay",
                 "PartnerQuote",
-                "QuickSearch.ServiceController",
                 "Registration",
                 "ServiceController.Validations.RequireSecureFix"
             ]
