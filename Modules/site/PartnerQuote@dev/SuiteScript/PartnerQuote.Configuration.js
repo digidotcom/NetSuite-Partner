@@ -98,7 +98,22 @@ define('PartnerQuote.Configuration', [
         },
         filtersDynamic: {},
         sort: {},
+        search: {
+            labelFieldName: 'displayId',
+            fields: {
+                displayId: { operator: 'contains' },
+                registrationNumber: { operator: 'contains' },
+                registrationDisplayId: { operator: 'contains' }
+            }
+        },
         fieldsets: {
+            search: [
+                'internalid',
+                'name',
+                'displayId',
+                'registrationNumber',
+                'registrationDisplayId'
+            ],
             list: [
                 'internalid',
                 'name',
@@ -226,6 +241,23 @@ define('PartnerQuote.Configuration', [
             partnerPqrSubmission: {
                 record: {
                     fieldName: 'custrecord_pqr_partner_submission'
+                }
+            },
+            displayId: {
+                record: {
+                    fieldName: 'custrecord_pqr_display_id'
+                }
+            },
+            registrationNumber: {
+                record: {
+                    fieldName: 'custrecord_reg_number',
+                    joinKey: 'custrecord_quotereqregistration'
+                }
+            },
+            registrationDisplayId: {
+                record: {
+                    fieldName: 'custrecord_reg_dispay_id',
+                    joinKey: 'custrecord_quotereqregistration'
                 }
             },
 

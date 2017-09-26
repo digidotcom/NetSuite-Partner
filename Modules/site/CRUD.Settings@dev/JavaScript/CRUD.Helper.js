@@ -6,6 +6,7 @@ define('CRUD.Helper', [
     'CRUD.Helper.ListRecord',
     'CRUD.Helper.Menus',
     'CRUD.Helper.Record',
+    'CRUD.Helper.Search',
     'CRUD.Helper.Status',
     'CRUD.Helper.Subrecord',
     'CRUD.Helper.Urls'
@@ -17,6 +18,7 @@ define('CRUD.Helper', [
     CrudHelperListRecord,
     CrudHelperMenus,
     CrudHelperRecord,
+    CrudHelperSearch,
     CrudHelperStatus,
     CrudHelperSubrecord,
     CrudHelperUrls
@@ -33,6 +35,7 @@ define('CRUD.Helper', [
         CrudHelperListRecord,
         CrudHelperMenus,
         CrudHelperRecord,
+        CrudHelperSearch,
         CrudHelperStatus,
         CrudHelperSubrecord,
         CrudHelperUrls

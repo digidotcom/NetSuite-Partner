@@ -14,10 +14,11 @@ define('CRUD.Configuration', [
         addSettings: function add(crudId, settings) {
             this.get(crudId).settings = settings;
         },
-        getStatic: function configuration(crudId) {
+        getStatic: function getStatic(crudId) {
             return {
                 recordServiceUrl: 'services/CRUD.Record.Service.ss?id=' + crudId,
                 listServiceUrl: 'services/CRUD.List.Service.ss',
+                searchServiceUrl: 'services/CRUD.Search.Service.ss',
                 lookupServiceUrl: 'services/CRUD.Lookup.Service.ss?id=' + crudId,
                 actionServiceUrl: 'services/CRUD.Action.Service.ss?id=' + crudId
             };

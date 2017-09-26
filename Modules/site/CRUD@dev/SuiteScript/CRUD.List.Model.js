@@ -1,7 +1,7 @@
 define('CRUD.List.Model', [
     'underscore',
     'SC.Model',
-    'SearchHelper',
+    'SearchHelper.CRUD',
     'CRUD.Configuration'
 ], function CrudRecordModel(
     _,

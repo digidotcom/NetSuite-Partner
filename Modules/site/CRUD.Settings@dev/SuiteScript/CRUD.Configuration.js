@@ -25,6 +25,7 @@ define('CRUD.Configuration', [
                 'permissions'
             ],
             record: [
+                'search',
                 'listHeaderDisabled',
                 'record',
                 'loggedIn',
@@ -37,11 +38,16 @@ define('CRUD.Configuration', [
                 'subrecords',
                 'frontend',
                 'list',
+                'search',
                 'groups'
             ]
         },
 
         configuration: {},
+
+        getIds: function getIds() {
+            return _.keys(this.configuration);
+        },
 
         add: function add(id, configuration) {
             this.configuration[id] = configuration;
@@ -66,7 +72,7 @@ define('CRUD.Configuration', [
         getWithKeySetAll: function getWithKeySetAll(keySet, excludeShared) {
             var self = this;
             var configs = {};
-            _(this.configuration).each(function eachConfigurartion(config, id) {
+            _(this.configuration).each(function eachConfiguration(config, id) {
                 configs[id] = self.getWithKeySet(id, keySet, excludeShared);
             });
             return configs;

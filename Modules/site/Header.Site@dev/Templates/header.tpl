@@ -53,11 +53,11 @@
 				<div class="header-menu-profile" data-view="Header.Profile">
 				</div>
 				<div class="header-menu-locator-mobile" data-view="StoreLocatorHeaderLink"></div>
-				<div class="header-menu-searchmobile">
-					<button class="header-menu-searchmobile-link" data-action="show-sitesearch" title="{{translate 'Search'}}">
-						<i class="header-menu-searchmobile-icon"></i>
-					</button>
-				</div>
+                <div class="header-menu-search">
+                    <button class="header-menu-search-link" data-action="show-sitesearch" title="{{translate 'Search'}}">
+                        <i class="header-menu-search-icon"></i>
+                    </button>
+                </div>
 
 			</div>
 		</div>
@@ -68,3 +68,5 @@
 
 <div class="header-sidebar-overlay" data-action="header-sidebar-hide"></div>
 <div class="header-secondary-wrapper"></div>
+
+<div class="header-site-search" data-view="SiteSearch" data-type="SiteSearch"></div>
