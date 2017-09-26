@@ -7,8 +7,6 @@
 
 {{#if isItemSelected}}
 	<a class="itemssearcher-item-results" data-hashtag="{{model._url}}" data-touchpoint="customercenter">
-	    <div class="itemssearcher-item-results-image">
-	    </div>
 	    <div class="itemssearcher-item-results-content">
 	        <div class="itemssearcher-item-results-title">
 	            {{translate '<em>$(0)</em>: ' model._record}} {{highlightKeyword model._name currentQuery}}
