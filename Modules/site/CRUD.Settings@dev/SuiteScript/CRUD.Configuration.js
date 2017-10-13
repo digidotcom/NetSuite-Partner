@@ -39,6 +39,7 @@ define('CRUD.Configuration', [
                 'frontend',
                 'list',
                 'search',
+                'prefill',
                 'groups'
             ]
         },
