@@ -170,10 +170,29 @@ define('CRUD.Router', [
             view.showContentBefore();
             if (id) {
                 promises.push(model.fetch());
+            } else if (CrudHelper.isPrefill(options)) {
+                promises.push(this.getPrefillPromise(model, options));
             }
             jQuery.when.apply(jQuery, promises).done(function done() {
                 view.showContentAfter();
             });
+        },
+
+        getPrefillPromise: function getPrefillPromise(model, options) {
+            var config = CrudHelper.getPrefillOptions(options);
+            var prefillModel = new CrudRecordModel({
+                internalid: config.recordId,
+                parent: null,
+                crudId: config.crudId
+            });
+            var deferred = new jQuery.Deferred();
+            prefillModel.fetch().done(function onPrefillPromiseDone() {
+                CrudHelper.executePrefillModel(model, prefillModel);
+                deferred.resolve();
+            }).fail(function onPrefillPromiseFail() {
+                deferred.reject();
+            });
+            return deferred.promise();
         },
 
         allowPage: function allowPage(crudId, permission) {

@@ -124,32 +124,6 @@ define('Registration.Configuration', [
                 number: { operator: 'contains' }
             }
         },
-        prefill: [
-            {
-                crudId: 'partner_quote',
-                button: {
-                    display: true,
-                    label: 'Request a Quote'
-                },
-                fieldMapping: {
-                    endCustomerName: 'companyName',
-                    endCustomerMainAddress: 'companyAddress',
-                    endCustomerMainAddress2: 'companyAddress2',
-                    endCustomerCity: 'companyCity',
-                    endCustomerCountry: 'companyCountry',
-                    endCustomerState: 'companyState',
-                    endCustomerPostalCode: 'companyZipCode',
-                    endCustomerWebsite: 'webAddress',
-                    contractManufacturer: 'contractManufacturer',
-                    resellerName: 'reseller',
-                    productInterest: 'productInterest',
-                    registration: 'number'
-                },
-                values: {
-                    registrationExists: 'Yes'
-                }
-            }
-        ],
         fieldsets: {
             search: [
                 'internalid',
@@ -172,6 +146,7 @@ define('Registration.Configuration', [
             ],
             details: [
                 'internalid',
+                'displayId',
                 'name',
                 'date',
                 'number',
