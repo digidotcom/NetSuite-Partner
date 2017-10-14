@@ -50,6 +50,21 @@ define('Registration.Configuration', [
                     type: 'redirect',
                     page: 'view'
                 }
+            },
+            {
+                name: 'prefill',
+                label: 'Request a Quote',
+                conditions: [
+                    {
+                        type: 'page',
+                        values: ['view']
+                    }
+                ],
+                execute: 'static',
+                result: {
+                    type: 'prefill',
+                    crudId: 'partner_quote'
+                }
             }
         ],
         subrecords: [
@@ -131,6 +146,7 @@ define('Registration.Configuration', [
             ],
             details: [
                 'internalid',
+                'displayId',
                 'name',
                 'date',
                 'number',

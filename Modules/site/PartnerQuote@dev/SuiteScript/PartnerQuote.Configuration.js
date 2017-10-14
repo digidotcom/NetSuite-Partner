@@ -106,6 +106,32 @@ define('PartnerQuote.Configuration', [
                 registrationDisplayId: { operator: 'contains' }
             }
         },
+        prefill: [
+            {
+                crudId: 'registration',
+                fieldMapping: {
+                    endCustomerName: 'companyName',
+                    endCustomerMainAddress: 'companyAddress',
+                    endCustomerMainAddress2: 'companyAddress2',
+                    endCustomerCity: 'companyCity',
+                    endCustomerCountry: 'companyCountry',
+                    endCustomerState: 'companyState',
+                    endCustomerPostalCode: 'companyZipCode',
+                    endCustomerWebsite: 'webAddress',
+                    contractManufacturer: 'contractManufacturer',
+                    resellerName: 'reseller',
+                    productInterest: 'productInterest',
+                    registration: 'internalid',
+                    registration_display: 'displayId'
+                },
+                fieldValues: {
+                    registrationExists: {
+                        internalid: '1',
+                        name: 'Yes'
+                    }
+                }
+            }
+        ],
         fieldsets: {
             search: [
                 'internalid',

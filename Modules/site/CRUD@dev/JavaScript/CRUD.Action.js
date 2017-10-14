@@ -26,11 +26,20 @@ define('CRUD.Action', [
                 Backbone.history.navigate(url, { trigger: true, replace: isSameUrl });
             }
         },
+        executePrefill: function executePrefill(options) {
+            var url = CrudHelper.getPrefillUrl(options.result.crudId, options.crudId, options.id);
+            if (url) {
+                Backbone.history.navigate(url, { trigger: true });
+            }
+        },
         executeActionResponse: function executeActionResponse(options) {
             var type = options.result.type;
             switch (type) {
             case 'redirect':
                 this.executeRedirect(options);
+                break;
+            case 'prefill':
+                this.executePrefill(options);
                 break;
             default:
             }
