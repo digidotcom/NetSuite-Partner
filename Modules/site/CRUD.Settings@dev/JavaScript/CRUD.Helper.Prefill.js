@@ -85,7 +85,6 @@ define('CRUD.Helper.Prefill', [
             var config = this.getPrefillConfigForCrud(model.crudId, prefillModel.crudId);
             this.executePrefillMapping(config, model, prefillModel);
             this.executePrefillValues(config, model);
-            console.log('model', model);
         }
     };
 });
