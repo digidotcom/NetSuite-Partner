@@ -8,7 +8,7 @@
 
 .form-info-header-title {
   @extend .col-xs-12;
-  @extend .col-sm-6;
+  @extend .col-sm-5;
 }
 
 .form-info-header-title-heading {
@@ -18,7 +18,7 @@
 .form-info-header-actions {
   @extend .col-xs-12;
   &.has-title {
-    @extend .col-sm-6;
+    @extend .col-sm-7;
   }
 }
 
