@@ -39,8 +39,8 @@ define('CRUD.Search.View', [
                 this.trigger('itemSelected'
                 ,	{
                         selectedItem: null
-                        ,	collection: this.collection.models
-                        ,	currentQuery: this.options.query
+                    ,	collection: this.collection.models
+                    ,	currentQuery: this.options.query
                     });
             }
         },
