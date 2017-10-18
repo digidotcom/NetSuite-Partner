@@ -1,15 +1,20 @@
 define('CRUD.Helper.Form', [
     'underscore',
     'Utils',
+    'Form.Config',
     'CRUD.Configuration'
 ], function CrudHelperForm(
     _,
     Utils,
+    FormConfig,
     CrudConfiguration
 ) {
     'use strict';
 
     return {
+        getFieldDisplaySuffix: function getFieldDisplaySuffix() {
+            return FormConfig.prototype.getFieldDisplaySuffix();
+        },
         filterFieldByVisibility: function filterFieldByVisibility(field, data) {
             if (field.visibility) {
                 if (_.isArray(field.visibility)) {

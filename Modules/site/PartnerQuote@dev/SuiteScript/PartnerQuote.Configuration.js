@@ -110,6 +110,8 @@ define('PartnerQuote.Configuration', [
             {
                 crudId: 'registration',
                 fieldMapping: {
+                    distributorBuyerName: 'buyer.name',
+                    distributorSalesRepName: 'fieldSalesRep.name',
                     endCustomerName: 'companyName',
                     endCustomerMainAddress: 'companyAddress',
                     endCustomerMainAddress2: 'companyAddress2',

@@ -61,10 +61,22 @@ define('CRUD.Helper.Prefill', [
         getPrefillFieldValues: function getPrefillFieldMapping(config) {
             return config.fieldValues || {};
         },
+        getMappedFieldParts: function isPrefillFieldComposite(field) {
+            return field.split('.');
+        },
+        getPrefillFieldValue: function getPrefillFieldValue(prefillModel, mappedField) {
+            var fieldParts = this.getMappedFieldParts(mappedField);
+            var fieldName = fieldParts.shift();
+            var value = prefillModel.get(fieldName);
+            if (_.isObject(value) && fieldParts.length > 0) {
+                value = Utils.getPathFromObject(value, fieldParts.join('.'));
+            }
+            return value;
+        },
         executePrefillField: function prefillField(model, field, value) {
             if (_.isObject(value)) {
                 model.set(field, value.internalid);
-                model.set(field + FormConfig.prototype.getFieldDisplaySuffix(), value.name);
+                model.set(field + this.getFieldDisplaySuffix(), value.name);
             } else {
                 model.set(field, value);
             }
@@ -72,7 +84,8 @@ define('CRUD.Helper.Prefill', [
         executePrefillMapping: function executePrefillMapping(config, model, prefillModel) {
             var self = this;
             _(this.getPrefillFieldMapping(config)).each(function eachFieldMapping(mappedField, field) {
-                self.executePrefillField(model, field, prefillModel.get(mappedField));
+                var value = self.getPrefillFieldValue(prefillModel, mappedField);
+                self.executePrefillField(model, field, value);
             });
         },
         executePrefillValues: function executePrefillValues(config, model) {
