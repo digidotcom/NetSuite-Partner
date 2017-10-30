@@ -1,22 +1,16 @@
 {
     "id": "site",
     "name": "Site",
-    "dependencies": ["boilerplate"],
+    "dependencies": ["crud"],
     "endpoint": true,
     "modules": {
-        "site/Backbone.View.Multiple": "dev",
         "site/BaseSassStyles.Site": "dev",
         "site/Case.FileUpload": "dev",
         "site/Case.Site": "dev",
         "site/CheckoutApplication.Site": "dev",
-        "site/Configuration.Countries": "dev",
         "site/Configuration.Site": "dev",
-        "site/CRUD.Settings": "dev",
-        "site/CRUD": "dev",
         "site/Documents": "dev",
-        "site/EFCore.CRUD": "dev",
         "site/Footer.Site": "dev",
-        "site/Form": "dev",
         "site/GlobalImages.Site": "dev",
         "site/Header.Site": "dev",
         "site/Heartbeat": "dev",
@@ -26,19 +20,15 @@
         "site/Lists": "dev",
         "site/LoginRegister.Site": "dev",
         "site/MenuTree.Site": "dev",
-        "site/Mixin": "dev",
         "site/MyAccountApplication.Site": "dev",
         "site/NavigationTabsDisplay": "dev",
         "site/Overview.Site": "dev",
         "site/PartnerQuote": "dev",
-        "site/Publish": "dev",
         "site/Quote.Site": "dev",
         "site/Registration": "dev",
         "site/SafariHtmlClass": "dev",
-        "site/ServiceController.Validations.RequireSecureFix": "dev",
         "site/Settings.MenuItemsDisplay": "dev",
         "site/ShoppingApplication.Site": "dev",
-        "site/SiteSearch.CRUD": "dev",
         "site/Utils.CRUD": "dev"
     },
     "tasksConfig": {
@@ -47,7 +37,6 @@
                 "entryPoint": "SC.Shopping.Starter",
                 "dependencies": [
                     {"prepend": "SC.Shopping.Configuration.Site"},
-                    {"prepend": "Configuration.Countries"},
                     "Header.Site",
                     {"remove": "Newsletter"},
                     {"remove": "RequestQuoteAccessPoints"},
@@ -57,10 +46,8 @@
             {
                 "entryPoint": "SC.MyAccount.Starter",
                 "dependencies": [
-                    {"prepend": "Configuration.Countries"},
                     {"prepend": "SC.MyAccount.Configuration.Site"},
                     "Case.Site",
-                    "CRUD",
                     "Documents",
                     "Header.Site",
                     "Heartbeat",
@@ -71,7 +58,6 @@
                     "Quote.Site",
                     "Knowledge",
                     "Case.FileUpload.Model",
-                    "SiteSearch.CRUD",
                     {"remove": "OrderHistory"},
                     {"remove": "ReorderItems"},
                     {"remove": "ReturnAuthorization"},
@@ -87,7 +73,6 @@
                 "entryPoint": "SC.Checkout.Starter",
                 "dependencies": [
                     {"prepend": "SC.Checkout.Configuration.Site"},
-                    {"prepend": "Configuration.Countries"},
                     "Header.Site",
                     "Heartbeat",
                     {"remove": "RequestQuoteAccessPoints"},
@@ -103,8 +88,7 @@
                 "Lists",
                 "NavigationTabsDisplay",
                 "PartnerQuote",
-                "Registration",
-                "ServiceController.Validations.RequireSecureFix"
+                "Registration"
             ]
         },
         "sass": {
@@ -123,7 +107,6 @@
                     "dependencies": [
                         {"prepend": "BaseSassStyles.Site"},
                         "Case.Site",
-                        "CRUD",
                         "Documents",
                         "Footer.Site",
                         "Header.Site",
