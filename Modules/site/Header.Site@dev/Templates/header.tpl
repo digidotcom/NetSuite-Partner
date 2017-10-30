@@ -53,7 +53,7 @@
 				<div class="header-menu-profile" data-view="Header.Profile">
 				</div>
 				<div class="header-menu-locator-mobile" data-view="StoreLocatorHeaderLink"></div>
-                <div class="header-menu-search">
+                <div class="header-menu-search {{#unless showSiteSearch}}hide{{/unless}}">
                     <button class="header-menu-search-link" data-action="show-sitesearch" title="{{translate 'Search'}}">
                         <i class="header-menu-search-icon"></i>
                     </button>
@@ -69,4 +69,6 @@
 <div class="header-sidebar-overlay" data-action="header-sidebar-hide"></div>
 <div class="header-secondary-wrapper"></div>
 
+{{#if showSiteSearch}}
 <div class="header-site-search" data-view="SiteSearch" data-type="SiteSearch"></div>
+{{/if}}
