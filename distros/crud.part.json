@@ -1,0 +1,67 @@
+{
+    "id": "crud",
+    "name": "CRUD",
+    "dependencies": ["boilerplate"],
+    "endpoint": true,
+    "modules": {
+        "crud/Backbone.View.Multiple": "dev",
+        "crud/Configuration.Countries": "dev",
+        "crud/CRUD.Settings": "dev",
+        "crud/CRUD": "dev",
+        "crud/EFCore.CRUD": "dev",
+        "crud/Form": "dev",
+        "crud/Mixin": "dev",
+        "crud/Publish": "dev",
+        "crud/ServiceController.Validations.RequireSecureFix": "dev",
+        "crud/SiteSearch.CRUD": "dev"
+    },
+    "tasksConfig": {
+        "javascript": [
+            {
+                "entryPoint": "SC.Shopping.Starter",
+                "dependencies": [
+                    {"prepend": "Configuration.Countries"}
+                ]
+            },
+            {
+                "entryPoint": "SC.MyAccount.Starter",
+                "dependencies": [
+                    {"prepend": "Configuration.Countries"},
+                    "CRUD",
+                    "SiteSearch.CRUD"
+                ]
+            },
+            {
+                "entryPoint": "SC.Checkout.Starter",
+                "dependencies": [
+                    {"prepend": "Configuration.Countries"}
+                ]
+            }
+        ],
+        "ssp-libraries": {
+            "dependencies": [
+                "ServiceController.Validations.RequireSecureFix"
+            ]
+        },
+        "sass": {
+            "applications": [
+                {
+                    "name": "Shopping",
+                    "dependencies": [
+                    ]
+                },
+                {
+                    "name": "MyAccount",
+                    "dependencies": [
+                        "CRUD"
+                    ]
+                },
+                {
+                    "name": "Checkout",
+                    "dependencies": [
+                    ]
+                }
+            ]
+        }
+    }
+}
