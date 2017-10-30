@@ -16,6 +16,10 @@
 {{else}}
 	<div class="itemssearcher-item-shadow"></div>
 	{{#if hasResults}}
+        <div class="itemssearcher-item-all-results">
+            {{translate 'See all results'}}
+            <span class="hide">{{currentQuery}}</span>
+        </div>
 	{{else}}
 		{{#if isAjaxDone}}
 			<div class="itemssearcher-item-no-results">
