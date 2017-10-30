@@ -1,0 +1,92 @@
+.crud-search-results {
+  
+}
+.crud-search-results-button-back {
+  @extend .button-back;
+}
+.crud-search-results-header {
+  border-top: 1px solid $sc-color-theme-border;
+  padding: $sc-base-padding * 3 0;
+}
+.crud-search-results-button-back-icon {
+  @extend .button-back-icon;
+}
+.crud-search-results-empty {
+  @extend .list-empty;
+}
+
+.crud-search-results-recordviews-container{
+  @extend .recordviews-container;
+
+  @media (min-width: $screen-md-min) {
+    .recordviews-actionable-title-header,
+    .recordviews-actionable-title {
+      width: auto;
+      text-align: left;
+    }
+    .recordviews-actionable-text-header,
+    .recordviews-actionable-text {
+      width: auto;
+      text-align: left;
+    }
+    .recordviews-actionable-actions-header,
+    .recordviews-actionable-actions {
+      width: auto;
+      text-align: right;
+    }
+  }
+}
+
+.crud-search-results-recordviews-table {
+  @extend .recordviews-table;
+
+  &:not(.clickable-rows) {
+    .recordviews-actionable-title {
+      a {
+        cursor: default;
+        font-weight: normal;
+        pointer-events: none;
+        color: $sc-color-dark-copy;
+        &:hover {
+          color: $sc-color-dark-copy;
+        }
+      }
+    }
+  }
+  &.clickable-rows {
+    .recordviews-actionable {
+      cursor: pointer;
+    }
+  }
+}
+
+.crud-search-results-recordviews-header{
+  @extend .recordviews-header;
+}
+
+.crud-search-results-recordviews-title-header{
+  @extend .recordviews-actionable-title-header;
+}
+
+.crud-search-results-recordviews-text-header {
+  @extend .recordviews-actionable-text-header;
+}
+
+.crud-search-results-recordviews-actions-header {
+  @extend .recordviews-actionable-actions-header;
+}
+
+.crud-search-results-case-list-paginator{
+  @extend .case-list-paginator;
+}
+
+.crud-search-results{
+  .list-header-view-filters {
+    padding-right: 0px;
+  }
+}
+
+.crud-search-results-results-empty-section {
+  padding:$sc-base-padding * 8 $sc-base-padding * 3 $sc-base-padding * 3 $sc-base-padding * 3;
+  text-align:center;
+}
