@@ -4,14 +4,16 @@ define('SiteSearch.View.CRUD', [
     'Session',
     'SC.Configuration',
     'SiteSearch.View',
-    'CRUD.Search.View'
+    'CRUD.Helper',
+    'CRUD.Search.Typeahead.View'
 ], function CrudRouter(
     _,
     BackboneCompositeView,
     Session,
     Configuration,
     SiteSearchView,
-    CrudSearchView
+    CrudHelper,
+    CrudSearchTypeaheadView
 ) {
     'use strict';
 
@@ -19,7 +21,7 @@ define('SiteSearch.View.CRUD', [
         /* eslint-disable */
         initialize: function ()
         {
-            this.itemsSearcherComponent = new CrudSearchView({
+            this.itemsSearcherComponent = new CrudSearchTypeaheadView({
                 minLength: Configuration.get('typeahead.minLength', 3)
             ,	maxLength: Configuration.get('searchPrefs.maxLength', 0)
             ,	limit: Configuration.get('typeahead.maxResults', 10)
@@ -36,20 +38,22 @@ define('SiteSearch.View.CRUD', [
         /* eslint-enable */
 
         /* eslint-disable */
-        searchEventHandler: function (e)
+        executeSearch: function (keywords)
         {
-            e.preventDefault();
+            var search_url = CrudHelper.getSearchResultsUrl()// _.getPathFromObject(Configuration, 'defaultSearchUrl')
+            ,	keywordsDelimited = '?' + CrudHelper.getSearchQueryKey() + '=';
 
-            var search_term = this.itemsSearcherComponent.getCurrentQuery();
-
-            if (search_term.length < 1)
+            // If we are not in Shopping we have to redirect to it
+            if (_.getPathFromObject(Configuration, 'currentTouchpoint') !== 'customercenter'/* 'home' */)
             {
-                return;
+                window.location.href = Session.get('touchpoints.home') + '#' + search_url + keywordsDelimited + keywords;
             }
-
-            this.itemsSearcherComponent.cleanSearch();
-
-            // this.executeSearch(search_term);
+            // Else we stay in the same app
+            else
+            {
+                // We navigate to the default search url passing the keywords
+                Backbone.history.navigate(search_url + keywordsDelimited + keywords /*+ this.getCurrentSearchOptions()*/, {trigger: true});
+            }
         },
         /* eslint-enable */
 
@@ -84,7 +88,7 @@ define('SiteSearch.View.CRUD', [
                 }
                 else
                 {
-                    // this.executeSearch(query);
+                    this.executeSearch(query);
                 }
             }
         }

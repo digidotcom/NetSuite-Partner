@@ -25,7 +25,7 @@ define('CRUD.List.View', [
         sortOptions: [
             {
                 value: 'date',
-                name: Utils.translate('Sort By Date'),
+                name: Utils.translate('Sort By Created Date'),
                 selected: true
             }
         ]

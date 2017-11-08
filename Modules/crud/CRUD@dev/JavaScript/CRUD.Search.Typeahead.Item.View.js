@@ -1,18 +1,18 @@
-define('CRUD.Search.Item.View', [
+define('CRUD.Search.Typeahead.Item.View', [
     'underscore',
     'ItemsSearcher.Item.View',
-    'crud_search_item.tpl'
-], function CrudSearchModel(
+    'crud_search_typeahead_item.tpl'
+], function CrudSearchTypeaheadItemView(
     _,
     ItemsSearcherItemView,
-    crudSearchItemTpl
+    crudSearchTypeaheadItemTpl
 ) {
     'use strict';
 
     return ItemsSearcherItemView.extend({
 
         defaultOptions: _({}).extend(ItemsSearcherItemView.prototype.defaultOptions, {
-            template: crudSearchItemTpl
+            template: crudSearchTypeaheadItemTpl
         })
 
     });

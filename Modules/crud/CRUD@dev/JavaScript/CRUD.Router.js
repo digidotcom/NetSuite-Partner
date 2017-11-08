@@ -10,8 +10,10 @@ define('CRUD.Router', [
     'CRUD.Record.Model',
     'CRUD.ListRecord.Collection',
     'CRUD.Status.Collection',
+    'CRUD.Search.Collection',
     'CRUD.List.View',
-    'CRUD.Details.View'
+    'CRUD.Details.View',
+    'CRUD.Search.Results.View'
 ], function CrudRouter(
     _,
     Backbone,
@@ -24,20 +26,27 @@ define('CRUD.Router', [
     CrudRecordModel,
     CrudRecordListCollection,
     CrudStatusCollection,
+    CrudSearchCollection,
     CrudListView,
-    CrudDetailsView
+    CrudDetailsView,
+    CrudSearchResultsView
 ) {
     'use strict';
 
 
     return Backbone.Router.extend({
 
+        routes: {
+            'records/search': 'search',
+            'records/search?:options': 'search'
+        },
+
         initialize: function initialize(application) {
             this.application = application;
             this.addRoutes();
         },
 
-        addRoutes: function addRoutes() {
+        addCrudRoutes: function addCrudRoutes() {
             var self = this;
             var regexes = {
                 list: CrudHelper.getListUrlRegex('list'),
@@ -50,6 +59,15 @@ define('CRUD.Router', [
                     self.route(regex, method);
                 });
             });
+        },
+        addSearchRoutes: function addSearchRoutes() {
+            var url = CrudHelper.getSearchResultsUrl();
+            this.route(url, 'search');
+            this.route(url + '?:options', 'search');
+        },
+        addRoutes: function addRoutes() {
+            this.addCrudRoutes();
+            this.addSearchRoutes();
         },
 
         list: function list(parentUrl, parentId, crudUrl, optionsArg) {
@@ -178,6 +196,27 @@ define('CRUD.Router', [
             });
         },
 
+        search: function search(optionsArg) {
+            var options = this.parseSearchOptions(optionsArg);
+            var queryKey = CrudHelper.getSearchQueryKey();
+            var query = options[queryKey];
+            var collection = new CrudSearchCollection(null, {
+                query: query
+            });
+            var view = new CrudSearchResultsView({
+                application: this.application,
+                recordsPerPage: options.show,
+                collection: collection,
+                query: query
+            });
+            if (query) {
+                collection.on('reset', view.showContent, view);
+            } else {
+                view.setLoading(false);
+            }
+            view.showContent();
+        },
+
         getPrefillPromise: function getPrefillPromise(model, options) {
             var config = CrudHelper.getPrefillOptions(options);
             var prefillModel = new CrudRecordModel({
@@ -225,8 +264,21 @@ define('CRUD.Router', [
             }
             return options;
         },
-        parseDetailsOptions: function parseDetailsOptions(optionsArg) {
-            return Utils.parseUrlOptions(optionsArg);
+        parseDetailsOptions: function parseDetailsOptions(options) {
+            return Utils.parseUrlOptions(options);
+        },
+        parseSearchOptions: function parseSearchOptions(optionsArg) {
+            var defaults = {
+                page: 1, // default to 1
+                show: 10 // default to 10
+            };
+            var options = defaults;
+            if (optionsArg) {
+                options = Utils.parseUrlOptions(optionsArg);
+                options.page = parseInt(options.page, 10) || defaults.page;
+                options.show = parseInt(options.show, 10) || defaults.show;
+            }
+            return options;
         }
     });
 });
