@@ -155,10 +155,7 @@ define('PartnerQuote.Configuration', [
                     registration_display: 'displayId'
                 },
                 fieldValues: {
-                    distributor: {
-                        internalid: UtilsCrud.getConvertPlaceholder('Distributor Name'),
-                        name: '-- Placeholder --'
-                    },
+                    distributor: UtilsCrud.partnerNameDefaultValue(),
                     distributorBuyerPhone: UtilsCrud.getConvertPlaceholder('Distributor Buyer Phone'),
                     distributorBuyerEmail: UtilsCrud.getConvertPlaceholder('Distributor Buyer Email'),
                     distributorSalesRepPhone: UtilsCrud.getConvertPlaceholder('Distributor Sales Rep Phone'),

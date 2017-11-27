@@ -87,6 +87,7 @@ define('CRUD.Action.Convert.Model', [
             var mappedData = this.getTargetData(configOrigin, id, configTarget);
             var newId = this.createRecord(action.crudId, mappedData);
             return {
+                type: 'convert',
                 crudId: action.crudId,
                 id: newId
             };

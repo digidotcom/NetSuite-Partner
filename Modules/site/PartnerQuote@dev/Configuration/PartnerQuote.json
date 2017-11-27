@@ -21,7 +21,6 @@
                         "title": "Field",
                         "enum": [
                             "",
-                            "Distributor Name",
                             "Distributor Buyer Phone",
                             "Distributor Buyer Email",
                             "Distributor Sales Rep Phone",
@@ -41,10 +40,6 @@
                 }
             },
             "default": [
-                {
-                    "field": "Distributor Name",
-                    "value": "820380"
-                },
                 {
                     "field": "Distributor Buyer Phone",
                     "value": "N/A"
