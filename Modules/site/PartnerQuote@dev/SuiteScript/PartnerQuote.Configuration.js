@@ -54,8 +54,8 @@ define('PartnerQuote.Configuration', [
         ],
         subrecords: [
             {
-                crudId: 'partner_quote_product',
                 name: 'products',
+                crudId: 'partner_quote_product',
                 pages: ['view']
             }
         ],
@@ -132,6 +132,44 @@ define('PartnerQuote.Configuration', [
                         name: 'Yes'
                     }
                 }
+            }
+        ],
+        convert: [
+            {
+                crudId: 'registration',
+                fieldMapping: {
+                    distributorBuyerName: 'buyer.name',
+                    distributorSalesRepName: 'fieldSalesRep.name',
+                    endCustomerName: 'companyName',
+                    endCustomerMainAddress: 'companyAddress',
+                    endCustomerMainAddress2: 'companyAddress2',
+                    endCustomerCity: 'companyCity',
+                    endCustomerCountry: 'companyCountry',
+                    endCustomerState: 'companyState',
+                    endCustomerPostalCode: 'companyZipCode',
+                    endCustomerWebsite: 'webAddress',
+                    contractManufacturer: 'contractManufacturer',
+                    resellerName: 'reseller',
+                    productInterest: 'productInterest',
+                    registration: 'internalid',
+                    registration_display: 'displayId'
+                },
+                fieldValues: {
+                    distributor: {
+                        internalid: UtilsCrud.getConvertPlaceholder('Distributor Name'),
+                        name: '-- Placeholder --'
+                    },
+                    distributorBuyerPhone: UtilsCrud.getConvertPlaceholder('Distributor Buyer Phone'),
+                    distributorBuyerEmail: UtilsCrud.getConvertPlaceholder('Distributor Buyer Email'),
+                    distributorSalesRepPhone: UtilsCrud.getConvertPlaceholder('Distributor Sales Rep Phone'),
+                    distributorSalesRepEmail: UtilsCrud.getConvertPlaceholder('Distributor Sales Rep Email'),
+                    targetPurchaseDate: UtilsCrud.getConvertPlaceholder('Target Purchase Date'),
+                    justificationForDiscount: UtilsCrud.getConvertPlaceholder('Justification for Price Discount')
+                },
+                dynamicFields: {},
+                subrecords: [
+                    'products'
+                ]
             }
         ],
         fieldsets: {

@@ -1,0 +1,75 @@
+{
+    "type": "object",
+    "subtab": {
+        "id": "convertToQuote",
+        "title": "Convert To Quote",
+        "description": "",
+        "group": "myAccountApp"
+    },
+    "properties": {
+        "convertToQuote.placeholderValues": {
+            "group": "myAccountApp",
+            "subtab": "convertToQuote",
+            "type": "array",
+            "title": "Placeholder Values",
+            "description": "Placeholder values to be used in required fields not existing in Registrations.",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "field": {
+                        "type": "string",
+                        "title": "Field",
+                        "enum": [
+                            "",
+                            "Distributor Name",
+                            "Distributor Buyer Phone",
+                            "Distributor Buyer Email",
+                            "Distributor Sales Rep Phone",
+                            "Distributor Sales Rep Email",
+                            "Target Purchase Date",
+                            "Justification for Price Discount"
+                        ],
+                        "description": "Field to set the placeholder value to.",
+                        "default": ""
+                    },
+                    "value": {
+                        "type": "string",
+                        "title": "Value",
+                        "description": "Value to use as placeholder for the selected field.",
+                        "default": "N/A"
+                    }
+                }
+            },
+            "default": [
+                {
+                    "field": "Distributor Name",
+                    "value": "820380"
+                },
+                {
+                    "field": "Distributor Buyer Phone",
+                    "value": "N/A"
+                },
+                {
+                    "field": "Distributor Buyer Email",
+                    "value": "N/A"
+                },
+                {
+                    "field": "Distributor Sales Rep Phone",
+                    "value": "N/A"
+                },
+                {
+                    "field": "Distributor Sales Rep Email",
+                    "value": "N/A"
+                },
+                {
+                    "field": "Target Purchase Date",
+                    "value": "12/31/2222"
+                },
+                {
+                    "field": "Justification for Price Discount",
+                    "value": "N/A"
+                }
+            ]
+        }
+    }
+}

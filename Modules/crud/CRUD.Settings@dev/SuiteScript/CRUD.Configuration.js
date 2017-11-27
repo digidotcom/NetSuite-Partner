@@ -17,6 +17,7 @@ define('CRUD.Configuration', [
                 'permissions'
             ],
             shared: [
+                'id',
                 'fields',
                 'type',
                 'status',
@@ -29,6 +30,7 @@ define('CRUD.Configuration', [
                 'listHeaderDisabled',
                 'record',
                 'loggedIn',
+                'convert',
                 'fieldsets',
                 'filters',
                 'filtersDynamic',

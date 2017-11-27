@@ -47,6 +47,22 @@ define('PartnerQuote.Product.Configuration', [
         sort: {
             internalid: 'asc'
         },
+        convert: [
+            {
+                crudId: 'registration_product',
+                fieldMapping: {
+                    item: 'item',
+                    partNumber: 'partNumber',
+                    estimatedAnnualQuantity: 'quantity',
+                    targetResalePrice: 'targetResalePrice'
+                },
+                fieldValues: {
+                },
+                dynamicFields: {
+                    partnerQuote: { type: 'parent' }
+                }
+            }
+        ],
         fieldsets: {
             list: [
                 'internalid',
