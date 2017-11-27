@@ -22,6 +22,7 @@ define('CRUD.Configuration', [
                 'type',
                 'status',
                 'parent',
+                'subrecords',
                 'actions',
                 'permissions'
             ],
@@ -37,7 +38,6 @@ define('CRUD.Configuration', [
                 'sort'
             ],
             bootstrapping: [
-                'subrecords',
                 'frontend',
                 'list',
                 'search',

@@ -163,10 +163,9 @@ define('PartnerQuote.Configuration', [
                     targetPurchaseDate: UtilsCrud.getConvertPlaceholder('Target Purchase Date'),
                     justificationForDiscount: UtilsCrud.getConvertPlaceholder('Justification for Price Discount')
                 },
-                dynamicFields: {},
-                subrecords: [
-                    'products'
-                ]
+                subrecords: {
+                    products: 'products'
+                }
             }
         ],
         fieldsets: {

@@ -20,8 +20,8 @@ define('CRUD.Action.Convert.Model', [
     return SCModel.extend({
         name: 'CRUD.Action.Field',
 
-        getTargetConfig: function getConvertConfig(action) {
-            return CrudConfiguration.getForRecord(action.crudId);
+        getCrudConfig: function getCrudConfig(crudId) {
+            return CrudConfiguration.getForRecord(crudId);
         },
 
         getRecord: function getRecord(crudId, id) {
@@ -64,28 +64,76 @@ define('CRUD.Action.Convert.Model', [
             return data;
         },
 
-        generateTargetData: function generateTargetData(recordOrigin, convertConfig) {
+        getParentData: function getParentData(configTarget, parentIdTarget) {
             var data = {};
-            _(data).extend(this.getMappedData(recordOrigin, convertConfig));
-            _(data).extend(this.getValuesData(convertConfig));
+            if (parentIdTarget && configTarget.parent) {
+                data[configTarget.parent.filterName] = parentIdTarget;
+            }
             return data;
         },
 
-        getTargetData: function getTargetData(configOrigin, id, configTarget) {
+        generateTargetData: function generateTargetData(recordOrigin, configTarget, convertConfig, parentIdTarget) {
+            var data = {};
+            _(data).extend(this.getMappedData(recordOrigin, convertConfig));
+            _(data).extend(this.getValuesData(convertConfig));
+            _(data).extend(this.getParentData(configTarget, parentIdTarget));
+            return data;
+        },
+
+        getTargetData: function getTargetData(configOrigin, id, configTarget, parentIdTarget) {
             var crudIdOrigin = configOrigin.id;
             var recordOrigin = this.getRecord(crudIdOrigin, id);
             var convertConfig = this.getConvertConfig(crudIdOrigin, configTarget);
-            return this.generateTargetData(recordOrigin, convertConfig);
+            return this.generateTargetData(recordOrigin, configTarget, convertConfig, parentIdTarget);
         },
 
         createRecord: function createRecord(crudId, data) {
             return CrudRecordModel.create(crudId, data);
         },
 
-        run: function runActionField(configOrigin, id, action) {
-            var configTarget = this.getTargetConfig(action);
-            var mappedData = this.getTargetData(configOrigin, id, configTarget);
-            var newId = this.createRecord(action.crudId, mappedData);
+        getSubrecordCrudId: function getSubrecordCrudId(config, subrecord) {
+            return _(config.subrecords).findWhere({ name: subrecord }).crudId;
+        },
+
+        convertSubrecord: function convertSubrecord(crudIdOrigin, crudIdTarget, parentIdOrigin, parentIdTarget) {
+            var self = this;
+            var configOrigin = this.getCrudConfig(crudIdOrigin);
+            var results;
+            var records;
+
+            var listData = { filters: {} };
+            listData.filters[configOrigin.parent.filterName] = parentIdOrigin;
+
+            results = CrudRecordModel.list(crudIdOrigin, listData);
+            records = configOrigin.noListHeader ? results : results.records;
+            _(records).each(function eachRecord(record) {
+                var action = {
+                    type: 'convert',
+                    crudId: crudIdTarget
+                };
+                self.run(configOrigin, record.internalid, action, parentIdTarget);
+            });
+        },
+
+        convertSubrecords: function convertSubrecords(configOrigin, configTarget, parentIdOrigin, parentIdTarget) {
+            var self = this;
+            var convertConfigTarget = this.getConvertConfig(configOrigin.id, configTarget);
+            var subrecords = convertConfigTarget.subrecords || [];
+            _(subrecords).each(function eachSubrecord(subrecordOrigin, subrecordTarget) {
+                var crudIdOrigin = self.getSubrecordCrudId(configOrigin, subrecordOrigin);
+                var crudIdTarget = self.getSubrecordCrudId(configTarget, subrecordTarget);
+                self.convertSubrecord(crudIdOrigin, crudIdTarget, parentIdOrigin, parentIdTarget);
+            });
+        },
+
+        run: function run(configOrigin, id, action, parentIdTarget) {
+            var configTarget;
+            var mappedData;
+            var newId;
+            configTarget = this.getCrudConfig(action.crudId);
+            mappedData = this.getTargetData(configOrigin, id, configTarget, parentIdTarget);
+            newId = this.createRecord(action.crudId, mappedData);
+            this.convertSubrecords(configOrigin, configTarget, id, newId);
             return {
                 type: 'convert',
                 crudId: action.crudId,

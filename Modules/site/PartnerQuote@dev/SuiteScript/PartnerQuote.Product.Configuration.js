@@ -57,9 +57,6 @@ define('PartnerQuote.Product.Configuration', [
                     targetResalePrice: 'targetResalePrice'
                 },
                 fieldValues: {
-                },
-                dynamicFields: {
-                    partnerQuote: { type: 'parent' }
                 }
             }
         ],

@@ -89,8 +89,8 @@ define('Registration.Configuration', [
         ],
         subrecords: [
             {
-                crudId: 'registration_product',
                 name: 'products',
+                crudId: 'registration_product',
                 pages: ['view']
             }
         ],
