@@ -2632,6 +2632,7 @@ define('Case.FileUpload.Configuration', [
         thumbnailImageResizeID: 'thumbnail',
 
         allowedTypes: [
+            'PDF',
             'EXCEL',
             'WORD',
             'PLAINTEXT',
@@ -2640,6 +2641,7 @@ define('Case.FileUpload.Configuration', [
         ],
 
         allowedExtensions: [
+            'pdf',
             'txt',
             'zip',
             'rar',
