@@ -9,12 +9,12 @@
   @extend .button-medium;
   margin-bottom: $sc-base-margin * 2;
   vertical-align: text-top;
-  &:last-child {
+  /* &:last-child {
     margin-bottom: 0;
   }
   @media (min-width: $screen-sm-min) {
     margin-bottom: 0;
-  }
+  } */
 }
 
 .form-actions-edit {

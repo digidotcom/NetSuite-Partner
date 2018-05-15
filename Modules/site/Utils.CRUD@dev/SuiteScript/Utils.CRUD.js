@@ -1,11 +1,13 @@
 define('Utils.CRUD', [
     'underscore',
     'Models.Init',
-    'Application'
+    'Application',
+    'Configuration'
 ], function UtilsCrudModule(
     _,
     ModelsInit,
-    Application
+    Application,
+    Configuration
 ) {
     'use strict';
 
@@ -103,13 +105,33 @@ define('Utils.CRUD', [
         return registrations;
     }
 
+    function getConvertPlaceholderValues() {
+        var placeholderValuesConfig;
+        if (!UtilsCrud.convertPlaceholderValues) {
+            placeholderValuesConfig = Configuration.get('convertToQuote.placeholderValues', {});
+
+            UtilsCrud.convertPlaceholderValues = {};
+            _(placeholderValuesConfig).each(function eachPlaceholderValue(placeholderValue) {
+                UtilsCrud.convertPlaceholderValues[placeholderValue.field] = placeholderValue.value;
+            });
+        }
+        return UtilsCrud.convertPlaceholderValues;
+    }
+
+    function getConvertPlaceholder(field) {
+        var values = UtilsCrud.getConvertPlaceholderValues();
+        return values[field] || 'N/A';
+    }
+
     _(UtilsCrud).extend({
         sameIdName: sameIdName,
         booleanMap: booleanMap,
         setText: setText,
         partnerNameDefaultValue: partnerNameDefaultValue,
         partnerContactsLookup: partnerContactsLookup,
-        partnerRegistrationsLookup: partnerRegistrationsLookup
+        partnerRegistrationsLookup: partnerRegistrationsLookup,
+        getConvertPlaceholderValues: getConvertPlaceholderValues,
+        getConvertPlaceholder: getConvertPlaceholder
     });
 
     return UtilsCrud;

@@ -4,14 +4,18 @@ define('CRUD.Action.Model', [
     'SearchHelper.CRUD',
     'RecordHelper.CRUD',
     'CRUD.Utils',
-    'CRUD.Configuration'
+    'CRUD.Configuration',
+    'CRUD.Action.Field.Model',
+    'CRUD.Action.Convert.Model'
 ], function CrudActionModel(
     _,
     SCModel,
     SearchHelper,
     RecordHelper,
     CrudUtils,
-    CrudConfiguration
+    CrudConfiguration,
+    CrudActionFieldModel,
+    CrudActionConvertModel
 ) {
     'use strict';
 
@@ -27,39 +31,50 @@ define('CRUD.Action.Model', [
             return action;
         },
 
-        runActionField: function runActionField(config, id, action) {
-            var record;
-            var data = {};
-            data[action.fieldName] = action.value;
-            record = new RecordHelper()
-                .setRecord(config.record)
-                .setFields(config.columns)
-                .setData(data)
-                .setFilters(config.filters);
-            record.update(id);
-            return !!record.getResult();
+        getActionModel: function getActionModel(type) {
+            switch (type) {
+            case 'field':
+                return CrudActionFieldModel;
+            case 'convert':
+                return CrudActionConvertModel;
+            default:
+            }
+            return null;
         },
 
-        runAction: function runAction(config, id, action) {
-            switch (action.type) {
-            case 'field':
-                return this.runActionField(config, id, action);
-            default:
+        runActionExecute: function runAction(config, id, action) {
+            var model = this.getActionModel(action.type);
+            if (model) {
+                return model.run(config, id, action);
             }
             return false;
         },
 
-        run: function update(crudId, id, actionName) {
+        runActionExecutes: function runActions(config, id, actionConfig, resultsArray) {
             var self = this;
+            resultsArray = resultsArray || []; // eslint-disable-line no-param-reassign
+            return _(actionConfig.execute).every(function eachAction(action) {
+                var result = self.runActionExecute(config, id, action);
+                resultsArray.push(result);
+                return !!result;
+            });
+        },
+
+        parseActionsResponse: function parseResultResponse(actionConfig, executeResults) {
+            return _({}).extend(actionConfig.result || {}, {
+                resultData: executeResults
+            });
+        },
+
+        run: function update(crudId, id, actionName) {
             var config = CrudConfiguration.getForRecord(crudId);
             var actionConfig = this.getActionData(config, actionName);
 
-            var result = _(actionConfig.execute).every(function eachAction(action) {
-                return self.runAction(config, id, action);
-            });
+            var resultsArray = [];
+            var result = this.runActionExecutes(config, id, actionConfig, resultsArray);
 
             if (result) {
-                return actionConfig.result;
+                return this.parseActionsResponse(actionConfig, resultsArray);
             }
             return null;
         }

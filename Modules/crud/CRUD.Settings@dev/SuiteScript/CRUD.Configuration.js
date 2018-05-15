@@ -17,10 +17,12 @@ define('CRUD.Configuration', [
                 'permissions'
             ],
             shared: [
+                'id',
                 'fields',
                 'type',
                 'status',
                 'parent',
+                'subrecords',
                 'actions',
                 'permissions'
             ],
@@ -29,13 +31,13 @@ define('CRUD.Configuration', [
                 'listHeaderDisabled',
                 'record',
                 'loggedIn',
+                'convert',
                 'fieldsets',
                 'filters',
                 'filtersDynamic',
                 'sort'
             ],
             bootstrapping: [
-                'subrecords',
                 'frontend',
                 'list',
                 'search',

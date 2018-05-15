@@ -64,14 +64,15 @@ define('CRUD.Record.Model', [
         get: function get(crudId, id) {
             var config = CrudConfiguration.getForRecord(crudId);
             var fieldset = config.fieldsets.details;
+            var filters = _.union([], config.filters);
             var search;
             var result;
 
-            config.filters.push({ fieldName: 'internalid', operator: 'is', value1: id });
+            filters.push({ fieldName: 'internalid', operator: 'is', value1: id });
 
             search = new SearchHelper()
                 .setRecord(config.record)
-                .setFilters(config.filters)
+                .setFilters(filters)
                 .setColumns(config.columns)
                 .setFieldset(fieldset);
 

@@ -51,7 +51,7 @@ define('Registration.Configuration', [
                     page: 'view'
                 }
             },
-            {
+            /* {
                 name: 'prefill',
                 label: 'Request a Quote',
                 conditions: [
@@ -65,12 +65,32 @@ define('Registration.Configuration', [
                     type: 'prefill',
                     crudId: 'partner_quote'
                 }
+            }, */
+            {
+                name: 'convert',
+                label: 'Request a Quote',
+                conditions: [
+                    {
+                        type: 'page',
+                        values: ['view']
+                    }
+                ],
+                execute: [
+                    {
+                        type: 'convert',
+                        crudId: 'partner_quote'
+                    }
+                ],
+                result: {
+                    type: 'convert',
+                    page: 'edit'
+                }
             }
         ],
         subrecords: [
             {
-                crudId: 'registration_product',
                 name: 'products',
+                crudId: 'registration_product',
                 pages: ['view']
             }
         ],

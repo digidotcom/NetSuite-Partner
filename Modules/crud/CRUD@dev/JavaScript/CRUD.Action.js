@@ -1,9 +1,11 @@
 define('CRUD.Action', [
+    'underscore',
     'Backbone',
     'jQuery',
     'CRUD.Helper',
     'CRUD.Action.Model'
 ], function CrudAction(
+    _,
     Backbone,
     jQuery,
     CrudHelper,
@@ -32,6 +34,17 @@ define('CRUD.Action', [
                 Backbone.history.navigate(url, { trigger: true });
             }
         },
+        executeConvert: function executeConvert(options) {
+            var result = options.result;
+            var data = _(result.resultData).findWhere({ type: 'convert' });
+            var url;
+            if (data) {
+                url = CrudHelper.getUrlForPage(result.page, data.crudId, data.id, null);
+                if (url) {
+                    Backbone.history.navigate(url, { trigger: true });
+                }
+            }
+        },
         executeActionResponse: function executeActionResponse(options) {
             var type = options.result.type;
             switch (type) {
@@ -40,6 +53,9 @@ define('CRUD.Action', [
                 break;
             case 'prefill':
                 this.executePrefill(options);
+                break;
+            case 'convert':
+                this.executeConvert(options);
                 break;
             default:
             }
