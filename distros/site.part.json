@@ -8,6 +8,7 @@
         "site/Case.FileUpload": "dev",
         "site/Case.Site": "dev",
         "site/CheckoutApplication.Site": "dev",
+        "site/Configuration.BridgeDomainFix": "dev",
         "site/Configuration.Site": "dev",
         "site/Documents": "dev",
         "site/Footer.Site": "dev",
