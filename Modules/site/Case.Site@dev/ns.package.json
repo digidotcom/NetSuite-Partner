@@ -17,6 +17,7 @@
         ]
     },
     "overrides": {
-        "suitecommerce/Case@2.2.0/Templates/case_new.tpl": "Templates/case_new.tpl"
+        "suitecommerce/Case@2.2.0/Templates/case_new.tpl": "Templates/case_new.tpl",
+        "efficiencies/Case.Upload@1.0.3/Templates/case_detail.tpl": "Templates/case_detail.tpl"
     }
 }
