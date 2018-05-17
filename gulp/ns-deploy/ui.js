@@ -197,7 +197,7 @@ module.exports = {
 					type: 'list'
 				,	name: 'role'
 				,	message: 'Choose your target account and role'
-				,	choices: deploy.roles.map(function(role) { return {name: role.account.name + ' - ' + role.role.name, value: role }; }).sort(alphabeticSort)
+				,	choices: deploy.roles.map(function(role) { return {name: role.account.name + ' (' + role.account.internalId + ') - ' + role.role.name, value: role }; }).sort(alphabeticSort)
 				}
 			,	function(answers)
 				{
