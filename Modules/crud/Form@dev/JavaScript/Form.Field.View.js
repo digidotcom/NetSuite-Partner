@@ -171,6 +171,7 @@ define('Form.Field.View', [
                 isRequired: !!model.get('required'),
                 tooltip: model.get('tooltip'),
                 help: model.get('help'),
+                placeholder: model.get('placeholder'),
                 isNew: isNew,
                 isEdit: isEdit,
                 isView: isView,

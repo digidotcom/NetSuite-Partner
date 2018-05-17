@@ -26,7 +26,7 @@
                 {{/if}}
             </p>
         {{else}}
-            <input type="search" class="form-fields-input" id="{{attribute}}{{nameFieldSuffix}}" name="{{attribute}}{{nameFieldSuffix}}" data-value="{{selectedValue}}" data-selected-name="{{selectedName}}" value="" />
+            <input type="search" class="form-fields-input" id="{{attribute}}{{nameFieldSuffix}}" name="{{attribute}}{{nameFieldSuffix}}" data-value="{{selectedValue}}" data-selected-name="{{selectedName}}" value="" placeholder="{{placeholder}}" />
             <i class="form-fields-input-search-icon" data-lookup-trigger></i>
             {{#if help}}
             <p class="form-fields-input-help">{{{translate help}}}</p>

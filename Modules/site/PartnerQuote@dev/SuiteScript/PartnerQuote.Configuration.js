@@ -694,6 +694,7 @@ define('PartnerQuote.Configuration', [
                     type: 'date',
                     label: 'Target Purchase Date',
                     tooltip: 'The date the end customer expects to purchase.',
+                    placeholder: 'MM/DD/YYYY',
                     required: true
                 },
                 record: {

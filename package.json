@@ -5,8 +5,7 @@
   "main": "gulpfile.js",
   "private": true,
   "scripts": {
-    "deploy": "gulp deploy --m sandbox --no-backup",
-    "deploy:production": "gulp deploy --no-backup",
+    "deploy": "gulp deploy --no-backup",
     "start": "gulp local",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

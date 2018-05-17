@@ -763,6 +763,7 @@ define('Registration.Configuration', [
                     label: 'Production Date',
                     tooltip: 'Enter the date on which the customer expects to take deliery of their first production quantity of products. ' +
                              '(Do not use dates for samples, development systems, prototype orders, pilot orders, etc.)',
+                    placeholder: 'MM/DD/YYYY',
                     required: true
                 },
                 record: {
@@ -802,6 +803,7 @@ define('Registration.Configuration', [
                     type: 'date',
                     label: 'Prototype/Eval Date',
                     tooltip: 'Have you provided, or when will you provide, a Dev Kit or Evaluation Unit.',
+                    placeholder: 'MM/DD/YYYY',
                     required: true
                 },
                 record: {

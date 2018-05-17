@@ -25,7 +25,7 @@
                 {{/if}}
             </p>
         {{else}}
-            <textarea class="form-fields-input" id="{{attribute}}" name="{{attribute}}" data-value="{{value}}"></textarea>
+            <textarea class="form-fields-input" id="{{attribute}}" name="{{attribute}}" data-value="{{value}}" placeholder="{{placeholder}}"></textarea>
             {{#if help}}
             <p class="form-fields-input-help">{{{translate help}}}</p>
             {{/if}}
