@@ -16,10 +16,6 @@ define('Case.FileUpload.Hooks', [
         deploy: CaseFileUploadConfig.suitelet.deployedScript
     });
 
-    Application.on('after:Case.create', function attachFileMessage(Model, response, companyID, data) {
-        Model.attachFileMessage(data, response);
-    });
-
     Application.on('after:Case.update', function attachFileMessage(Model, response, companyID, data) {
         Model.attachFileMessage(data, data.internalid);
     });
