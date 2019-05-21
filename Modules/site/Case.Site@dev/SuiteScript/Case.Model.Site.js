@@ -101,7 +101,7 @@ define('Case.Model.Site', [
 
             newCaseRecord.setFieldValue('status', default_values.statusStart.id); // Not Started
             newCaseRecord.setFieldValue('origin', default_values.origin.id); // Web
-
+            this.attachFileMessage(data, newCaseId);
             return nlapiSubmitRecord(newCaseRecord);
         }
         /* eslint-enable */
