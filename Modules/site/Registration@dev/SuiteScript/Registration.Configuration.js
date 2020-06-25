@@ -50,12 +50,47 @@ define('Registration.Configuration', [
                     type: 'redirect',
                     page: 'view'
                 }
+            },
+            /* {
+                name: 'prefill',
+                label: 'Request a Quote',
+                conditions: [
+                    {
+                        type: 'page',
+                        values: ['view']
+                    }
+                ],
+                execute: 'static',
+                result: {
+                    type: 'prefill',
+                    crudId: 'partner_quote'
+                }
+            }, */
+            {
+                name: 'convert',
+                label: 'Request a Quote',
+                conditions: [
+                    {
+                        type: 'page',
+                        values: ['view']
+                    }
+                ],
+                execute: [
+                    {
+                        type: 'convert',
+                        crudId: 'partner_quote'
+                    }
+                ],
+                result: {
+                    type: 'convert',
+                    page: 'edit'
+                }
             }
         ],
         subrecords: [
             {
-                crudId: 'registration_product',
                 name: 'products',
+                crudId: 'registration_product',
                 pages: ['view']
             }
         ],
@@ -102,7 +137,20 @@ define('Registration.Configuration', [
         },
         filtersDynamic: {},
         sort: {},
+        search: {
+            labelFieldName: 'displayId',
+            fields: {
+                displayId: { operator: 'contains' },
+                number: { operator: 'contains' }
+            }
+        },
         fieldsets: {
+            search: [
+                'internalid',
+                'name',
+                'number',
+                'displayId'
+            ],
             list: [
                 'internalid',
                 'name',
@@ -118,6 +166,7 @@ define('Registration.Configuration', [
             ],
             details: [
                 'internalid',
+                'displayId',
                 'name',
                 'date',
                 'number',
@@ -236,6 +285,11 @@ define('Registration.Configuration', [
             partnerApprovalSubmission: {
                 record: {
                     fieldName: 'custrecord_partner_approval_submission'
+                }
+            },
+            displayId: {
+                record: {
+                    fieldName: 'custrecord_reg_dispay_id'
                 }
             },
 
@@ -709,6 +763,7 @@ define('Registration.Configuration', [
                     label: 'Production Date',
                     tooltip: 'Enter the date on which the customer expects to take deliery of their first production quantity of products. ' +
                              '(Do not use dates for samples, development systems, prototype orders, pilot orders, etc.)',
+                    placeholder: 'MM/DD/YYYY',
                     required: true
                 },
                 record: {
@@ -748,6 +803,7 @@ define('Registration.Configuration', [
                     type: 'date',
                     label: 'Prototype/Eval Date',
                     tooltip: 'Have you provided, or when will you provide, a Dev Kit or Evaluation Unit.',
+                    placeholder: 'MM/DD/YYYY',
                     required: true
                 },
                 record: {

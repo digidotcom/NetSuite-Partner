@@ -25,6 +25,9 @@ define('Case.FileUpload.Configuration', [
         thumbnailImageResizeID: 'thumbnail',
 
         allowedTypes: [
+            'PNGIMAGE',
+            'JPGIMAGE',
+            'PDF',
             'EXCEL',
             'WORD',
             'PLAINTEXT',
@@ -33,6 +36,10 @@ define('Case.FileUpload.Configuration', [
         ],
 
         allowedExtensions: [
+            'png',
+            'jpeg',
+            'jpg',
+            'pdf',
             'txt',
             'zip',
             'rar',

@@ -16,7 +16,7 @@ function jQueryAjaxSetup(
 ) {
     'use strict';
 
-    var $document;
+    var $document = jQuery(document);
     // example of NProgress setup
     NProgress.configure({
         minimum: parseFloat(Configuration.themes.nprogress.minimumProgress),
@@ -29,7 +29,7 @@ function jQueryAjaxSetup(
 
     // This registers an event listener to any ajax call
     if (typeof nsglobal === 'undefined') {
-        $document = jQuery(document)
+        $document
         // http://api.jquery.com/ajaxStart/
             .ajaxStart(NProgress.start)
             // http://api.jquery.com/ajaxStop/

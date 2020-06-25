@@ -54,8 +54,8 @@ define('PartnerQuote.Configuration', [
         ],
         subrecords: [
             {
-                crudId: 'partner_quote_product',
                 name: 'products',
+                crudId: 'partner_quote_product',
                 pages: ['view']
             }
         ],
@@ -98,7 +98,84 @@ define('PartnerQuote.Configuration', [
         },
         filtersDynamic: {},
         sort: {},
+        search: {
+            labelFieldName: 'displayId',
+            fields: {
+                displayId: { operator: 'contains' },
+                registrationNumber: { operator: 'contains' },
+                registrationDisplayId: { operator: 'contains' }
+            }
+        },
+        prefill: [
+            {
+                crudId: 'registration',
+                fieldMapping: {
+                    distributorBuyerName: 'buyer.name',
+                    distributorSalesRepName: 'fieldSalesRep.name',
+                    endCustomerName: 'companyName',
+                    endCustomerMainAddress: 'companyAddress',
+                    endCustomerMainAddress2: 'companyAddress2',
+                    endCustomerCity: 'companyCity',
+                    endCustomerCountry: 'companyCountry',
+                    endCustomerState: 'companyState',
+                    endCustomerPostalCode: 'companyZipCode',
+                    endCustomerWebsite: 'webAddress',
+                    contractManufacturer: 'contractManufacturer',
+                    resellerName: 'reseller',
+                    productInterest: 'productInterest',
+                    registration: 'internalid',
+                    registration_display: 'displayId'
+                },
+                fieldValues: {
+                    registrationExists: {
+                        internalid: '1',
+                        name: 'Yes'
+                    }
+                }
+            }
+        ],
+        convert: [
+            {
+                crudId: 'registration',
+                fieldMapping: {
+                    distributorBuyerName: 'buyer.name',
+                    distributorSalesRepName: 'fieldSalesRep.name',
+                    endCustomerName: 'companyName',
+                    endCustomerMainAddress: 'companyAddress',
+                    endCustomerMainAddress2: 'companyAddress2',
+                    endCustomerCity: 'companyCity',
+                    endCustomerCountry: 'companyCountry',
+                    endCustomerState: 'companyState',
+                    endCustomerPostalCode: 'companyZipCode',
+                    endCustomerWebsite: 'webAddress',
+                    contractManufacturer: 'contractManufacturer',
+                    resellerName: 'reseller',
+                    productInterest: 'productInterest',
+                    registration: 'internalid',
+                    registration_display: 'displayId'
+                },
+                fieldValues: {
+                    distributor: UtilsCrud.partnerNameDefaultValue(),
+                    distributorBuyerPhone: UtilsCrud.getConvertPlaceholder('Distributor Buyer Phone'),
+                    distributorBuyerEmail: UtilsCrud.getConvertPlaceholder('Distributor Buyer Email'),
+                    distributorSalesRepPhone: UtilsCrud.getConvertPlaceholder('Distributor Sales Rep Phone'),
+                    distributorSalesRepEmail: UtilsCrud.getConvertPlaceholder('Distributor Sales Rep Email'),
+                    targetPurchaseDate: UtilsCrud.getConvertPlaceholder('Target Purchase Date'),
+                    justificationForDiscount: UtilsCrud.getConvertPlaceholder('Justification for Price Discount')
+                },
+                subrecords: {
+                    products: 'products'
+                }
+            }
+        ],
         fieldsets: {
+            search: [
+                'internalid',
+                'name',
+                'displayId',
+                'registrationNumber',
+                'registrationDisplayId'
+            ],
             list: [
                 'internalid',
                 'name',
@@ -226,6 +303,23 @@ define('PartnerQuote.Configuration', [
             partnerPqrSubmission: {
                 record: {
                     fieldName: 'custrecord_pqr_partner_submission'
+                }
+            },
+            displayId: {
+                record: {
+                    fieldName: 'custrecord_pqr_display_id'
+                }
+            },
+            registrationNumber: {
+                record: {
+                    fieldName: 'custrecord_reg_number',
+                    joinKey: 'custrecord_quotereqregistration'
+                }
+            },
+            registrationDisplayId: {
+                record: {
+                    fieldName: 'custrecord_reg_dispay_id',
+                    joinKey: 'custrecord_quotereqregistration'
                 }
             },
 
@@ -600,6 +694,7 @@ define('PartnerQuote.Configuration', [
                     type: 'date',
                     label: 'Target Purchase Date',
                     tooltip: 'The date the end customer expects to purchase.',
+                    placeholder: 'MM/DD/YYYY',
                     required: true
                 },
                 record: {
